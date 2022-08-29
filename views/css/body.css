@@ -1,0 +1,296 @@
+* {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+/*Pending style*/
+#notification_box{
+    border-radius: 25px;
+    border: 1px solid black;
+    padding-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 1% 4%;
+    background-color:rgba(246, 242, 237, 0.358);
+}
+
+#notification_box label{
+    color:rgb(84, 84, 84);
+}
+
+/*Pending table styles for administrator*/
+
+#pending_form table, #student_handling_form table {
+    border-collapse: collapse;
+    width: 96%;
+    margin: 2% 2% auto 2%;
+}
+
+th, td {
+    text-align: left;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+}
+
+th:last-of-type, td:last-of-type{
+    text-align: right;
+    padding-right: 2%;
+}
+
+tr:nth-child(even) {
+    background-color:rgba(212, 212, 211, 0.73);
+}
+
+#finalize_button {
+    border-radius: 50px;
+    width: auto;
+    margin-top: 2%;
+    right: 4%;
+    position: absolute;
+    background-color: white;
+}
+
+#finalize_button:hover {
+    border-color: rgb(153, 218, 149);
+}
+
+/*Main content styles*/
+h1 {
+    font-weight: normal;
+    margin-top: 2%;
+    margin-left: 4%;
+    font-size: 30px
+}
+
+hr {
+    margin-top: 1%;
+    margin-left: 4%;
+    margin-right: 4%;
+    border: 0px;
+    border-top: 2px solid rgb(223, 200, 172);
+}
+
+/*Cards*/
+.card_row {
+    display: flex;
+    width: 96%;
+    margin: 2% 2%;
+}
+
+.big_card, .small_card {
+    border: 1px solid black;
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    transition: 0.4s;
+    border-radius: 5px;
+    margin: 2% auto;
+    padding-top: 7%;
+    padding-bottom: 10%;
+
+    text-align: center;
+    cursor: pointer;
+}
+
+.big_card {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.small_card {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+    padding-bottom: 2%;
+}
+
+.title {
+    font-size: calc(15px + 0.3vw);
+}
+
+.small_card .title, .big_card .title {
+    cursor: pointer;
+    margin: 0% 5% 15% 5%;
+    width: 90%;
+}
+
+.small_card .description {
+    cursor: pointer;
+    font-size: calc(10px + 0.3vw);
+    margin: auto 5% auto 5%;
+    width: 90%;
+}
+
+.small_card .level_container {
+    cursor: default;
+    display: flex;
+    width: 100%;
+    margin-top: 25%;
+    margin-bottom: 0%;
+}
+
+/*Level bar on cards*/
+
+.level_container .level_bar{
+    width: 30%;
+    margin: 0% 5% 0% 0%;
+    height: 100%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.level_container .level_counter{
+    width: 15%;
+    margin: 0% 0% 0% 50%;
+}
+
+.progress_line {
+    background-color: rgb(78, 203, 78);
+    height: 100%;
+    margin: auto auto auto 0%;
+    border-radius: 5px;
+
+}
+
+.big_card:hover, .small_card:hover {
+    box-shadow: 0 12px 17px 0 rgba(61, 54, 46, 0.5);
+}
+
+/*Group selector for student handling, student grades etc.*/
+
+.group_selector {
+    display: flex;
+    width: 96%;
+    margin: 2% 2% auto 2%;
+    font-size: 25px
+}
+
+.group_selector > select {
+    width: 20%;
+    border-radius: 50px;
+    margin: 0% auto 0% 1%;
+}
+
+.group_selector > label {
+    width: auto;
+    margin: 0% 1% 0% 0%;
+}
+
+/*Practice page content*/
+
+.practice_container {
+    display: flex;
+    width: 92%;
+    margin: 2% 4% 2% 4%;
+}
+
+.definitions_container, .task_container{
+    border: 1px solid black;
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    transition: 0.4s;
+    border-radius: 5px;
+}
+
+.definitions_container {
+    width: 38%;
+    margin-right: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+.definitions_container label {
+    font-size: calc(13px + 0.3vw);
+    width: auto;
+    margin: 2% auto 3% 5%;
+}
+
+.task_container {
+    width: 60%;
+    margin-left: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+.task {
+    width: 90%;
+    margin: 0% 5%;
+}
+
+.solution_container, .title_and_progress {
+    width: 100%;
+    margin: 2% 0% 6% 0%;
+    display: flex;
+}
+
+.title_and_progress .level_container {
+    cursor: default;
+    display: flex;
+    width: 20%;
+    margin: 0% 5% 0% 25%; 
+}
+
+.title_and_progress .title {
+    width: 20%;
+    margin: 0% 25% 0% 5%; 
+}
+
+.solution_container {
+    margin: 1% 0% 3% 0%;
+}
+
+.partial_task{
+    margin: 0% 0% 5% 0%;
+}
+
+.solution_container label {
+    margin: 0% 2% 0% 0%;
+    width: 25%;
+}
+
+.solution_container input {
+    width: 71%;
+    margin: 0% 2% 0% 0%; 
+    border-radius: 5px;
+    padding-left: 2%;
+    color:rgb(134, 132, 132);
+}
+
+.solution_container select {
+    width: 25%;
+    margin: 0% 45% 0% 3%; 
+    border-radius: 5px;
+    padding-left: 2%;
+    color:black;
+}
+
+.solution_button, .request_new_task_button {
+    width: 20%;
+    margin: 0% 40% 5% 40%; 
+    border-radius: 50px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.solution_input{
+    border: 1px solid rgba(30, 144, 236, 0.899);
+}
+
+.correct {
+    border: 1px solid green;
+}
+
+.wrong {
+    border: 1px solid red;
+}
+
+.small_task_container{
+    width: 100%;
+    margin: 2% 0% 5% 0%;
+}
+
+ul {
+    margin: 0%;
+    padding-left: 18px;
+}
+
