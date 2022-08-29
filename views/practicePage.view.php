@@ -40,12 +40,12 @@
             "Értelmezési tartomány, értékkészlet, megszorítás halmazra, inverz, kép és őskép",
             "Kompozíció, reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
             "Függvények, injekció, szürjekció, bijekció",
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "..."
+            "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
+            "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
+            "Hatványozás és gyökvonás trigonometrikus alak segítségével, Euler-alak, egységgyökök",
+            "Polinomok kifejtése, a binomiális tétel alkalmazása",
+            "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
+            "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
         ];
         $row_number = count($practice_topics)/4;
     }elseif($approved_student_subject == "ii"){

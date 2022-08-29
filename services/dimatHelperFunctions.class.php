@@ -1,6 +1,7 @@
 <?php
     class DimatHelperFunctions {
         private $set_names;
+        private $complex_number_names;
         private $possible_abc_characters;
         private $maximum_number;
         private $minimum_number;
@@ -9,6 +10,7 @@
             $this->maximum_number = 10;
             $this->minimum_number = 1;
             $this->set_names = ["A", "B", "C", "D"];
+            $this->complex_number_names = ["v", "w", "x", "y", "z"];
             $this->possible_abc_characters = [
                 "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
                 "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"                       
@@ -58,7 +60,7 @@
             $first_index = array_search($first_set, $this->set_names);
             $second_index = array_search($second_set, $this->set_names);
             while(!$is_new_pair){
-                $is_new_pair = !in_array($first_set, $array[0]) || !in_array($second_set, $array[0]);
+                $is_new_pair = !in_array([$first_set, $second_set], $array[0]);
                 if(!$is_new_pair){
                     $first_index = mt_rand(0, 3);
                     $second_index = mt_rand(0, 3);
@@ -68,6 +70,22 @@
                         $second_index = mt_rand(0, 3);
                         $second_set = $this->set_names[$second_index];
                     }
+                }
+            }
+            return [$first_index, $second_index];
+        }
+
+        public function CreateNewPairOfNumbers($array, $first_number, $second_number){
+            $is_new_pair = count($array) == 0;
+            $first_index = array_search($first_number, $this->complex_number_names);
+            $second_index = array_search($second_number, $this->complex_number_names);
+            while(!$is_new_pair){
+                $is_new_pair = !in_array([$first_number, $second_number], $array);
+                if(!$is_new_pair){
+                    $first_index = mt_rand(0, 4);
+                    $second_index = mt_rand(0, 4);
+                    $first_number = $this->complex_number_names[$first_index];
+                    $second_number = $this->complex_number_names[$second_index];
                 }
             }
             return [$first_index, $second_index];
@@ -85,6 +103,52 @@
                 }
             }
             return $first_index;
+        }
+
+        public function CreateDescartesProduct($domain, $image, $number_of_elements){
+            if($number_of_elements < count($domain)*count($image)){
+                $relation = [];
+    
+                for($counter = 0; $counter < $number_of_elements; $counter++){
+                    $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
+                    $random_element_image = $image[mt_rand(0,count($image)-1)];
+                    while(in_array([$random_element_domain,$random_element_image],$relation)){
+                        $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
+                        $random_element_image = $image[mt_rand(0,count($image)-1)];
+                    }
+                    array_push($relation, [$random_element_domain,$random_element_image]);
+                }
+    
+                return $relation;
+            }else{
+                $relation = [];
+    
+                for($domain_counter = 0; $domain_counter < count($domain); $domain_counter++){
+                    $domain_element = $domain[$domain_counter];
+                    for($image_counter = 0; $image_counter < count($image); $image_counter++){
+                        $image_element = $image[$image_counter];
+                        array_push($relation, [$domain_element ,$image_element]);
+                    }
+                }
+
+                return $relation;
+            }
+        }
+
+        public function CreateComplexNumbers($number_of_elements){
+            $complex_numbers = [];
+            for($counter = 0; $counter < $number_of_elements; $counter++){
+                $real_part = mt_rand($this->minimum_number, $this->maximum_number);
+                $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
+                $complex_number = [$real_part, $imaginary_part];
+                while(in_array($complex_number, $complex_numbers)){
+                    $real_part = mt_rand($this->minimum_number, $this->maximum_number);
+                    $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
+                    $complex_number = [$real_part, $imaginary_part];
+                }
+                array_push($complex_numbers, $complex_number);
+            }
+            return $complex_numbers;
         }
 
         public function GetUniverse($index, $sets=[]){
@@ -133,36 +197,6 @@
 
             return $universe;
         } 
-
-        public function CreateDescartesProduct($domain, $image, $number_of_elements){
-            if($number_of_elements < count($domain)*count($image)){
-                $relation = [];
-    
-                for($counter = 0; $counter < $number_of_elements; $counter++){
-                    $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
-                    $random_element_image = $image[mt_rand(0,count($image)-1)];
-                    while(in_array([$random_element_domain,$random_element_image],$relation)){
-                        $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
-                        $random_element_image = $image[mt_rand(0,count($image)-1)];
-                    }
-                    array_push($relation, [$random_element_domain,$random_element_image]);
-                }
-    
-                return $relation;
-            }else{
-                $relation = [];
-    
-                for($domain_counter = 0; $domain_counter < count($domain); $domain_counter++){
-                    $domain_element = $domain[$domain_counter];
-                    for($image_counter = 0; $image_counter < count($image); $image_counter++){
-                        $image_element = $image[$image_counter];
-                        array_push($relation, [$domain_element ,$image_element]);
-                    }
-                }
-
-                return $relation;
-            }
-        }
 
         public function GetRelationTwoArrayForm($relation){
             $first_components = [];
@@ -514,6 +548,26 @@
 
         public function IsBijective($relation, $image){
             return $this->IsSurjective($relation, $image) && $this->IsInjective($relation);
+        }
+
+        public function SolveQuadraticEquation($a, $b, $c){
+            $return_values = [];
+            $discriminator = $b**2 + -4*$a*$c;
+            $is_pure_real = true;
+            if($discriminator < 0){
+                $is_pure_real = false;
+                $discriminator *= -1;
+            }
+
+            if($is_pure_real){
+                array_push($return_values, [(-1*$b+$discriminator)/(2*$a),0]);
+                array_push($return_values, [(-1*$b-$discriminator)/(2*$a),0]);
+            }else{
+                array_push($return_values, [(-1*$b)/(2*$a),$discriminator/(2*$a)]);
+                array_push($return_values, [(-1*$b)/(2*$a),(-1*$discriminator)/(2*$a)]);
+            }
+
+            return $return_values;
         }
 
         private function CreateNewRandomElement($set){

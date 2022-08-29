@@ -36,6 +36,20 @@
             }
         }
 
+        
+        public function PracticeAnswers(){
+            if(isset($_SESSION["neptun_code"])){
+                $this->SetMembers();
+                if($this->GetApprovedStudentSubject() != ""){
+                    include(ROOT_DIRECTORY . "/views/practicePage.view.php");
+                }else{
+                    header("Location: ./index.php?site=notifications");
+                }
+            }else{
+                header("Location: ./index.php");
+            }
+        }
+
         public function HandInSolution(){
             if(isset($_SESSION["neptun_code"]) && $_SESSION["new_task"] != ""){
                 if(count($_POST) != 0){
@@ -54,19 +68,6 @@
                 }else{
                     $_SESSION["new_task"] = "";
                     header("Location: ./index.php?site=practiceShowAnswers");
-                }
-            }else{
-                header("Location: ./index.php");
-            }
-        }
-
-        public function PracticeAnswers(){
-            if(isset($_SESSION["neptun_code"])){
-                $this->SetMembers();
-                if($this->GetApprovedStudentSubject() != ""){
-                    include(ROOT_DIRECTORY . "/views/practicePage.view.php");
-                }else{
-                    header("Location: ./index.php?site=notifications");
                 }
             }else{
                 header("Location: ./index.php");
@@ -111,6 +112,8 @@
                     };
                     break;
                     case "4":{
+                        $this->solution_counter = 3;
+                        $this->CheckComplexSolution();
                     };
                     break;
                     case "5":{
@@ -288,6 +291,10 @@
                 };
                 $answer_counter++;
             }
+        }
+
+        private function CheckComplexSolution(){
+            
         }
 
         private function CheckIfSetsEqual($first_set,$second_set){

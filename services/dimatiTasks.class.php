@@ -2,6 +2,7 @@
 
     class DimatiTasks extends Tasks{        
         private $set_names;
+        private $complex_number_names;
         private $dimat_helper_functions;
 
         public function __construct($topic){
@@ -10,6 +11,7 @@
             $this->SetDefinitions("");
 
             $this->set_names = ["A", "B", "C", "D"];
+            $this->complex_number_names = ["v", "w", "x", "y", "z"];
             $this->dimat_helper_functions = new DimatHelperFunctions();
 
             mt_srand(time()); //Seeding the random number generator with the current time (we may change this overtime...)
@@ -272,7 +274,96 @@
         }
 
         private function ComplexNumbersBasics(){
-            
+            $this->dimat_helper_functions->SetMaximumNumber(100);
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(5);
+
+            $solution_array = [];
+
+            $basic_characteristics = array();
+            $current_real_part = $complex_numbers[0][0];
+            $current_imaginary_part = $complex_numbers[0][1];   
+            $length = sqrt($current_real_part**2+$current_imaginary_part**2);
+            $conjugate = [$current_real_part, -1*$current_imaginary_part];
+            $solution_array["solution_0" ] = $current_real_part;
+            $solution_array["solution_1"] = $current_imaginary_part;
+            $solution_array["solution_2"] = $length;
+            $solution_array["solution_3"] = $conjugate;
+
+            $operation_dictionary = array("addition" => [], "multiplication" => [], "substraction" => [],"division" => []);
+            for($operation_counter = 0; $operation_counter < 8; $operation_counter++){
+                $operation = $operation_counter%4;
+                
+                $first_index = mt_rand(0, 4);
+                $second_index = mt_rand(0, 4);
+                $first_number = $this->complex_number_names[$first_index];
+                $second_number = $this->complex_number_names[$second_index];
+
+                switch($operation){
+                    case 0:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["addition"], $first_number, $second_number);
+                        array_push($operation_dictionary["addition"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    };break;
+                    case 1:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["multiplication"], $first_number, $second_number);
+                        array_push($operation_dictionary["multiplication"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    };break;
+                    case 2:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["substraction"], $first_number, $second_number);
+                        array_push($operation_dictionary["substraction"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    };break;
+                    case 3:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["division"], $first_number, $second_number);
+                        array_push($operation_dictionary["division"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    };break;
+                    default:break;
+                }
+                $first_number_real_part = $complex_numbers[$new_indices[0]][0];
+                $first_number_imaginary_part = $complex_numbers[$new_indices[0]][1];
+                $second_number_real_part = $complex_numbers[$new_indices[1]][0];
+                $second_number_imaginary_part = $complex_numbers[$new_indices[1]][1];
+                $result_real_part = 0;
+                $result_imaginary_part = 0;
+                switch($operation){
+                    case 0:{
+                        $result_real_part = $first_number_real_part + $second_number_real_part;
+                        $result_imaginary_part = $first_number_imaginary_part + $second_number_imaginary_part;
+                    };break;
+                    case 1:{
+                        $result_real_part = $first_number_real_part * $second_number_real_part - $first_number_imaginary_part * $second_number_imaginary_part;
+                        $result_imaginary_part = $first_number_real_part * $second_number_imaginary_part + $first_number_imaginary_part * $second_number_real_part;
+                    };break;
+                    case 2:{
+                        $result_real_part = $first_number_real_part - $second_number_real_part;
+                        $result_imaginary_part = $first_number_imaginary_part - $second_number_imaginary_part;
+                    };break;
+                    case 3:{
+                        $length_of_second_number = $second_number_real_part**2 + $second_number_imaginary_part**2;
+                        $result_real_part = (1/$length_of_second_number)*($first_number_real_part * $second_number_real_part + $first_number_imaginary_part * $second_number_imaginary_part);
+                        $result_imaginary_part = (1/$length_of_second_number)*($first_number_imaginary_part * $second_number_real_part - $first_number_real_part * $second_number_imaginary_part);
+                    };break;
+                    default:break;
+                }
+                $solution_array["solution_" . $operation_counter + 4] = [$result_real_part, $result_imaginary_part];
+            }
+
+            $a = mt_rand(-100, 100);
+            while($a == 0){
+                $a = mt_rand(-100, 100);
+            }
+            $b = mt_rand(-100, 100);
+            $c = mt_rand(-100, 100);
+            $solution_array["solution_12"] =  $this->dimat_helper_functions->SolveQuadraticEquation($a,$b,$c);
+
+            $task_array = array(
+                "task_description" => "Old meg a következő feladatokat!",
+                "complex_numbers" => $complex_numbers,
+                "operations" => $operation_dictionary,
+                "coefficients" => [$a, $b, $c]
+            );
+
+            $this->SetTaskDescription($task_array);
+            $this->SetTaskSolution($solution_array);
         }
 
         private function ComplexNumbersTrigonometry(){
