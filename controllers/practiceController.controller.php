@@ -112,7 +112,6 @@
                     };
                     break;
                     case "4":{
-                        $this->solution_counter = 3;
                         $this->CheckComplexSolution();
                     };
                     break;
@@ -294,7 +293,46 @@
         }
 
         private function CheckComplexSolution(){
-            
+            $this->solution_counter = 0;
+            foreach($this->solutions as $index => $given_answer){
+                $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter];
+                $was_correct = false;
+                if(is_numeric($real_solution) && is_numeric($given_answer)){
+                    $was_correct = round($real_solution,2) == round($given_answer,2);
+                }else if(is_array($real_solution)){
+                    $parts = array_map("trim",explode(";",$given_answer));
+                    if(count($real_solution) == 2 && is_array($real_solution[0])){
+                        $first_complex_number = array_map("trim",explode(";",$parts[0]));
+                        $second_complex_number = array_map("trim",explode(";",$parts[1]));
+                        $first_complex_number_real = $real_solution[0];
+                        $second_complex_number_real = $real_solution[1];
+                        
+                        $was_correct = round($first_complex_number_real[0],2) == round($first_complex_number[0],2)
+                            && round($first_complex_number_real[1],2) == round($first_complex_number[1],2)
+                            && round($second_complex_number_real[0],2) == round($second_complex_number[0],2)
+                            && round($second_complex_number_real[1],2) == round($second_complex_number[1],2);
+                    }else if(count($real_solution) == 2 && is_numeric($real_solution[0])){
+                        $parts = array_map("trim",explode(",",$given_answer));
+                        if(count($parts)==2 && is_numeric($parts[0]) && is_numeric($parts[1])){
+                            $was_correct = round($real_solution[0],2) == round($parts[0],2)
+                                && round($real_solution[1],2) == round($parts[1],2);
+                        }
+                    }
+                }
+
+                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
+                        array(
+                            "answer" => $given_answer,
+                            "solution" => $real_solution,
+                            "correct" => $was_correct
+                        );
+
+                if($was_correct){
+                    $this->count_correct++;
+                }
+
+                $this->solution_counter++;
+            }
         }
 
         private function CheckIfSetsEqual($first_set,$second_set){

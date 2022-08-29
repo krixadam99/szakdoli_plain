@@ -1,4 +1,4 @@
-
+<?php $array_complex = true?>
 <?php $complex_number_names = ["v", "w", "x", "y", "z"]?>
 <?php foreach($_SESSION["task"]["complex_numbers"] as $complex_number_counter => $complex_number):?>
     <label class="task_label">
@@ -10,8 +10,9 @@
 
 <?php $task_counter = 0;?>
 <div class="small_task_container">
+    <?php $complex_number_counter = $_SESSION["task"]["random_number"];?>
     <label class="task_label">
-        1. részfeladat: Add meg a v komplex szám alapvető tulajdonságait!
+        1. részfeladat: Add meg a <?=$complex_number_names[$complex_number_counter]?> komplex szám alapvető tulajdonságait!
     </label>
     <br>
     <label class="task_label">Re(<?=$complex_number_names[$complex_number_counter]?>)</label>
@@ -52,7 +53,6 @@
     </div>
 <?php endfor?>
 
-<?php $task_counter++;?>
 <label class="task_label">
     3. részfeladat: Old meg a következő másodfokú egyenletet a komplex számok halmazán! Válaszodban a valós- és képzetes részt 2 tizedesjegy pontossággal add meg!
 </label>

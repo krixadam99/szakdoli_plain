@@ -280,9 +280,9 @@
 
             $solution_array = [];
 
-            $basic_characteristics = array();
-            $current_real_part = $complex_numbers[0][0];
-            $current_imaginary_part = $complex_numbers[0][1];   
+            $random_number = mt_rand(0, 4);
+            $current_real_part = $complex_numbers[$random_number][0];
+            $current_imaginary_part = $complex_numbers[$random_number][1];   
             $length = sqrt($current_real_part**2+$current_imaginary_part**2);
             $conjugate = [$current_real_part, -1*$current_imaginary_part];
             $solution_array["solution_0" ] = $current_real_part;
@@ -358,6 +358,7 @@
             $task_array = array(
                 "task_description" => "Old meg a következő feladatokat!",
                 "complex_numbers" => $complex_numbers,
+                "random_number" => $random_number,
                 "operations" => $operation_dictionary,
                 "coefficients" => [$a, $b, $c]
             );

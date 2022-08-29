@@ -11,11 +11,15 @@
                     <?=$solution?>
                 <?php else:?>
                     <?php if(!is_array($solution[0])):?>
-                        <?="{ "?>
-                            <?php foreach($solution as $element_index => $element):?>
-                                <?=$element_index == 0?$element :", " . $element?>
-                            <?php endforeach?>
-                        <?=" }"?>
+                        <?php if(!isset($array_complex)):?>
+                            <?="{ "?>
+                                <?php foreach($solution as $element_index => $element):?>
+                                    <?=$element_index == 0?$element :", " . $element?>
+                                <?php endforeach?>
+                            <?=" }"?>
+                        <?php else:?>
+                            <?=$solution[0]?><?=$solution[1]>=0?" + ":" "?><?=$solution[1] . "i"?>
+                        <?php endif?>
                         <br>
                         </label>
                     <?php elseif(is_array($solution[0])):?>
