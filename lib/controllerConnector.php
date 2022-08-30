@@ -19,10 +19,10 @@
             }
 
             if(isset($_SESSION["neptun_code"])){
-                $controller = new notificationsController();
+                $controller = new NotificationsController();
                 $controller->Notifications();
             }else{
-                $controller = new indexController();
+                $controller = new IndexController();
                 $controller->Index();
             }
             return;

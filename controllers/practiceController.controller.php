@@ -32,7 +32,7 @@
                     header("Location: ./index.php?site=notifications");
                 }
             }else{
-                header("Location: ./index.php");
+                header("Location: ./index.php?site=login");
             }
         }
 

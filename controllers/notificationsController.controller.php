@@ -10,7 +10,7 @@
                 $this->SetMembers();
                 include(ROOT_DIRECTORY . "/views/notificationPage.view.php");
             }else{
-                header("Location: ./index.php");
+                header("Location: ./index.php?site=login");
             }
          }
 

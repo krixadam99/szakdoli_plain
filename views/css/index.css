@@ -6,9 +6,9 @@ body{
     background-image: url("./pics/moving_background.png");
     background-position: relative;
     background-attachment: fixed;
-    background-size: calc(500px + 0.5vw) calc(500px + 0.5vw);
+    background-size: calc(600px + 0.6vw) calc(600px + 0.6vw);
     background-repeat: repeat;
-    animation: moving_symbols 12s, color_changing 24s ease infinite;
+    animation: moving_symbols 20s, color_changing 24s ease infinite;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 
@@ -28,10 +28,10 @@ header {
     padding-top: 2%;
     padding-bottom: 2%;
     border-radius: 50px;
-    border: 1px solid rgb(234, 175, 98);
+    border: 2px solid rgb(234, 175, 98);
     text-align: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: white;
+    background-color: rgb(243, 241, 241);
     box-shadow: 0px 4px 6px 0px rgba(61, 54, 46, 0.5);
 }
 
@@ -43,10 +43,12 @@ header {
     0% {
         background-position: left bottom;
     }
-    100% {
+    50% {
         background-position: right top;
     }
-    
+    100% {
+        background-position: left bottom;
+    }
 }
 
 @keyframes color_changing {

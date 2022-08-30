@@ -6,9 +6,9 @@ body{
     background-image: url("./pics/moving_background.png");
     background-position: relative;
     background-attachment: fixed;
-    background-size: calc(500px + 0.5vw) calc(500px + 0.5vw);
+    background-size: calc(600px + 0.6vw) calc(600px + 0.6vw);
     background-repeat: repeat;
-    animation: moving_symbols 20s, color_changing 20s ease infinite;;
+    animation: moving_symbols 20s, color_changing 24s ease infinite;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
@@ -131,10 +131,12 @@ a{
     0% {
         background-position: left bottom;
     }
-    100% {
+    50% {
         background-position: right top;
     }
-    
+    100% {
+        background-position: left bottom;
+    }
 }
 
 @keyframes color_changing {
@@ -160,13 +162,13 @@ a{
         background-color: rgba(247, 255, 234, 0.35)
     }
     70% {
-        background-color: rgba(250, 193, 180, 0.35)
+        background-color: rgba(253, 214, 206, 0.35)
     }
     80% {
         background-color: rgba(247, 255, 234, 0.35)
     }
     90% {
-        background-color: rgba(255, 234, 252, 0.35)
+        background-color: rgba(255, 234, 246, 0.35)
     }
     100% {
         background-color: rgba(233, 255, 195, 0.35)
