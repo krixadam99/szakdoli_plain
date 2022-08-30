@@ -36,7 +36,7 @@
                 $current_subject = $_SESSION["subject"];
                 $current_group = $_SESSION["group"];
             
-                $student_handler_model = new StudentHandlingModel($_SESSION["neptun_code"]);
+                $student_handler_model = new StudentHandlingModel("szakdoli");
             
                 $decision_array = array();
                 foreach($_POST as $key => $value){

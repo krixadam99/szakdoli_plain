@@ -116,6 +116,7 @@
                     };
                     break;
                     case "5":{
+                        $this->CheckComplexTrigonometricSolution();
                     };
                     break;
                     case "6":{
@@ -318,6 +319,31 @@
                                 && round($real_solution[1],2) == round($parts[1],2);
                         }
                     }
+                }
+
+                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
+                        array(
+                            "answer" => $given_answer,
+                            "solution" => $real_solution,
+                            "correct" => $was_correct
+                        );
+
+                if($was_correct){
+                    $this->count_correct++;
+                }
+
+                $this->solution_counter++;
+            }
+        }
+
+        public function CheckComplexTrigonometricSolution(){
+            $this->solution_counter = 0;
+            foreach($this->solutions as $index => $given_answer){
+                $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter]??"";
+                $was_correct = false;
+
+                if($real_solution != ""){
+                    
                 }
 
                 $_SESSION["answers"]["answer_" . $this->solution_counter] = 

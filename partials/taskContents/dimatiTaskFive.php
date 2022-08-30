@@ -2,7 +2,7 @@
 <?php $complex_number_names = ["v", "w", "x", "y", "z"]?>
 <?php foreach($_SESSION["task"]["complex_numbers"] as $complex_number_counter => $complex_number):?>
     <label class="task_label">
-        <?=$complex_number_names[$complex_number_counter] . " = " . $complex_number[0]?><?=$complex_number[1]>=0?" + ":" "?><?=$complex_number[1] . "i"?>
+        <?=$complex_number_names[$complex_number_counter] . " = " . $complex_number[0]?><?=$complex_number[1]>=0?" + ":" "?><?=$complex_number[1] . "*i"?>
     </label>
     <br>
 <?php endforeach?>

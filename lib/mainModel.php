@@ -52,7 +52,7 @@
                 }
             }
             $query = $query."COMMIT;";
-            $this->model->UpdateDatabase($query, true);
+            $this->database->UpdateDatabase($query, true);
         }
 
         public function GetStudents($subject_name, $subject_group){

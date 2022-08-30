@@ -296,6 +296,10 @@
                 
                 $first_index = mt_rand(0, 4);
                 $second_index = mt_rand(0, 4);
+                while($first_index == $second_index){
+                    $first_index = mt_rand(0, 4);
+                    $second_index = mt_rand(0, 4);
+                }
                 $first_number = $this->complex_number_names[$first_index];
                 $second_number = $this->complex_number_names[$second_index];
 
@@ -368,7 +372,63 @@
         }
 
         private function ComplexNumbersTrigonometry(){
-            
+            $this->dimat_helper_functions->SetMaximumNumber(100);
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(5);
+
+            $solution_array = [];
+
+            for($complex_number_counter = 0; $complex_number_counter<5; $complex_number_counter++){  
+                $solution_array["solution_".$complex_number_counter] = $this->dimat_helper_functions->GetTrigonometricForm($complex_numbers[$complex_number_counter]);
+            }
+
+            $operation_dictionary = array("multiplication" => [], "division" => []);
+            for($operation_counter = 0; $operation_counter < 4; $operation_counter++){
+                $operation = $operation_counter%2;
+                
+                $first_index = mt_rand(0, 4);
+                $second_index = mt_rand(0, 4);
+                while($first_index == $second_index){
+                    $first_index = mt_rand(0, 4);
+                    $second_index = mt_rand(0, 4);
+                }
+                $first_number = $this->complex_number_names[$first_index];
+                $second_number = $this->complex_number_names[$second_index];
+
+                switch($operation){
+                    case 0:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["multiplication"], $first_number, $second_number);
+                        array_push($operation_dictionary["multiplication"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    };break;
+                    case 1:{
+                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfNumbers($operation_dictionary["division"], $first_number, $second_number);
+                        array_push($operation_dictionary["division"], [$this->complex_number_names[$new_indices[0]],$this->complex_number_names[$new_indices[1]]]);
+                    }
+                    default:break;
+                }
+                $first_number = $complex_numbers[$new_indices[0]];
+                $second_number = $complex_numbers[$new_indices[1]];
+                $result = [];
+                switch($operation){
+                    case 0:{
+                        $result = $this->dimat_helper_functions->UseMoivre("multiplication", $first_number, $second_number);
+                    };break;
+                    case 1:{
+                        $result = $this->dimat_helper_functions->UseMoivre("division", $first_number, $second_number);
+                    }
+                    default:break;
+                }
+                $solution_array["solution_" . $operation_counter + 5] = $result;
+            }
+
+            $task_array = array(
+                "task_description" => "Old meg a következő komplex számok trigonometrikus alakjával kapcsolatos feladatokat!",
+                "complex_numbers" => $complex_numbers,
+                "operations" => $operation_dictionary
+            );
+
+            $this->SetTaskDescription($task_array);
+            $this->SetTaskSolution($solution_array);
         }
 
         private function ComplexNumbersPowers(){

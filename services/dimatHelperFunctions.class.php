@@ -76,7 +76,7 @@
         }
 
         public function CreateNewPairOfNumbers($array, $first_number, $second_number){
-            $is_new_pair = count($array) == 0;
+            $is_new_pair = !in_array([$first_number, $second_number], $array);
             $first_index = array_search($first_number, $this->complex_number_names);
             $second_index = array_search($second_number, $this->complex_number_names);
             while(!$is_new_pair){
@@ -84,6 +84,10 @@
                 if(!$is_new_pair){
                     $first_index = mt_rand(0, 4);
                     $second_index = mt_rand(0, 4);
+                    while($first_index == $second_index){
+                        $first_index = mt_rand(0, 4);
+                        $second_index = mt_rand(0, 4);
+                    }
                     $first_number = $this->complex_number_names[$first_index];
                     $second_number = $this->complex_number_names[$second_index];
                 }
@@ -568,6 +572,58 @@
             }
 
             return $return_values;
+        }
+
+        public function UseMoivre($operation, $first_number, $second_number, $power=0){
+            $return_values = [];
+            switch($operation){
+                case "multiplication":{
+                    $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
+                    $second_trigonometric_form = $this->GetTrigonometricForm($second_number);
+                    array_push($return_values, $first_trigonometric_form[0]*$second_trigonometric_form[0]);
+                    array_push($return_values, $first_trigonometric_form[1]*$second_trigonometric_form[1]);
+                }break;
+                case "division":{
+                    $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
+                    $second_trigonometric_form = $this->GetTrigonometricForm($second_number);
+                    array_push($return_values, $first_trigonometric_form[0]/$second_trigonometric_form[0]);
+                    array_push($return_values, $first_trigonometric_form[1]-$second_trigonometric_form[1]);
+                }break;
+                case "power":{
+                    $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
+                    if($power != 0){
+                        array_push($return_values, $first_trigonometric_form[0]**$power);
+                        array_push($return_values, $first_trigonometric_form[1]*$power);
+                    }else{
+                        array_push($return_values, 1, 0);
+                    }
+                }break;
+                case "root":{
+                    $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
+                    if($power != 0){
+                        array_push($return_values, $first_trigonometric_form[0]/$power);
+                        for($k=0; $k<abs($power); $k++){
+                            array_push($return_values, ($first_trigonometric_form[1]+2*$k*pi())/$power);
+                        }
+                    }else{
+                        array_push($return_values, 1, 0);
+                    }
+                }break;
+                default:break;
+            }
+            return $return_values;
+        }
+
+        public function GetTrigonometricForm($algebraic_form = [0,0]){
+            $length = sqrt($algebraic_form[0]**2 + $algebraic_form[1]**2);
+            $argument = 0;
+            if($algebraic_form[0] != 0){
+                $argument = atan($algebraic_form[1]/$algebraic_form[0]);
+            }else{
+                $argument = pi()/2;
+            }
+
+            return [$length, $argument];
         }
 
         private function CreateNewRandomElement($set){

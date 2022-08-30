@@ -9,16 +9,18 @@
                 <?php $solution = $_SESSION["solution"]["solution_" . $task_counter]??""?>
                 <?php if(!is_array($solution)):?>
                     <?=$solution?>
-                <?php else:?>
+                <?php else:?><!--Solution will be of type array here-->
                     <?php if(!is_array($solution[0])):?>
-                        <?php if(!isset($array_complex)):?>
+                        <?php if(isset($array_complex)):?>
+                            <?=$solution[0]?><?=$solution[1]>=0?" + ":" "?><?=$solution[1] . "i"?>
+                        <?php elseif(isset($array_trigonometric)):?>
+                            <?=round($solution[0],2)?>*(cos(<?=round($solution[1],2)?>)+i*sin(<?=round($solution[1],2)?>))
+                        <?php else:?>
                             <?="{ "?>
                                 <?php foreach($solution as $element_index => $element):?>
                                     <?=$element_index == 0?$element :", " . $element?>
                                 <?php endforeach?>
                             <?=" }"?>
-                        <?php else:?>
-                            <?=$solution[0]?><?=$solution[1]>=0?" + ":" "?><?=$solution[1] . "i"?>
                         <?php endif?>
                         <br>
                         </label>
