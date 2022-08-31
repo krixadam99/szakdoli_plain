@@ -42,7 +42,7 @@
             "Függvények, injekció, szürjekció, bijekció",
             "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
             "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
-            "Hatványozás és gyökvonás trigonometrikus alak segítségével, Euler-alak, egységgyökök",
+            "Hatványozás és gyökvonás trigonometrikus alak segítségével",
             "Polinomok kifejtése, a binomiális tétel alkalmazása",
             "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
             "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"

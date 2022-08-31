@@ -432,7 +432,49 @@
         }
 
         private function ComplexNumbersPowers(){
-            
+            $this->dimat_helper_functions->SetMaximumNumber(100);
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(3);
+
+            $solution_array = [];
+
+            $operation_dictionary = array("power" => [], "root" => []);
+            for($operation_counter = 0; $operation_counter < 3; $operation_counter++){                                
+                $index = mt_rand(0, 2);
+                $power = mt_rand(7, 12);
+                $complex_number = $this->complex_number_names[$index];
+                while(in_array([$complex_number, $power], $operation_dictionary["power"])){
+                    $index = mt_rand(0, 2);
+                    $power = mt_rand(7, 12);
+                    $complex_number = $this->complex_number_names[$index];
+                }
+                array_push($operation_dictionary["power"], [$complex_number, $power]);
+                $result = $this->dimat_helper_functions->UseMoivre("power", $complex_numbers[$index], $power);
+                $solution_array["solution_" . $operation_counter] = $result;
+            }
+
+            for($operation_counter = 0; $operation_counter < 2; $operation_counter++){                                
+                $index = mt_rand(0, 2);
+                $power = mt_rand(2, 6);
+                $complex_number = $this->complex_number_names[$index];
+                while(in_array([$complex_number, $power], $operation_dictionary["root"])){
+                    $index = mt_rand(0, 2);
+                    $power = mt_rand(2, 6);
+                    $complex_number = $this->complex_number_names[$index];
+                }
+                array_push($operation_dictionary["root"], [$complex_number, $power]);
+                $result = $this->dimat_helper_functions->UseMoivre("root", $complex_numbers[$index], $power);
+                $solution_array["solution_" . $operation_counter + 3] = $result;
+            }
+
+            $task_array = array(
+                "task_description" => "Old meg a következő komplex számok hatványaival kapcsolatos feladatokat!",
+                "complex_numbers" => $complex_numbers,
+                "operations" => $operation_dictionary
+            );
+
+            $this->SetTaskDescription($task_array);
+            $this->SetTaskSolution($solution_array);      
         }
 
         private function BinomialTheorem(){

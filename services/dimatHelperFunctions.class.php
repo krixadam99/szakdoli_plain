@@ -626,6 +626,14 @@
             return [$length, $argument];
         }
 
+        public function GetNthUnitRoot($n){
+            $root = [];
+            if($n>0 && is_int($n)){
+                array_push($root, 1, (2*mt_rand(1, $n-1)*pi())/$n);
+            }
+            return $root;
+        }
+
         private function CreateNewRandomElement($set){
             $random_element = $this->CreateRandomElement();
 
