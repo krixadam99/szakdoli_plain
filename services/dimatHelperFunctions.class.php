@@ -5,7 +5,15 @@
         private $possible_abc_characters;
         private $maximum_number;
         private $minimum_number;
-        
+
+        /**
+         * 
+         * The contructor for DimatHelperFunctions class
+         * 
+         * The range for random numbers; set, complex number names and possible alphabetic characters are set here 
+         * 
+         * @return void
+         */
         public function __construct(){
             $this->maximum_number = 10;
             $this->minimum_number = 1;
@@ -17,12 +25,39 @@
             ];
         }
 
+        /**
+         *
+         * This function is responsible for setting the upper bound of the range from which numbers will be picked randomly
+         *  
+         * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly
+         * @return void
+        */
         public function SetMaximumNumber($maximum_number){ $this->maximum_number = $maximum_number;}
+        
+        /**
+         *
+         * This function is responsible for setting the lowe bound of the range from which numbers will be picked randomly
+         *  
+         * @param int $maximum_number The lower bound for the range from which numbers will be picked randomly
+         * @return void
+        */
         public function SetMinimumNumber($minimum_number){ $this->minimum_number = $minimum_number;}
 
-        public function CreateSets($sets, $number_of_elements, $is_bag = false){
+        /**
+         *
+         * This function is responsible for creating sets
+         * 
+         * Creating sets, where each of the sets will consist the same amount of elements
+         * It can also be set if the elements can repeat in the sets, or not
+         *  
+         * @param int $set_number The number of sets that will be generated
+         * @param int $number_of_elements The number of elements that will be put into the sets
+         * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value of this parameter is false
+         * @return void
+        */
+        public function CreateSets($set_number, $number_of_elements, $is_bag = false){
             $return_sets = [];
-            foreach($sets as $index => $set){
+            for($set_counter = 0; $set_counter < $set_number; $set_counter++){
                 $new_set = [];
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
@@ -38,6 +73,17 @@
             return $return_sets;
         }
 
+        /**
+         *
+         * This function is responsible for returning part of a set
+         * 
+         * If the number of elements to be returned is greater, or equal to the size of the set, then the function returns the original set
+         * Else the function returns the requested number of random elements from the set
+         *  
+         * @param array $set The set from which we want to get elements
+         * @param int $number_of_elements The number of elements that will be returned from the given set
+         * @return array
+        */
         public function GetPartOfSet($set, $number_of_elements){
             if($number_of_elements < count($set)){
                 $return_set = [];
@@ -109,29 +155,42 @@
             return $first_index;
         }
 
-        public function CreateDescartesProduct($domain, $image, $number_of_elements){
-            if($number_of_elements < count($domain)*count($image)){
+        /**
+         *
+         * This function is responsible for returning a part of a cartesian product
+         * 
+         * If the number of elements is greater, or equal to the product of the first and second sets' size, then the function returns the cartesian product og the two sets
+         * Else the function returns the requested number of ordered pairs, which first and second elements are randomly selected from the first and second sets respectively
+         * Non of the ordered pairs can be repeated
+         * 
+         * @param array $first_set The set from which the pairs' first element will be chosen randomly
+         * @param array $image The image The set from which the pairs' second element will be chosen randomly
+         * @param int $number_of_elements The number of ordered pairs that will be returned
+         * @return array
+        */
+        public function CreateDescartesProduct($first_set, $second_set, $number_of_elements){
+            if($number_of_elements < count($first_set)*count($second_set)){
                 $relation = [];
     
                 for($counter = 0; $counter < $number_of_elements; $counter++){
-                    $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
-                    $random_element_image = $image[mt_rand(0,count($image)-1)];
-                    while(in_array([$random_element_domain,$random_element_image],$relation)){
-                        $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
-                        $random_element_image = $image[mt_rand(0,count($image)-1)];
+                    $first_set_random_element = $first_set[mt_rand(0,count($first_set)-1)];
+                    $second_set_random_element = $second_set[mt_rand(0,count($second_set)-1)];
+                    while(in_array([$first_set_random_element,$second_set_random_element],$relation)){
+                        $first_set_random_element = $first_set[mt_rand(0,count($first_set)-1)];
+                        $second_set_random_element = $second_set[mt_rand(0,count($second_set)-1)];
                     }
-                    array_push($relation, [$random_element_domain,$random_element_image]);
+                    array_push($relation, [$first_set_random_element,$second_set_random_element]);
                 }
     
                 return $relation;
             }else{
                 $relation = [];
     
-                for($domain_counter = 0; $domain_counter < count($domain); $domain_counter++){
-                    $domain_element = $domain[$domain_counter];
-                    for($image_counter = 0; $image_counter < count($image); $image_counter++){
-                        $image_element = $image[$image_counter];
-                        array_push($relation, [$domain_element ,$image_element]);
+                for($first_set_counter = 0; $first_set_counter < count($first_set); $first_set_counter++){
+                    $first_set_element = $first_set[$first_set_counter];
+                    for($second_set_counter = 0; $second_set_counter < count($second_set); $second_set_counter++){
+                        $second_set_element = $second_set[$second_set_counter];
+                        array_push($relation, [$first_set_element ,$second_set_element]);
                     }
                 }
 
@@ -139,6 +198,16 @@
             }
         }
 
+        /**
+         *
+         * This function is responsible for creating a new complex number
+         * 
+         * The function will create the real and imaginary part of each complex number
+         * If this pair has already been created, then a new pair will be generated, until it is not present in the returned array
+         *  
+         * @param int $number_of_elements The number of complex numbers to return
+         * @return array
+        */
         public function CreateComplexNumbers($number_of_elements){
             $complex_numbers = [];
             for($counter = 0; $counter < $number_of_elements; $counter++){
@@ -155,50 +224,49 @@
             return $complex_numbers;
         }
 
+        /**
+         *
+         * This function is responsible for creating a new complex number
+         * 
+         *  
+         * @param int $index The index of the set for which the function will return the universe
+         * @param array $sets An array containing the possible sets
+         * @return array
+        */
         public function GetUniverse($index, $sets=[]){
-            $set_A = $sets[0];
-            $set_B = $sets[1];
-            $set_C = $sets[2];
-            $set_D = $sets[3];
-
-            switch($index){
-                case 0: $first_operand = $set_A; break;
-                case 1: $first_operand = $set_B; break;
-                case 2: $first_operand = $set_C; break;
-                case 3: $first_operand = $set_D; break;
-                default: break;
-            }
-            
             $universe = [];
-            $minimum_number = $this->maximum_number;
-            $maximum_number = $this->minimum_number;
-            $minimum_alphabetic = "z";
-            $maximum_alpabetic = "a";
-            foreach($first_operand as $index => $element){
-                if(is_int($element)){
-                    if($element < $minimum_number){
-                        $minimum_number = $element;
-                    }
-                    if($element > $maximum_number){
-                        $maximum_number = $element;
-                    }
-                }else{
-                    if($element < $minimum_alphabetic){
-                        $minimum_alphabetic = $element;
-                    }
-                    if($element > $maximum_alpabetic){
-                        $maximum_alpabetic = $element;
+            if(isset($sets[$index])){                
+                $first_operand = $sets[$index];
+                $minimum_number = $this->maximum_number;
+                $maximum_number = $this->minimum_number;
+                $minimum_alphabetic = "z";
+                $maximum_alpabetic = "a";
+                foreach($first_operand as $index => $element){
+                    if(is_int($element)){
+                        if($element < $minimum_number){
+                            $minimum_number = $element;
+                        }
+                        if($element > $maximum_number){
+                            $maximum_number = $element;
+                        }
+                    }else{
+                        if($element < $minimum_alphabetic){
+                            $minimum_alphabetic = $element;
+                        }
+                        if($element > $maximum_alpabetic){
+                            $maximum_alpabetic = $element;
+                        }
                     }
                 }
-            }
-            
-            for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ) array_push($universe, $numeric_counter);
-            foreach($this->possible_abc_characters as $index => $possible_abc_character){
-                if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
-                    array_push($universe, $possible_abc_character);
+                
+                for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ) array_push($universe, $numeric_counter);
+                foreach($this->possible_abc_characters as $index => $possible_abc_character){
+                    if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
+                        array_push($universe, $possible_abc_character);
+                    }
                 }
+    
             }
-
             return $universe;
         } 
 

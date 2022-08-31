@@ -5,6 +5,7 @@
         private $count_correct;
         private $dimat_helper_functions;
         private $solutions;
+        private $real_solutions;
         
         public function __construct(){
             parent::__construct();
@@ -92,6 +93,7 @@
             $_SESSION["answers"] = [];
             $this->solution_counter = 0;
             $this->count_correct = 0;
+            $this->real_solutions = $_SESSION["solution"];
             if($subject == "i"){
                 switch($topic_number){
                     case "0":{
@@ -153,7 +155,7 @@
 
         /**
          * 
-         * Function that compares the given answers with the solutions for Discrete mathematics I. subject 1st topic's tasks
+         * This function compares the given answers with the solutions for Discrete mathematics I. subject 1st topic's tasks
          * 
          * There are 10 tasks for this topic
          * This function will extract the set elements from each input, then compare each set with the predetermined one
@@ -163,14 +165,11 @@
          * @return void
         */
         private function CheckSetSolution(){
-            $real_solutions = $_SESSION["solution"];
-            foreach($real_solutions as $index => $real_solution){
+            foreach($this->real_solutions as $index => $real_solution){
                 $given_answer = $this->solutions[$this->solution_counter]??"";
-                $given_solutions = $this->ExtractSolutionFromInput($given_answer);
-                $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter];
-
+                $given_solution = $this->ExtractSolutionFromInput($given_answer);
                 $was_correct = false;
-                if($this->CompareSets($given_solutions, $real_solution)){
+                if($this->CompareSets($given_solution, $real_solution)){
                     $this->count_correct += 1;
                     $was_correct = true;
                 }
@@ -178,7 +177,7 @@
                 $_SESSION["answers"]["answer_" . $this->solution_counter] = 
                     array(
                         "answer" => $given_answer, 
-                        "answer_text" => $this->CreatePrintableSet($given_solutions),
+                        "answer_text" => $this->CreatePrintableSet($given_solution),
                         "solution_text" => $this->CreatePrintableSet($real_solution),
                         "correct" => $was_correct
                     );
@@ -189,26 +188,30 @@
 
         /**
          * 
-         * Function that compares the given answers with the solutions for Discrete mathematics I. subject 2nd topic's tasks
+         * This function compares the given answers with the solutions for Discrete mathematics I. subject 2nd topic's tasks
          * 
-         * There are 10 tasks for this topic
-         * This function will extract the set elements from each input, then compare each set with the predetermined one
-         * If the 2 sets are identical, then the student has a plus point
+         * There are 6 tasks for this topic
+         * This function will extract the relation elements from the third and fourth input, then compare each relation with the predetermined one
+         * From the first, second, fifth and sixth input it will extract the set elements, then compare each set with the predetermined one
+         * If the 2 sets, or 2 relations are identical, then the student has a plus point
          * Finally, for each input we will determine the original answer (string), the cleaned answer (string), the real solution (string) and if the answer was correct
          * 
          * @return void
         */
         private function CheckRelationSolution(){
-            foreach($this->solutions as $index => $value){
+            foreach($this->real_solutions as $index => $real_solution){
+                $given_answer = $this->solutions[$this->solution_counter]??"";
+                $given_solution = $this->ExtractSolutionFromInput($given_answer);
                 $was_correct = false;
                 if($this->solution_counter == 2 || $this->solution_counter == 3){
-                    $first_relation = $this->ParseRelation($value, false);
-                    $second_relation = $_SESSION["solution"]["solution_" . $this->solution_counter];
-                    $was_correct = $this->CompareRelations($first_relation, $second_relation);         
+                    $first_relation = $this->CreateRelation($given_solution);
+                    $answer_text = $this->CreatePrintableRelation($first_relation);
+                    $solution_text = $this->CreatePrintableRelation($real_solution);
+                    $was_correct = $this->CompareRelations($real_solution, $first_relation);         
                 }else{
-                    $given_solution = array_map("trim", explode(",", $value));
-                    $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter];
-                    $was_correct = $this->CompareRelations($given_solution, $real_solution);
+                    $was_correct = $this->CompareSets($given_solution, $real_solution);
+                    $answer_text = $this->CreatePrintableSet($given_solution);
+                    $solution_text = $this->CreatePrintableSet($real_solution);
                 }
 
                 if($was_correct){
@@ -217,43 +220,67 @@
 
                 $_SESSION["answers"]["answer_" . $this->solution_counter] = 
                     array(
-                        "answer" => $value,
-                        "solution" => $_SESSION["solution"]["solution_" . $this->solution_counter],
+                        "answer" => $given_answer,
+                        "answer_text" => $answer_text,
+                        "solution_text" => $solution_text,
                         "correct" => $was_correct
                     );
                 $this->solution_counter++;
             }
         }
 
+        /**
+         * 
+         * This function compares the given answers with the solutions for Discrete mathematics I. subject 3rd topic's tasks
+         * 
+         * There are 3 tasks for this topic
+         * This function will extract the relation elements from the first and third inputs
+         * ...
+         * 
+         * @return void
+        */
         private function CheckCompositionSolution(){
             //Parsing the answers
-            $first_answer_relation = $this->ParseRelation($this->solutions["solution_0"], false);
-            $second_answer = $this->ParseSelectSolutions(1);
-            $third_answer_relation = $this->ParseRelation($this->solutions["solution_2"], false);
+            $real_solutions = array_values($this->real_solutions);
+
+            $first_answer_relation = [];
+            if(isset($this->solutions[0])){
+                $values = $this->ExtractSolutionFromInput($this->solutions[0]);
+                $first_answer_relation = $this->CreateRelation($values);
+            }
+
+            $second_answer = $this->ParseSelectSolutions(1,9);
+
+            $third_answer_relation = [];
+            if(isset($this->solutions[2])){
+                $values = $this->ExtractSolutionFromInput($this->solutions[2]);
+                $first_answer_relation = $this->CreateRelation($values);
+            }
 
             //Checking the first answer
-            $first_solution_relation =  $_SESSION["solution"]["solution_0"]; 
+            $first_solution_relation =  $real_solutions[0]; 
             $was_correct = $this->CompareRelations($first_answer_relation, $first_solution_relation);
             if($was_correct){
                 $this->count_correct += 1;
             }
             $_SESSION["answers"]["answer_0"] = 
                 array(
-                    "answer" => $this->solutions["solution_0"],
-                    "solution" => $first_solution_relation,
+                    "answer" => $this->solutions[0],
+                    "anser_text" => $this->CreatePrintableRelation($first_answer_relation),
+                    "solution_text" =>$this->CreatePrintableRelation($real_solutions[0]),
                     "correct" => $was_correct
                 );
             $this->solution_counter++;
 
             //Checking the second answer
-            $real_solution_1 = $_SESSION["solution"]["solution_1"];
+            $real_solution_1 = $real_solutions[1];
             $this->solution_counter++;
             if($this->CheckIfSelectsEqual($real_solution_1, $second_answer, 1)){
                 $this->count_correct += 1;
             }
             
             //Checking the third answer
-            $real_solution_2 = $_SESSION["solution"]["solution_2"];
+            $real_solution_2 = $real_solutions[2];
             $this->solution_counter++;
             $personal_set =  $real_solution_2[0];
             $characteristics =  $real_solution_2[1]; 
@@ -310,8 +337,8 @@
 
         private function CheckFunctionSolution(){
             //Parsing the answers;
-            $first_answer = $this->ParseSelectSolutions(0);
-            $second_answers = [$this->ParseSelectSolutions(1),$this->ParseSelectSolutions(2),$this->ParseSelectSolutions(3)];
+            $first_answer = $this->ParseSelectSolutions(0,2);
+            $second_answers = [$this->ParseSelectSolutions(3,5),$this->ParseSelectSolutions(6,8),$this->ParseSelectSolutions(9,11)];
 
             //Checking the first answers
             $real_solution_0 = $_SESSION["solution"]["solution_0"];
@@ -407,8 +434,8 @@
             [$first_relation_first_components, $first_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($first_relation);
             [$second_relation_first_components, $second_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($second_relation);
             
-            $first_equal = count(array_merge(array_diff($first_relation_first_components,$second_relation_first_components), array_diff($second_relation_first_components,$first_relation_first_components))) == 0;
-            $second_equal = count(array_merge(array_diff($first_relation_second_components,$second_relation_second_components), array_diff($second_relation_second_components,$first_relation_second_components))) == 0;
+            $first_equal = count(array_merge(array_diff($first_relation_first_components, $second_relation_first_components), array_diff($second_relation_first_components, $first_relation_first_components))) == 0;
+            $second_equal = count(array_merge(array_diff($first_relation_second_components, $second_relation_second_components), array_diff($second_relation_second_components, $first_relation_second_components))) == 0;
 
             return $first_equal && $second_equal;
         }
@@ -427,7 +454,7 @@
                     $_SESSION["answers"]["answer_" . $answer_counter . "_" . $index] = 
                         array(
                             "answer" => $given_answers[$index],
-                            "solution" => $solution,
+                            "solution_text" => $solution,
                             "correct" => $solution === $answer
                         );
                 }else{
@@ -438,53 +465,27 @@
             return $all_correct;
         }
 
-        private function ParseSelectSolutions($solution_number){
+        private function ParseSelectSolutions($select_start, $select_end){
             $answer = [];
-            foreach($this->solutions as $index => $value){
-                if(is_int(strpos($index, "solution_" . $solution_number))){
-                    array_push($answer, $value);
+            for($counter = $select_start; $counter < $select_end; $counter++){
+                if(isset($this->solutions[$counter])){
+                    array_push($answer, $this->solutions[$counter]);
                 }
             }
             return $answer;
         }
 
-        private function ParseRelation($values, $with_domain_image = true){
-            $pairs = explode("(", $values);
-            $first_array = [];
-            $second_array = [];
-            $third_array = [];
-            foreach($pairs as $pair_counter => $pair){
-                if($pair_counter > 0){
-                    $pair = str_replace("),", "", $pair);
-                    $pair = str_replace(")", "", $pair);
-                    $pair = str_replace("}", "", $pair);
-                    $pair = str_replace("{", "", $pair);
-                    $pair = str_replace(";", ",", $pair);
-                    $pair = str_replace(".", ",", $pair);
-                    $pair = array_map("trim", explode(",",$pair));
-
-                    if($with_domain_image){
-                        array_push($first_array, $pair[0]);
-                        if(count($pair)>1){
-                            array_push($second_array, $pair[1]);
-                        }else{
-                            array_push($second_array, []);
-                        }
-                    }else{
-                        if(count($pair)>1){
-                            array_push($third_array, [$pair[0], $pair[1]]);
-                        }else{
-                            array_push($first_array, [$pair[0], ""]);
-                        }
-                    }
+        private function CreateRelation($values){
+            $relation = [];
+            for($pair_counter = 0; $pair_counter < count($values); $pair_counter += 2){
+                if(isset($values[$pair_counter+1])){
+                    array_push($relation, [$values[$pair_counter], $values[$pair_counter+1]]);
+                }else{
+                    array_push($relation, [$values[$pair_counter], "invalid_pair"]);
                 }
             }
 
-            if($with_domain_image){
-                return [$first_array, $second_array];
-            }else{
-                return $third_array;
-            }
+            return $relation;
         }
 
         private function ExtractSolutionFromInput($input){
@@ -514,6 +515,18 @@
             }
             $printable_set = $printable_set . "}";
             return $printable_set;
+        }
+
+        private function CreatePrintableRelation($relation){
+            $printable_relation = "{";
+            for($relation_counter = 0; $relation_counter < count($relation); $relation_counter++){
+                if($relation_counter != 0){
+                    $printable_relation = $printable_relation . ", ";
+                }
+                $printable_relation = $printable_relation . "(" . $relation[$relation_counter][0] . ", " . $relation[$relation_counter][1] . ")";
+            }
+            $printable_relation = $printable_relation . "}";
+            return $printable_relation;
         }
     }
 

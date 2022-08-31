@@ -17,7 +17,7 @@
          * @param string $data_type The array type of the returned value, can either be MYSQLI_ASSOC or MYSQLI_NUM
          * @return array The data stored in an array
         */
-        public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) : array {
+        public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) {
             $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);
             //$connection = mysql_connect_caesar();
             if(!$connection){
@@ -51,7 +51,7 @@
          * @param bool $multi Whether the query is a multi line transaction, or a single line one
          * @return bool A boolean value that tells us whether updating the database was sucessful, or not
         */
-        public function UpdateDatabase($query, $multi = false) : bool {
+        public function UpdateDatabase($query, $multi = false) {
             $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);
             if(!$connection){
                 exit("Connection wasn't successful: " . mysqli_connect_error());

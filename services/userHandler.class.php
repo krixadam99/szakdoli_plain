@@ -2,7 +2,7 @@
     /**
      * This is a helper class that simulates a user
      * 
-     * This class checks if a user exists in the database
+     * ...
      */
     class UserHandler {
         private $neptun_code;

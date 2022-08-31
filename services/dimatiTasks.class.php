@@ -5,13 +5,25 @@
         private $complex_number_names;
         private $dimat_helper_functions;
 
+        /**
+         * 
+         * The contructor for DimatiTasks class
+         * 
+         * Here the inherited members will be set
+         * Set and complex number names are also set here
+         * Based on the $topic parameter a new set of tasks will be generated
+         * 
+         * @param string $topic The topic id for task generation
+         * 
+         * @return void
+         */
         public function __construct($topic){
             $this->SetTaskDescription([]);
             $this->SetTaskSolution([]);
             $this->SetDefinitions("");
 
-            $this->set_names = ["A", "B", "C", "D"];
-            $this->complex_number_names = ["v", "w", "x", "y", "z"];
+            $this->set_names = ["A", "B", "C", "D"]; //The set names used throughout the task generation
+            $this->complex_number_names = ["v", "w", "x", "y", "z"]; //The complex number names used throughout the task generation
             $this->dimat_helper_functions = new DimatHelperFunctions();
 
             mt_srand(time()); //Seeding the random number generator with the current time (we may change this overtime...)
@@ -62,13 +74,15 @@
         }
 
         /**
-         *
-         *  
+         * 
+         * This function is used to create the first set of tasks for Discrete mathematics I. related to basic set operations
+         * 
+         * @return void 
         */
         private function SetOperations(){
             //We will have 4 sets
             //Each set has 10 elements
-            [$set_A, $set_B, $set_C, $set_D] = $this->dimat_helper_functions->CreateSets([[], [], [], []], 10, false);
+            [$set_A, $set_B, $set_C, $set_D] = $this->dimat_helper_functions->CreateSets(4, 10, false);
             
             //Make the operations and the solutions
             $operation_dictionary = array("union" => [], "intersection" => [], "substraction" => [], "complementer" => [], "symmetric difference" => []);
@@ -126,11 +140,17 @@
             $this->SetTaskSolution($solution_array);
         }
 
+        /**
+         * 
+         * This function is used to create the second set of tasks for Discrete mathematics I. related to basic set operations
+         * 
+         * @return void 
+        */
         private function RelationBasics(){
             //Set generation
             $this->dimat_helper_functions->SetMaximumNumber(20);
             $this->dimat_helper_functions->SetMinimumNumber(1);
-            [$set_A, $set_B] = $this->dimat_helper_functions->CreateSets([[],[]], 20, false);
+            [$set_A, $set_B] = $this->dimat_helper_functions->CreateSets(2, 20, false);
 
             $number_of_pairs = mt_rand(6, 12);
             $same = mt_rand(0, 1)==0?false:true;
@@ -176,7 +196,7 @@
         }
 
         private function RelationComposition(){
-            [$set_A, $set_B, $set_C] = $this->dimat_helper_functions->CreateSets([[], [], []], 5, false);
+            [$set_A, $set_B, $set_C] = $this->dimat_helper_functions->CreateSets(3, 5, false);
 
             //Composition
             $first_relation = $this->dimat_helper_functions->CreateDescartesProduct($set_B, $set_C, 6);
@@ -184,7 +204,7 @@
             $composition = $this->dimat_helper_functions->CreateCompositionOfRelations($first_relation, $second_relation);
             
             //Determine the characteristics
-            $base_set = $this->dimat_helper_functions->CreateSets([[]], 3, false)[0];
+            $base_set = $this->dimat_helper_functions->CreateSets(1, 3, false)[0];
             $third_relation = $this->dimat_helper_functions->CreateDescartesProduct($base_set, $base_set, mt_rand(4, 10));
             $solution_1 = array(
                 $this->dimat_helper_functions->IsReflexiveRelation($base_set, $third_relation),
@@ -199,7 +219,7 @@
             );
             
             //Determine a proper relation with certain characteristics
-            $personal_set = $this->dimat_helper_functions->CreateSets([[]], 4, false)[0];
+            $personal_set = $this->dimat_helper_functions->CreateSets(1, 4, false)[0];
             $characteristics = $this->dimat_helper_functions->GetCharacteristics();
             
             $task_array = array(
@@ -223,8 +243,8 @@
         }
 
         private function FunctionAsRelation(){
-            $set_A = $this->dimat_helper_functions->CreateSets([[]], 10, false)[0];
-            $set_B = $this->dimat_helper_functions->CreateSets([[]], mt_rand(4, 7), false)[0];
+            $set_A = $this->dimat_helper_functions->CreateSets(1, 10, false)[0];
+            $set_B = $this->dimat_helper_functions->CreateSets(1, mt_rand(4, 7), false)[0];
 
             $first_relation = $this->dimat_helper_functions->CreateDescartesProduct($set_A, $set_B, mt_rand(3, 6));
             $second_relation = $this->dimat_helper_functions->CreateDescartesProduct($set_A, $set_B, mt_rand(3, 6));
