@@ -104,6 +104,13 @@ hr {
     padding-bottom: 2%;
 }
 
+.place_holder_card {
+    width: 15%;
+    box-shadow: 0;
+    border: 0px;
+    margin: 2% auto;
+}
+
 .title {
     font-size: calc(15px + 0.3vw);
 }

@@ -54,7 +54,7 @@
             if(isset($_SESSION["neptun_code"]) && $_SESSION["new_task"] != ""){
                 if(count($_POST) != 0){
                     $this->SetMembers();
-                    $this->solutions = $_POST;
+                    $this->solutions = array_values($_POST);
                     $practice_number = intval($_SESSION["topic"]) + 1;
                     $previous_point = floatval($this->GetPracticeResults()["practice_" . $practice_number]);
                     
@@ -90,7 +90,8 @@
 
         private function CheckSolution($subject, $topic_number){
             $_SESSION["answers"] = [];
-            
+            $this->solution_counter = 0;
+            $this->count_correct = 0;
             if($subject == "i"){
                 switch($topic_number){
                     case "0":{
@@ -102,12 +103,10 @@
                     };
                     break;
                     case "2":{
-                        $this->solution_counter = 3;
                         $this->CheckCompositionSolution();
                     };
                     break;
                     case "3":{
-                        $this->solution_counter = 4;
                         $this->CheckFunctionSolution();
                     };
                     break;
@@ -138,6 +137,12 @@
             }
         }
 
+        /**
+         * 
+         * This function returns the score with which the student's practice task point should be updated
+         * 
+         * @return float The score which should be added to the student's practice task point
+        */
         public function GetUpdatePoint(){
             if($this->solution_counter != 0){
                 return $this->count_correct/$this->solution_counter;
@@ -146,36 +151,64 @@
             }
         }
 
+        /**
+         * 
+         * Function that compares the given answers with the solutions for Discrete mathematics I. subject 1st topic's tasks
+         * 
+         * There are 10 tasks for this topic
+         * This function will extract the set elements from each input, then compare each set with the predetermined one
+         * If the 2 sets are identical, then the student has a plus point
+         * Finally, for each input we will determine the original answer (string), the cleaned answer (string), the real solution (string) and if the answer was correct
+         * 
+         * @return void
+        */
         private function CheckSetSolution(){
-            foreach($this->solutions as $index => $value){
-                $given_solutions = array_map("trim", explode(",", $value));
+            $real_solutions = $_SESSION["solution"];
+            foreach($real_solutions as $index => $real_solution){
+                $given_answer = $this->solutions[$this->solution_counter]??"";
+                $given_solutions = $this->ExtractSolutionFromInput($given_answer);
                 $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter];
+
                 $was_correct = false;
-                if($this->CheckIfSetsEqual($given_solutions,$real_solution)){
+                if($this->CompareSets($given_solutions, $real_solution)){
                     $this->count_correct += 1;
                     $was_correct = true;
                 }
+
                 $_SESSION["answers"]["answer_" . $this->solution_counter] = 
                     array(
-                        "answer" => $value, 
-                        "solution" => $real_solution,
+                        "answer" => $given_answer, 
+                        "answer_text" => $this->CreatePrintableSet($given_solutions),
+                        "solution_text" => $this->CreatePrintableSet($real_solution),
                         "correct" => $was_correct
                     );
+
                 $this->solution_counter++;
             }
         }
 
+        /**
+         * 
+         * Function that compares the given answers with the solutions for Discrete mathematics I. subject 2nd topic's tasks
+         * 
+         * There are 10 tasks for this topic
+         * This function will extract the set elements from each input, then compare each set with the predetermined one
+         * If the 2 sets are identical, then the student has a plus point
+         * Finally, for each input we will determine the original answer (string), the cleaned answer (string), the real solution (string) and if the answer was correct
+         * 
+         * @return void
+        */
         private function CheckRelationSolution(){
             foreach($this->solutions as $index => $value){
                 $was_correct = false;
                 if($this->solution_counter == 2 || $this->solution_counter == 3){
                     $first_relation = $this->ParseRelation($value, false);
                     $second_relation = $_SESSION["solution"]["solution_" . $this->solution_counter];
-                    $was_correct = $this->CheckIfRelationsEqual($first_relation, $second_relation);         
+                    $was_correct = $this->CompareRelations($first_relation, $second_relation);         
                 }else{
                     $given_solution = array_map("trim", explode(",", $value));
                     $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter];
-                    $was_correct = $this->CheckIfSetsEqual($given_solution, $real_solution);
+                    $was_correct = $this->CompareRelations($given_solution, $real_solution);
                 }
 
                 if($was_correct){
@@ -200,7 +233,7 @@
 
             //Checking the first answer
             $first_solution_relation =  $_SESSION["solution"]["solution_0"]; 
-            $was_correct = $this->CheckIfRelationsEqual($first_answer_relation, $first_solution_relation);
+            $was_correct = $this->CompareRelations($first_answer_relation, $first_solution_relation);
             if($was_correct){
                 $this->count_correct += 1;
             }
@@ -210,15 +243,18 @@
                     "solution" => $first_solution_relation,
                     "correct" => $was_correct
                 );
-            
+            $this->solution_counter++;
+
             //Checking the second answer
             $real_solution_1 = $_SESSION["solution"]["solution_1"];
+            $this->solution_counter++;
             if($this->CheckIfSelectsEqual($real_solution_1, $second_answer, 1)){
                 $this->count_correct += 1;
             }
             
             //Checking the third answer
             $real_solution_2 = $_SESSION["solution"]["solution_2"];
+            $this->solution_counter++;
             $personal_set =  $real_solution_2[0];
             $characteristics =  $real_solution_2[1]; 
             $all_correct = true;
@@ -279,11 +315,13 @@
 
             //Checking the first answers
             $real_solution_0 = $_SESSION["solution"]["solution_0"];
+            $this->solution_counter++;
             if($this->CheckIfSelectsEqual($real_solution_0, $first_answer, 0)){
                 $this->count_correct += 1;
             };
 
             $real_solution_1 = $_SESSION["solution"]["solution_1"];
+            $this->solution_counter++;
             $answer_counter = 1;
             foreach($real_solution_1 as $index => $solution){
                 if($this->CheckIfSelectsEqual($solution, $second_answers[$answer_counter-1], $answer_counter)){
@@ -361,11 +399,11 @@
             }
         }
 
-        private function CheckIfSetsEqual($first_set,$second_set){
+        private function CompareSets($first_set,$second_set){
             return count(array_merge(array_diff($first_set,$second_set), array_diff($second_set,$first_set))) == 0;
         }
 
-        private function CheckIfRelationsEqual($first_relation, $second_relation){
+        private function CompareRelations($first_relation, $second_relation){
             [$first_relation_first_components, $first_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($first_relation);
             [$second_relation_first_components, $second_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($second_relation);
             
@@ -447,6 +485,35 @@
             }else{
                 return $third_array;
             }
+        }
+
+        private function ExtractSolutionFromInput($input){
+            $input = preg_replace("/[^a-zA-Z0-9]/", "|", $input);
+            $values = explode("|", $input);
+            $return_values = [];
+            foreach($values as $index => $value){
+                if(ctype_alnum($value)){
+                    if(!is_numeric($value) && strlen($value) == 1 || is_numeric($value)){
+                        array_push($return_values, $value);
+                    }
+                }
+            }
+            return $return_values;
+        }
+
+        private function CreatePrintableSet($set){
+            $printable_set = "{";
+            $is_first_element = true;
+            foreach($set as $index => $element){
+                if($is_first_element){
+                    $printable_set = $printable_set . $element;
+                    $is_first_element = false;
+                }else{
+                    $printable_set = $printable_set . ", " . $element;
+                }
+            }
+            $printable_set = $printable_set . "}";
+            return $printable_set;
         }
     }
 

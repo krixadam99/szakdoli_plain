@@ -71,7 +71,6 @@
         <select id="subject_name" name="subject_name">
             <option id="dimat_i" <?=(isset($valid_parameters["subject_name"]) && $valid_parameters["subject_name"]=="0")?"selected":""?>>Diszkrét matematika I.</option>
             <option id="dimat_ii" <?=(isset($valid_parameters["subject_name"]) && $valid_parameters["subject_name"]=="1")?"selected":""?>>Diszkrét matematika II.</option>
-            <option id="dimmoa" <?=(isset($valid_parameters["subject_name"]) && $valid_parameters["subject_name"]=="2")?"selected":""?>>Diszkrét matematika modellek és alkalmazásaik</option>
         </select>
         <?php if(isset($error_parameters)):?>
             <?php if(in_array('wrong_3_no_such_subject',$error_parameters)):?>

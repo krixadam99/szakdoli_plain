@@ -17,12 +17,12 @@
 
     $approved_student_subject = $this->GetApprovedStudentSubject();
     $subject_name = "";
-    $row_number = 2;
     $column_number = 4;
     $practice_topics = [];
     $topic_descriptions = [];
     if($approved_student_subject == "i"){
         $subject_name = "Diszkrét matematika I. gyakorlás";
+        $topic_division = [4, 3, 1, 2];
         $practice_topics = [
             "Halmazok és műveletek", 
             "Relációk alapvető definíciói",
@@ -47,9 +47,9 @@
             "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
             "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
         ];
-        $row_number = count($practice_topics)/4;
     }elseif($approved_student_subject == "ii"){
         $subject_name = "Diszkrét matematika II. gyakorlás";
+        $topic_division = [6, 5];
         $practice_topics = [
             "Maradékos osztás és osztók száma", 
             "Redukált és teljes maradékrendszerek",
@@ -76,22 +76,6 @@
             "...",
             "..."
         ];
-        $row_number = count($practice_topics)/4;
-    }elseif($approved_student_subject == "dimmoa"){
-        $subject_name = "Diszkrét matematikai modellek és alkalmazások szemléltetések";
-        $practice_topics = [
-            "Egyszerű gráf előre megadott fokszámokkal",
-            "Páros gráf előre megadott fokszámokkal",
-            "Fák előre megadott fokszámokkal",
-            "Irányított gráf előre megadott fokszámokkal"
-        ];
-        $topic_descriptions = [
-            "...", 
-            "...",
-            "...",
-            "..."
-        ];
-        $row_number = intval(count($practice_topics)/4);
     }
 
     $practice_results = $this->GetPracticeResults();
@@ -127,29 +111,53 @@
         <?php if(!isset($_SESSION["topic"]) || (isset($_SESSION["topic"]) && $_SESSION["topic"] == "")):?>
             <h1><?=$subject_name?></h1>
             <hr>
-            <?php for($row_index = 0; $row_index < $row_number; ++$row_index):?>
+            <?php $topic_counter = 0;?>
+            <?php $card_counter = 0;?>
+            <?php $topic = 0;?>
+            <?php while($card_counter < count($practice_topics)):?>
                 <div class="card_row">
                     <?php for($column_index = 0; $column_index < $column_number; ++$column_index):?>
-                        <?php if(($row_index*4 + $column_index) < count($practice_topics)):?>
-                            <div class="small_card" onclick="SmallCardClicked(this)" id=<?=($row_index*4 + $column_index)?>>
-                                <label class="title"><?=$practice_topics[$row_index*4 + $column_index]?></label>
-                                <label class="description"><?=$topic_descriptions[$row_index*4 + $column_index]?></label>
+                        <?php if($topic_counter < $topic_division[$topic]):?>
+                            <div class="small_card" onclick="SmallCardClicked(this)" id=<?=$card_counter?>>
+                                <label class="title"><?=$practice_topics[$card_counter]?></label>
+                                <label class="description"><?=$topic_descriptions[$card_counter]?></label>
                                 <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
                                     <div class="level_container">
                                         <label class="level_counter">
-                                            <?= ProgressCalculator(floatval(array_values($practice_results)[$row_index*4 + $column_index]))[0]?>
+                                            <?= ProgressCalculator(floatval(array_values($practice_results)[$card_counter]))[0]?>
                                         </label>
                                         <div class="level_bar">
-                                            <div class="progress_line" style=<?="width:" . ProgressCalculator(floatval(array_values($practice_results)[$row_index*4 + $column_index]))[1] . "%"?>>
+                                            <div class="progress_line" style=<?="width:" . ProgressCalculator(floatval(array_values($practice_results)[$card_counter]))[1] . "%"?>>
                                             </div>
                                         </div>
                                     </div>
                                 <?php endif?>
                             </div>
+                            <?php 
+                                $topic_counter++;
+                                $card_counter++;
+                            ?>
+                        <?php else:?>
+                            <?php
+                                $topic_counter = 0;
+                                $topic++;
+                            ?>
+                            <?php if($column_index != 0):?>
+                                <?php for($column_index_new = $column_index; $column_index_new < $column_number; ++$column_index_new):?>
+                                    <div class="place_holder_card"></div>
+                                <?php endfor?>
+                                <?php $column_index = $column_number;?>
+                            <?php endif?>
                         <?php endif?>
                     <?php endfor?>
+                    <?php if(isset( $topic_division[$topic]) && $topic_counter >= $topic_division[$topic]):?>
+                        <?php
+                            $topic_counter = 0;
+                            $topic++;
+                        ?>
+                    <?php endif?>
                 </div>
-            <?php endfor?>
+            <?php endwhile?>
         <?php elseif(isset($practice_topics[intval($_SESSION["topic"])])):?>
             <h1><?=$practice_topics[intval($_SESSION["topic"])]?></h1>
             <hr>
