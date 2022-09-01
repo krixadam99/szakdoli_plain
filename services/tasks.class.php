@@ -1,4 +1,9 @@
 <?php
+    /**
+     * This is an abstract class, which represents tasks.
+     * 
+     * A task will contain the task description, the solutions for the subtasks and the definitions related to the tasks. 
+    */
     abstract class Tasks {
         private $task_description;
         private $task_solution;
@@ -6,33 +11,33 @@
 
         /**
          * 
-         * This function returns the task description
+         * This function returns the task description.
          * 
-         * @return array
+         * @return array An associative array containing the task parameters.
         */
         public function GetTaskDescription(){ return $this->task_description; }
 
         /**
          * 
-         * This function returns the task solutions
+         * This function returns the task solutions.
          * 
-         * @return array
+         * @return array An associative array containing the tasks' solutions.
         */
         public function GetTaskSolution(){ return $this->task_solution; }
 
         /**
          * 
-         * This function returns the definitions related to the tasks
+         * This function returns the definitions related to the tasks.
          * 
-         * @return string
+         * @return string A string of the topic related definitions. 
         */
         public function GetDefinitions(){ return $this->definitions; }
 
         /**
          * 
-         * Assigning a new value to the $task_description variable
+         * Assigning a new value to the class's $task_description variable.
          * 
-         * @param array $task_description The task description which will be assigned to the class's $task_description member
+         * @param array $task_description The task description which will be assigned to the class's $task_description member.
          * 
          * @return void
         */
@@ -40,9 +45,9 @@
         
         /**
          * 
-         * Assigning a new value to the $task_solutions variable
+         * Assigning a new value to the class's $task_solutions variable.
          * 
-         * @param array $task_solutions The task description which will be assigned to the class's $task_solutions member
+         * @param array $task_solutions The task description which will be assigned to the class's $task_solutions member.
          * 
          * @return void
         */
@@ -50,9 +55,9 @@
 
         /**
          * 
-         * Assigning a new value to the $definitions variable
+         * Assigning a new value to the class's $definitions variable.
          * 
-         * @param array $definitions The task description which will be assigned to the class's $definitions member
+         * @param array $definitions The task description which will be assigned to the class's $definitions member.
          * 
          * @return void
         */

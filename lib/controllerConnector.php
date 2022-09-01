@@ -1,48 +1,83 @@
 <?php
-
+    /**
+     * This is the class which is responsible for connecting the end points, so it performs the routing.
+    */
     class ControllerConnector{
         private $paths = [];
 
+        /**
+         *
+         * This function is responsible for making the actual connections.
+         * 
+         * If there is no site key in the URI, or is present in the URI, however there is no end point for it, then the default page, that is, the index page, will be displayed.
+         * For each valid site value the respective end point (controller) will be instantiated, and the appropriate caller method will be called upon creation.
+         * 
+         * @return void
+        */
         public function start_connection() {
-            $current_site = $_GET["site"] ?? "index";
-            $http_method = $_SERVER["REQUEST_METHOD"];
+            $current_site = $_GET["site"] ?? "index"; //The default site is the index page
+            $method = $_SERVER["REQUEST_METHOD"];
 
             foreach ($this->paths as $path) {
-                if ($path["path"] === $current_site && $path["http-method"] === $http_method) {
+                if ($path["path"] === $current_site && $path["method"] === $method) {
                     $controller_name = $path["controller"];
-                    $method_name = $path["method"];
+                    $controller_method = $path["controller_method"];
 
                     $controller = new $controller_name();
-                    $controller->$method_name();
+                    $controller->$controller_method();
                     return;
                 }
             }
 
-            if(isset($_SESSION["neptun_code"])){
-                $controller = new NotificationsController();
-                $controller->Notifications();
-            }else{
-                $controller = new IndexController();
-                $controller->Index();
+            if(isset($_SESSION["neptun_code"])){ //If the user is logged in and they wanted to access a non-existent end point, then they will be redirected to the notifications page
+                header("Location: ./index.php?site=notifications");
+            }else{ //If the user is not logged in and they wanted to access a non-existent end point, then they will be redirected to the index page
+                header("Location: ./index.php");
             }
             return;
         }
 
-        public function get_method_connection($path, $controller, $method) {
+        /**
+         *
+         * This function is responsible for connecting the end points between views and controllers, when the http-method is GET.
+         * 
+         * If the HTTP method is a GET, then we connect the given path to the caller page and the controller.
+         * We also states what method should be called upon the creation of the controller.
+         * 
+         * @param string $path The first end point.
+         * @param Class $controller The other end point.
+         * @param callable $controller_method The controller's method which should be called upon creation of the controller.
+         * 
+         * @return void
+        */
+        public function get_method_connection($path, $controller, $controller_method) {
             $this->paths[] = [
                 "path" => $path,
-                "http-method" => "GET",
+                "method" => "GET",
                 "controller" => $controller,
-                "method" => $method
+                "controller_method" => $controller_method
             ];
         }
 
-        public function post_method_connection($path, $controller, $method) { 
+        /**
+         *
+         * This function is responsible for connecting the end points between views and controllers, when the http-method is POST.
+         * 
+         * If the HTTP method is a POST, then we connect the given path to the caller page and the controller.
+         * We also states what method should be called upon the creation of the controller.
+         * 
+         * @param string $path The first end point.
+         * @param Class $controller The other end point.
+         * @param callable $controller_method The controller's method which should be called upon creation of the controller.
+         * 
+         * @return void
+        */
+        public function post_method_connection($path, $controller, $controller_method) { 
             $this->paths[] = [
                 "path" => $path,
-                "http-method" => "POST",
+                "method" => "POST",
                 "controller" => $controller,
-                "method" => $method
+                "controller_method" => $controller_method
             ];
         }
     };

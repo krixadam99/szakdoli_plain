@@ -1,21 +1,32 @@
 <?php
-
+    /**
+     * This is a class which is responsible for making the actual data fetching and updating the database.
+    */
     class DatabaseHandler { 
         private $database;
         
+        /**
+         * 
+         * The contructor of the DataBaseHandler class.
+         * 
+         * @param string $database The name of the database from which the class will fetch daga, or in what the class wull update data. 
+         * 
+         * @return void
+         */
         public function __construct($database){
             $this->database = $database;
         }
         
         /**
          *
-         * This function is responsible for loading data from the database
+         * This function is responsible for loading data from the database.
          * 
-         * If the result is a boolean, and was unsuccessful, the user will be shown an error page
+         * If the result is a boolean, and was unsuccessful, the user will be shown an error page.
          * 
-         * @param string $query The query to send to the database
-         * @param string $data_type The array type of the returned value, can either be MYSQLI_ASSOC or MYSQLI_NUM
-         * @return array The data stored in an array
+         * @param string $query The query to send to the database.
+         * @param string $data_type The array type of the returned value, can either be MYSQLI_ASSOC or MYSQLI_NUM.
+         * 
+         * @return array The data stored in an array.
         */
         public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) {
             $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);
@@ -45,11 +56,12 @@
 
         /**
          *
-         * This function is responsible for loading data from the database
+         * This function is responsible for loading data from the database.
          * 
-         * @param string $query The query to send to the database
-         * @param bool $multi Whether the query is a multi line transaction, or a single line one
-         * @return bool A boolean value that tells us whether updating the database was sucessful, or not
+         * @param string $query The query to send to the database.
+         * @param bool $multi Whether the query is a multi line transaction, or a single line one.
+         * 
+         * @return bool A boolean value that determines whether updating the database was sucessful, or not.
         */
         public function UpdateDatabase($query, $multi = false) {
             $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);

@@ -1,14 +1,14 @@
 <?php
     /**
-     * This is a helper class that simulates a user
+     * This is a helper class that simulates a user.
      * 
-     * It gets the MainModel with the database, so the actual data fetch will be executed by the MainModel
-     * A user can have a neptun code, user email, subject name, user status, subject group, password and reassuring password
-     * These members will be set when an instance of the class is created, but the subject name can be updated later on
-     * This class checks if the user's password and the given password are the same, this is important for both the registration and login
-     * It also checks if the user's given neptun code is in use or not, this will be important for the registration 
-     * Furthermore, it checks if the user is the administrator
-     * Finally, it checks if the user's given subject group is a valid subject group or not
+     * It gets the MainModel with the database, so the actual data fetch will be executed by the MainModel.
+     * A user can have a neptun code, user email, subject name, user status, subject group, password and reassuring password.
+     * These members will be set when an instance of the class is created, but the subject name can be updated later on.
+     * This class checks if the user's password and the given password are the same, this is important for both the registration and login.
+     * It also checks if the user's given neptun code is in use or not, this will be important for the registration.
+     * Furthermore, it checks if the user is the administrator.
+     * Finally, it checks if the user's given subject group is a valid subject group or not.
      * 
      */
     class UserHandler {
@@ -20,7 +20,21 @@
         private $user_password;
         private $user_password_again;
 
-
+        /**
+         * 
+         * The contructor of the UserHandler class.
+         * 
+         * @param string $database The name of the database from which the class will request data. 
+         * @param string $neptun_code The neptun code of the user.
+         * @param string $user_password The password the user.
+         * @param string $user_password_again The reassuring password of the user.
+         * @param string $user_email The email address of the user.
+         * @param string $subject_name The subject name which the user applied to.
+         * @param string $user_status The status of the user for the applied subject.
+         * @param string $subject_group The group which the user applied to in the subject.
+         * 
+         * @return void
+        */
         public function __construct($database = "szakdoli", $neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = ""){
             $this->model = new MainModel($database);
             $this->neptun_code = $neptun_code;
@@ -32,16 +46,72 @@
             $this->user_password_again = $user_password_again;
         }
 
-        public function GetNeptunCode() : string { return $this->neptun_code;}
-        public function GetUserEmail() : string { return $this->user_email;}
-        public function GetSubjectName() : string { return $this->subject_name;}
-        public function SetSubjectName($subject_name) : void { $this->subject_name = $subject_name;}
-        public function GetUserStatus() : string { return $this->user_status;}
-        public function GetSubjectGroup() : string { return $this->subject_group;}
-        public function GetUserPassword() : string { return $this->user_password;}
-        public function GetUserPasswordAgain() : string { return $this->user_password_again;}
+        /**
+         * 
+         * This function returns the neptun code of the user.
+         * 
+         * @return string The neptun code of the user.
+        */
+        public function GetNeptunCode() { return $this->neptun_code;}
 
-        public function IsSamePassword() : bool {
+        /**
+         * 
+         * This function returns the email address of the user.
+         * 
+         * @return string The email address of the user.
+        */
+        public function GetUserEmail() { return $this->user_email;}
+
+        /**
+         * 
+         * This function returns the name of the subject which the user applied to.
+         * 
+         * @return string The name of the subject which the user applied to.
+        */
+        public function GetSubjectName() { return $this->subject_name;}
+
+
+        public function SetSubjectName($subject_name) { $this->subject_name = $subject_name;}
+
+        /**
+         * 
+         * This function returns the status of the user for the applied subject.
+         * 
+         * @return string The status of the user for the applied subject.
+        */
+        public function GetUserStatus() { return $this->user_status;}
+
+        /**
+         * 
+         * This function returns the subject group of the user.
+         * 
+         * @return string The subject group of the user.
+        */
+        public function GetSubjectGroup() { return $this->subject_group;}
+
+        /**
+         * 
+         * This function returns the user's password.
+         * 
+         * @return string The password of the user.
+        */
+        public function GetUserPassword() { return $this->user_password;}
+
+        /**
+         * 
+         * This function returns the reassuring password of the user.
+         * 
+         * @return string The reassuring password of the user.
+        */
+        public function GetUserPasswordAgain() { return $this->user_password_again;}
+
+        /**
+         * 
+         * This function decides if the password belonging to the given neptun code and the given password are the same.
+         * 
+         * @return bool Returns if the password belonging to the given neptun code and the given password are the same.
+        */
+        public function IsSamePassword() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
             $users = $this->model->GetDataFromDatabase($query);
@@ -52,8 +122,14 @@
                 return false;
             }
         }
-
-        public function IsUserNameUsed() : bool {
+        
+        /**
+         * 
+         * This function decides if the neptun code given by the user is already in use, or not.
+         * 
+         * @return bool Returns whether the neptun code given by the user is already in use, or not.
+        */
+        public function IsUserNameUsed() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code =  \"".$neptun_code."\"";
             $users = $this->model->GetDataFromDatabase($query);
@@ -64,7 +140,13 @@
             }
         }
 
-        public function IsAdministrator() : bool {
+        /**
+         * 
+         * This function decides whether the user is an administrator, or not.
+         * 
+         * @return bool Returns whether the user is an administrator, or not.
+        */
+        public function IsAdministrator() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
             $users = $this->model->GetDataFromDatabase($query);
@@ -76,6 +158,12 @@
             }
         }
 
+        /**
+         * 
+         * This function decides whether the user as a student applied to a valid group, or not.
+         * 
+         * @return bool Returns whether the user as a student applied to a valid group.
+        */
         public function IsGroupNumberCorrect() : bool {
             $query = "SELECT DISTINCT subject_group FROM status_pending WHERE subject_name = \"".$this->subject_name."\" AND user_status = \"teacher\" AND pending_status  = \"0\"";
             $groups = $this->model->GetDataFromDatabase($query);

@@ -1,16 +1,30 @@
 <?php
-    
+    /**
+     * This is a controller class which is responsible for showing the student handling page.
+     * 
+     * This controller extends the MainContentController, from which it inherits members that are related to a logged in user.
+     * If someone navigates to the student handling page, although they are not logged in, then this controller redirects them to the login page.
+     * If someone navigates to the student handling page, however they are not a teacher, then this controller redirects them to the notifications page.
+    */
     class StudentHandlingController extends MainContentController{
+        /**
+         * 
+         * The contructor of the StudentHandlingController class.
+         * 
+         * It will call the MainContentController class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+        */
         public function __construct(){
             parent::__construct();
         }
         
         /**
          *
-         * This function is responsible for showing the student handler page 
+         * This function is responsible for showing the student handler page.
          * 
-         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page
-         * If a user is logged in, but is not a teacher, i.e., has no assigned group, then they will be redirected to the notifications page (every user has this, regardless their status)
+         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
+         * If a user is logged in, but is not a teacher, i.e., has no assigned group, then they will be redirected to the notifications page (every user has this, regardless their status).
          * 
          * @return void
          */
@@ -30,6 +44,19 @@
             }
         }
 
+        /**
+         *
+         * This function is responsible for handling students' requests.
+         * 
+         * Only teachers can handle students (TODO).
+         * Pending students can be either deined, accepted or ignored.
+         * Denied students can be accepted and accepted students can be denied.
+         * Accepted students has 0 as their pending request.
+         * Denied students has -1 as their pending request.
+         * Pending students has 1 as their pending request.
+         * 
+         * @return void
+        */
         public function HandleStudents(){
             //Neptun code, subject group and subject name must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"]) && isset($_SESSION["group"]) && isset($_SESSION["subject"])){

@@ -1,5 +1,9 @@
 <?php
-    
+    /**
+     * 
+     * This is a class which defines the basic data that will be user on every page (except index, login and registration pages).
+     * 
+    */
     class MainContentController {
         private $is_administrator;
         private $neptun_code;
@@ -14,8 +18,17 @@
         private $approved_student_subject;
         private $practice_results;
 
+        /**
+         * 
+         * The contructor of the MainContentController class.
+         * 
+         * It will check the URI parameters if the group, topic or subject value is incorrect, then the user will be automatically rediected to the notifications page.
+         * This contructor also aissgns the members to default values.
+         * 
+         * @return void
+        */
         protected function __construct(){
-            $this->CheckURLParameters();
+            $this->CheckURIParameters();
             
             $this->is_administrator = false;
             $this->neptun_code = "";
@@ -31,19 +44,112 @@
             $this->practice_results = [];
         }
 
+        /**
+         * 
+         * This function returns whether the logged in user is an administrator, or not.
+         * 
+         * @return string Returns a string that can be either 1 or 0, where 0 means that the logged in user is not an administrator, and 1 means that the user is an administrator.
+        */
         public function GetIsAdministrator(){ return $this->is_administrator; }
+
+        /**
+         * 
+         * This function returns the logged in user's neptun code.
+         * 
+         * @return string Returns the logged in user's neptun code.
+        */
         public function GetNeptunCode(){ return $this->neptun_code; }
+
+        /**
+         * 
+         * This function returns data about the user.
+         * 
+         * The returned data differs on the basis that the user is an administrator, or not.
+         * For administrators this returns the neptun code, email address, password, is administrator attributes as a single record, since records are unique in the users table.
+         * For non-administrators this returns the neptun code, email address, password, is administrator, user status, subject group, subject name and pending status attributes as a set of records, a user can teach multiple groups, but can be a student of only one group and only one subject.
+         * 
+         * @return array Returns an indexed array containing the data from the users table if the user is administrator, and the data from the joined version of the users and status_pending table if the user is not an administrator.
+        */
         public function GetUserData(){ return $this->user_data; }
+
+        /**
+         * 
+         * This function returns all the pending teachers.
+         * 
+         * @return array Returns an indexed array containing the neptun code, subject name and subject group from the status_pending table for users that are teachers and whose request is pending.
+        */
         public function GetPendingTeachers(){ return $this->pending_teachers; }
+
+        /**
+         * 
+         * This function returns students for one of the logged in user's group.
+         * 
+         * @return array Returns an indexed array containing the neptun code, user status, subject group, subject name and pending status from the status_pending table for users that are students and who belong to the teacher's group.
+        */
         public function GetStudents(){ return $this->pending_students; }
+
+        /**
+         * 
+         * This function returns the subject name and group (pairs) where the user's teacher request is pending.
+         * 
+         * @return array Returns an indexed array containing the subject group and subject name (pairs) where the user's status is teacher and it is pending.
+        */
         public function GetPendingTeacherGroups(){ return $this->pending_teacher_groups; }
+
+        /**
+         * 
+         * This function returns the subject name and group (pairs) where the user's teacher request was approved.
+         * 
+         * @return array Returns an indexed array containing the subject group and subject name (pairs) where the user's status is teacher and it is approved.
+        */
         public function GetApprovedTeacherGroups(){ return $this->approved_teacher_groups; }
+
+        /**
+         * 
+         * This function returns the subject names where the user's teacher request was approved.
+         * 
+         * @return array Returns an indexed array containing the subject groups where the user's status is teacher and it is approved.
+        */
         public function GetApprovedTeacherSubjects(){ return $this->approved_teacher_subjects; }
+
+        /**
+         * 
+         * This function returns the subject names and groups (pairs) where the user's student request is pending.
+         * 
+         * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it is pending.
+        */
         public function GetPendingStudentGroups(){ return $this->pending_student_groups; }
+
+        /**
+         * 
+         * This function returns the subject names and groups (pairs) where the user's student request was approved.
+         * 
+         * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it was approved.
+        */
         public function GetApprovedStudentGroups(){ return $this->approved_student_groups; }
+
+        /**
+         * 
+         * This function returns the subject names where the user's student request was approved.
+         * 
+         * @return array Returns an indexed array containing the subject names where the user's status is student and it was approved.
+        */
         public function GetApprovedStudentSubject(){ return $this->approved_student_subject; }
+
+        /**
+         * 
+         * This function returns the practice results for the logged in user.
+         * 
+         * @return array Returns an associative array containing the practice results of the user who is a student and whose student status is approved.
+        */
         public function GetPracticeResults(){ return $this->practice_results; }
 
+        /**
+         * 
+         * This function sets the class's members.
+         * 
+         * @return void
+        */
         protected function SetMembers(){
             if(isset($_SESSION["neptun_code"])){                
                 $this->neptun_code = $_SESSION["neptun_code"];
@@ -95,16 +201,23 @@
             }
         }
 
-        private function CheckURLParameters(){
-            //Handling malicious user url inputs
-
+        /**
+         * 
+         * This function checks if the URI values for subject, topic and group keys are correct.
+         * 
+         * @return void
+        */
+        private function CheckURIParameters(){
+            // Handling malicious user uri inputs.
+            // The subject must be either i or ii.
             if(isset($_SESSION["subject"]) && $_SESSION["subject"] != ""){
-                if($_SESSION["subject"] != "i" && $_SESSION["subject"] != "ii" && $_SESSION["subject"] != "dimmoa"){
+                if($_SESSION["subject"] != "i" && $_SESSION["subject"] != "ii"){
                     header("Location: ./index.php?site=notifications");
                     exit();
                 }
             }
 
+            // The topic must be a numeric value, and it must be 0 and 11 (inclusively).
             if(isset($_SESSION["topic"]) && $_SESSION["topic"] != ""){
                 if(is_numeric($_SESSION["topic"])){
                     if(intval($_SESSION["topic"]) > 11 || intval($_SESSION["topic"]) < 0){
@@ -117,7 +230,7 @@
                 }
             }
 
-            //The topic part is not betwenn 0 and 11, or not a number
+            // The group must be a numeric value, and it must be 0 and 30 (inclusively).
             if(isset($_SESSION["group"]) && $_SESSION["group"] != ""){
                 if(is_numeric($_SESSION["group"])){
                     if(intval($_SESSION["group"]) > 30 || intval($_SESSION["group"]) < 0){

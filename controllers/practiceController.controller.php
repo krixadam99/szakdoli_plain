@@ -1,5 +1,11 @@
 <?php
-    
+    /**
+     * This is a controller class which is responsible for showing the practice page.
+     * 
+     * This controller extends the MainContentController, from which it inherits members that are related to a logged in user.
+     * If someone navigates to the practice page, although they are not logged in, then this controller redirects them to the login page.
+     * If someone navigates to the practice page, however they are not a student, then this controller redirects them to the notifications page.
+    */
     class PracticeController extends MainContentController{
         private $solution_counter;
         private $count_correct;
@@ -7,6 +13,14 @@
         private $solutions;
         private $real_solutions;
         
+        /**
+         * 
+         * The contructor of the PracticeController class.
+         * 
+         * It will call the MainContentController class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
         public function __construct(){
             parent::__construct();
             $this->count_correct = 0;

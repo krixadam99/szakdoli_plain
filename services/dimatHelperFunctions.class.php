@@ -1,4 +1,8 @@
 <?php
+    /**
+     * This is a helper class which contains helper functions related to discrete mathematics.
+     * 
+    */
     class DimatHelperFunctions {
         private $set_names;
         private $complex_number_names;
@@ -8,9 +12,9 @@
 
         /**
          * 
-         * The contructor for DimatHelperFunctions class
+         * The contructor for DimatHelperFunctions class.
          * 
-         * The range for random numbers; set, complex number names and possible alphabetic characters are set here 
+         * The range for random numbers; set, complex number names and possible alphabetic characters are set here.
          * 
          * @return void
          */
@@ -27,32 +31,32 @@
 
         /**
          *
-         * This function is responsible for setting the upper bound of the range from which numbers will be picked randomly
+         * This function is responsible for setting the upper bound of the range from which numbers will be picked randomly.
          *  
-         * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly
+         * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly.
          * @return void
         */
         public function SetMaximumNumber($maximum_number){ $this->maximum_number = $maximum_number;}
         
         /**
          *
-         * This function is responsible for setting the lowe bound of the range from which numbers will be picked randomly
+         * This function is responsible for setting the lowe bound of the range from which numbers will be picked randomly.
          *  
-         * @param int $maximum_number The lower bound for the range from which numbers will be picked randomly
+         * @param int $maximum_number The lower bound for the range from which numbers will be picked randomly.
          * @return void
         */
         public function SetMinimumNumber($minimum_number){ $this->minimum_number = $minimum_number;}
 
         /**
          *
-         * This function is responsible for creating sets
+         * This function is responsible for creating sets.
          * 
-         * Creating sets, where each of the sets will consist the same amount of elements
-         * It can also be set if the elements can repeat in the sets, or not
+         * Creating sets, where each of the sets will consist the same amount of elements.
+         * It can also be set if the elements can repeat in the sets, or not.
          *  
-         * @param int $set_number The number of sets that will be generated
-         * @param int $number_of_elements The number of elements that will be put into the sets
-         * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value of this parameter is false
+         * @param int $set_number The number of sets that will be generated.
+         * @param int $number_of_elements The number of elements that will be put into the sets.
+         * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
          * @return void
         */
         public function CreateSets($set_number, $number_of_elements, $is_bag = false){
@@ -75,14 +79,13 @@
 
         /**
          *
-         * This function is responsible for returning part of a set
+         * This function is responsible for returning part of a set.
          * 
-         * If the number of elements to be returned is greater, or equal to the size of the set, then the function returns the original set
-         * Else the function returns the requested number of random elements from the set
+         * If the number of elements to be returned is greater, or equal to the size of the set, then the function returns the original set, else the function returns the requested number of random elements from the set.
          *  
-         * @param array $set The set from which we want to get elements
-         * @param int $number_of_elements The number of elements that will be returned from the given set
-         * @return array
+         * @param array $set The set from which we want to get elements.
+         * @param int $number_of_elements The number of elements that will be returned from the given set.
+         * @return array A part of the set with the requested amount of elements.
         */
         public function GetPartOfSet($set, $number_of_elements){
             if($number_of_elements < count($set)){
@@ -157,16 +160,15 @@
 
         /**
          *
-         * This function is responsible for returning a part of a cartesian product
+         * This function is responsible for returning a part of a cartesian product.
          * 
-         * If the number of elements is greater, or equal to the product of the first and second sets' size, then the function returns the cartesian product og the two sets
-         * Else the function returns the requested number of ordered pairs, which first and second elements are randomly selected from the first and second sets respectively
-         * Non of the ordered pairs can be repeated
+         * If the number of elements is greater, or equal to the product of the first and second sets' size, then the function returns the cartesian product of the two set, else the function returns the requested number of ordered pairs, which first and second elements are randomly selected from the first and second sets respectively.
+         * Non of the ordered pairs can be repeated.
          * 
-         * @param array $first_set The set from which the pairs' first element will be chosen randomly
-         * @param array $image The image The set from which the pairs' second element will be chosen randomly
-         * @param int $number_of_elements The number of ordered pairs that will be returned
-         * @return array
+         * @param array $first_set The set from which the pairs' first element will be chosen randomly.
+         * @param array $image The image The set from which the pairs' second element will be chosen randomly.
+         * @param int $number_of_elements The number of ordered pairs that will be returned.
+         * @return array A relation containing ordered pairs consisting elements of the two given sets, the form of this array is: [[element, element],[element, elemen]]
         */
         public function CreateDescartesProduct($first_set, $second_set, $number_of_elements){
             if($number_of_elements < count($first_set)*count($second_set)){
@@ -200,13 +202,13 @@
 
         /**
          *
-         * This function is responsible for creating a new complex number
+         * This function is responsible for creating a new complex number.
          * 
-         * The function will create the real and imaginary part of each complex number
-         * If this pair has already been created, then a new pair will be generated, until it is not present in the returned array
+         * The function will create the real and imaginary part of each complex number.
+         * If this pair has already been created, then a new pair will be generated, until it is not present in the returned array.
          *  
-         * @param int $number_of_elements The number of complex numbers to return
-         * @return array
+         * @param int $number_of_elements The number of complex numbers to return.
+         * @return array Array containing the given number of complex numbers of the form [real part, imaginary part].
         */
         public function CreateComplexNumbers($number_of_elements){
             $complex_numbers = [];
@@ -226,12 +228,11 @@
 
         /**
          *
-         * This function is responsible for creating a new complex number
+         * This function is responsible for getting the universe of set.
          * 
-         *  
-         * @param int $index The index of the set for which the function will return the universe
-         * @param array $sets An array containing the possible sets
-         * @return array
+         * @param int $index The index of the set for which the function will return the universe.
+         * @param array $sets An array containing the possible sets.
+         * @return array An array containing the universe of the given set of the form [...element].
         */
         public function GetUniverse($index, $sets=[]){
             $universe = [];
