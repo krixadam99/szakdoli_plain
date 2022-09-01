@@ -1,15 +1,7 @@
 <?php
 
-    $error_parameters = "";
-    $valid_parameters = "";
-
-    if(isset($this->error_parameters)){
-        $error_parameters = $this->error_parameters;
-    }
-
-    if(isset($this->valid_parameters)){
-        $valid_parameters = $this->valid_parameters;
-    }
+    $incorrect_parameters = $this->GetIncorrectParameters();
+    $correct_parameters = $this->GetCorrectParameters();
 
 ?>
 
@@ -24,11 +16,11 @@
 </head>
 <body>
     <form id="login_form" action="./index.php?site=validateLogin" method="POST">
-        <input type="text" id="user_input" name="neptun_code" value="<?=$valid_parameters['neptun_code']??"Neptun kód"?>">
-        <?php if(isset($error_parameters)):?>
-            <?php if(in_array("wrong_1_no_data",$error_parameters)):?>
+        <input type="text" id="user_input" name="neptun_code" value="<?=$correct_parameters['neptun_code']??"Neptun kód"?>">
+        <?php if(isset($incorrect_parameters)):?>
+            <?php if(in_array("wrong_1_no_data",$incorrect_parameters)):?>
                 <label id="error_label">Adjon meg neptun kódot!</label>
-            <?php elseif(in_array("wrong_1_no_neptun_code",$error_parameters)):?>
+            <?php elseif(in_array("wrong_1_no_neptun_code",$incorrect_parameters)):?>
                 <label id="error_label">Adjon meg létező neptun kódot!</label>
             <?php endif?>
         <?php endif?>
@@ -38,10 +30,10 @@
             <input type="text" id="user_password" name="user_password" value="Jelszó">
             <input  type="image" id="show_password_image" src="./views/css/pics/opened_eye.png" alt="password hidden" width="100%" height="100%">
         </div>
-        <?php if(isset($error_parameters)):?>
-            <?php if(in_array("wrong_2_no_password", $error_parameters)):?>
+        <?php if(isset($incorrect_parameters)):?>
+            <?php if(in_array("wrong_2_no_password", $incorrect_parameters)):?>
                 <label id="error_label">Adjon meg jelszót!</label>
-            <?php elseif(in_array("wrong_2_not_same", $error_parameters)):?>
+            <?php elseif(in_array("wrong_2_not_same", $incorrect_parameters)):?>
                 <label id="error_label">A jelszó nem megfelelő!</label>
             <?php endif?>
         <?php endif?>

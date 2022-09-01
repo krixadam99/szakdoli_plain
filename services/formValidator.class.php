@@ -1,24 +1,31 @@
 <?php
-
+    /**
+     * This is an abstract class, which represents a form
+     * 
+     * Each form can have correct and incorrect parameters
+     * Correct parameters are those, which satisfy the predetermined conditions (e.g., correct form, length, complexity, characters etc.)
+     * Inocrrect parameters are those, which don't satisfy the predetermined conditions
+     * Above the setter and getter methods, the class contains a user form validator method, which is responsible for validating the user's form according to a set of rules 
+    */
     abstract class FormValidator {
-        private $error_params = array();
-        private $valid_params = array();
+        private $incorrect_parameters = array();
+        private $correct_parameters = array();
 
         /**
          *
-         * This function is responsible for giving back the error parameters
+         * This function is responsible for giving back the incorrect parameters
          *  
          * @return array
         */
-        public function GetErrorParameters() : array { return $this->error_params; }
+        public function GetIncorrectParameters() : array { return $this->incorrect_parameters; }
 
         /**
          *
-         * This function is responsible for pushing a new error parameter to the back of the array holding the error parameters
+         * This function is responsible for pushing a new incorrect parameter to the back of the array holding the incorrect parameters
          * @param string $value The value we wish to push to the back of the array holding the incorrect values
          * @return array
         */
-        public function SetErrorParameters($value) { array_push( $this->error_params,$value); }
+        public function SetIncorrectParameter($value) { array_push( $this->incorrect_parameters,$value); }
         
         /**
          *
@@ -26,23 +33,23 @@
          *  
          * @return array
         */
-        public function GetValidParameters() : array { return $this->valid_params; }
+        public function GetCorrectParameters() : array { return $this->correct_parameters; }
 
         /**
          *
-         * This function is responsible for setting the value of the valid parameters' dictionary by the given key
+         * This function is responsible for setting the value of the correct parameters' dictionary by the given key
          *  
-         * @param string $key The key which we want to assign a new value to in the valid parameters' dictionary
-         * @param string $value The value we want to assign to the key in the valid parameters' dictionary
+         * @param string $key The key which we want to assign a new value to in the correct parameters' dictionary
+         * @param string $value The value we want to assign to the key in the correct parameters' dictionary
          * @return array
         */
-        public function SetValidParameters($key, $value) { $this->valid_params[$key] = $value; }
+        public function SetCorrectParameter($key, $value) { $this->correct_parameters[$key] = $value; }
 
         /**
          *
          * This function is responsible for validating a user's form
          *  
-         * @return array
+         * @return void
         */
         public abstract function ValidateUser();
     }
