@@ -7,7 +7,7 @@
 
         /**
          *
-         * This function is responsible for making the actual connections.
+         * This method is responsible for making the actual connections.
          * 
          * If there is no site key in the URI, or is present in the URI, however there is no end point for it, then the default page, that is, the index page, will be displayed.
          * For each valid site value the respective end point (controller) will be instantiated, and the appropriate caller method will be called upon creation.
@@ -39,7 +39,7 @@
 
         /**
          *
-         * This function is responsible for connecting the end points between views and controllers, when the http-method is GET.
+         * This method is responsible for connecting the end points between views and controllers, when the http-method is GET.
          * 
          * If the HTTP method is a GET, then we connect the given path to the caller page and the controller.
          * We also states what method should be called upon the creation of the controller.
@@ -61,7 +61,7 @@
 
         /**
          *
-         * This function is responsible for connecting the end points between views and controllers, when the http-method is POST.
+         * This method is responsible for connecting the end points between views and controllers, when the http-method is POST.
          * 
          * If the HTTP method is a POST, then we connect the given path to the caller page and the controller.
          * We also states what method should be called upon the creation of the controller.

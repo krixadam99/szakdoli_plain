@@ -75,7 +75,7 @@
 
         /**
          * 
-         * This function is used to create the first set of tasks for Discrete mathematics I. related to basic set operations
+         * This method is used to create the first set of tasks for Discrete mathematics I. related to basic set operations
          * 
          * @return void 
         */
@@ -142,7 +142,7 @@
 
         /**
          * 
-         * This function is used to create the second set of tasks for Discrete mathematics I. related to basic set operations
+         * This method is used to create the second set of tasks for Discrete mathematics I. related to basic set operations
          * 
          * @return void 
         */

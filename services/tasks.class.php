@@ -11,7 +11,7 @@
 
         /**
          * 
-         * This function returns the task description.
+         * This method returns the task description.
          * 
          * @return array An associative array containing the task parameters.
         */
@@ -19,7 +19,7 @@
 
         /**
          * 
-         * This function returns the task solutions.
+         * This method returns the task solutions.
          * 
          * @return array An associative array containing the tasks' solutions.
         */
@@ -27,7 +27,7 @@
 
         /**
          * 
-         * This function returns the definitions related to the tasks.
+         * This method returns the definitions related to the tasks.
          * 
          * @return string A string of the topic related definitions. 
         */
@@ -35,7 +35,7 @@
 
         /**
          * 
-         * Assigning a new value to the class's $task_description variable.
+         * This method assigns a new value to the class's $task_description variable.
          * 
          * @param array $task_description The task description which will be assigned to the class's $task_description member.
          * 
@@ -45,7 +45,7 @@
         
         /**
          * 
-         * Assigning a new value to the class's $task_solutions variable.
+         * This method assigns a new value to the class's $task_solutions variable.
          * 
          * @param array $task_solutions The task description which will be assigned to the class's $task_solutions member.
          * 
@@ -55,7 +55,7 @@
 
         /**
          * 
-         * Assigning a new value to the class's $definitions variable.
+         * This method assigns a new value to the class's $definitions variable.
          * 
          * @param array $definitions The task description which will be assigned to the class's $definitions member.
          * 

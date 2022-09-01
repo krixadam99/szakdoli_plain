@@ -31,7 +31,7 @@
 
         /**
          *
-         * This function is responsible for setting the upper bound of the range from which numbers will be picked randomly.
+         * This method is responsible for setting the upper bound of the range from which numbers will be picked randomly.
          *  
          * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly.
          * @return void
@@ -40,7 +40,7 @@
         
         /**
          *
-         * This function is responsible for setting the lowe bound of the range from which numbers will be picked randomly.
+         * This method is responsible for setting the lowe bound of the range from which numbers will be picked randomly.
          *  
          * @param int $maximum_number The lower bound for the range from which numbers will be picked randomly.
          * @return void
@@ -49,7 +49,7 @@
 
         /**
          *
-         * This function is responsible for creating sets.
+         * This method is responsible for creating sets.
          * 
          * Creating sets, where each of the sets will consist the same amount of elements.
          * It can also be set if the elements can repeat in the sets, or not.
@@ -79,7 +79,7 @@
 
         /**
          *
-         * This function is responsible for returning part of a set.
+         * This method is responsible for returning part of a set.
          * 
          * If the number of elements to be returned is greater, or equal to the size of the set, then the function returns the original set, else the function returns the requested number of random elements from the set.
          *  
@@ -625,19 +625,21 @@
 
         public function SolveQuadraticEquation($a, $b, $c){
             $return_values = [];
-            $discriminator = $b**2 + -4*$a*$c;
+            $discriminator = $b**2 - 4*$a*$c;
             $is_pure_real = true;
             if($discriminator < 0){
                 $is_pure_real = false;
-                $discriminator *= -1;
+                $discriminator -= 1;
             }
 
             if($is_pure_real){
-                array_push($return_values, [(-1*$b+$discriminator)/(2*$a),0]);
-                array_push($return_values, [(-1*$b-$discriminator)/(2*$a),0]);
+                array_push($return_values, [(-1*$b+sqrt($discriminator))/(2*$a),0]);
+                if($discriminator != 0){
+                    array_push($return_values, [(-1*$b-sqrt($discriminator))/(2*$a),0]);
+                }
             }else{
-                array_push($return_values, [(-1*$b)/(2*$a),$discriminator/(2*$a)]);
-                array_push($return_values, [(-1*$b)/(2*$a),(-1*$discriminator)/(2*$a)]);
+                array_push($return_values, [(-1*$b)/(2*$a),sqrt($discriminator)/(2*$a)]);
+                array_push($return_values, [(-1*$b)/(2*$a),(-1*sqrt($discriminator))/(2*$a)]);
             }
 
             return $return_values;

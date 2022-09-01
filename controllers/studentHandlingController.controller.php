@@ -21,7 +21,7 @@
         
         /**
          *
-         * This function is responsible for showing the student handler page.
+         * This method is responsible for showing the student handler page.
          * 
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
          * If a user is logged in, but is not a teacher, i.e., has no assigned group, then they will be redirected to the notifications page (every user has this, regardless their status).
@@ -46,7 +46,7 @@
 
         /**
          *
-         * This function is responsible for handling students' requests.
+         * This method is responsible for handling students' requests.
          * 
          * Only teachers can handle students (TODO).
          * Pending students can be either deined, accepted or ignored.

@@ -22,7 +22,7 @@
         
         /**
          *
-         * This function is responsible for showing the notifications page.
+         * This method is responsible for showing the notifications page.
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
@@ -40,7 +40,7 @@
 
         /**
          *
-         * This function is responsible for finalizing teachers' pending requests.
+         * This method is responsible for finalizing teachers' pending requests.
          * 
          * Only the administrator can finalize a pending, anyone else sending a POST request with the right action will be redirected to the login page.
          * For each record there can be 3 possibilities: deny, accept or nothing.

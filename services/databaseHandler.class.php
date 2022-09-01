@@ -19,7 +19,7 @@
         
         /**
          *
-         * This function is responsible for loading data from the database.
+         * This method is responsible for loading data from the database.
          * 
          * If the result is a boolean, and was unsuccessful, the user will be shown an error page.
          * 
@@ -56,7 +56,7 @@
 
         /**
          *
-         * This function is responsible for loading data from the database.
+         * This method is responsible for loading data from the database.
          * 
          * @param string $query The query to send to the database.
          * @param bool $multi Whether the query is a multi line transaction, or a single line one.

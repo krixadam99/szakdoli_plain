@@ -46,7 +46,7 @@
 
         /**
          * 
-         * This function returns whether the logged in user is an administrator, or not.
+         * This method returns whether the logged in user is an administrator, or not.
          * 
          * @return string Returns a string that can be either 1 or 0, where 0 means that the logged in user is not an administrator, and 1 means that the user is an administrator.
         */
@@ -54,7 +54,7 @@
 
         /**
          * 
-         * This function returns the logged in user's neptun code.
+         * This method returns the logged in user's neptun code.
          * 
          * @return string Returns the logged in user's neptun code.
         */
@@ -62,7 +62,7 @@
 
         /**
          * 
-         * This function returns data about the user.
+         * This method returns data about the user.
          * 
          * The returned data differs on the basis that the user is an administrator, or not.
          * For administrators this returns the neptun code, email address, password, is administrator attributes as a single record, since records are unique in the users table.
@@ -74,7 +74,7 @@
 
         /**
          * 
-         * This function returns all the pending teachers.
+         * This method returns all the pending teachers.
          * 
          * @return array Returns an indexed array containing the neptun code, subject name and subject group from the status_pending table for users that are teachers and whose request is pending.
         */
@@ -82,7 +82,7 @@
 
         /**
          * 
-         * This function returns students for one of the logged in user's group.
+         * This method returns students for one of the logged in user's group.
          * 
          * @return array Returns an indexed array containing the neptun code, user status, subject group, subject name and pending status from the status_pending table for users that are students and who belong to the teacher's group.
         */
@@ -90,7 +90,7 @@
 
         /**
          * 
-         * This function returns the subject name and group (pairs) where the user's teacher request is pending.
+         * This method returns the subject name and group (pairs) where the user's teacher request is pending.
          * 
          * @return array Returns an indexed array containing the subject group and subject name (pairs) where the user's status is teacher and it is pending.
         */
@@ -98,7 +98,7 @@
 
         /**
          * 
-         * This function returns the subject name and group (pairs) where the user's teacher request was approved.
+         * This method returns the subject name and group (pairs) where the user's teacher request was approved.
          * 
          * @return array Returns an indexed array containing the subject group and subject name (pairs) where the user's status is teacher and it is approved.
         */
@@ -106,7 +106,7 @@
 
         /**
          * 
-         * This function returns the subject names where the user's teacher request was approved.
+         * This method returns the subject names where the user's teacher request was approved.
          * 
          * @return array Returns an indexed array containing the subject groups where the user's status is teacher and it is approved.
         */
@@ -114,7 +114,7 @@
 
         /**
          * 
-         * This function returns the subject names and groups (pairs) where the user's student request is pending.
+         * This method returns the subject names and groups (pairs) where the user's student request is pending.
          * 
          * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it is pending.
         */
@@ -122,7 +122,7 @@
 
         /**
          * 
-         * This function returns the subject names and groups (pairs) where the user's student request was approved.
+         * This method returns the subject names and groups (pairs) where the user's student request was approved.
          * 
          * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it was approved.
         */
@@ -130,7 +130,7 @@
 
         /**
          * 
-         * This function returns the subject names where the user's student request was approved.
+         * This method returns the subject names where the user's student request was approved.
          * 
          * @return array Returns an indexed array containing the subject names where the user's status is student and it was approved.
         */
@@ -138,7 +138,7 @@
 
         /**
          * 
-         * This function returns the practice results for the logged in user.
+         * This method returns the practice results for the logged in user.
          * 
          * @return array Returns an associative array containing the practice results of the user who is a student and whose student status is approved.
         */
@@ -146,7 +146,7 @@
 
         /**
          * 
-         * This function sets the class's members.
+         * This method sets the class's members.
          * 
          * @return void
         */
@@ -203,7 +203,7 @@
 
         /**
          * 
-         * This function checks if the URI values for subject, topic and group keys are correct.
+         * This method checks if the URI values for subject, topic and group keys are correct.
          * 
          * @return void
         */

@@ -21,7 +21,7 @@
         
         /**
          *
-         * This function is responsible for showing a student's grades' page.
+         * This method is responsible for showing a student's grades' page.
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.

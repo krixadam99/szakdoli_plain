@@ -5,7 +5,7 @@
     class IndexController{
         /**
          *
-         * This function is responsible for showing the index (home) page.
+         * This method is responsible for showing the index (home) page.
          * 
          * Once a client is directed to this page, the session variables will be unset and destroyed.
          * 

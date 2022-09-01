@@ -13,7 +13,7 @@
 
         /**
          *
-         * This function is responsible for giving back the incorrect parameters.
+         * This method is responsible for giving back the incorrect parameters.
          *  
          * @return array An indexed array containing the incorrect parameters.
         */
@@ -21,7 +21,7 @@
 
         /**
          *
-         * This function is responsible for pushing a new incorrect parameter to the back of the array holding the incorrect parameters.
+         * This method is responsible for pushing a new incorrect parameter to the back of the array holding the incorrect parameters.
          * @param string $value The value we wish to push to the back of the array holding the incorrect values.
          * @return void
         */
@@ -29,7 +29,7 @@
         
         /**
          *
-         * This function is responsible for giving back the valid parameters.
+         * This method is responsible for giving back the valid parameters.
          *  
          * @return array An associative array containing the incorrect parameters.
         */
@@ -37,7 +37,7 @@
 
         /**
          *
-         * This function is responsible for setting the value of the correct parameters' dictionary by the given key.
+         * This method is responsible for setting the value of the correct parameters' dictionary by the given key.
          *  
          * @param string $key The key which we want to assign a new value to in the correct parameters' dictionary.
          * @param string $value The value we want to assign to the key in the correct parameters' dictionary.
@@ -47,7 +47,7 @@
 
         /**
          *
-         * This function is responsible for validating a user's form.
+         * This method is responsible for validating a user's form.
          *  
          * @return void
         */

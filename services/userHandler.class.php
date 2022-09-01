@@ -48,7 +48,7 @@
 
         /**
          * 
-         * This function returns the neptun code of the user.
+         * This method returns the neptun code of the user.
          * 
          * @return string The neptun code of the user.
         */
@@ -56,7 +56,7 @@
 
         /**
          * 
-         * This function returns the email address of the user.
+         * This method returns the email address of the user.
          * 
          * @return string The email address of the user.
         */
@@ -64,7 +64,7 @@
 
         /**
          * 
-         * This function returns the name of the subject which the user applied to.
+         * This method returns the name of the subject which the user applied to.
          * 
          * @return string The name of the subject which the user applied to.
         */
@@ -75,7 +75,7 @@
 
         /**
          * 
-         * This function returns the status of the user for the applied subject.
+         * This method returns the status of the user for the applied subject.
          * 
          * @return string The status of the user for the applied subject.
         */
@@ -83,7 +83,7 @@
 
         /**
          * 
-         * This function returns the subject group of the user.
+         * This method returns the subject group of the user.
          * 
          * @return string The subject group of the user.
         */
@@ -91,7 +91,7 @@
 
         /**
          * 
-         * This function returns the user's password.
+         * This method returns the user's password.
          * 
          * @return string The password of the user.
         */
@@ -99,7 +99,7 @@
 
         /**
          * 
-         * This function returns the reassuring password of the user.
+         * This method returns the reassuring password of the user.
          * 
          * @return string The reassuring password of the user.
         */
@@ -107,7 +107,7 @@
 
         /**
          * 
-         * This function decides if the password belonging to the given neptun code and the given password are the same.
+         * This method decides if the password belonging to the given neptun code and the given password are the same.
          * 
          * @return bool Returns if the password belonging to the given neptun code and the given password are the same.
         */
@@ -125,7 +125,7 @@
         
         /**
          * 
-         * This function decides if the neptun code given by the user is already in use, or not.
+         * This method decides if the neptun code given by the user is already in use, or not.
          * 
          * @return bool Returns whether the neptun code given by the user is already in use, or not.
         */
@@ -142,7 +142,7 @@
 
         /**
          * 
-         * This function decides whether the user is an administrator, or not.
+         * This method decides whether the user is an administrator, or not.
          * 
          * @return bool Returns whether the user is an administrator, or not.
         */
@@ -160,7 +160,7 @@
 
         /**
          * 
-         * This function decides whether the user as a student applied to a valid group, or not.
+         * This method decides whether the user as a student applied to a valid group, or not.
          * 
          * @return bool Returns whether the user as a student applied to a valid group.
         */
