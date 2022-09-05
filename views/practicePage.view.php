@@ -2,20 +2,16 @@
     
     $is_administrator = $this->GetIsAdministrator();
     $neptun_code = $this->GetNeptunCode();
-    
     $user_data = $this->GetUserData();
-
     $all_students = $this->GetStudents();
-    
     $pending_teachers = $this->GetPendingTeachers();
     $pending_teacher_groups = $this->GetPendingTeacherGroups();
     $pending_student_groups = $this->GetPendingStudentGroups();
-    
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
     $approved_student_groups = $this->GetApprovedStudentGroups();
-
     $approved_student_subject = $this->GetApprovedStudentSubject();
+    
     $subject_name = "";
     $column_number = 4;
     $practice_topics = [];
@@ -49,32 +45,30 @@
         ];
     }elseif($approved_student_subject == "ii"){
         $subject_name = "Diszkrét matematika II. gyakorlás";
-        $topic_division = [6, 5];
+        $topic_division = [6, 4];
         $practice_topics = [
             "Maradékos osztás és osztók száma", 
             "Redukált és teljes maradékrendszerek",
             "(Kibővített) Eukleidészi algoritmus", 
+            "Lineáris kongruenciák",
             "Lineáris diofantikus egyenletek",
             "Kínai maradéktétel",
-            "Euler-féle fí függvény",
             "Horner-táblázat használata", 
             "Polinommal való osztás", 
             "Lagrange-féle interpolációs polinomok", 
-            "Newton-féle interpolációs polinomok",
-            "Viéte-formulák használata"
+            "Newton-féle interpolációs polinomok"
         ];
         $topic_descriptions = [
-            "...", 
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "...",
-            "..."
+            "Maradékos osztások, pozitív osztók száma, kongruenciák", 
+            "Maradékosztályok reprezentatív elemekkel, Euler-féle fí függvény, az Euler-Fermat és kis Fermat-tétel",
+            "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
+            "Lineáris kongruenciák megoldása",
+            "Lineáris diofantikus egyenletek megoldása",
+            "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
+            "Polinomok helyettesítési értékének meghatározása Horner-táblázattal",
+            "Polinomok (maradékos) osztása az egész számok fölött, polinomok szorzása",
+            "Lagrange- féle interpolációs polinom illesztése több pontra",
+            "Newton- féle interpolációs polinom illesztése több pontra"
         ];
     }
 
@@ -91,6 +85,8 @@
         $progress = ($point/$counter)*100;
         return [$level, $progress];
     }
+
+    $actual_page = "practice";
 
 ?>
 
@@ -117,7 +113,7 @@
             <?php while($card_counter < count($practice_topics)):?>
                 <div class="card_row">
                     <?php for($column_index = 0; $column_index < $column_number; ++$column_index):?>
-                        <?php if($topic_counter < $topic_division[$topic]):?>
+                        <?php if($card_counter < count($practice_topics)):?>
                             <div class="small_card" onclick="SmallCardClicked(this)" id=<?=$card_counter?>>
                                 <label class="title"><?=$practice_topics[$card_counter]?></label>
                                 <label class="description"><?=$topic_descriptions[$card_counter]?></label>

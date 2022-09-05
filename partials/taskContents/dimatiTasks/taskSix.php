@@ -18,7 +18,7 @@
         <label class="task_label">
             <?=$complex_number[0]?><?=$complex_number[1]>=0?" + ":" "?><?=$complex_number[1] . "*i"?> trigonometrikus alakja:
         </label>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
     </div>
     <?php $task_counter++;?>
 <?php endforeach?>
@@ -38,7 +38,7 @@
             <?php endif?>
         </label>
         <br>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
         <?php $task_counter++;?>
     </div>
 <?php endfor?>

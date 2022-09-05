@@ -37,6 +37,6 @@
             <?php endif?>
         </label>
         <br>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
     </div>
 <?php endfor?>

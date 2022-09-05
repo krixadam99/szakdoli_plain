@@ -16,16 +16,16 @@
     </label>
     <br>
     <label class="task_label">Re(<?=$complex_number_names[$complex_number_counter]?>)</label>
-    <?php include("./partials/solutionInput.php")?>
+    <?php include("./partials/taskContents/solutionInput.php")?>
     <label class="task_label">Im(<?=$complex_number_names[$complex_number_counter]?>)</label>
     <?php $task_counter++;?>
-    <?php include("./partials/solutionInput.php")?>
+    <?php include("./partials/taskContents/solutionInput.php")?>
     <label class="task_label">|<?=$complex_number_names[$complex_number_counter]?>|</label>
     <?php $task_counter++;?>
-    <?php include("./partials/solutionInput.php")?>
+    <?php include("./partials/taskContents/solutionInput.php")?>
     <label class="task_label" style="text-decoration: overline"><?=$complex_number_names[$complex_number_counter]?></label>
     <?php $task_counter++;?>
-    <?php include("./partials/solutionInput.php")?>
+    <?php include("./partials/taskContents/solutionInput.php")?>
 </div>
 <br>
 
@@ -48,7 +48,7 @@
             <?php endif?>
         </label>
         <br>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
         <?php $task_counter++;?>
     </div>
 <?php endfor?>
@@ -59,5 +59,5 @@
 <?php $coefficients = $_SESSION["task"]["coefficients"]??"";?>
 <div class="small_task_container">
     <label class="task_label"><?=$coefficients[0] . "*x^2"?> + <?=$coefficients[1] . "*x"?> + <?=$coefficients[2] . " = 0"?></label>
-    <?php include("./partials/solutionInput.php")?>
+    <?php include("./partials/taskContents/solutionInput.php")?>
 </div>

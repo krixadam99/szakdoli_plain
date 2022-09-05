@@ -1,5 +1,8 @@
 <?php
-
+    /**
+     * This is a helper class which contains task generator functions related to Discrete Mathematics I..
+     * 
+    */
     class DimatiTasks extends Tasks{        
         private $set_names;
         private $complex_number_names;
@@ -7,13 +10,13 @@
 
         /**
          * 
-         * The contructor for DimatiTasks class
+         * The contructor for DimatiTasks class.
          * 
-         * Here the inherited members will be set
-         * Set and complex number names are also set here
-         * Based on the $topic parameter a new set of tasks will be generated
+         * Here the inherited members will be set.
+         * Set and complex number names are also set here.
+         * Based on the $topic parameter a new set of tasks will be generated.
          * 
-         * @param string $topic The topic id for task generation
+         * @param string $topic The topic id for task generation.
          * 
          * @return void
          */
@@ -22,51 +25,51 @@
             $this->SetTaskSolution([]);
             $this->SetDefinitions("");
 
-            $this->set_names = ["A", "B", "C", "D"]; //The set names used throughout the task generation
-            $this->complex_number_names = ["v", "w", "x", "y", "z"]; //The complex number names used throughout the task generation
-            $this->dimat_helper_functions = new DimatHelperFunctions();
+            $this->set_names = ["A", "B", "C", "D"]; // The set names used throughout the task generation.
+            $this->complex_number_names = ["v", "w", "x", "y", "z"]; // The complex number names used throughout the task generation.
+            $this->dimat_helper_functions = new DimatiHelperFunctions();
 
-            mt_srand(time()); //Seeding the random number generator with the current time (we may change this overtime...)
+            mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...).
             
             switch($topic){
                 case "0":{
-                    $this->SetOperations();
+                    $this->CreateTaskOne();
                 };
                 break;
                 case "1":{
-                    $this->RelationBasics();
+                    $this->CreateTaskTwo();
                 };
                 break;
                 case "2":{
-                    $this->RelationComposition();
+                    $this->CreateTaskThree();
                 };
                 break;
                 case "3":{
-                    $this->FunctionAsRelation();
+                    $this->CreateTaskFour();
                 };
                 break;
                 case "4":{
-                    $this->ComplexNumbersBasics();
+                    $this->CreateTaskFive();
                 };
                 break;
                 case "5":{
-                    $this->ComplexNumbersTrigonometry();
+                    $this->CreateTaskSix();
                 };
                 break;
                 case "6":{
-                    $this->ComplexNumbersPowers();
+                    $this->CreateTaskSeven();
                 };
                 break;
                 case "7":{
-                    $this->BinomialTheorem();
+                    $this->CreateTaskEight();
                 };
                 break;
                 case "8":{
-                    $this->GraphsBasics();
+                    $this->CreateTaskNine();
                 };
                 break;
                 case "9":{
-                    $this->GraphsExistence();
+                    $this->CreateTaskTen();
                 };
                 break;
                 default:break;
@@ -75,11 +78,13 @@
 
         /**
          * 
-         * This method is used to create the first set of tasks for Discrete mathematics I. related to basic set operations
+         * This method is used to create the first set of tasks for Discrete mathematics I. related to basic set operations.
+         * 
+         * ...Subtasks created here...
          * 
          * @return void 
         */
-        private function SetOperations(){
+        private function CreateTaskOne(){
             //We will have 4 sets
             //Each set has 10 elements
             [$set_A, $set_B, $set_C, $set_D] = $this->dimat_helper_functions->CreateSets(4, 10, false);
@@ -142,11 +147,13 @@
 
         /**
          * 
-         * This method is used to create the second set of tasks for Discrete mathematics I. related to basic set operations
+         * This method is used to create the second set of tasks for Discrete mathematics I. related to basic definitions about relation.
+         * 
+         * ...Subtasks created here...
          * 
          * @return void 
         */
-        private function RelationBasics(){
+        private function CreateTaskTwo(){
             //Set generation
             $this->dimat_helper_functions->SetMaximumNumber(20);
             $this->dimat_helper_functions->SetMinimumNumber(1);
@@ -195,7 +202,15 @@
             $this->SetTaskSolution($solution_array);
         }
 
-        private function RelationComposition(){
+        /**
+         * 
+         * This method is used to create the third set of tasks for Discrete mathematics I. related to characteristics and composition of relations.
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskThree(){
             [$set_A, $set_B, $set_C] = $this->dimat_helper_functions->CreateSets(3, 5, false);
 
             //Composition
@@ -242,7 +257,15 @@
             $this->SetTaskSolution($solution_array);
         }
 
-        private function FunctionAsRelation(){
+        /**
+         * 
+         * This method is used to create the fourth set of tasks for Discrete mathematics I. related to definitions about functions.
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskFour(){
             $set_A = $this->dimat_helper_functions->CreateSets(1, 10, false)[0];
             $set_B = $this->dimat_helper_functions->CreateSets(1, mt_rand(4, 7), false)[0];
 
@@ -297,7 +320,15 @@
             $this->SetTaskSolution($solution_array);
         }
 
-        private function ComplexNumbersBasics(){
+        /**
+         * 
+         * This method is used to create the fifth set of tasks for Discrete mathematics I. related to basic operations between complex numbers given by their algebraic form.
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskFive(){
             $this->dimat_helper_functions->SetMaximumNumber(100);
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(5);
@@ -395,7 +426,15 @@
             $this->SetTaskSolution($solution_array);
         }
 
-        private function ComplexNumbersTrigonometry(){
+        /**
+         * 
+         * This method is used to create the sixth set of tasks for Discrete mathematics I. related to operations between complex numbers given by their trigonometric form.
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskSix(){
             $this->dimat_helper_functions->SetMaximumNumber(100);
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(5);
@@ -455,7 +494,15 @@
             $this->SetTaskSolution($solution_array);
         }
 
-        private function ComplexNumbersPowers(){
+        /**
+         * 
+         * This method is used to create the seventh set of tasks for Discrete mathematics I. related to the powers of complex numbers.
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskSeven(){
             $this->dimat_helper_functions->SetMaximumNumber(100);
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(3);
@@ -501,15 +548,39 @@
             $this->SetTaskSolution($solution_array);      
         }
 
-        private function BinomialTheorem(){
+        /**
+         * 
+         * This method is used to create the eight set of tasks for Discrete mathematics I. related to...
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskEight(){
             
         }
 
-        private function GraphsBasics(){
+        /**
+         * 
+         * This method is used to create the ninth set of tasks for Discrete mathematics I. related to...
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskNine(){
             
         }
 
-        private function GraphsExistence(){
+        /**
+         * 
+         * This method is used to create the tenth set of tasks for Discrete mathematics I. related to...
+         * 
+         * ...Subtasks created here...
+         * 
+         * @return void 
+        */
+        private function CreateTaskTen(){
             
         }
 

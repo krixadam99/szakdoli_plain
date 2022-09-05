@@ -20,7 +20,7 @@
             <?=$operations["power"][$subtask_counter][0]?> ^ <?=$operations["power"][$subtask_counter][1]?>
         </label>
         <br>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
         <?php $task_counter++;?>
     </div>
 <?php endfor?>
@@ -35,7 +35,7 @@
             <?=$operations["root"][$subtask_counter][0]?> ^ 1/<?=$operations["root"][$subtask_counter][1]?>
         </label>
         <br>
-        <?php include("./partials/solutionInput.php")?>
+        <?php include("./partials/taskContents/solutionInput.php")?>
         <?php $task_counter++;?>
     </div>
 <?php endfor?>

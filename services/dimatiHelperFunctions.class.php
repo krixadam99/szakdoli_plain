@@ -1,9 +1,9 @@
 <?php
     /**
-     * This is a helper class which contains helper functions related to discrete mathematics.
+     * This is a helper class which contains helper functions related to Discrete Mathematics I..
      * 
     */
-    class DimatHelperFunctions {
+    class DimatiHelperFunctions {
         private $set_names;
         private $complex_number_names;
         private $possible_abc_characters;
@@ -12,7 +12,7 @@
 
         /**
          * 
-         * The contructor for DimatHelperFunctions class.
+         * The contructor for DimatiHelperFunctions class.
          * 
          * The range for random numbers; set, complex number names and possible alphabetic characters are set here.
          * 

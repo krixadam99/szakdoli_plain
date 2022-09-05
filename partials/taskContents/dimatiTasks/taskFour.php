@@ -26,7 +26,7 @@
             <?=" }"?>
         </label>
         <?php $select_label = "Függvény-e"?>
-        <?php include("./partials/solutionSelect.php")?>
+        <?php include("./partials/taskContents/solutionSelect.php")?>
         <?php $select_counter++;?>
     <?php endforeach?>
 </div>
@@ -48,7 +48,7 @@
             <?=" }"?>
         </label>
         <?php foreach($function_characteristics as $index => $select_label):?>
-            <?php include("./partials/solutionSelect.php")?>
+            <?php include("./partials/taskContents/solutionSelect.php")?>
             <?php $select_counter++;?>
         <?php endforeach?>
         <?php $task_counter++;?>

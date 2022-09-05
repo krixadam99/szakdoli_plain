@@ -24,7 +24,7 @@
 </label>
 <br>
 <?php $task_counter = 0;?>
-<?php include("./partials/solutionInput.php")?>
+<?php include("./partials/taskContents/solutionInput.php")?>
 </div>
 <br>
 
@@ -54,7 +54,7 @@
     <?php $relation_characteristics = ["Reflexív", "Irreflexív", "Szimmetrikus", "Antiszimmetrikus", "Asszimmetrikus", "Tranzitív", "Dichitóm", "Trichotóm", "Ekvivalencia reláció"]?>
     <?php $select_counter = 0;?>
     <?php foreach($relation_characteristics as $index => $select_label):?>
-        <?php include("./partials/solutionSelect.php")?>
+        <?php include("./partials/taskContents/solutionSelect.php")?>
         <?php $select_counter++;?>
     <?php endforeach?>
 </div>
@@ -83,7 +83,7 @@
                         <?php endif?>
                     <?php endforeach?>
                 </ul>
-                <?php include("./partials/solutionInput.php")?>
+                <?php include("./partials/taskContents/solutionInput.php")?>
                 </div>
             <?php endif?>
     </label>

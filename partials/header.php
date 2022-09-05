@@ -6,7 +6,7 @@
     <?php if(!$is_administrator):?>
         <div id="header_line">
             <?php if(count($approved_teacher_groups) != 0):?> <!-- there is at least one group assigned to this user -->
-                <nav id="generate_task" class="nav_with_submenu">
+                <nav id="generate_task" class="nav_with_submenu <?=$actual_page=="task_generation"?"actual_page":"not_actual_page"?>">
                     Feladatsor összeállítása
                     <div class="submenu">                    
                         <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>                            
@@ -15,7 +15,7 @@
                     </div>
                 </nav>
 
-                <nav id="students" class="nav_with_submenu">
+                <nav id="students" class="nav_with_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>">
                     Diákok kezelése
                     <div class="submenu">
                         <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>
@@ -33,7 +33,7 @@
                     </div>
                 </nav>
 
-                <nav id="student_grades" class="nav_with_submenu">
+                <nav id="student_grades" class="nav_with_submenu <?=$actual_page=="student_grades"?"actual_page":"not_actual_page"?>">
                     Eredemények
                     <div class="submenu">
                         <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>
@@ -56,11 +56,11 @@
                 <?php if(count($approved_teacher_groups) != 0):?>
                     <nav id="empty_nav"></nav>
                 <?php endif?>
-                <nav id="practice" class="nav_without_submenu">
+                <nav id="practice" class="nav_without_submenu <?=$actual_page=="practice"?"actual_page":"not_actual_page"?>">
                     <a class="menu_cell" href=<?="./index.php?site=practice"?>>Gyakorlás</a>
                 </nav>
 
-                <nav id="personal_grades" class="nav_without_submenu">
+                <nav id="personal_grades" class="nav_without_submenu <?=$actual_page=="grades"?"actual_page":"not_actual_page"?>">
                     <a class="menu_cell" href=<?="./index.php?site=grades"?>>Saját eredményeim</a>
                 </nav>
             <?php endif?>

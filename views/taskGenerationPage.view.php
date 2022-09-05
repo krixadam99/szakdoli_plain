@@ -2,15 +2,11 @@
     
     $is_administrator = $this->GetIsAdministrator();
     $neptun_code = $this->GetNeptunCode();
-    
     $user_data = $this->GetUserData();
-
     $all_students = $this->GetStudents();
-    
     $pending_teachers = $this->GetPendingTeachers();
     $pending_teacher_groups = $this->GetPendingTeacherGroups();
     $pending_student_groups = $this->GetPendingStudentGroups();
-    
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
     $approved_student_groups = $this->GetApprovedStudentGroups();
@@ -23,6 +19,8 @@
             $subject = "Diszkrét matematika II.";
         }
     }
+
+    $actual_page = "task_generation";
 
 ?>
 

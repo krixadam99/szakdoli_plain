@@ -25,7 +25,7 @@
             parent::__construct();
             $this->count_correct = 0;
             $this->solution_counter = 0;
-            $this->dimat_helper_functions = new DimatHelperFunctions();
+            $this->dimat_helper_functions = new DimatiHelperFunctions();
         }
         
         public function Practice(){
@@ -96,10 +96,10 @@
                 $_SESSION["solution"] = $dimat_i_tasks->GetTaskSolution();
                 $_SESSION["definitions"] = $dimat_i_tasks->GetDefinitions();
             }else if($subject == "ii"){
-                $dimat_i_tasks = new DimatiTasks($topic_number);
-                $_SESSION["task"] = $dimat_i_tasks->GetTaskDescription();
-                $_SESSION["solution"] = $dimat_i_tasks->GetTaskDescription();
-                $_SESSION["definitions"] = $dimat_i_tasks->GetTaskDescription();
+                $dimat_ii_tasks = new DimatiiTasks($topic_number);
+                $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescription();
+                $_SESSION["solution"] = $dimat_ii_tasks->GetTaskDescription();
+                $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();
             }
         }
 
