@@ -71,20 +71,20 @@
 
         /**
          * 
-         * This function is responsible for creating the first set of tasks for Discrete Mathematics II. related to division, number of dividors and congruencies.
+         * This function is responsible for creating the first set of tasks of Discrete Mathematics II. related to division, number of dividors and congruencies.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskOne(){
-            $this->dimat_helper_functions->SetMaximumNumber(1000);
             $this->dimat_helper_functions->SetMinimumNumber(-1000);
+            $this->dimat_helper_functions->SetMaximumNumber(1000);
 
             $first_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
             $second_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
             $third_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
-            $fourth_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4, true);
+            $fourth_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4, false, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő osztással, osztók számával és kongruencia definíciójával kapcsolatos feladatokat!",
@@ -98,26 +98,70 @@
 
         /**
          * 
-         * This function is responsible for creating the second task related to Discrete Mathematics II..
+         * This function is responsible for creating the second set of tasks of Discrete Mathematics II. related to residue systems.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
-        private function CreateTaskTwo(){
+        private function CreateTaskTwo(){            
+            $first_numbers = [mt_rand(5,15),mt_rand(5,15)];
+            $second_numbers = [mt_rand(5,25), mt_rand(5,25), mt_rand(5,25), mt_rand(5,25)];
+            $third_numbers = [mt_rand(1000,5000), mt_rand(1000,5000), mt_rand(1000,5000), mt_rand(1000,5000)];
+            
+            $this->dimat_helper_functions->SetMinimumNumber(2);
+            $this->dimat_helper_functions->SetMaximumNumber(5000);
+            $fourth_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
+            $fourth_mods = [mt_rand(10,100), mt_rand(10,100), mt_rand(10,100), mt_rand(10,100)];
 
+            $task_array = array(
+                "task_description" => "Old meg a következő maradékrendszerekkel kapcsolatos feladatokat!",
+                "first_parameter" => $first_numbers,
+                "second_parameter" => $second_numbers,
+                "third_parameter" => $third_numbers,
+                "fourth_parameter" => $fourth_pairs,
+                "fourth_mods" => $fourth_mods
+            );
+            $this->SetTaskDescription($task_array);
         }
 
         /**
          * 
-         * This function is responsible for creating the third task related to Discrete Mathematics II..
+         * This function is responsible for creating the third set of tasks of Discrete Mathematics II. related to Eucleidan algorithm.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskThree(){
+            $this->dimat_helper_functions->SetMinimumNumber(30);
+            $this->dimat_helper_functions->SetMaximumNumber(200);
+            
+            $first_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
+            $step_counts = [];
+            $eucleidan_algorithm = [];
+            $gcd_array = [];
+            $lcm_array = [];
+            foreach($first_pairs as $index => $pair){
+                $algorithm_steps = $this->dimat_helper_functions->GetGCDWithEucleidan($pair);
+                $actual_gcd = $algorithm_steps[count($algorithm_steps)-1][2];
+                array_push($eucleidan_algorithm, $algorithm_steps);
+                array_push($gcd_array, $actual_gcd); // We need the smaller number from the last step (it is the residue of the last but one step)
+                if($actual_gcd !== 0){
+                    array_push($lcm_array, ($pair[0]*$pair[1])/$actual_gcd);
+                }else{
+                    array_push($lcm_array, "inf");
+                }
+                array_push($step_counts, count($algorithm_steps));
+            }
 
+
+            $task_array = array(
+                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "first_parameter" => $first_pairs,
+                "step_counts" => $step_counts
+            );
+            $this->SetTaskDescription($task_array);
         }
 
         /**

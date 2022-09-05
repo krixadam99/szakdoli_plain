@@ -49,7 +49,7 @@
         $practice_topics = [
             "Maradékos osztás és osztók száma", 
             "Redukált és teljes maradékrendszerek",
-            "(Kibővített) Eukleidészi algoritmus", 
+            "Eukleidészi algoritmus", 
             "Lineáris kongruenciák",
             "Lineáris diofantikus egyenletek",
             "Kínai maradéktétel",

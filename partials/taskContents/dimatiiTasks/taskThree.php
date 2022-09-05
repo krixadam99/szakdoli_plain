@@ -1,10 +1,12 @@
-<!-- 4 tasks -->
-<div class="small_task_container">
+<?php foreach($_SESSION["task"]["first_parameter"] as $index => $pair):?>
     <label class="task_label">
-        n. részfeladat: Határozd meg a (szám1, szám2) számok legnagyobb közös osztóját az Euklideszi algoritmussal, majd add meg a legkisebb közös többszörösüket!
+        <?=$index + 1?>. részfeladat: Határozd meg a <?= $pair[0] . " és " . $pair[1]?> számok legnagyobb közös osztóját az Euklideszi algoritmussal, majd add meg a legkisebb közös többszörösüket!
     </label>
-    <!-- n row with 3 input/row -->
-    <!-- GCD input-->
-    <!-- LCM input-->
-</div>
-<br>
+    <div class="small_task_container">
+        <?php for($counter=0; $counter < $_SESSION["task"]["step_counts"][$index]; $counter++):?>
+            <?php $task_counter = $index . "_" . $counter;?>
+            <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php endfor?>
+    </div>
+    <br>
+<?php endforeach?>

@@ -301,3 +301,15 @@ ul {
     padding-left: 18px;
 }
 
+.exp{
+    position: relative;
+    bottom: 6px;
+    font-size: smaller;
+}
+
+.bottom{
+    position: relative;
+    top: 6px;
+    font-size:smaller;
+}
+
