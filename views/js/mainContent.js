@@ -42,7 +42,7 @@ if(nav_buttons){
 if(solution_inputs){
     for(let solution_input of solution_inputs){
         solution_input.addEventListener("click", ()=>{
-            if(!solution_input.readOnly && solution_input.value == "Megoldásom..."){
+            if(!solution_input.readOnly){
                 solution_input.value= ""
                 solution_input.style["color"] = "black"
                 solution_input.style["font-weight"] = "bold"

@@ -81,10 +81,10 @@
             $this->dimat_helper_functions->SetMinimumNumber(-1000);
             $this->dimat_helper_functions->SetMaximumNumber(1000);
 
-            $first_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
+            $first_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
             $second_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
             $third_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
-            $fourth_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4, false, true);
+            $fourth_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4, false, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő osztással, osztók számával és kongruencia definíciójával kapcsolatos feladatokat!",
@@ -111,7 +111,7 @@
             
             $this->dimat_helper_functions->SetMinimumNumber(2);
             $this->dimat_helper_functions->SetMaximumNumber(5000);
-            $fourth_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
+            $fourth_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
             $fourth_mods = [mt_rand(10,100), mt_rand(10,100), mt_rand(10,100), mt_rand(10,100)];
 
             $task_array = array(
@@ -137,7 +137,7 @@
             $this->dimat_helper_functions->SetMinimumNumber(30);
             $this->dimat_helper_functions->SetMaximumNumber(200);
             
-            $first_pairs = $this->dimat_helper_functions->CreatePairOfNumber(4);
+            $first_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
             $step_counts = [];
             $eucleidan_algorithm = [];
             $gcd_array = [];
@@ -166,26 +166,67 @@
 
         /**
          * 
-         * This function is responsible for creating the fourth task related to Discrete Mathematics II..
+         * This function is responsible for creating the fourth set of tasks of Discrete Mathematics II. related to linear congruencies.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskFour(){
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $this->dimat_helper_functions->SetMaximumNumber(100);
+            
+            $first_triplets = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(5);
+            $linear_congruency_algorithm = [];
+            $solution_array = [];
+            foreach($first_triplets as $index => $triplet){
+                $algorithm_steps = $this->dimat_helper_functions->GetLinearCongruencySolution($triplet);
+                array_push($linear_congruency_algorithm, $algorithm_steps);
+                array_push($solution_array, $algorithm_steps[count($algorithm_steps)-1]);
+            }
 
+
+            $task_array = array(
+                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "first_triplets" => $first_triplets,
+                "solution" => $linear_congruency_algorithm
+            );
+            $this->SetTaskDescription($task_array);
         }
 
         /**
          * 
-         * This function is responsible for creating the fifth task related to Discrete Mathematics II..
+         * This function is responsible for creating the fifth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskFive(){
+            $this->dimat_helper_functions->SetMinimumNumber(-50);
+            $this->dimat_helper_functions->SetMaximumNumber(50);
+            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2); // ax \equiv b (mod c)
+            
+            $this->dimat_helper_functions->SetMinimumNumber(100);
+            $this->dimat_helper_functions->SetMaximumNumber(1000);
+            array_push($congruency_triplets, $this->dimat_helper_functions->CreateSolvableLinearCongruencies(1)[0]);
+            $diophantine_algorithm = [];
+            $triplets = [];
+            foreach($congruency_triplets as $index => $triplet){
+                $diophantine_equation = [$triplet[0], -$triplet[2], $triplet[1]]; // ax - b = cy -> ax - cy = b 
+                $algorithm_steps = $this->dimat_helper_functions->GetDiophantineEquationSolution($diophantine_equation);
+                array_push($diophantine_algorithm, $algorithm_steps);
+                array_push($triplets, $diophantine_equation);
+            }
 
+
+            $task_array = array(
+                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "first_triplets" => [$triplets[0], $triplets[1]],
+                "second_triplet" => $triplets[2],
+                "solution" => $diophantine_algorithm 
+            );
+            $this->SetTaskDescription($task_array);
         }
 
         /**

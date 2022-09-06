@@ -55,17 +55,18 @@ nav {
 }
 
 .actual_page{
-    background-color:rgb(255, 240, 225);
-    border-radius: 10px 10px 0px 0px;
+    /*background: linear-gradient(180deg, rgba(255, 227, 192, 0.8) 0%, white 100%);*/
+    background-color:rgba(247, 206, 157, 0.8);
+    border-radius: 10px;
 }
 
 .not_actual_page.nav_with_submenu:hover{
-    background-color:rgba(248, 200, 142, 0.8);
+    background-color:rgba(247, 195, 132, 0.8);
     border-radius: 10px 10px 0px 0px;
 }
 
 .not_actual_page.nav_without_submenu:hover{
-    background-color:rgba(248, 200, 142, 0.8);
+    background-color:rgba(247, 195, 132, 0.8);
     border-radius: 10px;
 }
 

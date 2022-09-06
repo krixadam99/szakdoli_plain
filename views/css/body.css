@@ -242,8 +242,13 @@ hr {
     margin: 0% 25% 0% 5%; 
 }
 
-.solution_container {
+.solution_container, .multiple_solution_input_container {
     margin: 1% 0% 3% 0%;
+}
+
+.multiple_solution_input_container {
+    display: flex;  
+    width: 100%; 
 }
 
 .partial_task{
@@ -251,13 +256,21 @@ hr {
 }
 
 .solution_container label {
-    margin: 0% 2% 0% 0%;
-    width: 25%;
+    margin: 0% 0% 0% 0%;
+    width: auto
 }
 
 .solution_container input {
-    width: 71%;
-    margin: 0% 2% 0% 0%; 
+    width: 20%;
+    margin: 0% 60% 0% 0%; 
+    border-radius: 5px;
+    padding-left: 2%;
+    color:rgb(134, 132, 132);
+}
+
+.multiple_solution_input_container input {
+    margin: 0% 1% 0% 1%; 
+    width: 10%;
     border-radius: 5px;
     padding-left: 2%;
     color:rgb(134, 132, 132);
