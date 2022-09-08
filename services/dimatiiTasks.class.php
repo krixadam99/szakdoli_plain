@@ -264,23 +264,18 @@
             $this->dimat_helper_functions->SetMinimumNumber(-50);
             $this->dimat_helper_functions->SetMaximumNumber(50);
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
-            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(3);
-            $third_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4);
+            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4);
 
             $first_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($first_congruence_system_triplets);
             $second_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($second_congruence_system_triplets);
-            $third_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($third_congruence_system_triplets);
-
 
             $task_array = array(
                 "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
                 "divide_triplets" => $divide_triplets,
                 "first_congruence_system_triplets" => $first_congruence_system_triplets,
                 "second_congruence_system_triplets" => $second_congruence_system_triplets,
-                "third_congruence_system_triplets" => $third_congruence_system_triplets,
                 "first_solution" => $first_solution,
                 "second_solution" => $second_solution,
-                "third_solution" => $third_solution
             );
             $this->SetTaskDescription($task_array);
         }
