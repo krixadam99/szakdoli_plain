@@ -195,11 +195,79 @@
             // ... x^1's coefficient = (x_1*...*x_degree-1) + -> ($degree | 1) addition
             // x^0's coefficient = x_1*...*x_degree -> ($degree | 0) = 1 addition
             $roots = [];
+            $negated_roots = [];
             for($counter = 0; $counter < $degree; $counter++){
-                array_push($roots, mt_rand($this->minimum_number, $this->maximum_number));
+                $new_root = mt_rand($this->minimum_number, $this->maximum_number);
+                array_push($roots, $new_root);
+                array_push($negated_roots, -1*$new_root);
             }
 
+            // Here the roots are given
+            // Now it is time to calculate the coefficients:
+            $sign = mt_rand(0,1) == 0?-1:1;
+            $main_coefficient = $sign*mt_rand(1,5);
+            $coefficients = [$main_coefficient];
+            for($counter = $degree-1; $counter >= 0; $counter--){
+                array_push($coefficients, $main_coefficient*$this->CalculateCoefficientByVieta($negated_roots, $counter));
+            }
 
+            return [$coefficients, $roots];
+        }
+
+        /**
+         * This method returns the requested amount of places which will include the given amount of roots.
+         * 
+         * There is a chance, that the number of places that should be from the roots array is greater than, or equal to the number of requested places. In this case, a part of the roots array should be returned with extra places that are not roots.
+         * It is possible, that the number of places that should be from the roots array is greater than, or equla to the number of distinct elements in the roots array. In this case, the distinct elements of the roots array should be returned with extra places that are not roots.
+         * 
+         * @param int $number_of_places The number of places the method will return.
+         * @param int $number_of_roots The number of places that will be a root.
+         * @param array $roots An indexed array containing the roots of a polynomial expression.
+         * 
+         * @return array Returns an array containing the places, where the values will be calculated upon substituting the places into the polynomial expression's variables.
+         */
+        public function CreatePlacesWithRoots($number_of_places, $number_of_roots, $roots){
+            $return_places = [];
+            
+            // Distinct roots
+            $distinct_roots = [];
+            foreach($roots as $index => $root){
+                if(!in_array($root, $distinct_roots)){
+                    array_push($distinct_roots, $root);
+                }
+            }
+
+            // Add places to return array
+            $counter = 0;
+            $root_counter = 0;
+            $random_indices = [];
+            while($counter < $number_of_places){
+                $random_index = mt_rand(0,$number_of_places-1);
+                while(in_array($random_index, $random_indices)){
+                    $random_index = mt_rand(0,$number_of_places-1);
+                }
+                array_push($random_indices, $random_index);
+
+                if(  $root_counter < count($distinct_roots)
+                  && $root_counter < $number_of_roots
+                ){
+                    $random_element_from_roots = $distinct_roots[mt_rand(0,count($distinct_roots)-1)];
+                    while(in_array($random_element_from_roots, $return_places)){
+                        $random_element_from_roots = $distinct_roots[mt_rand(0,count($distinct_roots)-1)];
+                    }
+                    $return_places[$random_index] = $random_element_from_roots; 
+                    $root_counter++;
+                }else{
+                    $random_element = mt_rand($this->minimum_number,$this->maximum_number);
+                    while(in_array($random_element, $return_places) || in_array($random_element, $roots)){
+                        $random_element = mt_rand($this->minimum_number,$this->maximum_number);
+                    }
+                    $return_places[$random_index] = $random_element;
+                }
+                $counter++;
+            }
+
+            return $return_places;
         }
 
         /**
@@ -441,68 +509,76 @@
             return [1, $c_12, $m_12];
         }
 
-
         /**
          * 
-        */
-        private function CalculateCombinationOfListIndices(){
-            /*
-            if combNum-1 >= len(l):
-                pass
-
-            if combNum-1 > 0:
-                prevI += 1
-                for i in range(prevI,len(l)-combNum+1):
-                    act.append(i)
-                    combinationOfListInd(l, combNum-1, act, res, i)
-                    act.pop()
-            elif combNum-1 == 0:
-                prevI += 1
-                for i in range(prevI,len(l)):
-                    act.append(i)
-                    res.append(act.copy())
-                    act.pop()
-            else:
-                pass
-            */
-        }
-
-        /**
+         * This private recursive method creates a list containing possible combinations of the elements of the given list, where the number of elements per list is also given.
          * 
-         * This private recursive method creates a list containing all of the possible combinations of the elements of the given list, where the number of elements per list is also given.
+         * The list will be iterated through by embedded iterations, where the "deepest level" is the same as the required amount of elements per combination.
+         * Every iteration will start from the element following the "parent" iteration's actual element and ends at the element of the index of the original (list's size - original number of elements per combination + level of iteration (embedding count)).
+         * The element pushing happens on the deppest level.
+         * Since embedding n number of iterations is tedious and certainly not a good practice, the easiest way to implement this task is to make it recursive.
          * 
          * @param array $original_list The original list of which the method will give the combinations.
-         * @param int $number_of_elements_per_combinitaion The number of elements per combination.
+         * @param int $number_of_remained_iterations The number of remained iterations. This decreases by every recursive call.
+         * @param array $actual_elements This is a list of elements. It is growing every turn, and will finally contain a combination when it gets to the deepest level of iterations. When this finally contains as many elements as originally was required, then it gets pushed to the return array.
+         * @param int $previous_index The previous iteration's last element's index.
          * 
-         * @return array An indexed array containing all of the possible combinations of the elements of the given list, where the number of elements per list is also given.
+         * @return array An indexed array containing possible combinations of the original list's elements (required number of elements). In the final level all of the combinations are in the returned array.
         */
-        private function CalculateCombinationOfList($original_list, $number_of_elements_per_combinitaion, $actual_elements, $previous_index = 0){
-            if($number_of_elements_per_combinitaion >= 1){ //If the number of elements per combination is positive 
-                if($number_of_elements_per_combinitaion < count($original_list)){ //If the number of elements per combination is less than the number of elements of the original list
-                    if($number_of_elements_per_combinitaion > 1){ //The number of elements per combination is at least 2
+        private function CalculateCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
+            if($number_of_remained_iterations >= 1){ // At least 1 iterations remained
+                if($number_of_remained_iterations < count($original_list)){ // The number of remained iterations is not greater than, or equal to the number of elements of the original list 
+                    if($number_of_remained_iterations > 1){ // At least 2 iterations remained
                         $return_list = [];
-                        for($counter = $previous_index; $counter < count($original_list) - $number_of_elements_per_combinitaion + 1; $counter++){
-                            $temporary_list = $actual_elements;
+                        for($counter = $previous_index; $counter < count($original_list) - $number_of_remained_iterations + 1; $counter++){
+                            $temporary_list = $actual_elements; // NOT reference, also this is needed, or else we should pop the last element of $actual_elements in the end of each iteration
                             array_push($temporary_list, $original_list[$counter]);
-                            $combination_list = $this->CalculateCombinationOfList($original_list, $number_of_elements_per_combinitaion-1, $temporary_list, $counter + 1);
-                            $return_list = array_merge($return_list, $combination_list);
+                            $combination_list = $this->CalculateCombinationOfList($original_list, $number_of_remained_iterations - 1, $temporary_list, $counter + 1); // A part of the final list of combinations
+                            $return_list = array_merge($return_list, $combination_list); // Merging the list of combinations with part of the possible combinations  
                         }
                         return $return_list;
-                    }elseif($number_of_elements_per_combinitaion === 1){ //The number of elements per combination is 1
+                    }elseif($number_of_remained_iterations === 1){ // There is only 1 iteration left
                         $return_list = [];
                         for($counter = $previous_index; $counter < count($original_list); $counter++){
-                            $temporary_list = $actual_elements; // NOT reference!
-                            array_merge($temporary_list, [$original_list[$counter]]);
-                            array_push($return_list, $temporary_list); //[1,2], [1,3], [1,4], [1,5]
+                            $temporary_list = $actual_elements; // NOT reference, also this is needed, or else we should pop the last element of $actual_elements in the end of each iteration
+                            array_push($temporary_list, $original_list[$counter]);
+                            array_push($return_list, $temporary_list);
                         }
-                        return $return_list;
+                        return $return_list; // Returning a part of the final combination's list, this is the deepest level of iterations
                     }
                 }else{
-                    return $original_list;
+                    return [$original_list];
                 }
             }
             
             return [];
+        }
+
+        /**
+         * 
+         * This private method will use the given roots to calculate the coefficient given by its index.
+         * 
+         * By Viéte the number of elements per combinations is (the size of the array containing roots - index of coefficient).
+         * 
+         * @param array $roots The roots of a polynomial expression.
+         * @param int $index_of_coefficient The index of coefficient which the method will calculate.
+         * 
+         * @return int Returns the coefficient given by its index.
+        */
+        private function CalculateCoefficientByVieta($roots, $index_of_coefficient = 0){
+            $actual_index = count($roots) - $index_of_coefficient;
+            $combinations = $this->CalculateCombinationOfList($roots, $actual_index);
+
+            $sum = 0;
+            foreach($combinations as $combination_index => $combination){
+                $prod = 1;
+                foreach($combination as $element_index => $combination_element){
+                    $prod *= $combination_element; 
+                }
+                $sum += $prod;
+            }
+
+            return $sum;
         }
     }
 ?>

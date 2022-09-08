@@ -327,3 +327,30 @@ ul {
     top: 6px;
     font-size:smaller;
 }
+
+.solution_table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2% 0% auto 0%;
+}
+
+.solution_table tr:first-of-type{
+    border-bottom: 1px solid black;
+}
+
+.solution_table td:last-of-type, .solution_table th:last-of-type{
+    border-left: 1px dashed black;
+}
+
+.solution_table th, .solution_table td {
+    text-align: left;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.solution_table input{
+    width: 60%;
+    margin: 2% 38% 2% 2%;
+}
+
+

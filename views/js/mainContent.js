@@ -56,7 +56,7 @@ if(solution_inputs){
 if(body){
     for(let small_card of small_cards){
         small_card.addEventListener("mouseenter", ()=>{
-            body.style["background-color"] = "grey"
+            body.style["background-color"] = "#C1C2C7"
             body.style.transition = "1s"
             small_card.style["background-color"] = "white"
         })

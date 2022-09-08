@@ -295,23 +295,19 @@
          */
         private function CreateTaskSeven(){
             $task_array = array(
-                "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
+                "polynomials" => []
             );
 
-            $this->dimat_helper_functions->SetMinimumNumber(-50);
-            $this->dimat_helper_functions->SetMaximumNumber(50);
+            $this->dimat_helper_functions->SetMinimumNumber(-10);
+            $this->dimat_helper_functions->SetMaximumNumber(10);
             
-            $polynomial_degree = mt_rand(3,5);
-            $number_of_places = mt_rand(3,5);
-            $polynomial_expression = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-            $places = $this->dimat_helper_functions->CreatePlaces($number_of_places);
-            $task_array["first_polynomial"] = [$polynomial_degree, $number_of_places, $polynomial_expression, $places];
-
-            $polynomial_degree = mt_rand(6,8);
-            $number_of_places = mt_rand(3,5);
-            $second_polynomial = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-            $places = $this->dimat_helper_functions->CreatePlaces($number_of_places);
-            $task_array["second_polynomial"] = [$polynomial_degree, $number_of_places, $polynomial_expression, $places];
+            for($counter = 0; $counter < 2; $counter++){
+                $polynomial_degree = 2*$counter + 2;
+                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+                $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots);
+                array_push($task_array["polynomials"], [$polynomial_degree, $polynomial_expression, $places]);
+            }
 
             $this->SetTaskDescription($task_array);
 
