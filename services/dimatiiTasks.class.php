@@ -143,16 +143,15 @@
             $gcd_array = [];
             $lcm_array = [];
             foreach($first_pairs as $index => $pair){
-                $algorithm_steps = $this->dimat_helper_functions->GetGCDWithEucleidan($pair);
-                $actual_gcd = $algorithm_steps[count($algorithm_steps)-1][2];
-                array_push($eucleidan_algorithm, $algorithm_steps);
-                array_push($gcd_array, $actual_gcd); // We need the smaller number from the last step (it is the residue of the last but one step)
-                if($actual_gcd !== 0){
-                    array_push($lcm_array, ($pair[0]*$pair[1])/$actual_gcd);
+                $algorithm = $this->dimat_helper_functions->GetGCDWithEucleidan($pair);
+                array_push($eucleidan_algorithm, $algorithm["steps"]);
+                array_push($gcd_array, $algorithm["solution"]); // We need the smaller number from the last step (it is the residue of the last but one step)
+                if($algorithm["solution"] !== 0){
+                    array_push($lcm_array, ($pair[0]*$pair[1])/$algorithm["solution"]);
                 }else{
                     array_push($lcm_array, "inf");
                 }
-                array_push($step_counts, count($algorithm_steps));
+                array_push($step_counts, count($algorithm["steps"]));
             }
 
 
@@ -180,14 +179,14 @@
             $linear_congruency_algorithm = [];
             $solution_array = [];
             foreach($first_triplets as $index => $triplet){
-                $algorithm_steps = $this->dimat_helper_functions->GetLinearCongruencySolution($triplet);
-                array_push($linear_congruency_algorithm, $algorithm_steps);
-                array_push($solution_array, $algorithm_steps[count($algorithm_steps)-1]);
+                $algorithm = $this->dimat_helper_functions->GetLinearCongruenceSolution($triplet);
+                array_push($linear_congruency_algorithm, $algorithm["steps"]);
+                array_push($solution_array, $algorithm["solution"]);
             }
 
 
             $task_array = array(
-                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
                 "first_triplets" => $first_triplets,
                 "solution" => $linear_congruency_algorithm
             );
@@ -207,21 +206,36 @@
             $this->dimat_helper_functions->SetMaximumNumber(50);
             $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2); // ax \equiv b (mod c)
             
-            $this->dimat_helper_functions->SetMinimumNumber(100);
-            $this->dimat_helper_functions->SetMaximumNumber(1000);
-            array_push($congruency_triplets, $this->dimat_helper_functions->CreateSolvableLinearCongruencies(1)[0]);
+            // Divide b into two numbers, so that the first is divisable by a, and the second is divisible by c
+            // ax + cy = b
+            // Let b between 100-1000
+            // Let a and c be strictly smaller than b
+            $b = mt_rand(100,1000);
+            $c = mt_rand(2,1000);
+            $a = mt_rand(2,1000);
+            while($a > $b 
+                || $c > $b 
+                || $a === $c 
+                || $b % $this->dimat_helper_functions->GetGCDWithIteration([$a,$c]) !== 0){
+                $c = mt_rand(100,1000);
+                $a = mt_rand(100,1000);
+            }
+            // $ax \equiv $b (mod $c) => $a*x + $c*y = $b
+            array_push($congruency_triplets, [$a,$b,$c]);
+
             $diophantine_algorithm = [];
             $triplets = [];
             foreach($congruency_triplets as $index => $triplet){
-                $diophantine_equation = [$triplet[0], -$triplet[2], $triplet[1]]; // ax - b = cy -> ax - cy = b 
+                // Triplet in the form of $triplet[0]*x \equiv $triplet[1] (mod $triplet[2]) -> $triplet[0]*x - $triplet[1] = $triplet[2]*y
+                // Equation in the form of $triplet[0]*x + $triplet[2]*y = $triplet[1]
+                $diophantine_equation = [$triplet[0], $triplet[2], $triplet[1]];
                 $algorithm_steps = $this->dimat_helper_functions->GetDiophantineEquationSolution($diophantine_equation);
                 array_push($diophantine_algorithm, $algorithm_steps);
                 array_push($triplets, $diophantine_equation);
             }
 
-
             $task_array = array(
-                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő diofantoszi egyenletekkel kapcsolatos feladatokat!",
                 "first_triplets" => [$triplets[0], $triplets[1]],
                 "second_triplet" => $triplets[2],
                 "solution" => $diophantine_algorithm 
@@ -231,19 +245,45 @@
 
         /**
          * 
-         * This function is responsible for creating the sixth task related to Discrete Mathematics II..
+         * This function is responsible for creating the sixth set of tasks of Discrete Mathematics II. related to chinese remainder theorem.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskSix(){
+            $this->dimat_helper_functions->SetMinimumNumber(-50);
+            $this->dimat_helper_functions->SetMaximumNumber(50);
 
+            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(2);
+            $first_divide_triplet = $this->dimat_helper_functions->GetLinearCongruenceSolution($divide_triplets[0])["solution"];
+            $second_divide_triplet = $this->dimat_helper_functions->GetLinearCongruenceSolution($divide_triplets[1])["solution"];
+            
+            $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
+            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(3);
+            $third_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4);
+
+            $first_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($first_congruence_system_triplets);
+            $second_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($second_congruence_system_triplets);
+            $third_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($third_congruence_system_triplets);
+
+
+            $task_array = array(
+                "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
+                "divide_triplets" => $divide_triplets,
+                "first_congruence_system_triplets" => $first_congruence_system_triplets,
+                "second_congruence_system_triplets" => $second_congruence_system_triplets,
+                "third_congruence_system_triplets" => $third_congruence_system_triplets,
+                "first_solution" => $first_solution,
+                "second_solution" => $second_solution,
+                "third_solution" => $third_solution
+            );
+            $this->SetTaskDescription($task_array);
         }
 
         /**
          * 
-         * This function is responsible for creating the seventh task related to Discrete Mathematics II..
+         * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * ...Subtasks created here...
          * 
@@ -255,7 +295,7 @@
 
         /**
          * 
-         * This function is responsible for creating the eight task related to Discrete Mathematics II..
+         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * ...Subtasks created here...
          * 
@@ -267,7 +307,7 @@
 
         /**
          * 
-         * This function is responsible for creating the ninth task related to Discrete Mathematics II..
+         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * ...Subtasks created here...
          * 
@@ -279,7 +319,7 @@
 
         /**
          * 
-         * This function is responsible for creating the tenth task related to Discrete Mathematics II..
+         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * ...Subtasks created here...
          * 

@@ -27,14 +27,25 @@
 <div class="small_task_container">
     <?php $triplet = $_SESSION["task"]["second_triplet"]?>
     <label class="task_label">
-        3. részfeladat: Bontsd fel a <?=$triplet[2]?>-t 2 szám összegére úgy, hogy az egyik osztható a <?=$triplet[1]?>, a másik pedig <?=$triplet[2]?> számmal!
+        3. részfeladat: Írd fel a 
+        <?=$triplet[2]?>-<?=UseCorrectObjectSuffix($triplet[2])?> 2 szám összegeként úgy, hogy az egyik osztható legyen  
+        <?=$triplet[0]?>-<?=UseCorrectAdverb($triplet[0])?>, a másik pedig 
+        <?=$triplet[1]?>-<?=UseCorrectAdverb($triplet[1])?>!
     </label>
-    Az első szám: <!-- simple input-->
-    A második szám <!-- simple input-->
+    <div class="small_task_container">
+    <?php $task_counter = 2;?>
+    <div class="multiple_solution_input_container">
+        <?=$triplet[2] . " = "?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="Az első szám..." class="solution_input">
+        +
+        <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="Az második szám..." class="solution_input">
+    </div>
+</div>
 </div>
 <br>
 
-<?php $first = $_SESSION["task"]["solution"][0][0]?>
-<?php $second = $_SESSION["task"]["solution"][0][1]?>
-<?php print_r($first[count($first)-1])?>
+<?php $first = $_SESSION["task"]["solution"][0]?>
+<?php $second = $_SESSION["task"]["solution"][1]?>
+<?php $third = $_SESSION["task"]["solution"][2]?>
+<?php print_r($first)?>
 <?php print_r($second)?>
+<?php print_r($third)?>
