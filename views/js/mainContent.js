@@ -7,6 +7,8 @@ let navigation_links = document.querySelectorAll("a.menu_cell")
 let student_rows = document.querySelectorAll("tr")
 let group_selector = document.querySelector("#group_selector")
 let solution_inputs = document.querySelectorAll(".solution_input")
+let body = document.querySelector("body")
+let small_cards = document.querySelectorAll(".small_card")
 
 //Event-handlers
 if(logout_button){
@@ -50,6 +52,23 @@ if(solution_inputs){
         })
     }
 }
+
+if(body){
+    for(let small_card of small_cards){
+        small_card.addEventListener("mouseenter", ()=>{
+            body.style["background-color"] = "grey"
+            body.style.transition = "1s"
+            small_card.style["background-color"] = "white"
+        })
+
+        small_card.addEventListener("mouseleave", ()=>{
+            body.style["background-color"] = "white"
+            body.style.transition = "0.5s"
+            small_card.style["background-color"] = "inherit"
+        })
+    }
+}
+
 
 
 

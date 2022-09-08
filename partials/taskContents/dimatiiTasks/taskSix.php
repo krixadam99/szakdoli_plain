@@ -11,8 +11,6 @@
     <?php include("./partials/taskContents/solutionInput.php")?>
 </div>
 
-<?php //print_r($_SESSION["task"]["first_solution"])?>
-
 <label class="task_label">
     2. részfeladat: Old meg a következő 3 lineáris kongruenciából álló kongruenciarendszert!
 </label>
@@ -50,7 +48,7 @@
 </div>
 
 <label class="task_label">
-    Az összevont és harmadik lineáris kongruencia összevonását követő lineáris kongruencia (a konruenciarendszer megoldása):
+    Az összevont és harmadik lineáris kongruencia összevonását követő lineáris kongruencia (a kongruenciarendszer megoldása):
 </label>
 <?php $task_counter = 3;?>
 <div class="multiple_solution_input_container">  
@@ -60,8 +58,6 @@
     )
     <br>
 </div>
-
-<?php //print_r($_SESSION["task"]["first_solution"])?>
 
 <label class="task_label">
     3. részfeladat: Old meg a következő 4 lineáris kongruenciából álló kongruenciarendszert!
@@ -111,7 +107,7 @@
 </div>
 
 <label class="task_label">
-    Az 1-3. összevont és negyedik lineáris kongruencia összevonását követő lineáris kongruencia (a konruenciarendszer megoldása):
+    Az 1-3. összevont és negyedik lineáris kongruencia összevonását követő lineáris kongruencia (a kongruenciarendszer megoldása):
 </label>
 <?php $task_counter = 7;?>
 <div class="multiple_solution_input_container">
@@ -120,5 +116,3 @@
     <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="modulo..." class="solution_input">
     )
 </div>
-
-<?php //print_r($_SESSION["task"]["second_solution"])?>

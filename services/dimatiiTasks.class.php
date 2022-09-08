@@ -143,7 +143,7 @@
             $gcd_array = [];
             $lcm_array = [];
             foreach($first_pairs as $index => $pair){
-                $algorithm = $this->dimat_helper_functions->GetGCDWithEucleidan($pair);
+                $algorithm = $this->dimat_helper_functions->CalculateGCDWithEucleidan($pair);
                 array_push($eucleidan_algorithm, $algorithm["steps"]);
                 array_push($gcd_array, $algorithm["solution"]); // We need the smaller number from the last step (it is the residue of the last but one step)
                 if($algorithm["solution"] !== 0){
@@ -179,7 +179,7 @@
             $linear_congruency_algorithm = [];
             $solution_array = [];
             foreach($first_triplets as $index => $triplet){
-                $algorithm = $this->dimat_helper_functions->GetLinearCongruenceSolution($triplet);
+                $algorithm = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($triplet);
                 array_push($linear_congruency_algorithm, $algorithm["steps"]);
                 array_push($solution_array, $algorithm["solution"]);
             }
@@ -216,7 +216,7 @@
             while($a > $b 
                 || $c > $b 
                 || $a === $c 
-                || $b % $this->dimat_helper_functions->GetGCDWithIteration([$a,$c]) !== 0){
+                || $b % $this->dimat_helper_functions->CalculateGCDWithIteration([$a,$c]) !== 0){
                 $c = mt_rand(100,1000);
                 $a = mt_rand(100,1000);
             }
@@ -229,7 +229,7 @@
                 // Triplet in the form of $triplet[0]*x \equiv $triplet[1] (mod $triplet[2]) -> $triplet[0]*x - $triplet[1] = $triplet[2]*y
                 // Equation in the form of $triplet[0]*x + $triplet[2]*y = $triplet[1]
                 $diophantine_equation = [$triplet[0], $triplet[2], $triplet[1]];
-                $algorithm_steps = $this->dimat_helper_functions->GetDiophantineEquationSolution($diophantine_equation);
+                $algorithm_steps = $this->dimat_helper_functions->CalculateDiophantineEquationSolution($diophantine_equation);
                 array_push($diophantine_algorithm, $algorithm_steps);
                 array_push($triplets, $diophantine_equation);
             }
@@ -252,20 +252,24 @@
          * @return void
          */
         private function CreateTaskSix(){
+            $this->dimat_helper_functions->SetMinimumNumber(2);
+            $this->dimat_helper_functions->SetMaximumNumber(1000);
+            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2);
+            while($this->dimat_helper_functions->CalculateGCDWithIteration([$divide_triplets[0][2],$divide_triplets[1][2]]) !== 1){
+                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2);
+            }
+            $first_divide_triplet = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($divide_triplets[0])["solution"];
+            $second_divide_triplet = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($divide_triplets[1])["solution"];
+
             $this->dimat_helper_functions->SetMinimumNumber(-50);
             $this->dimat_helper_functions->SetMaximumNumber(50);
-
-            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(2);
-            $first_divide_triplet = $this->dimat_helper_functions->GetLinearCongruenceSolution($divide_triplets[0])["solution"];
-            $second_divide_triplet = $this->dimat_helper_functions->GetLinearCongruenceSolution($divide_triplets[1])["solution"];
-            
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
             $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(3);
             $third_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4);
 
-            $first_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($first_congruence_system_triplets);
-            $second_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($second_congruence_system_triplets);
-            $third_solution = $this->dimat_helper_functions->GetLinearCongruenceSystemSolution($third_congruence_system_triplets);
+            $first_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($first_congruence_system_triplets);
+            $second_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($second_congruence_system_triplets);
+            $third_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($third_congruence_system_triplets);
 
 
             $task_array = array(
@@ -283,19 +287,39 @@
 
         /**
          * 
-         * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to linear diophantine equations.
+         * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to horner table.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskSeven(){
+            $task_array = array(
+                "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
+            );
+
+            $this->dimat_helper_functions->SetMinimumNumber(-50);
+            $this->dimat_helper_functions->SetMaximumNumber(50);
+            
+            $polynomial_degree = mt_rand(3,5);
+            $number_of_places = mt_rand(3,5);
+            $polynomial_expression = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+            $places = $this->dimat_helper_functions->CreatePlaces($number_of_places);
+            $task_array["first_polynomial"] = [$polynomial_degree, $number_of_places, $polynomial_expression, $places];
+
+            $polynomial_degree = mt_rand(6,8);
+            $number_of_places = mt_rand(3,5);
+            $second_polynomial = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+            $places = $this->dimat_helper_functions->CreatePlaces($number_of_places);
+            $task_array["second_polynomial"] = [$polynomial_degree, $number_of_places, $polynomial_expression, $places];
+
+            $this->SetTaskDescription($task_array);
 
         }
 
         /**
          * 
-         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to linear diophantine equations.
+         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division.
          * 
          * ...Subtasks created here...
          * 
@@ -307,7 +331,7 @@
 
         /**
          * 
-         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
+         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to Lagrange interpolation.
          * 
          * ...Subtasks created here...
          * 
@@ -319,7 +343,7 @@
 
         /**
          * 
-         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
+         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to Newton interpolation.
          * 
          * ...Subtasks created here...
          * 
