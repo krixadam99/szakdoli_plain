@@ -129,7 +129,7 @@
          * @return void
          */
         private function CreateTaskThree(){
-            $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4, 30, 200);
+            $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(3, 30, 200);
             $step_counts = [];
             $eucleidan_algorithm = [];
             $gcd_array = [];
@@ -330,19 +330,28 @@
 
         /**
          * 
-         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to Lagrange interpolation.
+         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to interpolations.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskNine(){
+            $task_array = array(
+                "task_description" => "Old meg a következő Lagrange- és Newton- féle interpolációkkal kapcsolatos feladatokat!",
+                "lagrange_points" => [],
+                "newton_points" => []
+            );
+            
+            $task_array["lagrange_points"] = $this->dimat_helper_functions->CreatePoints(mt_rand(3,5), -15, 15);
+            $task_array["newton_points"] = $this->dimat_helper_functions->CreatePoints(mt_rand(5,7), -15, 15);
 
+            $this->SetTaskDescription($task_array);
         }
 
         /**
          * 
-         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to Newton interpolation.
+         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to equations.
          * 
          * ...Subtasks created here...
          * 

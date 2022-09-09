@@ -15,7 +15,15 @@
             <br>
     <?php else:?>
         <div class="solution_container">
-        <label><?=$solution_label??"Megoldásom: "?></label>
+        <label>
+            <?php 
+                if(isset($solution_label)){
+                    echo($solution_label);
+                }else{
+                    echo("Megoldásom: ");
+                }
+            ?>
+        </label>
             <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
         </div>
     <?php endif?>

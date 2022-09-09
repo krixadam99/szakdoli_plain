@@ -41,7 +41,7 @@
         for($column_counter = 1; $column_counter < $column_number-1; $column_counter++){
             array_push($table_header_cells, "p<span class=\"bottom\">" .  $divide_polynomials[0] - $column_counter + 1 . "</span> = " . $divide_polynomials[1][$column_counter - 1]);
         }
-        array_push($table_header_cells, $polynomial_names[$task_index]);
+        array_push($table_header_cells, $polynomial_names[2]);
     ?>
     <?php include("./partials/taskContents/solutionTable.php")?>
     <?php 

@@ -85,6 +85,13 @@
             echo($prefix . $places[$place_counter]);
         }
     }
+
+    function PrintPoints($points){
+        for($point_counter = 0; $point_counter < count($points); $point_counter++){
+            $prefix = $point_counter !== 0?', ':'';
+            echo($prefix . "(" . $points[$point_counter][0] . ", " . $points[$point_counter][1] . ")");
+        }
+    }
 ?>
 
 <?php if($approved_student_subject=="i" ):?>

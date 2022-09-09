@@ -54,21 +54,21 @@
             "Lineáris diofantikus egyenletek",
             "Kínai maradéktétel",
             "Horner-táblázat használata", 
-            "Polinommal való osztás", 
-            "Lagrange-féle interpolációs polinomok", 
-            "Newton-féle interpolációs polinomok"
+            "Polinomok osztása és szorzása", 
+            "Lagrange- és Newton-féle interpolációs polinomok", 
+            "Egyenletek gyökkeresése"
         ];
         $topic_descriptions = [
             "Maradékos osztások, prímfelbontás, pozitív osztók száma, kongruenciák", 
             "Maradékosztályok reprezentatív elemekkel, Euler-féle fí függvény, Redukált maradékrendszerek szorzása",
             "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
-            "Lineáris kongruenciák megoldása",
+            "Lineáris kongruenciák megoldása, az Euler-Fermat és kis Fermat-tétel",
             "Lineáris diofantikus egyenletek megoldása",
             "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
             "Polinomok helyettesítési értékének meghatározása Horner-táblázattal",
-            "Polinomok (maradékos) osztása az egész számok fölött, polinomok szorzása",
-            "Lagrange- féle interpolációs polinom illesztése több pontra",
-            "Newton- féle interpolációs polinom illesztése több pontra"
+            "Polinomok (maradékos) osztása és szorzása",
+            "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra",
+            "Viéte- formulák, Schönemann-Eisenstein és Gauss tétel, szimmetrikus és antiszimmetrikus egyenletek"
         ];
     }
 

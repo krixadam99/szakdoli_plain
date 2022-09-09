@@ -283,6 +283,36 @@
         }
 
         /**
+         * 
+         * This method creates the given amount of points.
+         * 
+         * Each points are distinct, and the first coordinates are pairwise different. 
+         * 
+         * @param int $number_of_points The number of points the method returns.
+         * @param int $lower The lower bound for the range from which a random number will be picked for the first coordinate. The default value is -1000.
+         * @param int $upper The upper bound for the range from which a random number will be picked for the first coordinate. The default value is 1000.
+         * 
+         * @return array Returns the given amount of points.
+         */
+        public function CreatePoints($number_of_points, $lower = -1000, $upper = 1000){
+            $return_points = [];
+            $first_coordinates = []; 
+            for($counter = 0; $counter < $number_of_points; $counter++){
+                $first_element = mt_rand($lower, $upper);
+                $second_element = mt_rand($lower, $upper);
+
+                while( in_array([$first_element, $second_element], $return_points) 
+                    || in_array($first_element, $first_coordinates)){
+                    $first_element = mt_rand($lower, $upper);
+                    $second_element = mt_rand($lower, $upper);
+                }
+                array_push($return_points, [$first_element, $second_element]);
+                array_push($first_coordinates, $first_element);
+            }
+            return $return_points;
+        }
+
+        /**
          * This method uses the Eucleidan algorithm to calculate the greatest common divisor of the given pair.
          * 
          * @param array $pair The pair for which the method will determine the gcd and eucleidan algorithm steps.

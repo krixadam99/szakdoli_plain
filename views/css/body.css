@@ -226,6 +226,11 @@ hr {
     margin: 0% 5%;
 }
 
+.task_label{
+    text-align: justify;
+    display: block;
+}
+
 .solution_container, .title_and_progress {
     width: 100%;
     margin: 2% 0% 6% 0%;
@@ -348,9 +353,30 @@ ul {
     padding-bottom: 2%;
 }
 
-.solution_table input{
+.solution_table input, .stair_table input{
     width: 60%;
     margin: 2% 38% 2% 2%;
 }
 
+.stair_table {
+    border-collapse: collapse;
+    width: 100%;
+    height: auto;
+    margin: 2% 0% 3% 0%;
+}
+
+.stair_table tr:nth-child(even) {
+    background-color:white;
+}
+
+.no_content_cell {
+    border-right: 1px solid black; 
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+
+.stair_table td {
+    padding-top: 1%;
+    padding-bottom: 0%;
+}
 

@@ -38,8 +38,13 @@
                     $_SESSION["definitions"] = "";
                     $_SESSION["task"] = "";
                     
-                    if(isset($_SESSION["topic"]) && $_SESSION["topic"] != ""){
+                    if( isset($_SESSION["topic"]) 
+                        && intval($_SESSION["topic"]) <= 9
+                        && 0 <= intval($_SESSION["topic"])
+                    ){
                         $this->GenerateTask($this->GetApprovedStudentSubject(), $_SESSION["topic"]);
+                    }else{
+                        header("Location: ./index.php?site=practice");
                     }
                     
                     include(ROOT_DIRECTORY . "/views/practicePage.view.php");
