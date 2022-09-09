@@ -78,4 +78,9 @@
             </tr>
         <?php endfor?>
     </table>
+    <?php 
+        $task_counter = "1_" . count($newton_points);
+        $solution_label = "<i>N</i>[x] = ";
+        include("./partials/taskContents/solutionInput.php")
+    ?>
 </div>
