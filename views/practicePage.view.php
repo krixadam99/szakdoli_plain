@@ -59,8 +59,8 @@
             "Newton-féle interpolációs polinomok"
         ];
         $topic_descriptions = [
-            "Maradékos osztások, pozitív osztók száma, kongruenciák", 
-            "Maradékosztályok reprezentatív elemekkel, Euler-féle fí függvény, az Euler-Fermat és kis Fermat-tétel",
+            "Maradékos osztások, prímfelbontás, pozitív osztók száma, kongruenciák", 
+            "Maradékosztályok reprezentatív elemekkel, Euler-féle fí függvény, Redukált maradékrendszerek szorzása",
             "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
             "Lineáris kongruenciák megoldása",
             "Lineáris diofantikus egyenletek megoldása",

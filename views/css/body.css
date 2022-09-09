@@ -258,13 +258,12 @@ hr {
 }
 
 .solution_container label {
-    margin: 0% 0% 0% 0%;
+    margin: 0% 2% 0% 0%;
     width: auto
 }
 
 .solution_container input {
-    width: 20%;
-    margin: 0% 60% 0% 0%; 
+    margin: 0% 2% 0% 2%;
     border-radius: 5px;
     padding-left: 2%;
     color:rgb(134, 132, 132);
@@ -325,13 +324,14 @@ ul {
 .bottom{
     position: relative;
     top: 6px;
+    left: -2px;
     font-size:smaller;
 }
 
 .solution_table {
     border-collapse: collapse;
     width: 100%;
-    margin: 2% 0% auto 0%;
+    margin: 2% 0% 3% 0%;
 }
 
 .solution_table tr:first-of-type{

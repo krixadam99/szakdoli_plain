@@ -15,7 +15,7 @@
                     </div>
                 </nav>
 
-                <nav id="students" class="nav_with_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>">
+                <nav id="students" class="nav_with_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>" ?>
                     Diákok kezelése
                     <div class="submenu">
                         <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>

@@ -78,20 +78,17 @@
          * @return void
          */
         private function CreateTaskOne(){
-            $this->dimat_helper_functions->SetMinimumNumber(-1000);
-            $this->dimat_helper_functions->SetMaximumNumber(1000);
-
-            $first_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
-            $second_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
-            $third_numbers = [mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000),mt_rand(100,1000)];
-            $fourth_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4, false, true);
+            $divide_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(2, -1000, 1000);
+            $prime_factorization_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 100, 1000)[0];
+            $divisor_count_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 100, 1000)[0];
+            $congruency_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(2, -1000, 1000, false, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő osztással, osztók számával és kongruencia definíciójával kapcsolatos feladatokat!",
-                "first_parameter" => $first_pairs,
-                "second_parameter" => $second_numbers,
-                "third_parameter" => $third_numbers,
-                "fourth_parameter" => $fourth_pairs
+                "divide_pairs" => $divide_pairs,
+                "prime_factorization_numbers" => $prime_factorization_numbers,
+                "divisor_count_numbers" => $divisor_count_numbers,
+                "congruency_pairs" => $congruency_pairs
             );
             $this->SetTaskDescription($task_array);
         }
@@ -104,23 +101,21 @@
          * 
          * @return void
          */
-        private function CreateTaskTwo(){            
-            $first_numbers = [mt_rand(5,15),mt_rand(5,15)];
-            $second_numbers = [mt_rand(5,25), mt_rand(5,25), mt_rand(5,25), mt_rand(5,25)];
-            $third_numbers = [mt_rand(1000,5000), mt_rand(1000,5000), mt_rand(1000,5000), mt_rand(1000,5000)];
-            
-            $this->dimat_helper_functions->SetMinimumNumber(2);
-            $this->dimat_helper_functions->SetMaximumNumber(5000);
-            $fourth_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
-            $fourth_mods = [mt_rand(10,100), mt_rand(10,100), mt_rand(10,100), mt_rand(10,100)];
+        private function CreateTaskTwo(){    
+            $crs_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 5, 15)[0];
+            $rrs_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 5, 25)[0];
+            $rrs_size_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 1000, 5000)[0];
+
+            $multiplicand_rs_size = mt_rand(3,7);
+            $multiplier_rs_size = mt_rand(3,7);
+            $rrs_pairs = [3,5]; //$this->dimat_helper_functions->CreatePairsOfNumbers(1, 2, 10)[0];
 
             $task_array = array(
                 "task_description" => "Old meg a következő maradékrendszerekkel kapcsolatos feladatokat!",
-                "first_parameter" => $first_numbers,
-                "second_parameter" => $second_numbers,
-                "third_parameter" => $third_numbers,
-                "fourth_parameter" => $fourth_pairs,
-                "fourth_mods" => $fourth_mods
+                "crs_numbers" => $crs_numbers,
+                "rrs_numbers" => $rrs_numbers,
+                "rrs_size_numbers" => $rrs_size_numbers,
+                "multiply_rrs" => [$multiplicand_rs_size, $multiplier_rs_size, $rrs_pairs]
             );
             $this->SetTaskDescription($task_array);
         }
@@ -134,15 +129,12 @@
          * @return void
          */
         private function CreateTaskThree(){
-            $this->dimat_helper_functions->SetMinimumNumber(30);
-            $this->dimat_helper_functions->SetMaximumNumber(200);
-            
-            $first_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4);
+            $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(4, 30, 200);
             $step_counts = [];
             $eucleidan_algorithm = [];
             $gcd_array = [];
             $lcm_array = [];
-            foreach($first_pairs as $index => $pair){
+            foreach($gcd_pairs as $index => $pair){
                 $algorithm = $this->dimat_helper_functions->CalculateGCDWithEucleidan($pair);
                 array_push($eucleidan_algorithm, $algorithm["steps"]);
                 array_push($gcd_array, $algorithm["solution"]); // We need the smaller number from the last step (it is the residue of the last but one step)
@@ -157,7 +149,7 @@
 
             $task_array = array(
                 "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
-                "first_parameter" => $first_pairs,
+                "gcd_pairs" => $gcd_pairs,
                 "step_counts" => $step_counts
             );
             $this->SetTaskDescription($task_array);
@@ -172,23 +164,20 @@
          * @return void
          */
         private function CreateTaskFour(){
-            $this->dimat_helper_functions->SetMinimumNumber(-100);
-            $this->dimat_helper_functions->SetMaximumNumber(100);
-            
-            $first_triplets = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(5);
-            $linear_congruency_algorithm = [];
+         $linear_congrences = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(3, -100, 100);
+            $linear_congrences_algorithm = [];
             $solution_array = [];
-            foreach($first_triplets as $index => $triplet){
+            foreach($linear_congrences as $index => $triplet){
                 $algorithm = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($triplet);
-                array_push($linear_congruency_algorithm, $algorithm["steps"]);
+                array_push($linear_congrences_algorithm, $algorithm["steps"]);
                 array_push($solution_array, $algorithm["solution"]);
             }
 
 
             $task_array = array(
                 "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
-                "first_triplets" => $first_triplets,
-                "solution" => $linear_congruency_algorithm
+                "linear_congrences" => $linear_congrences,
+                "solution" => $linear_congrences_algorithm
             );
             $this->SetTaskDescription($task_array);
         }
@@ -202,9 +191,7 @@
          * @return void
          */
         private function CreateTaskFive(){
-            $this->dimat_helper_functions->SetMinimumNumber(-50);
-            $this->dimat_helper_functions->SetMaximumNumber(50);
-            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2); // ax \equiv b (mod c)
+            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, -50, 50); // ax \equiv b (mod c)
             
             // Divide b into two numbers, so that the first is divisable by a, and the second is divisible by c
             // ax + cy = b
@@ -224,20 +211,20 @@
             array_push($congruency_triplets, [$a,$b,$c]);
 
             $diophantine_algorithm = [];
-            $triplets = [];
-            foreach($congruency_triplets as $index => $triplet){
+            $diophantine_equation = [];
+            foreach($congruency_triplets as $equation_counter => $triplet){
                 // Triplet in the form of $triplet[0]*x \equiv $triplet[1] (mod $triplet[2]) -> $triplet[0]*x - $triplet[1] = $triplet[2]*y
                 // Equation in the form of $triplet[0]*x + $triplet[2]*y = $triplet[1]
-                $diophantine_equation = [$triplet[0], $triplet[2], $triplet[1]];
-                $algorithm_steps = $this->dimat_helper_functions->CalculateDiophantineEquationSolution($diophantine_equation);
+                $actual_diophantine_equation = [$triplet[0], $triplet[2], $triplet[1]];
+                $algorithm_steps = $this->dimat_helper_functions->CalculateDiophantineEquationSolution($actual_diophantine_equation);
                 array_push($diophantine_algorithm, $algorithm_steps);
-                array_push($triplets, $diophantine_equation);
+                array_push($diophantine_equation, $actual_diophantine_equation);
             }
 
             $task_array = array(
                 "task_description" => "Old meg a következő diofantoszi egyenletekkel kapcsolatos feladatokat!",
-                "first_triplets" => [$triplets[0], $triplets[1]],
-                "second_triplet" => $triplets[2],
+                "diophantine_equations" => [$diophantine_equation[0], $diophantine_equation[1]],
+                "partition_number" => $diophantine_equation[2],
                 "solution" => $diophantine_algorithm 
             );
             $this->SetTaskDescription($task_array);
@@ -252,19 +239,15 @@
          * @return void
          */
         private function CreateTaskSix(){
-            $this->dimat_helper_functions->SetMinimumNumber(2);
-            $this->dimat_helper_functions->SetMaximumNumber(1000);
-            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2);
+            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
             while($this->dimat_helper_functions->CalculateGCDWithIteration([$divide_triplets[0][2],$divide_triplets[1][2]]) !== 1){
-                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2);
+                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
             }
             $first_divide_triplet = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($divide_triplets[0])["solution"];
             $second_divide_triplet = $this->dimat_helper_functions->CalculateLinearCongruenceSolution($divide_triplets[1])["solution"];
 
-            $this->dimat_helper_functions->SetMinimumNumber(-50);
-            $this->dimat_helper_functions->SetMaximumNumber(50);
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
-            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4);
+            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4, -50, 50);
 
             $first_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($first_congruence_system_triplets);
             $second_solution = $this->dimat_helper_functions->CalculateLinearCongruenceSystemSolution($second_congruence_system_triplets);
@@ -291,18 +274,20 @@
         private function CreateTaskSeven(){
             $task_array = array(
                 "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
-                "polynomials" => []
+                "polynomials" => [],
+                "divide_polynomials" => []
             );
-
-            $this->dimat_helper_functions->SetMinimumNumber(-10);
-            $this->dimat_helper_functions->SetMaximumNumber(10);
             
             for($counter = 0; $counter < 2; $counter++){
                 $polynomial_degree = 2*$counter + 2;
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-                $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots);
+                $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots, -20, 20);
                 array_push($task_array["polynomials"], [$polynomial_degree, $polynomial_expression, $places]);
             }
+
+            [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression(5);
+            $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, -20, 20);
+            $task_array["divide_polynomials"] = [5, $polynomial_expression, $places];
 
             $this->SetTaskDescription($task_array);
 
@@ -310,14 +295,37 @@
 
         /**
          * 
-         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division.
+         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division and multiplication.
          * 
          * ...Subtasks created here...
          * 
          * @return void
          */
         private function CreateTaskEight(){
+            $task_array = array(
+                "task_description" => "Old meg a következő polinomok osztásával és szorzásával kapcsolatos feladatokat!",
+                "divide_polynomials" => [],
+                "multiply_polynomials" => []
+            );
+            
+            for($counter = 0; $counter < 2; $counter++){
+                $first_polynomial_degree = mt_rand(3,5);
+                $second_polynomial_degree = mt_rand(1,3);
+                [$first_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($first_polynomial_degree);
+                [$second_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($second_polynomial_degree);
+                if($counter === 0){
+                    $key = "divide_polynomials";
+                }else{
+                    $key = "multiply_polynomials";
+                }
+                $task_array[$key] = [
+                    [$first_polynomial_degree, $first_polynomial_expression], 
+                    [$second_polynomial_degree, $second_polynomial_expression], 
+                    mt_rand(2,80)
+                ];
+            }
 
+            $this->SetTaskDescription($task_array);
         }
 
         /**

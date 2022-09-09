@@ -37,6 +37,10 @@ if(nav_buttons){
                     submenu.style["visibility"] = "hidden"
                 }
             })
+
+            nav_button.addEventListener("click",()=>{
+                nav_button.querySelector("a").click()
+            })
         }
     }
 }

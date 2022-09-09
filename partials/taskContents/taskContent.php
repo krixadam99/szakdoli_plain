@@ -58,6 +58,33 @@
         }
         return $suffix;
     }
+
+    function PrintPolynomialExpression($polynomial_degree, $polynomial_expression_coefficients){
+        foreach($polynomial_expression_coefficients as $coefficient_index => $coefficient){
+            $actual_index = $polynomial_degree - $coefficient_index;
+            
+            $prefix = "";
+            if($coefficient_index != 0){
+                $prefix = $coefficient < 0?" - ":" + ";
+                $coefficient = abs($coefficient);
+            }
+            if($coefficient != 0){
+                $coefficient = $coefficient === 1 && $actual_index !== 0?"":$coefficient;
+                $coefficient = $coefficient === -1 && $coefficient_index === 0?"-":$coefficient;
+                $variable = $actual_index === 0?"":"x";
+                $expo = $actual_index <= 1?"":"<span class=\"exp\">$actual_index</span>";
+                echo($prefix . $coefficient . $variable . $expo);
+            }
+        }
+    }
+
+    function PrintPlaces($places){
+        for($place_counter = 0; $place_counter < count($places); $place_counter++){
+            $prefix = $place_counter !== 0?', ':'';
+            $prefix = $place_counter === count($places) - 1?' és ':$prefix;
+            echo($prefix . $places[$place_counter]);
+        }
+    }
 ?>
 
 <?php if($approved_student_subject=="i" ):?>

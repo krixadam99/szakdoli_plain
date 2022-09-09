@@ -3,7 +3,7 @@
 </label>
 <div class="small_task_container">
     <?php $task_counter = 0;?>
-    <?php foreach($_SESSION["task"]["first_parameter"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["crs_numbers"] as $index => $number):?>
         <?="\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124}"?> teljes maradék rendszer megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>
@@ -16,7 +16,7 @@
     </label>
 <div class="small_task_container">
     <?php $task_counter = 1;?>
-    <?php foreach($_SESSION["task"]["second_parameter"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["rrs_numbers"] as $index => $number):?>
         <?="(\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124})*"?>redukált maradék rendszer megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>
@@ -29,7 +29,7 @@
     </label>
 <div class="small_task_container">
     <?php $task_counter = 2;?>
-    <?php foreach($_SESSION["task"]["third_parameter"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["rrs_size_numbers"] as $index => $number):?>
         <?="|(\u{2124}" . "/"?><span class="bottom"><?=$number?></span><?="\u{2124})*|"?> redukált maradék rendszer méretének megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>
@@ -37,15 +37,15 @@
 </div>
 <br>
 
+<?php $multiply_rrs = $_SESSION["task"]["multiply_rrs"]?>
 <label class="task_label">
-    4. részfeladat: Határozd meg a következő hatványok maradékát!
+    4. részfeladat: Határozd meg a 
+    <?="(\u{2124}" . "/"?><span class="bottom"><?=$multiply_rrs[2][0]?></span><?="\u{2124})*"?>
+    és
+    <?="(\u{2124}" . "/"?><span class="bottom"><?=$multiply_rrs[2][1]?></span><?="\u{2124})*"?> 
+    redukált maradékrendszerek egyes szorzat maradékosztályainak egy-egy reprezentatív elemét!
 </label>
 <div class="small_task_container">
-    <?php $task_counter = 3;?>
-    <?php foreach($_SESSION["task"]["fourth_parameter"] as $index => $pair):?>
-        <?=$pair[0]?><span class="exp"><?=$pair[1]?></span> / <?=$_SESSION["task"]["fourth_mods"][$index]?> hányados maradéka:
-        <br>
-        <?php include("./partials/taskContents/solutionInput.php")?>
-    <?php endforeach?>
+        <!-- Táblázat ide -->
 </div>
 <br>

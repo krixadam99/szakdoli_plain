@@ -1,4 +1,4 @@
-<?php foreach($_SESSION["task"]["first_parameter"] as $index => $pair):?>
+<?php foreach($_SESSION["task"]["gcd_pairs"] as $index => $pair):?>
     <label class="task_label">
         <?=$index + 1?>. részfeladat: Határozd meg a <?= $pair[0] . " és " . $pair[1]?> számok legnagyobb közös osztóját az Euklideszi algoritmussal, majd add meg a legkisebb közös többszörösüket!
     </label>
@@ -27,3 +27,5 @@
     </div>
     <br>
 <?php endforeach?>
+
+<!-- Kibővített eukleidészi még táblázattal-->

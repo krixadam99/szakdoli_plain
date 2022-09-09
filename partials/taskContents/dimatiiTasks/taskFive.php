@@ -1,4 +1,4 @@
-<?php foreach($_SESSION["task"]["first_triplets"] as $index => $triplet):?>
+<?php foreach($_SESSION["task"]["diophantine_equations"] as $index => $triplet):?>
     <label class="task_label">
         <?=$index + 1?>. részfeladat: Határozd meg a <?= $triplet[0] . " * x "?> <?=$triplet[1] < 0 ?" - " . abs($triplet[1]):" + " . $triplet[1]?> <?=" * y = " . $triplet[2]?> diofantikus egyenlet megoldását!
     </label>
@@ -25,7 +25,7 @@
 <?php endforeach?>
 
 <div class="small_task_container">
-    <?php $triplet = $_SESSION["task"]["second_triplet"]?>
+    <?php $triplet = $_SESSION["task"]["partition_number"]?>
     <label class="task_label">
         3. részfeladat: Írd fel a 
         <?=$triplet[2]?>-<?=UseCorrectObjectSuffix($triplet[2])?> 2 szám összegeként úgy, hogy az egyik osztható legyen  
