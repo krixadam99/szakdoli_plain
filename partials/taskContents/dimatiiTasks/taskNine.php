@@ -3,6 +3,7 @@
     1. részfeladat: Illessz polinomot a <?php PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
     Míg megfelelő ponthoz tartozó alappolinomt az <i>l</i><span class="bottom">pont</span>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
     A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">
     <?php for($point_counter = 0; $point_counter < count($lagrange_points); $point_counter++):?>
@@ -22,7 +23,9 @@
 <?php $newton_points = $_SESSION["task"]["newton_points"]?>
 <?php $task_counter = 1?>
 <label class="task_label">
-    2. részfeladat: Illessz polinomot a <?php PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval!
+    2. részfeladat: Illessz polinomot a <?php PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval! A cellákban a számlálót és nevezőt '/' jellel elválasztva add meg! 
+    Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">
     <table class="stair_table">

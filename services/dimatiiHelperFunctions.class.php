@@ -119,7 +119,7 @@
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
                 $b= $triplet[1];
-                $gcd = $this->CalculateGCDWithIteration([$triplet[0], $triplet[2]]);
+                $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                 $was_there_zero = false;
                 if($without_zeros){
                     $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0;
@@ -130,7 +130,7 @@
                     ){
                         $triplet = $this->CreateTripletOfNumbers($lower, $upper);
                         $b= $triplet[1];
-                        $gcd = $this->CalculateGCDWithIteration([$triplet[0], $triplet[2]]);
+                        $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         if($without_zeros){
                             $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0;
                         }
@@ -160,7 +160,7 @@
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
                 $b= $triplet[1];
-                $gcd = $this->CalculateGCDWithIteration([$triplet[0], $triplet[2]]); // The linear congruence can be solved
+                $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]); // The linear congruence can be solved
                 
                 $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0; // Non of the coefficients in the congruence is zero
                 $triplet_contains_similar = abs($triplet[1]) === abs($triplet[2]) || abs($triplet[0]) === abs($triplet[2]); // The left and right hand sides are different from the modulo  
@@ -174,7 +174,7 @@
                     ){
                         $triplet = $this->CreateTripletOfNumbers($lower, $upper);
                         $b= $triplet[1];
-                        $gcd = $this->CalculateGCDWithIteration([$triplet[0], $triplet[2]]);
+                        $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         
                         $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0; // Non of the coefficients in the congruence is zero
                         $triplet_contains_similar = abs($triplet[1]) === abs($triplet[2]) || abs($triplet[0]) === abs($triplet[2]); // The left and right hand sides are different from the modulo 
@@ -218,7 +218,7 @@
             $main_coefficient = $sign*mt_rand(1,5);
             $coefficients = [$main_coefficient];
             for($counter = $degree-1; $counter >= 0; $counter--){
-                array_push($coefficients, $main_coefficient*$this->CalculateCoefficientByVieta($negated_roots, $counter));
+                array_push($coefficients, $main_coefficient*$this->DetermineCoefficientByVieta($negated_roots, $counter));
             }
 
             return [$coefficients, $roots];
@@ -313,13 +313,129 @@
         }
 
         /**
-         * This method uses the Eucleidan algorithm to calculate the greatest common divisor of the given pair.
+         * This method determines the quotients and residues for the given pairs of numbers, where the first number of the pair is the dividend and the secind is the divisor.
+         * 
+         * @param array $pairs The pairs of which the method returns the quotients and residues. Each of them is of the form of [dividend, divisor].
+         * 
+         * @return array Returns an indexed array containing the quotients and residues after dividing each pair's first component with the second.
+         */ 
+        public function DetermineQuotientAndResidue($pairs){
+            $quotients_and_residues = [];
+            foreach($pairs as $pair_index => $pair){
+                $dividend = $pair[0];
+                $divisor = $pair[1];
+
+                $quotient = 0;
+                if($dividend >= 0){
+                    if($divisor > 0){
+                        // 5,4
+                        // 5,8
+                        // 5,5
+                        // 0,5
+                        while($dividend - ($quotient + 1) * $divisor >= 0){
+                            $quotient++;
+                        }
+                        $residue = $dividend - $quotient * $divisor;
+                    }else if($divisor <0){
+                        // 5,-1
+                        // 5,-5
+                        // 5,-8
+                        // 0,-1
+                        while($dividend - ($quotient - 1) * $divisor >= 0){
+                            $quotient--;
+                        }
+                        $residue = $dividend - $quotient * $divisor;
+                    }else{ // Illegal
+                        $residue = 0;
+                    }
+                }else{
+                    if($divisor > 0){
+                        // -5,4
+                        // -5,8
+                        // -5,5
+                        while($dividend - $quotient * $divisor < 0){
+                            $quotient--;
+                        }
+                        $residue = $dividend - $quotient * $divisor;
+                    }else if($divisor <0){
+                        // -5,-1
+                        // -5,-5
+                        // -5,-8
+                        while($dividend - $quotient * $divisor < 0){
+                            $quotient++;
+                        }
+                        $residue = $dividend - $quotient * $divisor;
+                    }else{ // Illegal
+                        $residue = 0;
+                    }
+                }
+                array_push($quotients_and_residues, [$quotient, $residue]);
+            }
+            return $quotients_and_residues;
+        }
+
+        /**
+         * This method determines the prime factorization for each given number.
+         * 
+         * @param array $numbers The array containing the numbers for which the method gives the prime factorization.
+         * 
+         * @return array Returns an indexed array containing the prime factorization for each given number. The prime factorizations are stored in an indexed array, the factorization consists of [prime number, number of occurence] pairs.
+         */
+        public function DeterminePrimeFactorization($numbers){
+            $prime_factorizations = [];
+            foreach($numbers as $number_index => $number){
+                $prime_factorization = [];
+
+                $number = abs($number);
+                $divisor = 2;
+                while($number > 1){
+                    $is_divisor_prime = $this->IsPrime($divisor);
+                    if($is_divisor_prime){
+                        $occurence = 0;
+                        while($number % $divisor === 0 && $number > 0){
+                            $number /= $divisor;
+                            $occurence++;
+                        }
+                        if($occurence > 0){
+                            array_push($prime_factorization, [$divisor, $occurence]);
+                        }
+                    }
+                    $divisor++;
+                }
+
+                array_push($prime_factorizations, $prime_factorization);
+            }
+            return $prime_factorizations;
+        }
+
+        /**
+         * This method determines the number of positive divisors for each given number.
+         * 
+         * @param array $numbers The array containing the numbers for which the method gives the number of positive divisors.
+         * 
+         * @return array Returns an indexed array containing the number of positive divisors for each given number.
+         */
+        public function DetermineNumberOfDivisors($numbers){
+            $count_positive_divisors_array = [];
+            foreach($numbers as $number_index => $number){
+                $count_positive_divisors = 1;
+                $prime_factorization =  $this->DeterminePrimeFactorization([$number])[0];
+                foreach($prime_factorization as $factor_index => $factor_pair){
+                    $count_positive_divisors *= $factor_pair[1] + 1;
+                }
+                array_push($count_positive_divisors_array, $count_positive_divisors);
+            }
+            return $count_positive_divisors_array;
+        }
+
+        /**
+         * This method uses the Eucleidan algorithm to Determine the greatest common divisor of the given pair.
          * 
          * @param array $pair The pair for which the method will determine the gcd and eucleidan algorithm steps.
          * 
          * @return array Returns an associative array containing each step of the algorithm in the form of [bigger_number, quotient, smaller_number, residue] and the solution.
          */
-        public function CalculateGCDWithEucleidan($pair){
+        public function DetermineGCDWithEucleidan($pair){
             $return_array = array("steps" => [], "solution" => []);
             $first_number = abs($pair[0]);
             $second_number = abs($pair[1]);
@@ -346,48 +462,137 @@
          * 
          * @return array Returns an associative array containing each step of the algorithm in the form of [first operand, second operand, modulo] and the solution.
          */
-        public function CalculateLinearCongruenceSolution($triplet){
+        public function DetermineLinearCongruenceSolution($triplet){
             $return_array = array("steps" => [], "solution" => []);
+            
             $a = $triplet[0];
             $b = $triplet[1];
-            $c = abs($triplet[2]); // $c can be negative and positive, the congruence means the same
+            $modulo = abs($triplet[2]); // $c can be negative and positive, the congruence means the same
+            
+            // Make $a and $b coefficients positive
             while($a < 0){
-                $a += $c;
+                $a += $modulo;
             } 
             while($b < 0){
-                $b += $c;
+                $b += $modulo;
             }
 
-            if($a !== 0 && $b !== 0){
-                // $a*x \equiv $b (mod $c)
-                $gcd_ac = $this->CalculateGCDWithIteration([$a, $c]);
+            if($a !== 0){
+                // Check if congruence is solvable
+                $gcd_ac = $this->DetermineGCDWithIteration([$a, $modulo]);
                 if($b % $gcd_ac === 0){
-                    $gcd_ab = $this->CalculateGCDWithIteration([$a, $b]);
-                    $a /= $gcd_ab;
-                    $b /= $gcd_ab; 
-                    $c /= $this->CalculateGCDWithIteration([$gcd_ab, $c]); 
-                    array_push($return_array["steps"], [$a,$b,$c]);
-
-                    while($b % $a !== 0){
-                        $b = $b + $c;
-                        array_push($return_array["steps"], [$a,$b,$c]);
+                    // Divide every coefficient and the modulo with the greatest common divisor of the non-modulo coefficients 
+                    $gcd_ab = $this->DetermineGCDWithIteration([$a, $b]);
+                    if($gcd_ab !== 0){
+                        $a /= $gcd_ab;
+                        $b /= $gcd_ab; 
+                        $modulo /= $this->DetermineGCDWithIteration([$gcd_ab, $modulo]); 
                     }
-                    $b /= $a;
-                    $a = 1;
-                    $c /= $this->CalculateGCDWithIteration([$a, $c]);
-                    
-                    array_push($return_array["steps"], [$a,$b,$c]);
-                    $return_array["solution"] = [$a,$b,$c];
+
+                    // Introduce a new, helper congruence
+                    // This method will follow the example of the eucleidan algorithm
+                    $helper_congruence_a = $modulo;
+                    $helper_congruence_b = 0;
+
+                    // In every turn, the congruence with the smaller coefficient (next to the x) will be substracted from the congruence with the bigger coefficient
+                    // Since in each turn a smaller (or equal) number will be substracted from the bigger, the coefficient next to the x will be always non-negative (an invariant characteristic)
+                    array_push($return_array["steps"], [$a, $b, $modulo, $helper_congruence_a, $helper_congruence_b]);
+                    while($helper_congruence_a !== 0 && $a !== 0){
+                    if($helper_congruence_a > $a){
+                            $helper_congruence_a -= $a;
+                            $helper_congruence_b -= $b;
+                    }else{
+                            $a -= $helper_congruence_a;
+                            $b -= $helper_congruence_b;
+                    }
+                    array_push($return_array["steps"], [$a, $b, $modulo, $helper_congruence_a, $helper_congruence_b]);
+                    }
+
+                    // Getting the solution
+                    // We have to choose the congruence with non-zero left side coefficient
+                    if($helper_congruence_a === 0){
+                        // Simplify the right side coefficient in the congruence where the left side coefficient is zero
+                        if($helper_congruence_b < 0){
+                            while($helper_congruence_b - $modulo >= 0){
+                                $helper_congruence_b -= $modulo;
+                            }
+                        }else{
+                            while($helper_congruence_b + $modulo <= 0){
+                                $helper_congruence_b += $modulo;
+                            }
+                        }
+
+                        if($helper_congruence_b !== 0){
+                            $return_array["solution"] = "NINCSEN";
+                        }else{
+                            // Divide the coefficients in the congruence with the the greatest common divisor of the non-modulo coefficients 
+                            $gcd_ab = $this->DetermineGCDWithIteration([$a, $b]);
+                            if($gcd_ab !== 0){
+                                $modulo /= $this->DetermineGCDWithIteration([$gcd_ab, $modulo]);    
+                            }
+                            if($a !== 0){
+                                $b /= $a;
+                                $a = 1;
+                            }
+
+                            // Minimize the right side coefficient in the solution
+                            if($b >= 0){
+                                while($b - $modulo >= 0){
+                                    $b -= $modulo;
+                                }
+                            }else{
+                                while($b <= 0){
+                                    $b += $modulo;
+                                }
+                            }
+
+                            $return_array["solution"] = [$a,$b,$modulo];
+                        }
+                    }else{
+                        // Simplify the right side coefficient in the congruence where the left side coefficient is zero
+                        if($b >= 0){
+                            while($b - $modulo >= 0){
+                                $b -= $modulo;
+                            }
+                        }else{
+                            while($b + $modulo <= 0){
+                                $b += $modulo;
+                            }
+                        }
+
+                        if($b !== 0){
+                            $return_array["solution"] = "NINCSEN";
+                        }else{
+                            // Divide the coefficients in the congruence with the the greatest common divisor of the non-modulo coefficients
+                            $gcd_ab = $this->DetermineGCDWithIteration([$helper_congruence_a, $helper_congruence_b]);
+                            if($gcd_ab !== 0){
+                                $modulo /= $this->DetermineGCDWithIteration([$gcd_ab, $modulo]);    
+                            }
+                            $helper_congruence_b /= $helper_congruence_a; // In this branch: $helper_congruence_a !== 0
+                            $helper_congruence_a = 1;
+
+                            // Minimize the right side coefficient in the solution
+                            if($helper_congruence_b >= 0){
+                                while($helper_congruence_b - $modulo >= 0){
+                                    $helper_congruence_b -= $modulo;
+                                }
+                            }else{
+                                while($helper_congruence_b <= 0){
+                                    $helper_congruence_b += $modulo;
+                                }
+                            }
+
+                            $return_array["solution"] = [$helper_congruence_a, $helper_congruence_b, $modulo];
+                        }
+                    }
                 }else{
                     $return_array["solution"] = "NINCSEN";
                 }
             }else{
-                if($a === 0 ){
-                    $return_array["solution"] = [0,$b,1];
-                }else{
-                    $return_array["solution"] = [1,0,$c/$this->CalculateGCDWithIteration([$a, $c])];
-                }
+                $return_array["solution"] = [0,$b,$modulo];
             }
+            
+
             return $return_array;
         }
 
@@ -398,7 +603,7 @@
          * 
          * @return array Returns an array containing the solution of the algorithm.
          */
-        public function CalculateDiophantineEquationSolution($triplet){
+        public function DetermineDiophantineEquationSolution($triplet){
             $return_array = [];
             $a = $triplet[0];
             $b = $triplet[1];
@@ -413,7 +618,7 @@
             // x \equiv $d (mod $e)
             // x - $d = $e * k (k \in \doubleZ)
             // x = $e * k + $d (k \in \doubleZ)
-            $first_congruence_solution = $this->CalculateLinearCongruenceSolution($congruence);
+            $first_congruence_solution = $this->DetermineLinearCongruenceSolution($congruence);
             $x_solution = $first_congruence_solution["solution"];
             $d = $x_solution[1];
             $e = $x_solution[2];
@@ -440,18 +645,18 @@
          * 
          * @return array Returns an array containing each step and the solution of the algorithm.
          */
-        public function CalculateLinearCongruenceSystemSolution($congruences){
+        public function DetermineLinearCongruenceSystemSolution($congruences){
             $return_array = array("steps" => [], "solution" => []);
             $simplified_congruences = [];
             foreach($congruences as $index => $congruence){
-                array_push($simplified_congruences, $this->CalculateLinearCongruenceSolution($congruence)["solution"]);
+                array_push($simplified_congruences, $this->DetermineLinearCongruenceSolution($congruence)["solution"]);
             }
             array_push($return_array["steps"], $simplified_congruences);
 
-            $merged_solution = $this->CalculateMergedSolutionForCongruencies($simplified_congruences[0], $simplified_congruences[1]);
+            $merged_solution = $this->DetermineMergedSolutionForCongruencies($simplified_congruences[0], $simplified_congruences[1]);
             array_push($return_array["steps"], $merged_solution);
             for($counter = 2; $counter < count($simplified_congruences); $counter++){
-                $merged_solution = $this->CalculateMergedSolutionForCongruencies($merged_solution, $simplified_congruences[$counter]);
+                $merged_solution = $this->DetermineMergedSolutionForCongruencies($merged_solution, $simplified_congruences[$counter]);
                 array_push($return_array["steps"], $merged_solution);
             }
             $return_array["solution"] = $merged_solution;
@@ -468,7 +673,7 @@
          * 
          * @return int Returns the (positive) gcd for the given pair.
          */
-        public function CalculateGCDWithIteration($pair){
+        public function DetermineGCDWithIteration($pair){
             $gcd = 0;
             $first_number = abs($pair[0]);
             $second_number = abs($pair[1]);
@@ -502,8 +707,25 @@
         }
 
         /**
+         * This private mehtod checks whether the given number is a prime, or not.
          * 
-         * This method is responsible for checking if the new modulo is relative prime to the modulos of the given congruence system.
+         * @param int $number An integer which will be checked for being a prime.
+         * 
+         * @return bool Returns true if the given number is a prime, else it returns false.
+         */
+        public function IsPrime($number){
+            $number = abs($number);
+            for($divisor = 2; $divisor <= sqrt($number); $divisor++){
+                if($number % $divisor === 0){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
+         * 
+         * This private method is responsible for checking if the new modulo is relative prime to the modulos of the given congruence system.
          * 
          * @param array $congruence_system An array containing triplets representing linear congruencies in the form of [coefficient of x, right side of congruence, modulo].
          * @param int $new_modulo The new modulo we wish to compare to the modulos of the congruence system.
@@ -512,7 +734,7 @@
          */
         private function CheckIfModulosRelativelyPrimes($congruence_system, $new_modulo){
             foreach($congruence_system as $index => $congruence){
-                if($this->CalculateGCDWithIteration([$congruence[2], $new_modulo]) !== 1){
+                if($this->DetermineGCDWithIteration([$congruence[2], $new_modulo]) !== 1){
                     return false;
                 }
             }
@@ -528,12 +750,12 @@
          * 
          * @return array Returns a merged linear congruence for the given linear congruences.
          */
-        private function CalculateMergedSolutionForCongruencies($first_congruence, $second_congruence){
+        private function DetermineMergedSolutionForCongruencies($first_congruence, $second_congruence){
             [$a_1, $c_1, $m_1] = $first_congruence;
             [$a_2, $c_2, $m_2] = $second_congruence;
             
             // Diophantine equation: $m_1*x + $m_2*y = 1
-            [$solution_x, $solution_y] = $this->CalculateDiophantineEquationSolution([$m_1, $m_2, 1]);
+            [$solution_x, $solution_y] = $this->DetermineDiophantineEquationSolution([$m_1, $m_2, 1]);
 
             // Where all the xs = $solution_x[1] + $solution_x[2]*k (k any integer) and ys= $solution_y[0] + $solution_y[1]*k (k the same integer used for the xs)
             $basic_solution_x = $solution_x[1];
@@ -570,7 +792,7 @@
          * 
          * @return array An indexed array containing possible combinations of the original list's elements (required number of elements). In the final level all of the combinations are in the returned array.
         */
-        private function CalculateCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
+        private function DetermineCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
             if($number_of_remained_iterations >= 1){ // At least 1 iterations remained
                 if($number_of_remained_iterations < count($original_list)){ // The number of remained iterations is not greater than, or equal to the number of elements of the original list 
                     if($number_of_remained_iterations > 1){ // At least 2 iterations remained
@@ -578,7 +800,7 @@
                         for($counter = $previous_index; $counter < count($original_list) - $number_of_remained_iterations + 1; $counter++){
                             $temporary_list = $actual_elements; // NOT reference, also this is needed, or else we should pop the last element of $actual_elements in the end of each iteration
                             array_push($temporary_list, $original_list[$counter]);
-                            $combination_list = $this->CalculateCombinationOfList($original_list, $number_of_remained_iterations - 1, $temporary_list, $counter + 1); // A part of the final list of combinations
+                            $combination_list = $this->DetermineCombinationOfList($original_list, $number_of_remained_iterations - 1, $temporary_list, $counter + 1); // A part of the final list of combinations
                             $return_list = array_merge($return_list, $combination_list); // Merging the list of combinations with part of the possible combinations  
                         }
                         return $return_list;
@@ -610,9 +832,9 @@
          * 
          * @return int Returns the coefficient given by its index.
         */
-        private function CalculateCoefficientByVieta($roots, $index_of_coefficient = 0){
+        private function DetermineCoefficientByVieta($roots, $index_of_coefficient = 0){
             $actual_index = count($roots) - $index_of_coefficient;
-            $combinations = $this->CalculateCombinationOfList($roots, $actual_index);
+            $combinations = $this->DetermineCombinationOfList($roots, $actual_index);
 
             $sum = 0;
             foreach($combinations as $combination_index => $combination){

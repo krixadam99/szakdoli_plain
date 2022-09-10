@@ -249,11 +249,11 @@ hr {
     margin: 0% 25% 0% 5%; 
 }
 
-.solution_container, .multiple_solution_input_container {
+.solution_container, .multiple_solution_input_container, .single_solution_input_container {
     margin: 1% 0% 3% 0%;
 }
 
-.multiple_solution_input_container {
+.multiple_solution_input_container, .single_solution_input_container {
     display: flex;  
     width: 100%; 
 }
@@ -274,7 +274,7 @@ hr {
     color:rgb(134, 132, 132);
 }
 
-.multiple_solution_input_container input {
+.multiple_solution_input_container input, .single_solution_input_container input {
     margin: 0% 1% 0% 1%; 
     width: 10%;
     border-radius: 5px;
