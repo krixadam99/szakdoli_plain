@@ -11,7 +11,7 @@
          * Here the inherited members will be set.
          * Based on the $topic parameter a new set of tasks will be generated,
          * 
-         * @param string $topic The topic id for task generation,
+         * @param string $topic The topic id for task generation.
          * 
          * @return void
          */
@@ -22,7 +22,7 @@
 
             $this->dimat_helper_functions = new DimatiiHelperFunctions();
 
-            mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...)
+            mt_srand(time()); // Seeding the random number generator with the current time.
 
             switch($topic){
                 case "0":{
@@ -73,22 +73,26 @@
          * 
          * This function is responsible for creating the first set of tasks of Discrete Mathematics II. related to division, number of dividors and congruencies.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to division and congruences are:
+         * Dividing whole numbers among whole numbers, getting the quotients and residues;
+         * Giving the prime factorization for positive whole numbers;
+         * Giving the number of divisors for positive whole numbers;
+         * Giving one example for 2 congruences to get a valid statement.
          * 
          * @return void
          */
         private function CreateTaskOne(){
             // Task creation part:
-            // 2 pairs for division subtask (1 pair/ subtask)
-            // 2 numbers for prime factorization subtask (1 number/ subtask)
-            // 2 numbers for divisor counting subtask (1 number/ subtask)
-            // 2 pairs for congruency subtask (1 pair/ subtask)
+            // 2 pairs for division subtask (1 pair/ subtask);
+            // 2 numbers for prime factorization subtask (1 number/ subtask);
+            // 2 numbers for divisor counting subtask (1 number/ subtask);
+            // 2 pairs for congruency subtask (1 pair/ subtask).
             $divide_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(2, -1000, 1000);
             $prime_factorization_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 100, 1000)[0];
             $positive_divisor_count_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 100, 1000)[0];
             $congruency_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(2, -1000, 1000, false, true);
 
-            // Adding the data to the task array
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő osztással, osztók számával és kongruencia definíciójával kapcsolatos feladatokat!",
                 "divide_pairs" => $divide_pairs,
@@ -113,40 +117,57 @@
          * 
          * This function is responsible for creating the second set of tasks of Discrete Mathematics II. related to residue systems.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to residue systems:
+         * Giving the residue classes with a representative element for a complete residue system modulo n;
+         * Giving the residue classes with a representative element for a reduced residue system modulo n;
+         * Giving the size of a reduced residue system modulo n (where n is considerably big).
          * 
          * @return void
          */
         private function CreateTaskTwo(){    
-            $crs_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 5, 15)[0];
-            $rrs_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 5, 25)[0];
+            // Task creation part:
+            // 2 numbers for complete residue system subtask (1 number/ subtask);
+            // 2 numbers for reduced residue system subtask (1 number/ subtask);
+            // 2 numbers for reduced residue system size subtask (1 number/ subtask);
+            // 2 reduced residue system (2 rrs/ subtask).
+            $crs_numbers = [mt_rand(2,15)];
+            $rrs_numbers = [mt_rand(2,25)];
             $rrs_size_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 1000, 5000)[0];
 
-            $multiplicand_rs_size = mt_rand(3,7);
-            $multiplier_rs_size = mt_rand(3,7);
-            $rrs_pairs = [3,5]; //$this->dimat_helper_functions->CreatePairsOfNumbers(1, 2, 10)[0];
-
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő maradékrendszerekkel kapcsolatos feladatokat!",
                 "crs_numbers" => $crs_numbers,
                 "rrs_numbers" => $rrs_numbers,
-                "rrs_size_numbers" => $rrs_size_numbers,
-                "multiply_rrs" => [$multiplicand_rs_size, $multiplier_rs_size, $rrs_pairs]
+                "rrs_size_numbers" => $rrs_size_numbers
             );
             $this->SetTaskDescription($task_array);
+
+            //Solutions part:
+            $solution_array = [
+                "crs_systems" => [$this->dimat_helper_functions->DetermineCompleteResidueSystem($crs_numbers[0])],
+                "rrs_systems" => [$this->dimat_helper_functions->DetermineReducedResidueSystem($rrs_numbers[0])],
+                "rrs_size_numbers" => [$this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[0]), $this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[1])]
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
          * This function is responsible for creating the third set of tasks of Discrete Mathematics II. related to Eucleidan algorithm.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to Eucleidan algorithm:
+         * Creating 3 distinct pairs of numbers for which we want to determine the gcd with the Eucleidan algorithm;
+         * Creating 1 pair for which the student will have to determine the extended eucleidan algorithm.
          * 
          * @return void
          */
         private function CreateTaskThree(){
+            // Task creation part:
+            // 3 pairs of numbers for gcd (1 pair of numbers/ subtask);
             $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(3, 30, 200);
             $step_counts = [];
+            
             $eucleidan_algorithm = [];
             $gcd_array = [];
             $lcm_array = [];
@@ -162,52 +183,79 @@
                 array_push($step_counts, count($algorithm["steps"]));
             }
 
+            // 1 pair of numbers for extended eucleidan algorithm (1 pair of numbers/ subtask)
 
+
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
                 "gcd_pairs" => $gcd_pairs,
-                "step_counts" => $step_counts
+                "step_counts" => $step_counts,
+                "solution" => [$eucleidan_algorithm, $gcd_array, $lcm_array]
             );
             $this->SetTaskDescription($task_array);
+
+            //Solutions part:
+            $solution_array = [
+                "eucleidan_algorithm" => [$eucleidan_algorithm, $gcd_array, $lcm_array],
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
-         * This function is responsible for creating the fourth set of tasks of Discrete Mathematics II. related to linear congruencies.
+         * This function is responsible for creating the fourth set of tasks of Discrete Mathematics II. related to linear congruences.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to linear congruences:
+         * Creating 3 distinct triplets containing non-zero whole numbers representing congruences, where the modulo is positive, for the linear congruences subtask.
+         * Creating 2 distinct pairs of numbers for Euler-Fermat theorem subtask.
          * 
          * @return void
          */
         private function CreateTaskFour(){
-         $linear_congrences = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(3, -100, 100);
+            // Task creation part:
+            // 3 distinct triplets of numbers for linear congruences (1 triplet of numbers/ subtask).
+            $linear_congrences = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(3, -100, 100);
             $linear_congrences_algorithm = [];
-            $solution_array = [];
+            $solutions = [];
             foreach($linear_congrences as $index => $triplet){
                 $algorithm = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($triplet);
                 array_push($linear_congrences_algorithm, $algorithm["steps"]);
-                array_push($solution_array, $algorithm["solution"]);
+                array_push($solutions, $algorithm["solution"]);
             }
 
+            // 2 pairs of numbers for Euler-Fermat theorem (1 pair of numbers/ subtask).
 
+            // 1 pair of numbers for raising to power with the rapid algorithm.
+
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
                 "linear_congrences" => $linear_congrences,
-                "steps" => $linear_congrences_algorithm,
-                "solution" => $solution_array
             );
             $this->SetTaskDescription($task_array);
+
+            //Solutions part:
+            $solution_array = [
+                "linear_congruences" => [$linear_congrences_algorithm, $solutions],
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
          * This function is responsible for creating the fifth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to linear diophantine equations:
+         * Creating 1 triplet containing whole numbers that are at least 2, for partitioning a number into smaller numbers.
+         * Creating 2 distinct triplets of numbers for diophantine equations. These triplets represent congruences, that are solvable.
          * 
          * @return void
          */
         private function CreateTaskFive(){
+            // Task creation part:
+            // 1 triplet of numbers of whole numbers at least 2 for artitioning a number into smaller numbers (1 triplet of numbers/ subtask).
+            // 2 triplet of numbers of whole numbers between -50 and 50 representing congruences, that are solvable (1 triplet of numbers/ subtask).
             $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, -50, 50); // ax \equiv b (mod c)
             
             // Divide b into two numbers, so that the first is divisable by a, and the second is divisible by c
@@ -238,24 +286,35 @@
                 array_push($diophantine_equation, $actual_diophantine_equation);
             }
 
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő diofantoszi egyenletekkel kapcsolatos feladatokat!",
                 "diophantine_equations" => [$diophantine_equation[0], $diophantine_equation[1]],
-                "partition_number" => $diophantine_equation[2],
-                "solution" => $diophantine_algorithm 
+                "partition_number" => $diophantine_equation[2]
             );
             $this->SetTaskDescription($task_array);
+
+            //Solutions part:
+            $solution_array = [
+                "diophantine_equations" => [$diophantine_algorithm],
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
          * This function is responsible for creating the sixth set of tasks of Discrete Mathematics II. related to chinese remainder theorem.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to chinese remainder theorem:
+         * Creating 1 triplet containing whole numbers that are at least 2, for getting numbers that satisfy 2 simultaneous congruences.
+         * Creating 1 triplet containing whole numbers that are between -50 and 50, for getting numbers that satisfy 4 simultaneous congruences.
          * 
          * @return void
          */
         private function CreateTaskSix(){
+            // Task creation part:
+            // 1 triplet of whole numbers that are at least 2 representing congruences for getting numbers that satisfy 2 simultaneous congruences (1 triplet of numbers/ subtask).
+            // 1 triplet of whole numbers that are between -50 and 50 representing congruences for getting numbers that satisfy 4 simultaneous congruences (1 triplet of numbers/ subtask).
             $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
             while($this->dimat_helper_functions->DetermineGCDWithIteration([$divide_triplets[0][2],$divide_triplets[1][2]]) !== 1){
                 $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
@@ -266,35 +325,43 @@
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
             $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4, -50, 50);
 
-            $first_solution = $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($first_congruence_system_triplets);
-            $second_solution = $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($second_congruence_system_triplets);
-
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
                 "divide_triplets" => $divide_triplets,
                 "first_congruence_system_triplets" => $first_congruence_system_triplets,
-                "second_congruence_system_triplets" => $second_congruence_system_triplets,
-                "first_solution" => $first_solution,
-                "second_solution" => $second_solution,
+                "second_congruence_system_triplets" => $second_congruence_system_triplets
             );
             $this->SetTaskDescription($task_array);
+
+            //Solutions part:
+            $solution_array = [
+                "first_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($first_congruence_system_triplets),
+                "second_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($second_congruence_system_triplets),
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
          * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to horner table.
          * 
-         * ...Subtasks created here...
-         * 
+         * Subtasks related to horner's scheme:
+         * Creating 2 polynomial expressions and picking whole numbers from the range -20 and 20, where the first is of degree 2, and the second is of degree 4. The number of inputs for polynomial expression is the same as its degree.
+         * Creating 1 polynomial expression of degree 5 and picking a whole number from the range -20 and 20. 
+         *
          * @return void
          */
         private function CreateTaskSeven(){
+            // Task array declaration.
             $task_array = array(
                 "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
                 "polynomials" => [],
                 "divide_polynomials" => []
             );
             
+            // Creating 2 polynomials with degree of 2 and 4.
+            // Picking 2 and 4 wole numbers from the range of -20 and 20, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
             for($counter = 0; $counter < 2; $counter++){
                 $polynomial_degree = 2*$counter + 2;
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
@@ -302,19 +369,31 @@
                 array_push($task_array["polynomials"], [$polynomial_degree, $polynomial_expression, $places]);
             }
 
+            // Creating 1 polynomials with degree of 5.
+            // Creating 1 input between -20 and 20. Non of the has to be a root of the polynomial expression
             [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression(5);
             $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, -20, 20);
             $task_array["divide_polynomials"] = [5, $polynomial_expression, $places];
 
+            // Adding data to the task array.
             $this->SetTaskDescription($task_array);
 
+            //Solutions part:
+            $solution_array = [
+                "first_horner_scheme" => $this->dimat_helper_functions->DetermineHornerSchemes($task_array["polynomials"][0][1], $task_array["polynomials"][0][2]),
+                "second_horner_scheme" => $this->dimat_helper_functions->DetermineHornerSchemes($task_array["polynomials"][1][1], $task_array["polynomials"][1][2]),
+                "third_horner_scheme" => [$task_array["divide_polynomials"][2], $this->dimat_helper_functions->DetermineHornerSchemes($task_array["divide_polynomials"][1], $task_array["divide_polynomials"][2])],
+            ];
+            $this->SetTaskSolution($solution_array);
         }
 
         /**
          * 
          * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division and multiplication.
          * 
-         * ...Subtasks created here...
+         * Subtasks related to polinomial division and multiplication:
+         * Creating 2 polynomial expressions for polynomial division. The first one's degree is between 3 and 5.
+         * Creating 2 polynomial expression for polynomial multiplication. The second one's degree is between 1 and 3.
          * 
          * @return void
          */

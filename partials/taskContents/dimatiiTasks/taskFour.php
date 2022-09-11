@@ -13,13 +13,3 @@
     </div>
     <br>
 <?php endforeach?>
-
-<?php $first = $_SESSION["task"]["solution"][0]?>
-<?php $second = $_SESSION["task"]["solution"][1]?>
-<?php print_r($first)?>
-<?php print_r($second)?>
-
-<?php $first = $_SESSION["task"]["steps"][0]?>
-<?php $second = $_SESSION["task"]["steps"][1]?>
-<?php print_r($first)?>
-<?php print_r($second)?>

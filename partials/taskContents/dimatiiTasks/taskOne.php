@@ -59,6 +59,3 @@
     5. részfeladat: Hány olyan osztója van (szám1)-nek, ami nem osztható (egyik osztója)-val?
 </label>
 <!-- 1 számpár ide -->
-
-
-<?php print_r($_SESSION["solution"])?>

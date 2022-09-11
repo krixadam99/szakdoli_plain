@@ -6,7 +6,7 @@
         <?=$task_index + 1?>. részfeladat: Add meg a <?=$polynomial_names[$task_index]?> = 
         <?php PrintPolynomialExpression($polynomial_task_details[0],$polynomial_task_details[1])?> 
         polinom helyettesítési értékét a
-        <?php PrintPlaces($polynomial_task_details[2])?>
+        <?= PrintPlaces($polynomial_task_details[2])?>
         helyeken a Horner-táblázat segítségével!
     </label>
     <div class="small_task_container">

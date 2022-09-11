@@ -79,11 +79,13 @@
     }
 
     function PrintPlaces($places){
-        for($place_counter = 0; $place_counter < count($places); $place_counter++){
+        $return_string = "";
+        foreach($places as $place_counter => $place){
             $prefix = $place_counter !== 0?', ':'';
-            $prefix = $place_counter === count($places) - 1?' és ':$prefix;
-            echo($prefix . $places[$place_counter]);
+            $prefix = $place_counter === (count($places) - 1)?' és ':$prefix;
+            $return_string = $return_string . $prefix . $place;
         }
+        return $return_string;
     }
 
     function PrintPoints($points){

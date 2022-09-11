@@ -79,6 +79,27 @@
 
         /**
          * 
+         */
+        public function CreateReducedResidueSystemPair(){
+            $primes_between_7_and_20 = [7, 11, 13, 17, 19];
+            
+            //Let the cell number be maximum 8...
+            // Euler's phi values starting from 7:  6 (7), 4 (8), 6 (9), 4 (10), 10 (11), 4 (12), 12 (13), 6 (14), 8 (15), 8 (16), 16 (17), 6 (18), 18 (19), 8 (20) ... (from now on above 8)
+            $first_number_of_residue_classes = mt_rand(7,20);
+            while(in_array($first_number_of_residue_classes, $primes_between_7_and_20)){
+                $first_number_of_residue_classes = mt_rand(7,20);
+            }
+
+            $second_number_of_residue_classes = mt_rand(7,20);
+            while(in_array($second_number_of_residue_classes, $primes_between_7_and_20)){
+                $second_number_of_residue_classes = mt_rand(7,20);
+            }
+
+            return [[$first_number_of_residue_classes, $this->DetermineReducedResidueSystem($first_number_of_residue_classes)], [$second_number_of_residue_classes, $this->DetermineReducedResidueSystem($second_number_of_residue_classes)]];
+        }
+
+        /**
+         * 
          * This method is responsible for creating the given amount of triplets of numbers with the condition that non of the created numbers can be 0.
          * 
          * @param int $number_of_triplets The number of triplets the method must return.
@@ -215,7 +236,7 @@
             // Here the roots are given
             // Now it is time to calculate the coefficients:
             $sign = mt_rand(0,1) == 0?-1:1;
-            $main_coefficient = $sign*mt_rand(1,5);
+            $main_coefficient = $sign*mt_rand(1,5); // The main coefficient is never 0
             $coefficients = [$main_coefficient];
             for($counter = $degree-1; $counter >= 0; $counter--){
                 array_push($coefficients, $main_coefficient*$this->DetermineCoefficientByVieta($negated_roots, $counter));
@@ -279,6 +300,7 @@
                 $counter++;
             }
 
+            ksort($return_places);
             return $return_places;
         }
 
@@ -426,6 +448,72 @@
                 array_push($count_positive_divisors_array, $count_positive_divisors);
             }
             return $count_positive_divisors_array;
+        }
+
+        /**
+         * This method determines all of the residue classes for the Z/moduloZ complete residue system with a representative per residue class.
+         * 
+         * @param int $modulo A positive integer for which the method returns the complete residue system.
+         * 
+         * @return array Returns an indexed array containing all of the resiude classes for Z/moduloZ. Each resiude class is represented by an element, thus the method returns an array containing n numbers.
+         */
+        public function DetermineCompleteResidueSystem($modulo){
+            if($modulo > 0){
+                $complete_residue_system = [];
+
+                for($residue_class_representative = 0; $residue_class_representative < $modulo; $residue_class_representative++){
+                    array_push($complete_residue_system, $residue_class_representative);
+                }
+    
+                return $complete_residue_system;
+            }else{
+                return [];
+            }
+        }
+
+        /**
+         * This method determines all of the residue classes for the (Z/moduloZ)* reduced residue system with a representative per residue class.
+         * 
+         * @param int $modulo A positive integer for which the method returns the reduced residue system.
+         * 
+         * @return array Returns an indexed array containing all of the resiude classes for (Z/moduloZ)*. Each resiude class is represented by an element, thus the method returns an array containing phi(n) (Euler's phi function) numbers.
+         */
+        public function DetermineReducedResidueSystem($modulo){
+            if($modulo > 0){
+                $reduced_residue_system = [];
+
+                for($residue_class_representative = 0; $residue_class_representative < $modulo; $residue_class_representative++){
+                    if($this->DetermineGCDWithIteration([$residue_class_representative,$modulo]) === 1){
+                        array_push($reduced_residue_system, $residue_class_representative);
+                    }
+                }
+    
+                return $reduced_residue_system;
+            }else{
+                return [];
+            }
+        }
+
+        /**
+         * This method computes the value for the input by the Euler Phi function. This value for an input is the number of positive integers up to it that are relatively primes to it as well.
+         * 
+         * @param int $input_value The input for which the method determines the number of positive integers up to and are relatively primes to it as well.
+         * 
+         * @return int Returns the positive integers up to the given input that are relatively primes to it.
+         */
+        public function DetermineEulerPhiValue($input_value){
+            if($input_value >= 0){
+                $euler_phi_value = 1;
+                $prime_factorization = $this->DeterminePrimeFactorization([$input_value])[0];
+                foreach($prime_factorization as $pair_counter => $factor){
+                    $prime = $factor[0];
+                    $exponent = $factor[1];
+                    $euler_phi_value *= pow($prime, $exponent - 1)*($prime - 1); // $factor - $prime ^ (exponent - 1), e.g.: phi(2^3) = 8 - 4 = 4 (1, 3, 5, 7) 
+                }
+                return $euler_phi_value;
+            }else{
+                return 0;
+            }
         }
 
         /**
@@ -662,6 +750,73 @@
             $return_array["solution"] = $merged_solution;
             
             return $return_array;
+        }
+
+        /**
+         * This method determines the Horner scheme for the given places and polynomial expression.
+         * 
+         * @param array $polynomial_expression An indexed array containing the coefficients of a polynomial expression from the main coefficient to the constant part's coefficient (descending manner based on the degree).
+         * @param array $places The places where the method determines the Horner scheme. 
+         * 
+         * @return array Returns an indexed array containing the Horner schemes for each polynomial expression and places.
+         */
+        public function DetermineHornerSchemes($polynomial_expression, $places){
+            $horner_schemes = [];
+            foreach($places as $place_index => $place){
+                $horner_scheme = [];
+                $solution_part = 0;
+                foreach($polynomial_expression as $polynomial_index => $polynomial_coefficient){
+                    if($polynomial_index === 0){
+                        $solution_part = $polynomial_coefficient;
+                    }else{
+                        $solution_part = $place*$solution_part + $polynomial_coefficient;
+                    }
+                    array_push($horner_scheme, $solution_part);
+                }
+                array_push($horner_schemes, $horner_scheme);
+            }
+
+            return $horner_schemes;
+        }
+
+        /**
+         * 
+         */
+        public function DeterminePolynomialDivision($dividend_polynomial_expression, $divisor_polynomial_expression){
+            if(count($dividend_polynomial_expression) !== 0 && count($divisor_polynomial_expression) !== 0){
+                $quotient = [];
+                $residue = [];
+                
+                // 1. 3x^2+3x+3 / x+2 -> 0-1
+                // 2. 3x^2+3x+3 / 2 -> 0-1-2
+                // 3. 3x^2+3x+3 / x^2 -> 0
+                for($coefficient_counter = 0; $coefficient_counter <= count($dividend_polynomial_expression) - count($divisor_polynomial_expression); $coefficient_counter++){
+                    $actual_coefficient = $dividend_polynomial_expression[$coefficient_counter];
+                    
+                    // 1. 3; -3;
+                    // 2. 3/2; 3/2; 3/2
+                    // 3. 3
+                    $actual_quotient_coefficient = $actual_coefficient/$divisor_polynomial_expression[0]; // $divisor_polynomial_expression[0] cannot be 0
+                    array_push($quotient, $actual_quotient_coefficient);
+        
+                    // 1. 0x^2 - 3x + 3; 0x^2 - 0x + 9
+                    // 2. 0x^2 + 3x + 3; 0x^2 + 0x + 3; 0
+                    // 3. 0x^2 + 3x + 3
+                    for($substract_index = 0; $substract_index < count($divisor_polynomial_expression); $substract_index++){
+                        $dividend_polynomial_expression[$substract_index + $coefficient_counter] -= $actual_quotient_coefficient*$divisor_polynomial_expression[$substract_index];
+                    }
+                }
+        
+                foreach($dividend_polynomial_expression as $coefficient_counter => $coefficient){
+                    if($coefficient !== 0){
+                        array_push($residue, $coefficient);
+                    }
+                }
+        
+                return [$quotient, $residue];
+            }else{
+                return [[],[]];
+            }
         }
 
         /**

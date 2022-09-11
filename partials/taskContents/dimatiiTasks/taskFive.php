@@ -42,10 +42,3 @@
 </div>
 </div>
 <br>
-
-<?php $first = $_SESSION["task"]["solution"][0]?>
-<?php $second = $_SESSION["task"]["solution"][1]?>
-<?php $third = $_SESSION["task"]["solution"][2]?>
-<?php print_r($first)?>
-<?php print_r($second)?>
-<?php print_r($third)?>
