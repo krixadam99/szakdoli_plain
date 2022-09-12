@@ -5,7 +5,7 @@
 <label class="task_label">
     <?=1?>. részfeladat: Add meg a 
     <b>(<?php PrintPolynomialExpression($dividend_polynomial[0],$dividend_polynomial[1])?>) / (<?php PrintPolynomialExpression($divisor_polynomial[0],$divisor_polynomial[1])?>)</b>
-    polinomosztás eredményét és maradékát a <?="\u{2124}"?><span class="bottom"><b><?=$polynomials[2]?></b></span>
+    polinomosztás eredményét és maradékát a <?="\u{211D}"?>
     felett! A polinomok együtthatóit és a változó fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
 </label>
 <div class="small_task_container">

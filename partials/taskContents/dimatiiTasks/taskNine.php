@@ -87,3 +87,5 @@
         include("./partials/taskContents/solutionInput.php")
     ?>
 </div>
+
+<?php var_dump($_SESSION["task"]["polynomial_expressions"][0]);var_dump($_SESSION["task"]["solution"])?>

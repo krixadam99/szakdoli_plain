@@ -216,7 +216,7 @@
          * @param int $lower The lower bound for the range from which a random number will be picked for a root. The default value is -10.
          * @param int $upper The upper bound for the range from which a random number will be picked for a root. The default value is 10.
          * 
-         * @return array Returns an array containing the coefficients of the polynomial expression. The coefficients will be in descending manner based on the degrees.
+         * @return array Returns an array containing the coefficients of the polynomial expression. The coefficients will be in descending order based on the degrees.
          */
         public function CreatePolynomialExpression($degree, $lower = -10, $upper = 10){
             // a*(x-x_1)*(x-x_2)*...*(x*x_$degree)
@@ -306,29 +306,27 @@
 
         /**
          * 
-         * This method creates the given amount of points.
+         * This method creates the given amount of points that are on the given polynomial expression.
          * 
-         * Each points are distinct, and the first coordinates are pairwise different. 
+         * Each points are distinct, and the first coordinates are pairwise different. The points must lie on the graph given by the polynomial expression.
          * 
          * @param int $number_of_points The number of points the method returns.
          * @param int $lower The lower bound for the range from which a random number will be picked for the first coordinate. The default value is -1000.
          * @param int $upper The upper bound for the range from which a random number will be picked for the first coordinate. The default value is 1000.
+         * @param array $polynomial_expression An indexed array of coefficients defining a polynomial expression on which the newly made points should lie.
          * 
          * @return array Returns the given amount of points.
          */
-        public function CreatePoints($number_of_points, $lower = -1000, $upper = 1000){
+        public function CreatePoints($number_of_points, $lower = -1000, $upper = 1000, $polynomial_expression = []){
             $return_points = [];
             $first_coordinates = []; 
             for($counter = 0; $counter < $number_of_points; $counter++){
                 $first_element = mt_rand($lower, $upper);
-                $second_element = mt_rand($lower, $upper);
-
-                while( in_array([$first_element, $second_element], $return_points) 
-                    || in_array($first_element, $first_coordinates)){
+                while(in_array($first_element, $first_coordinates)){
                     $first_element = mt_rand($lower, $upper);
-                    $second_element = mt_rand($lower, $upper);
                 }
-                array_push($return_points, [$first_element, $second_element]);
+
+                array_push($return_points, [$first_element, $this->DeterminePolynomialValue($first_element, $polynomial_expression)]);
                 array_push($first_coordinates, $first_element);
             }
             return $return_points;
@@ -755,7 +753,7 @@
         /**
          * This method determines the Horner scheme for the given places and polynomial expression.
          * 
-         * @param array $polynomial_expression An indexed array containing the coefficients of a polynomial expression from the main coefficient to the constant part's coefficient (descending manner based on the degree).
+         * @param array $polynomial_expression An indexed array containing the coefficients of a polynomial expression from the main coefficient to the constant part's coefficient (descending order based on the degree).
          * @param array $places The places where the method determines the Horner scheme. 
          * 
          * @return array Returns an indexed array containing the Horner schemes for each polynomial expression and places.
@@ -780,9 +778,14 @@
         }
 
         /**
+         * This method returns the quotient and residue polynomial expression, after dividing the first argument with the second one.
+         *
+         * @param array $dividend_polynomial_expression An indexed array containing the coefficients of the dividend polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
+         * @param array $divisor_polynomial_expression An indexed array containing the coefficients of the divisor polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
          * 
+         * @return array Returns an indexed array containing the quotient and residue polynomial expressions.
          */
-        public function DeterminePolynomialDivision($dividend_polynomial_expression, $divisor_polynomial_expression){
+        public function DividePolynomialExpressions($dividend_polynomial_expression, $divisor_polynomial_expression){
             if(count($dividend_polynomial_expression) !== 0 && count($divisor_polynomial_expression) !== 0){
                 $quotient = [];
                 $residue = [];
@@ -795,7 +798,7 @@
                     
                     // 1. 3; -3;
                     // 2. 3/2; 3/2; 3/2
-                    // 3. 3
+                    // 3. 3                    
                     $actual_quotient_coefficient = $actual_coefficient/$divisor_polynomial_expression[0]; // $divisor_polynomial_expression[0] cannot be 0
                     array_push($quotient, $actual_quotient_coefficient);
         
@@ -808,7 +811,7 @@
                 }
         
                 foreach($dividend_polynomial_expression as $coefficient_counter => $coefficient){
-                    if($coefficient !== 0){
+                    if($coefficient_counter >  (count($dividend_polynomial_expression) - count($divisor_polynomial_expression))){
                         array_push($residue, $coefficient);
                     }
                 }
@@ -817,6 +820,102 @@
             }else{
                 return [[],[]];
             }
+        }
+
+        /**
+         * This method returns the product polynomial expression, after multiplying the first argument with the second one. The method also takes the modulo of each coefficient by the third argument.
+         *
+         * @param array $multiplicand_polynomial_expression An indexed array containing the coefficients of the multiplicand polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
+         * @param array $multiplier_polynomial_expression An indexed array containing the coefficients of the multiplier polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
+         * @param int $modulo A positive whole number with which each of the product polynomial expression's coefficients will take the residue upon division. The coefficients are in descending order from the main coefficient to the constant member.
+         * 
+         * @return array Returns an indexed array containing the product polynomial expressions modulo by the third argument.
+         */
+        public function MultiplyPolynomialExpressions($multiplicand_polynomial_expression, $multiplier_polynomial_expression, $modulo){
+            $product_polynomial_expression = [];
+        
+            // (x^2 + 2x + 3)*(2x^2 + 2x) => [1,2,3]*[2,2,0] = [2,2+4,0+4+6,0+6,0] = [2,6,10,6,0]
+            for($multiplicand_counter = 0; $multiplicand_counter < count($multiplicand_polynomial_expression); $multiplicand_counter++){
+                for($multiplier_counter = 0; $multiplier_counter < count($multiplier_polynomial_expression); $multiplier_counter++){
+                    $actual_product = $multiplicand_polynomial_expression[$multiplicand_counter]*$multiplier_polynomial_expression[$multiplier_counter];
+                    
+                    if(!isset($product_polynomial_expression[$multiplicand_counter + $multiplier_counter])){
+                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = $actual_product;
+                    }else{
+                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] += $actual_product;
+                    }
+                    $new_value = $product_polynomial_expression[$multiplicand_counter + $multiplier_counter];
+                    $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = $this->DetermineQuotientAndResidue([[$new_value, $modulo]])[0][1];
+                }
+            }
+    
+            return $product_polynomial_expression;
+        }
+
+        /**
+         * This method returns the Lagrange interpolation polynomial expression for the given points.
+         * 
+         * @param array $points An indexed array containing [first coordinate, second coordinate] pairs. These points will be on the resulting graph.
+         * 
+         * @return array Returns an associatvie array containing an indexed array with the coefficients of the interpolation polynomial expression, where the coefficients are in descending order from the main coefficient to the constant member. 
+         * It also contains an array with the base polynomial expressions per points.
+         */
+        public function DetermineLagrangeInterpolation($points){
+            $lagrange_interpolation = array("polynomial_expression" => [], "base_polynomial_expressions" => []);
+
+            // Calculate the base polynomial expression for each given point:
+            // Get the nominator polynomial expression by the roots;
+            // Multiply each coefficient with the right denominator.
+            foreach($points as $point_counter_first => $actual_point){ // (2,3), (3,4)
+                $first_coordinate = $actual_point[0];
+
+                $base_polynomial_roots = [];
+                $denominator = 1;
+                foreach($points as $point_counter_second => $substract_point){
+                    if($point_counter_first != $point_counter_second){
+                        $denominator *= ($first_coordinate - $substract_point[0]);
+                        array_push($base_polynomial_roots, -1*$substract_point[0]);
+                    }
+                }
+
+                if($denominator === 0){
+                    return ["polynomial_expression" => [], "base_polynomial_expressions" => []];
+                }
+
+                $base_polynomial_expression = [1/$denominator];
+                for($counter = count($base_polynomial_roots) - 1; $counter >= 0; $counter--){
+                    array_push($base_polynomial_expression, (1/$denominator)*$this->DetermineCoefficientByVieta($base_polynomial_roots, $counter));
+                }
+
+                array_push($lagrange_interpolation["base_polynomial_expressions"], $base_polynomial_expression);
+            }
+
+            // Give the final polyinomial expression:
+            // Multiply each base polynomial expression with the second coordinate of the corresponding point;
+            // Add the multiplied polynomial expressions together.
+            $final_polynomial_expression = [];
+            foreach($lagrange_interpolation["base_polynomial_expressions"] as $polynomial_counter => $polynomial_expression){
+                $multiplied_polynomial_expression = [];
+                foreach($polynomial_expression as $coefficient_counter => $coefficient){
+                    array_push($multiplied_polynomial_expression, $coefficient*$points[$polynomial_counter][1]);
+                }
+                $final_polynomial_expression = $this->AddPolynomialExpressions($final_polynomial_expression, $multiplied_polynomial_expression);
+            }
+            
+            $lagrange_interpolation["polynomial_expression"] = $final_polynomial_expression;
+
+            return $lagrange_interpolation;
+        }
+
+        /**
+         * This method returns the Newton interpolation polynomial expression for the given points.
+         * 
+         * @param array $points An indexed array containing [first coordinate, second coordinate] pairs. These points will be on the resulting graph.
+         * 
+         * @return array Returns an indexed array containing the coefficients of the interpolation polynomial expression. The coefficients are in descending order from the main coefficient to the constant member.
+         */
+        public function DetermineNewtonInterpolation($points){
+            
         }
 
         /**
@@ -1001,6 +1100,50 @@
             }
 
             return $sum;
+        }
+
+        /**
+         * This private mehtod determines the value for a given input by a polynomial expression.
+         * 
+         * @param mixed $input A number for which the method will determine the value.
+         * @param array $polynomial_expression An indexed array containing the polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
+         * 
+         * @return mixed Returns the value by the polynomial expression at the given input.
+         */
+        private function DeterminePolynomialValue($input, $polynomial_expression){
+            $value = 0;
+            foreach($polynomial_expression as $coefficient_counter => $coefficient){
+                $value += $coefficient*pow($input, count($polynomial_expression) - 1 - $coefficient_counter);
+            }
+            return $value;
+        }
+
+        /**
+         * This private method determines the sum of two polynomial expressions.
+         * 
+         * @param array $first_polynomial_expression An indexed array containing the first addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
+         * @param array $first_polynomial_expression An indexed array containing the second addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
+         * 
+         * @return array An indexed array containing the summed polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
+         
+         */
+        private function AddPolynomialExpressions($first_polynomial_expression, $second_polynomial_expression){
+            $sum_polynomial_expression = [];
+            if(count($first_polynomial_expression) >= count($second_polynomial_expression)){
+                $sum_polynomial_expression = $first_polynomial_expression;
+                $substracted_count = count($first_polynomial_expression) - count($second_polynomial_expression);
+                foreach($second_polynomial_expression as $coefficient_index => $coefficient){
+                    $sum_polynomial_expression[$substracted_count + $coefficient_index] += $coefficient;
+                }
+            }else{
+                $sum_polynomial_expression = $second_polynomial_expression; 
+                $substracted_count = count($second_polynomial_expression) - count($first_polynomial_expression);
+                foreach($first_polynomial_expression as $coefficient_index => $coefficient){
+                    $sum_polynomial_expression[$substracted_count + $coefficient_index] += $coefficient;
+                }
+            }
+
+            return $sum_polynomial_expression;
         }
     }
 ?>
