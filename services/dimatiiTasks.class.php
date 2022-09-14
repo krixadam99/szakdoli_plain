@@ -219,7 +219,7 @@
         private function CreateTaskFour(){
             // Task creation part:
             // 3 distinct triplets of numbers for linear congruences (1 triplet of numbers/ subtask).
-            $linear_congrences = $this->dimat_helper_functions->CreateTripletsOfNumbersWithoutZero(3, -100, 100);
+            $linear_congrences = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(3, true, -100, 100);
             $linear_congrences_algorithm = [];
             $solutions = [];
             foreach($linear_congrences as $index => $triplet){
@@ -241,7 +241,8 @@
 
             //Solutions part:
             $solution_array = [
-                "linear_congruences" => [$linear_congrences_algorithm, $solutions],
+                "linear_congruences" => $linear_congrences_algorithm, 
+                "solutions" => $solutions,
             ];
             $this->task_solutions = $solution_array;
         }

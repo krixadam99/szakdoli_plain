@@ -78,7 +78,7 @@
                     }
 
                     $task_evaluator->CheckSolution($_SESSION["topic"]);
-                    $update_point = $task_evaluator->GetUpdatePoint();
+                    $update_point = round($task_evaluator->GetUpdatePoint(),2);
                     $model = new PracticeModel();
                     $model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
 

@@ -5,9 +5,11 @@
     <div class="small_task_container">
         <?php $task_counter = $index;?>
         <div class="multiple_solution_input_container">
-            <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="b..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0"]??"";?>
+            <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value=<?=$current_answer["answer"]??"b..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             (mod
-            <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="modulo..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_1"]??"";?>
+            <input type="text" name=<?="solution_" . $task_counter . "_1"?> value=<?=$current_answer["answer"]??"mod..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             )
         </div>
     </div>
