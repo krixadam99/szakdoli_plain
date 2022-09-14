@@ -21,9 +21,9 @@
          * @return void
          */
         public function __construct($topic){
-            $this->SetTaskDescription([]);
-            $this->SetTaskSolution([]);
-            $this->SetDefinitions("");
+            $this->task_description = [];
+            $this->task_solutions= [];
+            $this->definitions = "";
 
             $this->set_names = ["A", "B", "C", "D"]; // The set names used throughout the task generation.
             $this->complex_number_names = ["v", "w", "x", "y", "z"]; // The complex number names used throughout the task generation.
@@ -141,8 +141,8 @@
                 "operations" => $operation_dictionary
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -198,8 +198,8 @@
                 "solution_5" => $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set)
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -253,8 +253,8 @@
                 "solution_2" => [$personal_set, $characteristics]
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -316,8 +316,8 @@
                 )
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -422,8 +422,8 @@
                 "coefficients" => [$a, $b, $c]
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -490,8 +490,8 @@
                 "operations" => $operation_dictionary
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -544,8 +544,8 @@
                 "operations" => $operation_dictionary
             );
 
-            $this->SetTaskDescription($task_array);
-            $this->SetTaskSolution($solution_array);      
+            $this->task_description = $task_array;
+            $this->task_solutions = $solution_array;      
         }
 
         /**

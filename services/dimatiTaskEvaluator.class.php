@@ -166,6 +166,8 @@
          * @return void
         */
         private function CheckThirdTaskSolution(){
+            $dimat_helper_functions = new DimatiHelperFunctions();
+            
             //Parsing the answers
             $real_solutions = array_values($this->real_solutions);
 
@@ -219,27 +221,27 @@
                 $is_answer_true = false;
                 switch($characteristic){
                     case "Reflexív":{
-                        $is_answer_true = $this->dimat_helper_functions->IsReflexiveRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsReflexiveRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     case "Irreflexív":{
-                        $is_answer_true = $this->dimat_helper_functions->IsIrreflexiveRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsIrreflexiveRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     case "Szimmetrikus":{
-                        $is_answer_true = $this->dimat_helper_functions->IsSymmetricRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsSymmetricRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     case "Antiszimmetrikus":{
-                        $is_answer_true = $this->dimat_helper_functions->IsAntisymmetricRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsAntisymmetricRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     case "Asszimetrikus":{
-                        $is_answer_true = $this->dimat_helper_functions->IsAssymmetricRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsAssymmetricRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     case "Tranzitív":{
-                        $is_answer_true = $this->dimat_helper_functions->IsTransitiveRelation($personal_set, $third_answer_relation);
+                        $is_answer_true = $dimat_helper_functions->IsTransitiveRelation($personal_set, $third_answer_relation);
                     };
                     break;
                     default:break;
