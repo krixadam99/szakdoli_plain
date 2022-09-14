@@ -147,8 +147,8 @@
 
             //Solutions part:
             $solution_array = [
-                "crs_systems" => [$this->dimat_helper_functions->DetermineCompleteResidueSystem($crs_numbers[0])],
-                "rrs_systems" => [$this->dimat_helper_functions->DetermineReducedResidueSystem($rrs_numbers[0])],
+                "crs_systems" => $this->dimat_helper_functions->DetermineCompleteResidueSystem($crs_numbers[0]),
+                "rrs_systems" => $this->dimat_helper_functions->DetermineReducedResidueSystem($rrs_numbers[0]),
                 "rrs_size_numbers" => [$this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[0]), $this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[1])]
             ];
             $this->task_solutions = $solution_array;
@@ -199,7 +199,9 @@
 
             //Solutions part:
             $solution_array = [
-                "eucleidan_algorithm" => [$eucleidan_algorithm, $gcd_array, $lcm_array],
+                "eucleidan_algorithm" => $eucleidan_algorithm,
+                "gcd" => $gcd_array,
+                "lcm" => $lcm_array
             ];
             $this->task_solutions = $solution_array;
         }

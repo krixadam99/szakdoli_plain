@@ -3,7 +3,7 @@
 </label>
 <div class="small_task_container">
     <?php $task_counter = 0;?>
-    <?php foreach($_SESSION["task"]["crs_numbers"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["crs_numbers"] as $crs_index => $number):?>
         <?="\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124}"?> teljes maradék rendszer megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>
@@ -16,7 +16,7 @@
     </label>
 <div class="small_task_container">
     <?php $task_counter = 1;?>
-    <?php foreach($_SESSION["task"]["rrs_numbers"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["rrs_numbers"] as $rrs_index => $number):?>
         <?="(\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124})*"?> redukált maradék rendszer megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>
@@ -28,8 +28,8 @@
         3. részfeladat: Határozd meg a következő redukált maradékrendszerek méretét az Euler- féle fí függvény segítségével!
     </label>
 <div class="small_task_container">
-    <?php $task_counter = 2;?>
-    <?php foreach($_SESSION["task"]["rrs_size_numbers"] as $index => $number):?>
+    <?php foreach($_SESSION["task"]["rrs_size_numbers"] as $rrs_size_index => $number):?>
+        <?php $task_counter = 2 . "_" . $rrs_size_index;?>
         <?="|(\u{2124}" . "/"?><span class="bottom"><?=$number?></span><?="\u{2124})*|"?> redukált maradék rendszer méretének megadása:
         <br>
         <?php include("./partials/taskContents/solutionInput.php")?>

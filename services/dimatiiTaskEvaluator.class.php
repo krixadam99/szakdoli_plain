@@ -175,6 +175,45 @@
          * @return void
         */
         private function CheckSecondTaskSolution(){
+            // Check first and second subtasks:
+            $first_solution = $this->real_solutions["crs_systems"];
+            $second_solution = $this->real_solutions["rrs_systems"];
+            for($subtask_counter = 0; $subtask_counter < 2; $subtask_counter++){
+                $given_answer_raw = $this->given_answers[$subtask_counter]??"";
+                $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
+                
+                $was_correct = false;
+                $solution_text = "";
+                if($subtask_counter === 0){
+                    $solution_text = $this->CreatePrintableSet($first_solution);
+                    $was_correct = $this->CompareSets($given_answer, $first_solution);
+                }else{
+                    $solution_text = $this->CreatePrintableSet($second_solution);
+                    $was_correct = $this->CompareSets($given_answer, $second_solution);
+                }
+                if($was_correct){
+                    $this->correct_answer_counter += 1;
+                }
+
+                $this->solution_counter += 1;
+                $this->SetSessionAnswer($subtask_counter, $given_answer_raw, $this->CreatePrintableSet($given_answer), $solution_text, $was_correct);
+            }
+
+            // Check third subtask:
+            $third_solution = $this->real_solutions["rrs_size_numbers"];
+            for($third_subtask_counter = 0; $third_subtask_counter < 2; $third_subtask_counter++){
+                $given_answer_raw = $this->given_answers[$third_subtask_counter + 2]??"";
+                $given_answer_rrs_size = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
+                
+                $was_correct = false;
+                if($given_answer_rrs_size == $third_solution[$third_subtask_counter]){
+                    $this->correct_answer_counter += 1;
+                    $was_correct = true;
+                }
+
+                $this->solution_counter += 1;
+                $this->SetSessionAnswer("2_" . $third_subtask_counter, $given_answer_raw, $given_answer_rrs_size, $third_solution[$third_subtask_counter], $was_correct);
+            }
         }
 
         /**
@@ -184,6 +223,93 @@
          * @return void
         */
         private function CheckThirdTaskSolution(){
+            // Check first, second and third subtasks:
+            $answer_counter = 0;
+            for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
+                $solution_steps = $this->real_solutions["eucleidan_algorithm"][$subtask_counter];
+                $actual_gcd = $this->real_solutions["gcd"][$subtask_counter];
+                $actual_lsm = $this->real_solutions["lcm"][$subtask_counter];
+                
+                foreach($solution_steps as $step_counter => $step){
+                    foreach($step as $substep_counter => $sub_step){
+                        if($substep_counter === 1){
+                            $multiplicand = $solution_steps[$step_counter][1];
+                            $multiplier = $solution_steps[$step_counter][2];
+                            $given_answer_raw_multiplicand = $this->given_answers[$answer_counter]??"";
+                            $given_answer_raw_multiplier = $this->given_answers[$answer_counter + 1]??"";
+                            $given_answer_multiplicand = $this->ExtractSolutionFromInput($given_answer_raw_multiplicand)[0]??"";
+                            $given_answer_multpilier = $this->ExtractSolutionFromInput($given_answer_raw_multiplier)[0]??"";
+                            
+                            $was_correct = false;
+                            if($given_answer_multpilier == $multiplicand && $given_answer_multiplicand == $multiplier || $given_answer_multpilier == $multiplier && $given_answer_multiplicand == $multiplicand){
+                                $this->correct_answer_counter += 2;
+                                $was_correct = true;
+                            }
+
+                            $this->SetSessionAnswer(
+                                $subtask_counter . "_" . $step_counter . "_" . $substep_counter, 
+                                $given_answer_raw_multiplicand,
+                                $given_answer_multiplicand, 
+                                $multiplicand . " vagy " . $multiplier,
+                                $was_correct
+                            );
+                            $this->SetSessionAnswer(
+                                $subtask_counter . "_" . $step_counter . "_" . $substep_counter + 1, 
+                                $given_answer_raw_multiplier,
+                                $given_answer_multpilier, 
+                                $multiplicand . " vagy " . $multiplier,
+                                $was_correct
+                            );
+
+                            $this->solution_counter += 2;
+                            $answer_counter += 2;
+                        }else if($substep_counter === 0 || $substep_counter === 3){
+                            $given_answer_raw = $this->given_answers[$answer_counter]??"";
+                            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
+                            
+                            $was_correct = false;
+                            if($given_answer == $sub_step){
+                                $this->correct_answer_counter += 1;
+                                $was_correct = true;
+                            }
+    
+                            $this->solution_counter += 1;
+                            $this->SetSessionAnswer(
+                                $subtask_counter . "_" . $step_counter . "_" . $substep_counter, 
+                                $given_answer_raw,
+                                $given_answer, 
+                                $sub_step,
+                                $was_correct
+                            );
+                            $answer_counter++;
+                        }
+                    }
+                    $this->solution_counter += 4;
+                }
+
+                for($step_counter = 0; $step_counter < 2; $step_counter++){
+                    $given_answer_raw = $this->given_answers[$answer_counter]??"";
+                    $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
+
+                    $solution_text = "";
+                    $was_correct = false;
+                    if($step_counter === 0){
+                        $was_correct = $actual_gcd == $given_answer;
+                        $solution_text = $actual_gcd;
+                    }else{
+                        $was_correct = $actual_lsm == $given_answer; 
+                        $solution_text = $actual_lsm;
+                    }
+
+                    if($was_correct){
+                        $this->correct_answer_counter += 1;
+                    }
+
+                    $this->solution_counter += 1;
+                    $this->SetSessionAnswer($subtask_counter . "_" . count($solution_steps) + $step_counter, $given_answer_raw, $given_answer, $solution_text, $was_correct);
+                    $answer_counter++;
+                }
+            }
         }
 
         /**

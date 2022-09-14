@@ -1,6 +1,6 @@
 <?php foreach($_SESSION["task"]["linear_congrences"] as $index => $triplet):?>
     <label class="task_label">
-        <?=$index + 1?>. részfeladat: Határozd meg a <?= $triplet[0] . "*x \u{2261} " . $triplet[1] . "(mod " . $triplet[2] . ")"?> kongruencia megoldását!
+        <?=$index + 1?>. részfeladat: Határozd meg a <?= $triplet[0] . "*x \u{2261} " . $triplet[1] . " (mod " . $triplet[2] . ")"?> kongruencia megoldását!
     </label>
     <div class="small_task_container">
         <?php $task_counter = $index;?>
