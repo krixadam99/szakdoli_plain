@@ -152,8 +152,9 @@
          * @return bool Returns whether the two relations are the same, i.e., contains the same ordered pairs with multiplicity, or not.
         */
         protected function CompareRelations($first_relation, $second_relation){
-            [$first_relation_first_components, $first_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($first_relation);
-            [$second_relation_first_components, $second_relation_second_components] = $this->dimat_helper_functions->GetRelationTwoArrayForm($second_relation);
+            $dimati_helper_functions = new DimatiHelperFunctions();
+            [$first_relation_first_components, $first_relation_second_components] = $dimati_helper_functions->GetRelationTwoArrayForm($first_relation);
+            [$second_relation_first_components, $second_relation_second_components] = $dimati_helper_functions->GetRelationTwoArrayForm($second_relation);
             
             $first_equal = $this->CompareSets($first_relation_first_components, $second_relation_first_components);
             $second_equal = $this->CompareSets($first_relation_second_components, $second_relation_second_components);

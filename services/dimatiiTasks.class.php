@@ -107,7 +107,8 @@
             $solution_array = [
                 "divide_pairs_solution" => $this->dimat_helper_functions->DetermineQuotientAndResidue($divide_pairs),
                 "prime_factorization_solution" => $this->dimat_helper_functions->DeterminePrimeFactorization($prime_factorization_numbers),
-                "positive_divisor_count_solution" => $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers)
+                "positive_divisor_count_solution" => $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers),
+                "congruence" => $congruency_pairs
             ];
             $this->task_solutions = $solution_array;
 

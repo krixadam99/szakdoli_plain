@@ -271,6 +271,7 @@ hr {
     border-radius: 5px;
     padding-left: 2%;
     color:rgb(134, 132, 132);
+    border: 1px solid rgba(30, 144, 236, 0.899);
 }
 
 .multiple_solution_input_container input, .single_solution_input_container input {
@@ -297,15 +298,13 @@ hr {
     border: 1px solid black;
 }
 
-.solution_input{
-    border: 1px solid rgba(30, 144, 236, 0.899);
-}
-
 .correct {
+    border-radius: 5px;
     border: 1px solid green;
 }
 
 .wrong {
+    border-radius: 5px;
     border: 1px solid red;
 }
 

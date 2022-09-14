@@ -5,7 +5,7 @@
     <?php foreach($_SESSION["task"]["divide_pairs"] as $division_index => $pair):?>
         <div class="multiple_solution_input_container">
             <?php 
-                $task_counter = "0_" . $division_index . "_0";
+                $task_counter = "0_$division_index" . "_0";
                 $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"";
             ?>
             <?=$pair[0]?> = <?=$pair[1]?> * <input type="text" name="<?="solution_" . $task_counter?>" value=<?=$current_answer["answer"]??"hányados..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
@@ -13,7 +13,7 @@
             +
 
             <?php 
-                $task_counter = "0_" . $division_index . "_1";
+                $task_counter = "0_$division_index". "_1" ;
                 $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"maradék...";
             ?>
             <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer["answer"]??"maradék..."?>" class="<?=IsCorrect($current_answer)?>">
@@ -55,12 +55,14 @@
 </label>
 <div class="small_task_container">
     <?php $task_counter = 3;?>
-    <?php foreach($_SESSION["task"]["congruency_pairs"] as $index => $pair):?>
-        <?php foreach($_SESSION["task"]["divide_pairs"] as $division_index => $pair):?>
-            <div class="single_solution_input_container">
-                <?=$pair[0] . " \u{2261}"?> <input type="text" name=<?="solution_3_" . $division_index . "_0"?> value="b..." class="solution_input"> (mod <?= $pair[1]?>)
-            </div>
-        <?php endforeach?>
+    <?php foreach($_SESSION["task"]["congruency_pairs"] as $congruence_index => $pair):?>
+        <?php 
+            $task_counter = "3_$congruence_index";
+            $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"";
+        ?>
+        <div class="single_solution_input_container">
+            <?=$pair[0] . " \u{2261}"?> <input type="text" name="<?="solution_" . $task_counter?>" value=<?=$current_answer["answer"]??"b..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>> (mod <?= $pair[1]?>)
+        </div>
     <?php endforeach?>
 </div>
 <br>

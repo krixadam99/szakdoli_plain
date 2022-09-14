@@ -6,7 +6,7 @@
     */
     abstract class Tasks {
         protected $task_description;
-        protected $task_solution;
+        protected $task_solutions;
         protected $definitions;
 
         /**
@@ -23,7 +23,7 @@
          * 
          * @return array An associative array containing the tasks' solutions.
         */
-        public function GetTaskSolution(){ return $this->task_solution; }
+        public function GetTaskSolutions(){ return $this->task_solutions; }
 
         /**
          * 
@@ -51,7 +51,7 @@
          * 
          * @return void
         */
-        public function SetTaskSolution($task_solutions){ $this->task_solution = $task_solutions; }
+        public function SetTaskSolutions($task_solutions){ $this->task_solutions = $task_solutions; }
 
         /**
          * 
