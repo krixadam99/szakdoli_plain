@@ -135,7 +135,7 @@
          * 
          * @return array Returns the given amount of triplets of numbers.
          */
-        public function CreateSolvableLinearCongruencies($number_of_triplets, $without_zeros = true, $lower = -1000, $upper = 1000){
+        public function CreateSolvableLinearCongruences($number_of_triplets, $without_zeros = true, $lower = -1000, $upper = 1000){
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
@@ -143,7 +143,8 @@
                 $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                 $was_there_zero = false;
                 if($without_zeros){
-                    $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0;
+                    $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0 || abs($triplet[0]) % abs($triplet[2]) === 0;
+
                 }
                 while( $was_there_zero 
                     || in_array($triplet, $return_triplets)
@@ -153,7 +154,7 @@
                         $b= $triplet[1];
                         $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         if($without_zeros){
-                            $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0;
+                            $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0 || abs($triplet[0]) % abs($triplet[2]) === 0;
                         }
                 }
                 array_push($return_triplets, $triplet);
@@ -176,14 +177,14 @@
          * 
          * @return array Returns the given amount of triplets of numbers (one triplet is one congruence).
          */
-        public function CreateSolvableLinearCongruenciesForCRT($number_of_triplets, $lower = -1000, $upper = 1000){
+        public function CreateSolvableLinearCongruencesForCRT($number_of_triplets, $lower = -1000, $upper = 1000){
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
                 $b= $triplet[1];
                 $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]); // The linear congruence can be solved
                 
-                $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0; // Non of the coefficients in the congruence is zero
+                $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0 || abs($triplet[0]) % abs($triplet[2])=== 0; // Non of the coefficients in the congruence is zero, additionally the absolute value of the left side is not divisible by the modulo (that is, will never get 0)
                 $triplet_contains_similar = abs($triplet[1]) === abs($triplet[2]) || abs($triplet[0]) === abs($triplet[2]); // The left and right hand sides are different from the modulo  
                 $is_modulo_relative_prime_to_modulos = $this->CheckIfModulosRelativelyPrimes($return_triplets, $triplet[2]); // New modulo is relatively prime to the modulos in the congruence system
 
@@ -197,7 +198,7 @@
                         $b= $triplet[1];
                         $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         
-                        $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0; // Non of the coefficients in the congruence is zero
+                        $was_there_zero = $triplet[0] === 0 || $triplet[1] === 0 || $triplet[2] === 0 || abs($triplet[0]) % abs($triplet[2])=== 0; // Non of the coefficients in the congruence is zero, additionally the absolute value of the left side is not divisible by the modulo (that is, will never get 0)
                         $triplet_contains_similar = abs($triplet[1]) === abs($triplet[2]) || abs($triplet[0]) === abs($triplet[2]); // The left and right hand sides are different from the modulo 
                         $is_modulo_relative_prime_to_modulos = $this->CheckIfModulosRelativelyPrimes($return_triplets, $triplet[2]); // New modulo is relatively prime to the modulos in the congruence system
                 }

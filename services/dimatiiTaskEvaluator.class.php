@@ -325,12 +325,12 @@
                 $given_answer_pair_raw = [$this->given_answers[$subtask_counter*2]??"", $this->given_answers[$subtask_counter*2 + 1]??""];
                 $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
                 
-                if(is_int($real_solution_pair[0])){
+                if(is_int($real_solution_pair[0])){    
                     $b = $real_solution_pair[1] - intval($given_answer_pair[0]);
                     while($b < 0){
                         $b += abs($real_solution_pair[2]);
                     }
-    
+                    
                     $was_correct_modulo = $given_answer_pair[1] == $real_solution_pair[2];
                     $was_correct_residue = $b % $real_solution_pair[2] === 0;
                     if($was_correct_residue && $was_correct_modulo){
@@ -351,6 +351,71 @@
          * @return void
         */
         private function CheckFifthTaskSolution(){
+            // Check first and second subtasks:
+            $answer_counter = 0;
+            for($subtask_counter = 0; $subtask_counter < 2; $subtask_counter++){
+                $real_solution_congruences = $this->real_solutions["diophantine_equations"][$subtask_counter];
+                $x_congruence = $real_solution_congruences[0];
+                $y_congruence = $real_solution_congruences[1];
+                
+                for($step_counter = 0; $step_counter < 3; $step_counter++){
+                    $given_answer_pair_raw = [$this->given_answers[$answer_counter]??"", $this->given_answers[$answer_counter + 1]??""];
+                    $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
+                    
+                    $congruence = [];
+                    if($step_counter < 2){
+                        $congruence = [$x_congruence[1], $x_congruence[2]];
+                    }else{
+                        $congruence = $y_congruence;
+                    }
+
+                    $was_correct_residue = false;
+                    $was_correct_modulo = false;
+                    if(is_numeric($given_answer_pair[0]) && is_numeric($given_answer_pair[1])){
+                        $was_correct_modulo = $given_answer_pair[1] == $congruence[1];
+                        $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]);
+                    }
+
+                    if($was_correct_residue && $was_correct_modulo){
+                        $this->correct_answer_counter += 1;
+                    }
+                    
+                    $this->solution_counter += 1;
+                    $this->SetSessionAnswer($subtask_counter . "_" . $step_counter . "_0", $given_answer_pair_raw[0], $given_answer_pair[0], $congruence[0], $was_correct_residue);
+                    $this->SetSessionAnswer($subtask_counter . "_" . $step_counter . "_1", $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
+                    
+                    $answer_counter += 2;
+                }
+            }
+
+            // Check third subtask:
+            $given_number_first_raw = $this->given_answers[$answer_counter]??"";
+            $given_number_second_raw = $this->given_answers[$answer_counter + 1]??"";
+            $given_number_first = $this->ExtractSolutionFromInput($given_number_first_raw)[0]??"";
+            $given_number_second = $this->ExtractSolutionFromInput($given_number_second_raw)[0]??"";
+
+            $real_solution_first_number = $this->real_solutions["diophantine_equations"][2][0];
+            $real_solution_second_number = $this->real_solutions["diophantine_equations"][2][1];
+
+            $first_number = $real_solution_first_number[1]*$real_solution_second_number[1];
+            $second_number = $real_solution_second_number[0]*$real_solution_first_number[2];
+
+            $was_correct = false;
+            if(is_numeric($given_number_first) && is_numeric($given_number_second)){
+                $was_correct = $this->IsCongruent(intval($given_number_first), $first_number, $real_solution_second_number[1])
+                            && $this->IsCongruent(intval($given_number_second), $second_number, $real_solution_first_number[2])
+                            || $this->IsCongruent(intval($given_number_second), $first_number, $real_solution_second_number[1])
+                            && $this->IsCongruent(intval($given_number_first), $second_number, $real_solution_first_number[2])
+                            && intval($given_number_first) + intval($given_number_second) == $first_number + $second_number;
+            }
+            
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->solution_counter += 1;
+            $this->SetSessionAnswer("2_0", $given_number_first_raw, $given_number_first, $first_number . " + " . $real_solution_second_number[1] .  "k (k \u{2208} \u{2124})", $was_correct);
+            $this->SetSessionAnswer("2_1", $given_number_second_raw, $given_number_second, $second_number . " + " . $real_solution_first_number[2] .  "k (k \u{2208} \u{2124})", $was_correct);
         }
 
         /**
@@ -396,6 +461,17 @@
          * @return void
         */
         private function CheckTenthTaskSolution(){
+        }
+
+        /**
+         * 
+         */
+        private function IsCongruent($number, $remainder, $modulo){
+            $b = $number - $remainder;
+            while($b < 0){
+                $b += $modulo;
+            }
+            return $b % $modulo === 0;
         }
     }
 ?>

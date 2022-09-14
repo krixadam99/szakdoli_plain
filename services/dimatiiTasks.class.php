@@ -219,7 +219,7 @@
         private function CreateTaskFour(){
             // Task creation part:
             // 3 distinct triplets of numbers for linear congruences (1 triplet of numbers/ subtask).
-            $linear_congrences = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(3, true, -100, 100);
+            $linear_congrences = $this->dimat_helper_functions->CreateSolvableLinearCongruences(3, true, -100, 100);
             $linear_congrences_algorithm = [];
             $solutions = [];
             foreach($linear_congrences as $index => $triplet){
@@ -261,7 +261,7 @@
             // Task creation part:
             // 1 triplet of numbers of whole numbers at least 2 for artitioning a number into smaller numbers (1 triplet of numbers/ subtask).
             // 2 triplet of numbers of whole numbers between -50 and 50 representing congruences, that are solvable (1 triplet of numbers/ subtask).
-            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, -50, 50); // ax \equiv b (mod c)
+            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, -50, 50); // ax \equiv b (mod c)
             
             // Divide b into two numbers, so that the first is divisable by a, and the second is divisible by c
             // ax + cy = b
@@ -301,7 +301,7 @@
 
             //Solutions part:
             $solution_array = [
-                "diophantine_equations" => [$diophantine_algorithm],
+                "diophantine_equations" => $diophantine_algorithm,
             ];
             $this->task_solutions = $solution_array;
         }
@@ -320,15 +320,15 @@
             // Task creation part:
             // 1 triplet of whole numbers that are at least 2 representing congruences for getting numbers that satisfy 2 simultaneous congruences (1 triplet of numbers/ subtask).
             // 1 triplet of whole numbers that are between -50 and 50 representing congruences for getting numbers that satisfy 4 simultaneous congruences (1 triplet of numbers/ subtask).
-            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
+            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, 2, 1000);
             while($this->dimat_helper_functions->DetermineGCDWithIteration([$divide_triplets[0][2],$divide_triplets[1][2]]) !== 1){
-                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencies(2, true, 2, 1000);
+                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, 2, 1000);
             }
             $first_divide_triplet = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($divide_triplets[0])["solution"];
             $second_divide_triplet = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($divide_triplets[1])["solution"];
 
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
-            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruenciesForCRT(4, -50, 50);
+            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT(4, -50, 50);
 
             // Adding the data to the task array.
             $task_array = array(

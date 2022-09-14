@@ -5,20 +5,26 @@
     <div class="small_task_container">
         <?php $task_counter = $index;?>
         <div class="multiple_solution_input_container">
-            <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0_0"?> value="b..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0_0"]??"";?>
+            <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0_0"?> value=<?=$current_answer["answer"]??"b..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             (mod
-            <input type="text" name=<?="solution_" . $task_counter . "_0_1"?> value="modulo..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0_1"]??"";?>
+            <input type="text" name=<?="solution_" . $task_counter . "_0_1"?> value=<?=$current_answer["answer"]??"modulo..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             )
         </div>
         <div class="multiple_solution_input_container">
-            <?="x = "?> <input type="text" name=<?="solution_" . $task_counter . "_1_0"?> value="b..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_1_0"]??"";?>
+            <?="x = "?> <input type="text" name=<?="solution_" . $task_counter . "_1_0"?> value=<?=$current_answer["answer"]??"b..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             +
-            <input type="text" name=<?="solution_" . $task_counter . "_1_1"?> value="modulo..." class="solution_input"> * k <?="(k \u{2208} \u{2124})"?>
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_1_1"]??"";?>
+            <input type="text" name=<?="solution_" . $task_counter . "_1_1"?> value=<?=$current_answer["answer"]??"modulo..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>> * k <?="(k \u{2208} \u{2124})"?>
         </div>
         <div class="multiple_solution_input_container">
-            <?="y = "?> <input type="text" name=<?="solution_" . $task_counter . "_2_0"?> value="első tag..." class="solution_input">
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_2_0"]??"";?>
+            <?="y = "?> <input type="text" name=<?="solution_" . $task_counter . "_2_0"?> value=<?=$current_answer["answer"]??"első tag..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             +
-            <input type="text" name=<?="solution_" . $task_counter . "_2_1"?> value="második tag..." class="solution_input"> * k <?="(k \u{2208} \u{2124})"?>
+            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_2_1"]??"";?>
+            <input type="text" name=<?="solution_" . $task_counter . "_2_1"?> value=<?=$current_answer["answer"]??"második tag..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>> * k <?="(k \u{2208} \u{2124})"?>
         </div>
     </div>
     <br>
@@ -35,9 +41,11 @@
     <div class="small_task_container">
     <?php $task_counter = 2;?>
     <div class="multiple_solution_input_container">
-        <?=$triplet[2] . " = "?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="Az első szám..." class="solution_input">
+        <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0"]??"";?>
+        <?=$triplet[2] . " = "?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="<?=$current_answer["answer"]??"Az első szám..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
         +
-        <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="Az második szám..." class="solution_input">
+        <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_1"]??"";?>
+        <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="<?=$current_answer["answer"]??"A második szám..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
     </div>
 </div>
 </div>
