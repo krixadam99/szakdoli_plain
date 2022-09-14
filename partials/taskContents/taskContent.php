@@ -94,6 +94,18 @@
             echo($prefix . "(" . $points[$point_counter][0] . ", " . $points[$point_counter][1] . ")");
         }
     }
+
+    function IsCorrect($current_answer){
+        if(isset($current_answer["correct"])){
+            if($current_answer["correct"]){
+                return  "correct";
+            }else{
+                return "wrong";
+            }
+        }else{
+            return "solution_input";
+        }
+    }
 ?>
 
 <?php if($approved_student_subject=="i" ):?>

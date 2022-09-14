@@ -8,8 +8,8 @@
     define('ROOT_DIRECTORY', __DIR__);   
 
     //Set some SESSION variables, like subject name etc.
-    //Do not let the user overwrite the session variables, when making a post request (like letting them to overwrite the action url) 
-    if(count($_POST) == 0){
+    //Do not let the user overwrite the session variables, when making a post request (like by letting them to overwrite the action url) 
+    if(count($_POST) === 0){
         //If subject, group, or topic is set in the url, then let's overwrite it, else let's clear them 
         if(isset($_GET["subject"])){
             $_SESSION["subject"] = $_GET["subject"];

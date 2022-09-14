@@ -39,7 +39,7 @@
                 $this->ValidateUser();
 
                 //If there is no error, then the user gets redirected to the notifications page, else to the login page
-                if(count($this->GetIncorrectParameters()) == 0){
+                if(count($this->incorrect_parameters) == 0){
                     //The user gets logged in with the given neptun_code
                     $_SESSION["neptun_code"] = $_POST['neptun_code'];
                     
@@ -83,12 +83,12 @@
         private function NeptunCodeValidator() {
             if(trim($this->user_handler->GetNeptunCode())!="Neptun kód" && trim($this->user_handler->GetNeptunCode())!=""){
                 if(!$this->user_handler->IsUserNameUsed()){//No such neptun code can be found in the database
-                    $this->SetIncorrectParameter("wrong_1_no_neptun_code");
+                    array_push($this->incorrect_parameters, "wrong_1_no_neptun_code");
                 }else{ //Everyting was correct
-                    $this->SetCorrectParameter("neptun_code", $this->user_handler->GetNeptunCode());
+                    $this->correct_parameters["neptun_code"] = $this->user_handler->GetNeptunCode();
                 }
             }else{ //No neptun code was given
-                $this->SetIncorrectParameter("wrong_1_no_data");
+                array_push($this->incorrect_parameters, "wrong_1_no_data");
             }
         }
 
@@ -106,10 +106,10 @@
         private function PasswordValidator() {
             if(trim($this->user_handler->GetUserPassword())!="Jelszó" && trim($this->user_handler->GetUserPassword()) != ""){
                 if(!$this->user_handler->IsSamePassword()){//Passwords were not the same
-                    $this->SetIncorrectParameter("wrong_2_not_same");
+                    array_push($this->incorrect_parameters, "wrong_2_not_same");
                 }
             }else{//No password was given
-                $this->SetIncorrectParameter("wrong_2_no_password");
+                array_push($this->incorrect_parameters, "wrong_2_no_password");
             }
         }
     }

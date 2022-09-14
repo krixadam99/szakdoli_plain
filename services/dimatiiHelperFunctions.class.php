@@ -915,7 +915,59 @@
          * @return array Returns an indexed array containing the coefficients of the interpolation polynomial expression. The coefficients are in descending order from the main coefficient to the constant member.
          */
         public function DetermineNewtonInterpolation($points){
-            
+            $newton_interpolation = array("table_data" => [], "polynomial_expression" => []);
+            $coefficients = [$points[0][1]];
+
+            // [-2, 1], [0, 3], [5, 6] => [2/2,5/3],1,2; [2/21],0,3;
+            // Calculating the data in the table.
+            $division_count = count($points) - 1;
+            $previous_values = [];          
+            $step = 1;
+            while($division_count > 0){
+                $temproary_previous_values = [];
+                for($value_counter = 0; $value_counter < $division_count; $value_counter++){
+                    $nominator = 0;
+                    if($step === 1){
+                        $nominator = $points[$value_counter + 1][1] - $points[$value_counter][1];
+                    }else{
+                        $nominator = $previous_values[$value_counter + 1] - $previous_values[$value_counter];
+                    }
+
+                    $denominator = $points[$value_counter + $step][0] - $points[$value_counter][0];
+                    if($denominator === 0){
+                        return [[],[]];
+                    }
+
+                    $new_value = $nominator/$denominator;
+                    if($value_counter === 0){
+                        array_push($coefficients, $new_value);
+                    }
+                    array_push($newton_interpolation["table_data"], $new_value);
+                    array_push($temproary_previous_values, $new_value);
+                }
+                $previous_values = $temproary_previous_values;
+                $step++;
+                $division_count--;
+            }
+
+            // Creating the final polynomial expression: 
+            $final_polynomial_expression = [];
+            foreach($coefficients as $coefficient_counter => $coefficient){
+                $polynomial_member_roots = [];
+                for($root_counter = 0; $root_counter < $coefficient_counter; $root_counter++){
+                    array_push($polynomial_member_roots, -1*$points[$root_counter][0]);
+                }
+
+                $polynomial_member_coefficients = [$coefficient];
+                for($counter = count($polynomial_member_roots) - 1; $counter >= 0; $counter--){
+                    array_push($polynomial_member_coefficients, $coefficient*$this->DetermineCoefficientByVieta($polynomial_member_roots, $counter));
+                }
+                $final_polynomial_expression = $this->AddPolynomialExpressions($final_polynomial_expression, $polynomial_member_coefficients);
+            }
+
+            $newton_interpolation["polynomial_expression"] = $final_polynomial_expression;
+
+            return $newton_interpolation;
         }
 
         /**

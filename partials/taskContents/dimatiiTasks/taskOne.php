@@ -4,9 +4,19 @@
 <div class="small_task_container">
     <?php foreach($_SESSION["task"]["divide_pairs"] as $division_index => $pair):?>
         <div class="multiple_solution_input_container">
-            <?=$pair[0]?> = <?=$pair[1]?> * <input type="text" name=<?="solution_0_" . $division_index . "_0"?> value="hányados..." class="solution_input">
+            <?php 
+                $task_counter = "0_" . $division_index . "_0";
+                $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"";
+            ?>
+            <?=$pair[0]?> = <?=$pair[1]?> * <input type="text" name="<?="solution_" . $task_counter?>" value=<?=$current_answer["answer"]??"hányados..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+            
             +
-            <input type="text" name=<?="solution_0_" . $division_index . "_1"?> value="maradék..." class="solution_input">
+
+            <?php 
+                $task_counter = "0_" . $division_index . "_1";
+                $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"maradék...";
+            ?>
+            <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer["answer"]??"maradék..."?>" class="<?=IsCorrect($current_answer)?>">
         </div>
     <?php endforeach?>
 </div>

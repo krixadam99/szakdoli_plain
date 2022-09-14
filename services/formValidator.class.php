@@ -8,8 +8,8 @@
      * Above the setter and getter methods, the class contains a user form validator method, which is responsible for validating the user's form according to a set of rules. 
     */
     abstract class FormValidator {
-        private $incorrect_parameters = array();
-        private $correct_parameters = array();
+        protected $incorrect_parameters = array();
+        protected $correct_parameters = array();
 
         /**
          *

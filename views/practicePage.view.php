@@ -178,7 +178,7 @@
                             </div>
                         </div>
                         <div class="task">
-                            <?php if(isset($_SESSION["new_task"]) && $_SESSION["new_task"] != ""):?>
+                            <?php if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]):?>
                                 <form class="solution_form" method="POST" action="./index.php?site=handInSolution">
                                     <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
                                         <label class="task_label"><?=$_SESSION["task"]["task_description"]?></label>

@@ -4,6 +4,8 @@
      * 
     */
     class DimatiiTasks extends Tasks{        
+        private $dimat_helper_functions;
+
         /**
          * 
          * The contructor for DimatiiTasks class.
@@ -16,12 +18,11 @@
          * @return void
          */
         public function __construct($topic){
-            $this->SetTaskDescription([]);
-            $this->SetTaskSolution([]);
-            $this->SetDefinitions("");
-
+            $this->task_description = [];
+            $this->task_solutions = [];
+            $this->definitions = "";
+            
             $this->dimat_helper_functions = new DimatiiHelperFunctions();
-
             mt_srand(time()); // Seeding the random number generator with the current time.
 
             switch($topic){
@@ -100,7 +101,7 @@
                 "positive_divisor_count_numbers" => $positive_divisor_count_numbers,
                 "congruency_pairs" => $congruency_pairs
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -108,7 +109,7 @@
                 "prime_factorization_solution" => $this->dimat_helper_functions->DeterminePrimeFactorization($prime_factorization_numbers),
                 "positive_divisor_count_solution" => $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers)
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
 
             // Definition part:
         }
@@ -141,7 +142,7 @@
                 "rrs_numbers" => $rrs_numbers,
                 "rrs_size_numbers" => $rrs_size_numbers
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -149,7 +150,7 @@
                 "rrs_systems" => [$this->dimat_helper_functions->DetermineReducedResidueSystem($rrs_numbers[0])],
                 "rrs_size_numbers" => [$this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[0]), $this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[1])]
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -193,13 +194,13 @@
                 "step_counts" => $step_counts,
                 "solution" => [$eucleidan_algorithm, $gcd_array, $lcm_array]
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
                 "eucleidan_algorithm" => [$eucleidan_algorithm, $gcd_array, $lcm_array],
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -233,13 +234,13 @@
                 "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
                 "linear_congrences" => $linear_congrences,
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
                 "linear_congruences" => [$linear_congrences_algorithm, $solutions],
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -292,13 +293,13 @@
                 "diophantine_equations" => [$diophantine_equation[0], $diophantine_equation[1]],
                 "partition_number" => $diophantine_equation[2]
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
                 "diophantine_equations" => [$diophantine_algorithm],
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -332,14 +333,14 @@
                 "first_congruence_system_triplets" => $first_congruence_system_triplets,
                 "second_congruence_system_triplets" => $second_congruence_system_triplets
             );
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
                 "first_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($first_congruence_system_triplets),
                 "second_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($second_congruence_system_triplets),
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -376,7 +377,7 @@
             $task_array["divide_polynomials"] = [5, $polynomial_expression, $places];
 
             // Adding data to the task array.
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -384,7 +385,7 @@
                 "second_horner_scheme" => $this->dimat_helper_functions->DetermineHornerSchemes($task_array["polynomials"][1][1], $task_array["polynomials"][1][2]),
                 "third_horner_scheme" => [$task_array["divide_polynomials"][2], $this->dimat_helper_functions->DetermineHornerSchemes($task_array["divide_polynomials"][1], $task_array["divide_polynomials"][2])],
             ];
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -428,7 +429,7 @@
             ];
 
             // Adding data to the task array.
-            $this->SetTaskDescription($task_array);
+            $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -436,7 +437,7 @@
                 "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])
             ];
 
-            $this->SetTaskSolution($solution_array);
+            $this->task_solutions = $solution_array;
         }
 
         /**
@@ -451,23 +452,27 @@
             $task_array = array(
                 "task_description" => "Old meg a következő Lagrange- és Newton- féle interpolációkkal kapcsolatos feladatokat!",
                 "lagrange_points" => [],
-                "newton_points" => [],
-                "polynomial_expressions" => [],
-                "solution" => []
+                "newton_points" => []
             );
             
             $first_polynomial_degree = mt_rand(2,3);
             [$first_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($first_polynomial_degree);
             $task_array["lagrange_points"] = $this->dimat_helper_functions->CreatePoints($first_polynomial_degree + 1, -5, 5, $first_polynomial_expression);
-            array_push($task_array["polynomial_expressions"], $first_polynomial_expression);
-            array_push($task_array["solution"], $this->dimat_helper_functions->DetermineLagrangeInterpolation($task_array["lagrange_points"]));
-
+            
             $second_polynomial_degree = mt_rand(4,5);
             [$second_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($second_polynomial_degree);
             $task_array["newton_points"] = $this->dimat_helper_functions->CreatePoints($second_polynomial_degree + 1, -5, 5, $second_polynomial_expression);
-            array_push($task_array["polynomial_expressions"], $second_polynomial_degree);
+            
+            // Adding data to the task array.s
+            $this->task_description = $task_array;
 
-            $this->SetTaskDescription($task_array);
+            //Solutions part:
+            $solution_array = [
+                "Lagrange_interpolation" => $this->dimat_helper_functions->DetermineLagrangeInterpolation($task_array["lagrange_points"]),
+                "Newton_interpolation" => $this->dimat_helper_functions->DetermineNewtonInterpolation($task_array["newton_points"])
+            ];
+
+            $this->task_solutions = $solution_array;
         }
 
         /**
