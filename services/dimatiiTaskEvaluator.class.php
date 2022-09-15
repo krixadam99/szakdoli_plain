@@ -176,43 +176,16 @@
         */
         private function CheckSecondTaskSolution(){
             // Check first and second subtasks:
-            $first_solution = $this->real_solutions["crs_systems"];
-            $second_solution = $this->real_solutions["rrs_systems"];
+            $this->real_solutions = array_values($this->real_solutions);
             for($subtask_counter = 0; $subtask_counter < 2; $subtask_counter++){
-                $given_answer_raw = $this->given_answers[$subtask_counter]??"";
-                $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
-                
-                $was_correct = false;
-                $solution_text = "";
-                if($subtask_counter === 0){
-                    $solution_text = $this->CreatePrintableSet($first_solution);
-                    $was_correct = $this->CompareSets($given_answer, $first_solution);
-                }else{
-                    $solution_text = $this->CreatePrintableSet($second_solution);
-                    $was_correct = $this->CompareSets($given_answer, $second_solution);
-                }
-                if($was_correct){
-                    $this->correct_answer_counter += 1;
-                }
-
+                $this->EvaluateInputsWithSets($this->real_solutions[$subtask_counter], $subtask_counter, $subtask_counter);
                 $this->solution_counter += 1;
-                $this->SetSessionAnswer($subtask_counter, $given_answer_raw, $this->CreatePrintableSet($given_answer), $solution_text, $was_correct);
             }
 
             // Check third subtask:
-            $third_solution = $this->real_solutions["rrs_size_numbers"];
             for($third_subtask_counter = 0; $third_subtask_counter < 2; $third_subtask_counter++){
-                $given_answer_raw = $this->given_answers[$third_subtask_counter + 2]??"";
-                $given_answer_rrs_size = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
-                
-                $was_correct = false;
-                if($given_answer_rrs_size == $third_solution[$third_subtask_counter]){
-                    $this->correct_answer_counter += 1;
-                    $was_correct = true;
-                }
-
+                $this->EvaluateInputsWithNumbers($this->real_solutions[2][$third_subtask_counter], $third_subtask_counter + 2, "2_" . $third_subtask_counter);
                 $this->solution_counter += 1;
-                $this->SetSessionAnswer("2_" . $third_subtask_counter, $given_answer_raw, $given_answer_rrs_size, $third_solution[$third_subtask_counter], $was_correct);
             }
         }
 
@@ -514,6 +487,16 @@
          * 
          */
         private function EvaluateInputsWithSets($real_value, $answer_counter, $answer_id){
+            $given_answer_raw = $this->given_answers[$answer_counter]??"";
+            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
+            
+            $solution_text = $this->CreatePrintableSet($real_value);
+            $was_correct = $this->CompareSets($given_answer, $real_value);
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->SetSessionAnswer($answer_id, $given_answer_raw, $this->CreatePrintableSet($given_answer), $solution_text, $was_correct);
         }
 
         /**
