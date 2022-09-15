@@ -12,14 +12,16 @@
                 <?php $width = $column_counter !== ($column_number - 1)?65/($column_number-3):15?>
                 <?php if($column_counter > 1):?>
                     <td style="width:<?=$width?>%">
-                        <input type="text" name=<?="solution_" . $task_counter . "_" . $row_counter . "_" . $column_counter-2 ?> value="..." class="solution_input">
+                        <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_" . $row_counter . "_" . $column_counter-2]??"";?>
+                        <input type="text" name=<?="solution_" . $task_counter . "_" . $row_counter . "_" . $column_counter-2 ?> value="<?=$current_answer["answer"]??"..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
                     </td>
                 <?php elseif($column_counter == 0):?>
                     <td style="width:10%">
                         <?php if(!$first_cell_should_be_filled):?>
                             x<span class="bottom"><?=$row_counter + 1?></span> = <?=$first_cell_datas[$row_counter]??""?>
                         <?php else:?>
-                            <input type="text" name=<?="solution_" . $task_counter . "_0" ?> value="x = ..." class="solution_input">
+                            <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0"]??"";?>
+                            <input type="text" name=<?="solution_" . $task_counter . "_0" ?> value="<?=$current_answer["answer"]??"x = ..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
                         <?php endif?>
                     </td>
                 <?php elseif($column_counter == 1):?>
@@ -31,3 +33,4 @@
         </tr>
     <?php endfor?>
 </table>
+

@@ -738,7 +738,7 @@
             foreach($congruences as $index => $congruence){
                 array_push($simplified_congruences, $this->DetermineLinearCongruenceSolution($congruence)["solution"]);
             }
-            array_push($return_array["steps"], $simplified_congruences);
+            $return_array["steps"] = array_merge($return_array["steps"], $simplified_congruences);
 
             $merged_solution = $this->DetermineMergedSolutionForCongruencies($simplified_congruences[0], $simplified_congruences[1]);
             array_push($return_array["steps"], $merged_solution);

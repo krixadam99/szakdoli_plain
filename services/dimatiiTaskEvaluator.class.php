@@ -170,7 +170,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 2nd topic's tasks
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 2nd topic's tasks related to complete and reduced residue systems.
          * 
          * @return void
         */
@@ -218,7 +218,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 3rd topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 3rd topic's tasks related to eucleidan algorithm.
          * 
          * @return void
         */
@@ -264,23 +264,9 @@
                             $this->solution_counter += 2;
                             $answer_counter += 2;
                         }else if($substep_counter === 0 || $substep_counter === 3){
-                            $given_answer_raw = $this->given_answers[$answer_counter]??"";
-                            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
-                            
-                            $was_correct = false;
-                            if($given_answer == $sub_step){
-                                $this->correct_answer_counter += 1;
-                                $was_correct = true;
-                            }
-    
+                            $this->EvaluateInputsWithNumbers($sub_step, $answer_counter, $subtask_counter . "_" . $step_counter . "_" . $substep_counter);
+
                             $this->solution_counter += 1;
-                            $this->SetSessionAnswer(
-                                $subtask_counter . "_" . $step_counter . "_" . $substep_counter, 
-                                $given_answer_raw,
-                                $given_answer, 
-                                $sub_step,
-                                $was_correct
-                            );
                             $answer_counter++;
                         }
                     }
@@ -288,25 +274,13 @@
                 }
 
                 for($step_counter = 0; $step_counter < 2; $step_counter++){
-                    $given_answer_raw = $this->given_answers[$answer_counter]??"";
-                    $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
-
-                    $solution_text = "";
-                    $was_correct = false;
                     if($step_counter === 0){
-                        $was_correct = $actual_gcd == $given_answer;
-                        $solution_text = $actual_gcd;
+                        $this->EvaluateInputsWithNumbers($actual_gcd, $answer_counter, $subtask_counter . "_" . count($solution_steps) + $step_counter);
                     }else{
-                        $was_correct = $actual_lsm == $given_answer; 
-                        $solution_text = $actual_lsm;
+                        $this->EvaluateInputsWithNumbers($actual_lsm, $answer_counter, $subtask_counter . "_" . count($solution_steps) + $step_counter);
                     }
-
-                    if($was_correct){
-                        $this->correct_answer_counter += 1;
-                    }
-
+                    
                     $this->solution_counter += 1;
-                    $this->SetSessionAnswer($subtask_counter . "_" . count($solution_steps) + $step_counter, $given_answer_raw, $given_answer, $solution_text, $was_correct);
                     $answer_counter++;
                 }
             }
@@ -314,7 +288,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 4th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 4th topic's tasks related to linear congruences.
          * 
          * @return void
         */
@@ -322,31 +296,15 @@
             // Check first, second and third subtasks:
             for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
                 $real_solution_pair = $this->real_solutions["solutions"][$subtask_counter];
-                $given_answer_pair_raw = [$this->given_answers[$subtask_counter*2]??"", $this->given_answers[$subtask_counter*2 + 1]??""];
-                $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
+                $this->EvaluatePairsOfCongruences([$real_solution_pair[1],$real_solution_pair[2]], [$subtask_counter*2, $subtask_counter*2 + 1],[$subtask_counter . "_0", $subtask_counter . "_1"]);
                 
-                if(is_int($real_solution_pair[0])){    
-                    $b = $real_solution_pair[1] - intval($given_answer_pair[0]);
-                    while($b < 0){
-                        $b += abs($real_solution_pair[2]);
-                    }
-                    
-                    $was_correct_modulo = $given_answer_pair[1] == $real_solution_pair[2];
-                    $was_correct_residue = $b % $real_solution_pair[2] === 0;
-                    if($was_correct_residue && $was_correct_modulo){
-                        $this->correct_answer_counter += 1;
-                    }
-                    
-                    $this->solution_counter += 1;
-                    $this->SetSessionAnswer($subtask_counter . "_0", $given_answer_pair_raw[0], $given_answer_pair[0], $real_solution_pair[1], $was_correct_residue);
-                    $this->SetSessionAnswer($subtask_counter . "_1", $given_answer_pair_raw[1], $given_answer_pair[1], $real_solution_pair[2], $was_correct_modulo);
-                }
+                $this->solution_counter += 1;
             }
         }
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 5th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 5th topic's tasks related to linear diophantine equations.
          * 
          * @return void
         */
@@ -359,31 +317,15 @@
                 $y_congruence = $real_solution_congruences[1];
                 
                 for($step_counter = 0; $step_counter < 3; $step_counter++){
-                    $given_answer_pair_raw = [$this->given_answers[$answer_counter]??"", $this->given_answers[$answer_counter + 1]??""];
-                    $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
-                    
                     $congruence = [];
                     if($step_counter < 2){
                         $congruence = [$x_congruence[1], $x_congruence[2]];
                     }else{
                         $congruence = $y_congruence;
                     }
+                    $this->EvaluatePairsOfCongruences($congruence, [$answer_counter, $answer_counter + 1],[$subtask_counter . "_" . $step_counter . "_0", $subtask_counter . "_" . $step_counter . "_1"]);
 
-                    $was_correct_residue = false;
-                    $was_correct_modulo = false;
-                    if(is_numeric($given_answer_pair[0]) && is_numeric($given_answer_pair[1])){
-                        $was_correct_modulo = $given_answer_pair[1] == $congruence[1];
-                        $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]);
-                    }
-
-                    if($was_correct_residue && $was_correct_modulo){
-                        $this->correct_answer_counter += 1;
-                    }
-                    
                     $this->solution_counter += 1;
-                    $this->SetSessionAnswer($subtask_counter . "_" . $step_counter . "_0", $given_answer_pair_raw[0], $given_answer_pair[0], $congruence[0], $was_correct_residue);
-                    $this->SetSessionAnswer($subtask_counter . "_" . $step_counter . "_1", $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
-                    
                     $answer_counter += 2;
                 }
             }
@@ -420,20 +362,57 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 6th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 6th topic's tasks related to chinese remainder theorem.
          *  
          * @return void
         */
         private function CheckSixthTaskSolution(){
+            // Check first subtask:
+            $first_solution = $this->real_solutions["first_crt_solution"]["solution"];
+            $this->EvaluateNumberAndCongruence($first_solution[1], $first_solution[2], 0, "0");
+            $this->solution_counter += 1;
+
+            // Check second and third subtasks:
+            $answer_counter = 1;
+            $real_solution_steps = $this->real_solutions["second_crt_solution"]["steps"];
+            for($step_counter = 0; $step_counter < count($real_solution_steps); $step_counter++){
+                $real_solution_congruences = $real_solution_steps[$step_counter];
+                $congruence = [$real_solution_congruences[1], $real_solution_congruences[2]];
+                
+                $this->EvaluatePairsOfCongruences($congruence, [$answer_counter, $answer_counter + 1],["1_" . $step_counter . "_0", "1_" . $step_counter . "_1"]);
+                $this->solution_counter += 1;
+                $answer_counter += 2;
+            }
         }
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 7th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 7th topic's tasks related to Horner scheme.
          * 
          * @return void
         */
         private function CheckSeventhTaskSolution(){
+            $this->real_solutions = array_values($this->real_solutions);
+            $answer_counter = 0;
+            for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
+                if($subtask_counter < 2){
+                    $horner_table = $this->real_solutions[$subtask_counter];
+                }else{
+                    $horner_table = $this->real_solutions[$subtask_counter][1];
+                    
+                    $this->EvaluateInputsWithNumbers($this->real_solutions[$subtask_counter][0][0], $answer_counter, $subtask_counter . "_0");
+                    $this->solution_counter += 1;
+                    $answer_counter += 1;
+                }
+
+                foreach($horner_table as $row_counter => $row_values){
+                    foreach($row_values as $cell_counter => $cell_value){
+                        $this->EvaluateInputsWithNumbers($cell_value, $answer_counter, $subtask_counter . "_" . $row_counter . "_" . $cell_counter);            
+                        $this->solution_counter += 1;
+                        $answer_counter += 1;
+                    }
+                }
+            }
         }
 
         /**
@@ -464,14 +443,83 @@
         }
 
         /**
+         * This private method checks if a number is congruent with another one for a given modulo.
          * 
+         * @param int $number A whole number, that we want to check if congruent with anohter one.
+         * @param int $remainder A whole number, with thich we wish to compare the first number, if they are congruent for the given modulo.
+         * @param int $modulo A positive whole number, for which we will compare the first two given arguments if they are congruent, or not.
+         * 
+         * @return bool Returns if the first two arguments are congruent modulo the third argument, or not.
          */
         private function IsCongruent($number, $remainder, $modulo){
-            $b = $number - $remainder;
-            while($b < 0){
-                $b += $modulo;
+            if($modulo > 0){
+                $b = $number - $remainder;
+                while($b < 0){
+                    $b += $modulo;
+                }
+                return $b % $modulo === 0;
+            }else{
+                return false;
             }
-            return $b % $modulo === 0;
+        }
+
+        /**
+         * 
+         */
+        private function EvaluateInputsWithNumbers($real_value, $answer_counter, $answer_id){
+            $given_answer_raw = $this->given_answers[$answer_counter]??"";
+            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
+            
+            $was_correct =  $given_answer == $real_value;
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->SetSessionAnswer($answer_id, $given_answer_raw, $given_answer, $real_value, $was_correct);
+        }
+
+        /**
+         * 
+         */
+        private function EvaluateNumberAndCongruence($real_value_residue, $real_value_modulo, $answer_counter, $answer_id){
+            $given_number_raw = $this->given_answers[$answer_counter]??"";
+            $given_number = $this->ExtractSolutionFromInput($given_number_raw)[0]??"";
+            
+            $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo);
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->SetSessionAnswer("0", $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
+        }
+
+        /**
+         * 
+         */
+        private function EvaluatePairsOfCongruences($congruence, $answer_counters, $answer_ids){
+            $given_answer_pair_raw = [$this->given_answers[$answer_counters[0]]??"", $this->given_answers[$answer_counters[1]]??""];
+            $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
+                
+            $was_correct_modulo = $given_answer_pair[1] == $congruence[1] && is_numeric($congruence[1]) && is_numeric($given_answer_pair[1]);
+            $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]) && is_numeric($given_answer_pair[0]);
+            if($was_correct_residue && $was_correct_modulo){
+                $this->correct_answer_counter += 1;
+            }
+            
+            $this->SetSessionAnswer($answer_ids[0], $given_answer_pair_raw[0], $given_answer_pair[0], $congruence[0], $was_correct_residue);
+            $this->SetSessionAnswer($answer_ids[1], $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
+        }
+
+        /**
+         * 
+         */
+        private function EvaluateInputsWithSets($real_value, $answer_counter, $answer_id){
+        }
+
+        /**
+         * 
+         */
+        private function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id){
         }
     }
 ?>

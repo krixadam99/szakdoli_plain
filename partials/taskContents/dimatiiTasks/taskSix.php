@@ -28,10 +28,11 @@
     <?php $task_counter = 1;?>
     <?php for($counter = 0; $counter < 4; $counter++):?>
         <div class="multiple_solution_input_container">
-            <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_" . $counter . "_0"?> value="b..." class="solution_input">
-            (mod
-            <input type="text" name=<?="solution_" . $task_counter . "_" . $counter . "_1"?> value="modulo..." class="solution_input">
-            )
+            <?php 
+                $solution_id_remainder = $task_counter . "_" . $counter . "_0";
+                $solution_id_modulo = $task_counter . "_" . $counter . "_1";
+                include("./partials/taskContents/congruence.php")
+            ?>
         </div>
     <?php endfor?>
 </div>
@@ -39,32 +40,38 @@
 <label class="task_label">
     Az első két kongruencia összevonását követő lineáris kongruencia:
 </label>
-<?php $task_counter = 2;?>
+<?php $task_counter = "1_" . 4;?>
 <div class="multiple_solution_input_container">
-    <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="b..." class="solution_input">
-    (mod
-    <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="modulo..." class="solution_input">
-    )
+    <?php 
+        $solution_id_remainder = $task_counter . "_0";
+        $solution_id_modulo = $task_counter . "_1";
+        include("./partials/taskContents/congruence.php")
+    ?>
 </div>
 
 <label class="task_label">
     Az 1-2. összevont és harmadik lineáris kongruencia összevonását követő lineáris kongruencia:
 </label>
-<?php $task_counter = 3;?>
+<?php $task_counter = "1_" . 5;?>
 <div class="multiple_solution_input_container">
-    <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="b..." class="solution_input">
-    (mod
-    <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="modulo..." class="solution_input">
-    )
+    <?php 
+        $solution_id_remainder = $task_counter . "_0";
+        $solution_id_modulo = $task_counter . "_1";
+        include("./partials/taskContents/congruence.php")
+    ?>
 </div>
 
 <label class="task_label">
     Az 1-3. összevont és negyedik lineáris kongruencia összevonását követő lineáris kongruencia (a kongruenciarendszer megoldása):
 </label>
-<?php $task_counter = 4;?>
+<?php $task_counter = "1_" . 6;?>
 <div class="multiple_solution_input_container">
-    <?="x \u{2261}"?> <input type="text" name=<?="solution_" . $task_counter . "_0"?> value="b..." class="solution_input">
-    (mod
-    <input type="text" name=<?="solution_" . $task_counter . "_1"?> value="modulo..." class="solution_input">
-    )
+    <?php 
+        $solution_id_remainder = $task_counter . "_0";
+        $solution_id_modulo = $task_counter . "_1";
+        include("./partials/taskContents/congruence.php")
+    ?>
 </div>
+
+<?php print_r($_SESSION["solution"])?>
+<?php print_r($_SESSION["answers"])?>
