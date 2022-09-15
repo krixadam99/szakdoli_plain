@@ -72,6 +72,3 @@
         include("./partials/taskContents/congruence.php")
     ?>
 </div>
-
-<?php print_r($_SESSION["solution"])?>
-<?php print_r($_SESSION["answers"])?>

@@ -376,8 +376,8 @@
 
             // Creating 1 polynomials with degree of 5.
             // Creating 1 input between -20 and 20. Non of the has to be a root of the polynomial expression
-            [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression(5);
-            $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, -20, 20);
+            [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression(5, -5, 5);
+            $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, -5, 5);
             $task_array["divide_polynomials"] = [5, $polynomial_expression, $places];
 
             // Adding data to the task array.

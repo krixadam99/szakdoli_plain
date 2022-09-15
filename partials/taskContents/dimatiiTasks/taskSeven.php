@@ -55,6 +55,3 @@
         include("./partials/taskContents/solutionInput.php")
     ?>
 </div>
-
-<?php print_r($_SESSION["solution"])?>
-<?php print_r($_SESSION["answers"])?>

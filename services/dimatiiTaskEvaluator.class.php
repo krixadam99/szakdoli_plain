@@ -88,81 +88,34 @@
          * @return void
         */
         private function CheckFirstTaskSolution(){
-            $was_correct = false;
-            
             // Check first subtask
-            $first_solution = $this->real_solutions["divide_pairs_solution"];
+            $answer_counter = 0;
             for($first_subtask_counter = 0; $first_subtask_counter < 2; $first_subtask_counter++){
-                $given_answer_pair_raw = [$this->given_answers[$first_subtask_counter*2]??"", $this->given_answers[$first_subtask_counter*2 + 1]??""];
-                $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0],$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]];
-                
-                $was_correct = false;
-                if($given_answer_pair == $first_solution[0]){
-                    $this->correct_answer_counter += 1;
-                    $was_correct = true;
-                }
-                
-                $this->solution_counter += 2;
-                $this->SetSessionAnswer("0_$first_subtask_counter" . "_0", $given_answer_pair_raw[0], $given_answer_pair[0], $first_solution[$first_subtask_counter][0], $was_correct);
-                $this->SetSessionAnswer("0_$first_subtask_counter" . "_1", $given_answer_pair_raw[1], $given_answer_pair[1], $first_solution[$first_subtask_counter][1], $was_correct);
+                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][0], $answer_counter, "0_" . $first_subtask_counter . "_0");
+                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][1], $answer_counter + 1, "0_" . $first_subtask_counter . "_1");
+                $answer_counter += 2;
             }
 
             // Check second subtask
-            $second_solution = $this->real_solutions["prime_factorization_solution"];
             for($second_subtask_counter = 0; $second_subtask_counter < 2; $second_subtask_counter++){
-                $given_answer_raw = $this->given_answers[$second_subtask_counter + 4]??"";
-                $given_answer_factorization = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
-                $answer_text = $this->CreatePrintableRelation($given_answer_factorization);
-                $solution_text = $this->CreatePrintableRelation($second_solution[$second_subtask_counter]);
-                
-                $was_correct = false;
-                if($this->CompareRelations($given_answer_factorization, $second_solution[$second_subtask_counter])){
-                    $this->correct_answer_counter += 1;
-                    $was_correct = true;
-                }
-
+                $this->EvaluateInputsWithRelations($this->real_solutions["prime_factorization_solution"][$second_subtask_counter], $answer_counter, "1_" . $second_subtask_counter);
                 $this->solution_counter += 1;
-                $this->SetSessionAnswer("1_" . $second_subtask_counter, $given_answer_raw, $answer_text, $solution_text, $was_correct);
+                $answer_counter++;
             }
 
             // Check third subtask
-            $third_solution = $this->real_solutions["positive_divisor_count_solution"];
             for($third_subtask_counter = 0; $third_subtask_counter < 2; $third_subtask_counter++){
-                $given_answer_raw = $this->given_answers[$third_subtask_counter + 6]??"";
-                $given_answer_division_count = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
-                
-                $was_correct = false;
-                if($given_answer_division_count == $third_solution[$third_subtask_counter]){
-                    $this->correct_answer_counter += 1;
-                    $was_correct = true;
-                }
-
+                $this->EvaluateInputsWithNumbers($this->real_solutions["positive_divisor_count_solution"][$third_subtask_counter], $answer_counter, "2_" . $third_subtask_counter);
                 $this->solution_counter += 1;
-                $this->SetSessionAnswer("2_" . $third_subtask_counter, $given_answer_raw, $given_answer_division_count, $third_solution[$third_subtask_counter], $was_correct);
+                $answer_counter++;
             }
 
             // Check fourth subtask
-            $fourth_solution = $this->real_solutions["congruence"];
             for($fourth_subtask_counter = 0; $fourth_subtask_counter < 2; $fourth_subtask_counter++){
-                $given_answer_raw = $this->given_answers[$fourth_subtask_counter + 8]??"";
-                $given_answer_congruence = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
-                
-                $a = $fourth_solution[$fourth_subtask_counter][0];
-                $modulo = abs($fourth_solution[$fourth_subtask_counter][1]);
-                $solution_text = $a . " + " . $modulo . "k (k \u{2208} \u{2124})";
-
-                $sub = $a - intval($given_answer_congruence);
-                while($sub < 0){
-                    $sub += $modulo;
-                }
-                $was_correct = false;
-                if($sub % $modulo === 0){
-                    $this->correct_answer_counter += 1;
-                    $was_correct = true;
-                }
-
+                $congruence = $this->real_solutions["congruence"][$fourth_subtask_counter];
+                $this->EvaluateNumberAndCongruence($congruence[0], $congruence[1], $answer_counter, "3_" . $fourth_subtask_counter);
                 $this->solution_counter += 1;
-                $this->SetSessionAnswer("3_" . $fourth_subtask_counter, $given_answer_raw, $given_answer_congruence, $solution_text, $was_correct);
+                $answer_counter++;
             }
 
             // Check fifth subtask
@@ -214,7 +167,7 @@
                             $given_answer_multpilier = $this->ExtractSolutionFromInput($given_answer_raw_multiplier)[0]??"";
                             
                             $was_correct = false;
-                            if($given_answer_multpilier == $multiplicand && $given_answer_multiplicand == $multiplier || $given_answer_multpilier == $multiplier && $given_answer_multiplicand == $multiplicand){
+                            if($this->AreSetsEqual([$multiplicand, $multiplier],[$given_answer_multiplicand, $given_answer_multpilier])){
                                 $this->correct_answer_counter += 2;
                                 $was_correct = true;
                             }
@@ -367,6 +320,9 @@
         private function CheckSeventhTaskSolution(){
             $this->real_solutions = array_values($this->real_solutions);
             $answer_counter = 0;
+
+            $quotient_relation = [];
+            $residue_relation = [];
             for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
                 if($subtask_counter < 2){
                     $horner_table = $this->real_solutions[$subtask_counter];
@@ -379,13 +335,23 @@
                 }
 
                 foreach($horner_table as $row_counter => $row_values){
+                    $degree = count($row_values) - 2;
                     foreach($row_values as $cell_counter => $cell_value){
                         $this->EvaluateInputsWithNumbers($cell_value, $answer_counter, $subtask_counter . "_" . $row_counter . "_" . $cell_counter);            
                         $this->solution_counter += 1;
                         $answer_counter += 1;
+                        
+                        if($subtask_counter === 2 && $degree - $cell_counter >= 0){
+                            array_push($quotient_relation, [$cell_value, $degree - $cell_counter]);
+                        }else if($subtask_counter === 2 && $degree - $cell_counter < 0){
+                            array_push($residue_relation, [$cell_value, 0]);
+                        }
                     }
                 }
             }
+
+            $this->EvaluateInputsWithRelations($quotient_relation, $answer_counter, "2_1");  
+            $this->EvaluateInputsWithRelations($residue_relation, $answer_counter, "2_2");  
         }
 
         /**
@@ -458,12 +424,12 @@
             $given_number_raw = $this->given_answers[$answer_counter]??"";
             $given_number = $this->ExtractSolutionFromInput($given_number_raw)[0]??"";
             
-            $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo);
+            $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo) && is_numeric($given_number);
             if($was_correct){
                 $this->correct_answer_counter += 1;
             }
 
-            $this->SetSessionAnswer("0", $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
+            $this->SetSessionAnswer($answer_id, $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
         }
 
         /**
@@ -490,19 +456,32 @@
             $given_answer_raw = $this->given_answers[$answer_counter]??"";
             $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
             
+            $answer_text = $this->CreatePrintableSet($given_answer);
             $solution_text = $this->CreatePrintableSet($real_value);
-            $was_correct = $this->CompareSets($given_answer, $real_value);
+            $was_correct = $this->AreSetsEqual($given_answer, $real_value);
             if($was_correct){
                 $this->correct_answer_counter += 1;
             }
 
-            $this->SetSessionAnswer($answer_id, $given_answer_raw, $this->CreatePrintableSet($given_answer), $solution_text, $was_correct);
+            $this->SetSessionAnswer($answer_id, $given_answer_raw, $answer_text, $solution_text, $was_correct);
         }
 
         /**
          * 
          */
         private function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id){
+            $given_answer_raw = $this->given_answers[$answer_counter]??"";
+            $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
+            
+            $answer_text = $this->CreatePrintableRelation($given_answer);
+            $solution_text = $this->CreatePrintableRelation($real_value);
+            
+            $was_correct = $this->AreRelationsEqual($given_answer, $real_value);
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->SetSessionAnswer($answer_id, $given_answer_raw, $answer_text, $solution_text, $was_correct);
         }
     }
 ?>

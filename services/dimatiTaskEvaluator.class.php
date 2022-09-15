@@ -95,7 +95,7 @@
                 $given_answer = $this->given_answers[$this->solution_counter]??"";
                 $given_solution = $this->ExtractSolutionFromInput($given_answer);
                 $was_correct = false;
-                if($this->CompareSets($given_solution, $real_solution)){
+                if($this->AreSetsEqual($given_solution, $real_solution)){
                     $this->count_correct += 1;
                     $was_correct = true;
                 }
@@ -133,9 +133,9 @@
                     $first_relation = $this->CreateRelation($given_solution);
                     $answer_text = $this->CreatePrintableRelation($first_relation);
                     $solution_text = $this->CreatePrintableRelation($real_solution);
-                    $was_correct = $this->CompareRelations($real_solution, $first_relation);         
+                    $was_correct = $this->AreRelationsEqual($real_solution, $first_relation);         
                 }else{
-                    $was_correct = $this->CompareSets($given_solution, $real_solution);
+                    $was_correct = $this->AreSetsEqual($given_solution, $real_solution);
                     $answer_text = $this->CreatePrintableSet($given_solution);
                     $solution_text = $this->CreatePrintableSet($real_solution);
                 }
@@ -188,7 +188,7 @@
 
             //Checking the first answer
             $first_solution_relation = $real_solutions[0]; 
-            $was_correct = $this->CompareRelations($first_answer_relation, $first_solution_relation);
+            $was_correct = $this->AreRelationsEqual($first_answer_relation, $first_solution_relation);
             if($was_correct){
                 $this->count_correct += 1;
             }
