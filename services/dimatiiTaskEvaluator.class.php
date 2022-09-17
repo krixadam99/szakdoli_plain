@@ -83,7 +83,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 1st topic's tasks related to division (with whole numbers), congruences and greatest common divisors.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 1st topic's tasks related to division (with whole numbers), congruences and greatest common divisors.
          * 
          * @return void
         */
@@ -118,7 +118,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 2nd topic's tasks related to complete and reduced residue systems.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 2nd topic's tasks related to complete and reduced residue systems.
          * 
          * @return void
         */
@@ -139,7 +139,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 3rd topic's tasks related to eucleidan algorithm.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 3rd topic's tasks related to eucleidan algorithm.
          * 
          * @return void
         */
@@ -207,7 +207,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 4th topic's tasks related to linear congruences.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 4th topic's tasks related to linear congruences.
          * 
          * @return void
         */
@@ -223,7 +223,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 5th topic's tasks related to linear diophantine equations.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 5th topic's tasks related to linear diophantine equations.
          * 
          * @return void
         */
@@ -282,7 +282,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 6th topic's tasks related to chinese remainder theorem.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 6th topic's tasks related to chinese remainder theorem.
          *  
          * @return void
         */
@@ -305,7 +305,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 7th topic's tasks related to Horner scheme.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 7th topic's tasks related to Horner scheme.
          * 
          * @return void
         */
@@ -345,7 +345,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 8th topic's tasks related to polynomial division and multiplication.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 8th topic's tasks related to polynomial division and multiplication.
          * 
          * @return void
         */
@@ -360,7 +360,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 9th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 9th topic's tasks.
          * 
          * @return void
         */
@@ -397,7 +397,7 @@
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 10th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 10th topic's tasks.
          * 
          * @return void
         */
