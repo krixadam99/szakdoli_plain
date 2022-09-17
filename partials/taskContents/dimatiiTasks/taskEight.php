@@ -10,12 +10,12 @@
 </label>
 <div class="small_task_container">
     <?php 
-        $task_counter = $task_counter . "_0";
+        $task_counter = "0_0";
         $solution_label = "A hányadospolinom (együttható, fokszám) párosokkal megadva:";
         include("./partials/taskContents/solutionInput.php")
     ?>
     <?php 
-        $task_counter = $task_counter . "_1";
+        $task_counter = "0_1";
         $solution_label = "A maradékpolinom (együttható, fokszám) párosokkal megadva:";
         include("./partials/taskContents/solutionInput.php")
     ?>
@@ -41,3 +41,5 @@
         include("./partials/taskContents/solutionInput.php")
     ?>
 </div>
+
+<?php var_dump($_SESSION["solution"])?>

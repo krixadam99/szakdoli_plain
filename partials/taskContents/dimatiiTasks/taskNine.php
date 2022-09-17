@@ -40,6 +40,7 @@
                 <?php endif?>
             <?php endfor?>
         </tr>
+        <?php $input_counter = 0?>
         <?php for($row_counter=0; $row_counter < 2*count($newton_points); $row_counter++):?>
             <tr>
                 <?php for($column_counter=0; $column_counter < count($newton_points) + 1; $column_counter++):?>
@@ -62,7 +63,12 @@
                             <?php if(abs($column_counter - $row_counter) % 2 === 1):?>
                                 <td 
                                     style="border-top: 1px solid black; width: <?=$width?>%; border-right: 1px solid black">
-                                    <input type="text" name=<?="solution_" . $task_counter . "_" . $row_counter - 1 . "_" . $column_counter - 2?> value="..." class="solution_input">
+                                    <?php 
+                                        $id = $task_counter . "_" . ($column_counter - 2) . "_" . floor(($row_counter - $column_counter + 1)/2);
+                                        $current_answer = $_SESSION["answers"]["answer_" . $id]??"";
+                                    ?>
+                                    <input type="text" name="<?="solution_" . $id?>" value="<?=$current_answer["answer"]??"..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+                                    <?php $input_counter++?>
                                 </td>
                             <?php else:?>
                                 <td 
@@ -82,7 +88,7 @@
         <?php endfor?>
     </table>
     <?php 
-        $task_counter = "1_" . count($newton_points);
+        $task_counter = "1_" . count($newton_points) - 1;
         $solution_label = "<i>N</i>[x] = ";
         include("./partials/taskContents/solutionInput.php")
     ?>

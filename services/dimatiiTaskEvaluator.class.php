@@ -22,7 +22,7 @@
             $this->solution_counter = 0;
             $this->correct_answer_counter = 0;
             $this->real_solutions = $_SESSION["solution"];
-            $this->given_answers = array_values($given_answers);
+            $this->given_answers = $given_answers;
         }
         
         /**
@@ -89,33 +89,28 @@
         */
         private function CheckFirstTaskSolution(){
             // Check first subtask
-            $answer_counter = 0;
             for($first_subtask_counter = 0; $first_subtask_counter < 2; $first_subtask_counter++){
-                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][0], $answer_counter, "0_" . $first_subtask_counter . "_0");
-                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][1], $answer_counter + 1, "0_" . $first_subtask_counter . "_1");
-                $answer_counter += 2;
+                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][0], "solution_" . "0_" . $first_subtask_counter . "_0", "0_" . $first_subtask_counter . "_0");
+                $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][1], "solution_" . "0_" . $first_subtask_counter . "_1", "0_" . $first_subtask_counter . "_1");
             }
 
             // Check second subtask
             for($second_subtask_counter = 0; $second_subtask_counter < 2; $second_subtask_counter++){
-                $this->EvaluateInputsWithRelations($this->real_solutions["prime_factorization_solution"][$second_subtask_counter], $answer_counter, "1_" . $second_subtask_counter);
+                $this->EvaluateInputsWithRelations($this->real_solutions["prime_factorization_solution"][$second_subtask_counter], "solution_" . "1_" . $second_subtask_counter, "1_" . $second_subtask_counter);
                 $this->solution_counter += 1;
-                $answer_counter++;
             }
 
             // Check third subtask
             for($third_subtask_counter = 0; $third_subtask_counter < 2; $third_subtask_counter++){
-                $this->EvaluateInputsWithNumbers($this->real_solutions["positive_divisor_count_solution"][$third_subtask_counter], $answer_counter, "2_" . $third_subtask_counter);
+                $this->EvaluateInputsWithNumbers($this->real_solutions["positive_divisor_count_solution"][$third_subtask_counter], "solution_" . "2_" . $third_subtask_counter, "2_" . $third_subtask_counter);
                 $this->solution_counter += 1;
-                $answer_counter++;
             }
 
             // Check fourth subtask
             for($fourth_subtask_counter = 0; $fourth_subtask_counter < 2; $fourth_subtask_counter++){
                 $congruence = $this->real_solutions["congruence"][$fourth_subtask_counter];
-                $this->EvaluateNumberAndCongruence($congruence[0], $congruence[1], $answer_counter, "3_" . $fourth_subtask_counter);
+                $this->EvaluateNumberAndCongruence($congruence[0], $congruence[1], "solution_" . "3_" . $fourth_subtask_counter, "3_" . $fourth_subtask_counter);
                 $this->solution_counter += 1;
-                $answer_counter++;
             }
 
             // Check fifth subtask
@@ -131,13 +126,13 @@
             // Check first and second subtasks:
             $this->real_solutions = array_values($this->real_solutions);
             for($subtask_counter = 0; $subtask_counter < 2; $subtask_counter++){
-                $this->EvaluateInputsWithSets($this->real_solutions[$subtask_counter], $subtask_counter, $subtask_counter);
+                $this->EvaluateInputsWithSets($this->real_solutions[$subtask_counter], "solution_" . $subtask_counter, $subtask_counter);
                 $this->solution_counter += 1;
             }
 
             // Check third subtask:
             for($third_subtask_counter = 0; $third_subtask_counter < 2; $third_subtask_counter++){
-                $this->EvaluateInputsWithNumbers($this->real_solutions[2][$third_subtask_counter], $third_subtask_counter + 2, "2_" . $third_subtask_counter);
+                $this->EvaluateInputsWithNumbers($this->real_solutions[2][$third_subtask_counter], "solution_2_" . $third_subtask_counter, "2_" . $third_subtask_counter);
                 $this->solution_counter += 1;
             }
         }
@@ -150,7 +145,6 @@
         */
         private function CheckThirdTaskSolution(){
             // Check first, second and third subtasks:
-            $answer_counter = 0;
             for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
                 $solution_steps = $this->real_solutions["eucleidan_algorithm"][$subtask_counter];
                 $actual_gcd = $this->real_solutions["gcd"][$subtask_counter];
@@ -161,10 +155,10 @@
                         if($substep_counter === 1){
                             $multiplicand = $solution_steps[$step_counter][1];
                             $multiplier = $solution_steps[$step_counter][2];
-                            $given_answer_raw_multiplicand = $this->given_answers[$answer_counter]??"";
-                            $given_answer_raw_multiplier = $this->given_answers[$answer_counter + 1]??"";
-                            $given_answer_multiplicand = $this->ExtractSolutionFromInput($given_answer_raw_multiplicand)[0]??"";
-                            $given_answer_multpilier = $this->ExtractSolutionFromInput($given_answer_raw_multiplier)[0]??"";
+                            $given_answer_raw_multiplicand = $this->given_answers["solution_" . $subtask_counter . "_" . $step_counter . "_" . $substep_counter]??"";
+                            $given_answer_raw_multiplier = $this->given_answers["solution_" . $subtask_counter . "_" . $step_counter . "_" . $substep_counter + 1]??"";
+                            $given_answer_multiplicand = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw_multiplicand)[0]??"";
+                            $given_answer_multpilier = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw_multiplier)[0]??"";
                             
                             $was_correct = false;
                             if($this->AreSetsEqual([$multiplicand, $multiplier],[$given_answer_multiplicand, $given_answer_multpilier])){
@@ -188,26 +182,25 @@
                             );
 
                             $this->solution_counter += 2;
-                            $answer_counter += 2;
                         }else if($substep_counter === 0 || $substep_counter === 3){
-                            $this->EvaluateInputsWithNumbers($sub_step, $answer_counter, $subtask_counter . "_" . $step_counter . "_" . $substep_counter);
+                            $id = $subtask_counter . "_" . $step_counter . "_" . $substep_counter;
+                            $this->EvaluateInputsWithNumbers($sub_step, "solution_" . $id, $id);
 
                             $this->solution_counter += 1;
-                            $answer_counter++;
                         }
                     }
                     $this->solution_counter += 4;
                 }
 
                 for($step_counter = 0; $step_counter < 2; $step_counter++){
+                    $id = $subtask_counter . "_" . count($solution_steps) + $step_counter;
                     if($step_counter === 0){
-                        $this->EvaluateInputsWithNumbers($actual_gcd, $answer_counter, $subtask_counter . "_" . count($solution_steps) + $step_counter);
+                        $this->EvaluateInputsWithNumbers($actual_gcd, "solution_" . $id, $id);
                     }else{
-                        $this->EvaluateInputsWithNumbers($actual_lsm, $answer_counter, $subtask_counter . "_" . count($solution_steps) + $step_counter);
+                        $this->EvaluateInputsWithNumbers($actual_lsm, "solution_" . $id, $id);
                     }
                     
                     $this->solution_counter += 1;
-                    $answer_counter++;
                 }
             }
         }
@@ -222,7 +215,7 @@
             // Check first, second and third subtasks:
             for($subtask_counter = 0; $subtask_counter < 3; $subtask_counter++){
                 $real_solution_pair = $this->real_solutions["solutions"][$subtask_counter];
-                $this->EvaluatePairsOfCongruences([$real_solution_pair[1],$real_solution_pair[2]], [$subtask_counter*2, $subtask_counter*2 + 1],[$subtask_counter . "_0", $subtask_counter . "_1"]);
+                $this->EvaluatePairsOfCongruences([$real_solution_pair[1],$real_solution_pair[2]], ["solution_" . $subtask_counter . "_0", "solution_" . $subtask_counter . "_1"],[$subtask_counter . "_0", $subtask_counter . "_1"]);
                 
                 $this->solution_counter += 1;
             }
@@ -249,18 +242,19 @@
                     }else{
                         $congruence = $y_congruence;
                     }
-                    $this->EvaluatePairsOfCongruences($congruence, [$answer_counter, $answer_counter + 1],[$subtask_counter . "_" . $step_counter . "_0", $subtask_counter . "_" . $step_counter . "_1"]);
+                    $this->EvaluatePairsOfCongruences($congruence, ["solution_" .  $subtask_counter . "_" . $step_counter . "_0", "solution_" . $subtask_counter . "_" . $step_counter . "_1"],[$subtask_counter . "_" . $step_counter . "_0", $subtask_counter . "_" . $step_counter . "_1"]);
 
                     $this->solution_counter += 1;
-                    $answer_counter += 2;
                 }
+
+                $answer_counter += 1;
             }
 
             // Check third subtask:
-            $given_number_first_raw = $this->given_answers[$answer_counter]??"";
-            $given_number_second_raw = $this->given_answers[$answer_counter + 1]??"";
-            $given_number_first = $this->ExtractSolutionFromInput($given_number_first_raw)[0]??"";
-            $given_number_second = $this->ExtractSolutionFromInput($given_number_second_raw)[0]??"";
+            $given_number_first_raw = $this->given_answers["solution_" .  $answer_counter . "_0"]??"";
+            $given_number_second_raw = $this->given_answers["solution_" .  $answer_counter . "_1"]??"";
+            $given_number_first = $this->ExtractSolutionFromInputOnlyNumbers($given_number_first_raw)[0]??"";
+            $given_number_second = $this->ExtractSolutionFromInputOnlyNumbers($given_number_second_raw)[0]??"";
 
             $real_solution_first_number = $this->real_solutions["diophantine_equations"][2][0];
             $real_solution_second_number = $this->real_solutions["diophantine_equations"][2][1];
@@ -295,19 +289,17 @@
         private function CheckSixthTaskSolution(){
             // Check first subtask:
             $first_solution = $this->real_solutions["first_crt_solution"]["solution"];
-            $this->EvaluateNumberAndCongruence($first_solution[1], $first_solution[2], 0, "0");
+            $this->EvaluateNumberAndCongruence($first_solution[1], $first_solution[2], "solution_0", "0");
             $this->solution_counter += 1;
 
             // Check second and third subtasks:
-            $answer_counter = 1;
             $real_solution_steps = $this->real_solutions["second_crt_solution"]["steps"];
             for($step_counter = 0; $step_counter < count($real_solution_steps); $step_counter++){
                 $real_solution_congruences = $real_solution_steps[$step_counter];
                 $congruence = [$real_solution_congruences[1], $real_solution_congruences[2]];
                 
-                $this->EvaluatePairsOfCongruences($congruence, [$answer_counter, $answer_counter + 1],["1_" . $step_counter . "_0", "1_" . $step_counter . "_1"]);
+                $this->EvaluatePairsOfCongruences($congruence, ["solution_" . "1_" . $step_counter . "_0", "solution_" . "1_" . $step_counter . "_1"],["1_" . $step_counter . "_0", "1_" . $step_counter . "_1"]);
                 $this->solution_counter += 1;
-                $answer_counter += 2;
             }
         }
 
@@ -319,7 +311,6 @@
         */
         private function CheckSeventhTaskSolution(){
             $this->real_solutions = array_values($this->real_solutions);
-            $answer_counter = 0;
 
             $quotient_relation = [];
             $residue_relation = [];
@@ -329,17 +320,15 @@
                 }else{
                     $horner_table = $this->real_solutions[$subtask_counter][1];
                     
-                    $this->EvaluateInputsWithNumbers($this->real_solutions[$subtask_counter][0][0], $answer_counter, $subtask_counter . "_0");
+                    $this->EvaluateInputsWithNumbers($this->real_solutions[$subtask_counter][0][0], "solution_" . $subtask_counter . "_0", $subtask_counter . "_0");
                     $this->solution_counter += 1;
-                    $answer_counter += 1;
                 }
 
                 foreach($horner_table as $row_counter => $row_values){
                     $degree = count($row_values) - 2;
                     foreach($row_values as $cell_counter => $cell_value){
-                        $this->EvaluateInputsWithNumbers($cell_value, $answer_counter, $subtask_counter . "_" . $row_counter . "_" . $cell_counter);            
+                        $this->EvaluateInputsWithNumbers($cell_value,"solution_" . $subtask_counter . "_" . $row_counter . "_" . $cell_counter, $subtask_counter . "_" . $row_counter . "_" . $cell_counter);            
                         $this->solution_counter += 1;
-                        $answer_counter += 1;
                         
                         if($subtask_counter === 2 && $degree - $cell_counter >= 0){
                             array_push($quotient_relation, [$cell_value, $degree - $cell_counter]);
@@ -350,17 +339,23 @@
                 }
             }
 
-            $this->EvaluateInputsWithRelations($quotient_relation, $answer_counter, "2_1");  
-            $this->EvaluateInputsWithRelations($residue_relation, $answer_counter, "2_2");  
+            $this->EvaluateInputsWithRelations($quotient_relation, "solution_2_1", "2_1");  
+            $this->EvaluateInputsWithRelations($residue_relation, "solution_2_2", "2_2");  
         }
 
         /**
          * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 8th topic's tasks.
+         * This private method compares the given answers with the solutions for Discrete mathematics II. subject 8th topic's tasks related to polynomial division and multiplication.
          * 
          * @return void
         */
         private function CheckEigthTaskSolution(){
+            $real_solutions = array_values($this->real_solutions);
+
+            $this->EvaluateInputsWithRelations($real_solutions[0][0], "solution_0_0", "0_0");
+            $this->EvaluateInputsWithRelations($real_solutions[0][1], "solution_0_1", "0_1");
+            $this->EvaluateInputsWithRelations($real_solutions[1], "solution_3_0", "3_0");  
+            $this->solution_counter += 3;
         }
 
         /**
@@ -370,6 +365,34 @@
          * @return void
         */
         private function CheckNinethTaskSolution(){
+            $base_polynomial_expressions = $this->real_solutions["Lagrange_interpolation"]["base_polynomial_expressions"];
+            $lagrange_interpolation_polynomial = $this->real_solutions["Lagrange_interpolation"]["polynomial_expression"];
+
+            $answer_counter = 0;
+            foreach($base_polynomial_expressions as $point_counter => $base_polynomial_expression){
+                $this->EvaluateInputsWithRelations($base_polynomial_expression, "solution_0_$answer_counter", "0_" . $answer_counter);
+                $this->solution_counter += 1;
+                $answer_counter++;
+            }
+            $this->EvaluateInputsWithRelations($lagrange_interpolation_polynomial, "solution_0_$answer_counter", "0_" . $answer_counter);
+            $this->solution_counter += 1;
+
+            
+            $table_data = $this->real_solutions["Newton_interpolation"]["table_data"];
+            foreach($table_data as $column_counter => $column_data){
+                foreach($column_data as $row_counter => $cell_data){
+                    $id = "1_" . $column_counter . "_" . $row_counter;
+                    $this->EvaluateInputsWithNumbers($cell_data, "solution_" . $id, $id);
+                    $this->solution_counter += 1;
+                }                
+            }
+
+            $newton_interpolation_polynomial = $this->real_solutions["Newton_interpolation"]["polynomial_expression"];
+            $id = "1_" . count($table_data);
+            $this->EvaluateInputsWithRelations($newton_interpolation_polynomial, "solution_" . $id, $id);
+            $this->solution_counter += 1;
+
+
         }
 
         /**
@@ -402,12 +425,20 @@
             }
         }
 
-        /**
+       /**
+         * This private method compares the content of an input with the real value for that input. The given key is the required element's key in the user's given asnwers' array.
          * 
+         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array didn't contain the given name as a key), then will be compared with the correct value.
+         * 
+         * @param int $real_value A whole number, the real value for the input.
+         * @param string $input_name A string, the key of the element in the user's given answers' array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         *  
+         * @return void
          */
-        private function EvaluateInputsWithNumbers($real_value, $answer_counter, $answer_id){
-            $given_answer_raw = $this->given_answers[$answer_counter]??"";
-            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw)[0]??"";
+        private function EvaluateInputsWithNumbers($real_value, $input_name, $answer_id){
+            $given_answer_raw = $this->given_answers[$input_name]??"";
+            $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw)[0]??"";
             
             $was_correct =  $given_answer == $real_value;
             if($was_correct){
@@ -417,12 +448,22 @@
             $this->SetSessionAnswer($answer_id, $given_answer_raw, $given_answer, $real_value, $was_correct);
         }
 
-        /**
+       /**
+         * This private method compares the content of an input with the real value for that input. The given key is the required element's key in the user's given asnwers' array.
          * 
+         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array didn't contain the given name as a key).
+         * Here, only the residues will be compared. The residues (the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
+         * 
+         * @param int $real_value_residue A whole number, the real value for the residue.
+         * @param int $real_value_modulo A positive whole number, the real value for the modulo.
+         * @param string $input_name A string, the key of the element in the user's given answers' array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         *  
+         * @return void
          */
-        private function EvaluateNumberAndCongruence($real_value_residue, $real_value_modulo, $answer_counter, $answer_id){
-            $given_number_raw = $this->given_answers[$answer_counter]??"";
-            $given_number = $this->ExtractSolutionFromInput($given_number_raw)[0]??"";
+        private function EvaluateNumberAndCongruence($real_value_residue, $real_value_modulo, $input_name, $answer_id){
+            $given_number_raw = $this->given_answers[$input_name]??"";
+            $given_number = $this->ExtractSolutionFromInputOnlyNumbers($given_number_raw)[0]??"";
             
             $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo) && is_numeric($given_number);
             if($was_correct){
@@ -432,12 +473,22 @@
             $this->SetSessionAnswer($answer_id, $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
         }
 
-        /**
+       /**
+         * This private method compares the content of a pair of inputs with the real values for those inputs. The given key is the first required element's key in the user's given asnwers' array.
          * 
+         * The contents here will be extracted from the inputs (even if its value is "", i.e., the user's answer array did not contain an element with the given key).
+         * The modulos (the second element of the first argument and the given number + 1 indexed element of the user's given answers' array) will be compared.
+         * Then, the residues (the first element of the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
+         * 
+         * @param array $congruence An indexed array containing two elements, the resiude and the modulo.
+         * @param array $input_names An array containing the keys of the required inputs' values found in the user's given answers' (associative) array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * 
+         * @return void
          */
-        private function EvaluatePairsOfCongruences($congruence, $answer_counters, $answer_ids){
-            $given_answer_pair_raw = [$this->given_answers[$answer_counters[0]]??"", $this->given_answers[$answer_counters[1]]??""];
-            $given_answer_pair = [$this->ExtractSolutionFromInput($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInput($given_answer_pair_raw[1])[0]??""];
+        private function EvaluatePairsOfCongruences($congruence, $input_names, $answer_ids){
+            $given_answer_pair_raw = [$this->given_answers[$input_names[0]]??"", $this->given_answers[$input_names[1]]??""];
+            $given_answer_pair = [$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[1])[0]??""];
                 
             $was_correct_modulo = $given_answer_pair[1] == $congruence[1] && is_numeric($congruence[1]) && is_numeric($given_answer_pair[1]);
             $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]) && is_numeric($given_answer_pair[0]);
@@ -449,12 +500,22 @@
             $this->SetSessionAnswer($answer_ids[1], $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
         }
 
-        /**
+       /**
+         * This private method compares the content of an input with the real value for that input. The given key is the first required element's key in the user's given asnwers' array.
          * 
+         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array did not contain an element with the given key), then will be converted into set form.
+         * For showing the answer and the real solution, the method creates a printable form of the sets.
+         * The sets will be compared by the inherited method named AreSetsEqual.
+         * 
+         * @param array $real_value An indexed array containing the set's elements.
+         * @param string $input_name A string, the key of the element in the user's given answers' array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * 
+         * @return void
          */
-        private function EvaluateInputsWithSets($real_value, $answer_counter, $answer_id){
-            $given_answer_raw = $this->given_answers[$answer_counter]??"";
-            $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
+        private function EvaluateInputsWithSets($real_value, $input_name, $answer_id){
+            $given_answer_raw = $this->given_answers[$input_name]??"";
+            $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw);
             
             $answer_text = $this->CreatePrintableSet($given_answer);
             $solution_text = $this->CreatePrintableSet($real_value);
@@ -467,11 +528,21 @@
         }
 
         /**
+         * This private method compares the content of an input with the real value for that input. The given key is the first required element's key in the user's given asnwers' array.
          * 
+         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array did not contain an element with the given key), then will be converted into relation form.
+         * For showing the answer and the real solution, the method creates a printable form of the relations.
+         * The relations will be compared by the inherited method named AreRelationsEqual.
+         * 
+         * @param array $real_value An indexed array containing oredered pairs, i.e., [first element, second element] pairs.
+         * @param string $input_name A string, the key of the element in the user's given answers' array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * 
+         * @return void
          */
         private function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id){
             $given_answer_raw = $this->given_answers[$answer_counter]??"";
-            $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
+            $given_answer = $this->CreateRelation($this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw));
             
             $answer_text = $this->CreatePrintableRelation($given_answer);
             $solution_text = $this->CreatePrintableRelation($real_value);

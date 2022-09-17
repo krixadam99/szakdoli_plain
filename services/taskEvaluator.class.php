@@ -276,6 +276,36 @@
 
         /**
          * 
+         * This method extracts the values from the student's answer.
+         * 
+         * Firstly, each non-numeric characters will be replaced by the '|' character.
+         * Then the string will be split by the '|' character.
+         * Finally, only the numbers will be kept in this array.
+         * 
+         * @param string $input The original content of the input element.
+         * 
+         * @return array Returns an indexed array with the extracted elements.
+        */
+        protected function ExtractSolutionFromInputOnlyNumbers($input){
+            $input = preg_replace("/[^0-9-]/", "|", $input);
+            $values = explode("|", $input);
+            $return_values = [];
+            foreach($values as $index => $value){
+                if(is_numeric($value)){
+                    array_push($return_values, $value);
+                }else{
+                    if(is_int(strpos($value,"-"))){//It was negative
+                        if(is_numeric(str_replace("-", "", $value))){
+                            array_push($return_values, "-" . str_replace("-", "", $value));
+                        }
+                    }
+                }
+            }
+            return $return_values;
+        }
+
+        /**
+         * 
          * This method creates a printable version of the given set.
          * 
          * @param array $set The set which the function will convert into a string.

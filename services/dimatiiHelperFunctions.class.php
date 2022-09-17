@@ -801,7 +801,7 @@
                     // 2. 3/2; 3/2; 3/2
                     // 3. 3                    
                     $actual_quotient_coefficient = $actual_coefficient/$divisor_polynomial_expression[0]; // $divisor_polynomial_expression[0] cannot be 0
-                    array_push($quotient, $actual_quotient_coefficient);
+                    array_push($quotient, [$actual_quotient_coefficient, count($dividend_polynomial_expression) - count($divisor_polynomial_expression) - $coefficient_counter]);
         
                     // 1. 0x^2 - 3x + 3; 0x^2 - 0x + 9
                     // 2. 0x^2 + 3x + 3; 0x^2 + 0x + 3; 0
@@ -813,7 +813,7 @@
         
                 foreach($dividend_polynomial_expression as $coefficient_counter => $coefficient){
                     if($coefficient_counter >  (count($dividend_polynomial_expression) - count($divisor_polynomial_expression))){
-                        array_push($residue, $coefficient);
+                        array_push($residue, [$coefficient, count($dividend_polynomial_expression) - $coefficient_counter - 1]);
                     }
                 }
         
@@ -841,13 +841,18 @@
                     $actual_product = $multiplicand_polynomial_expression[$multiplicand_counter]*$multiplier_polynomial_expression[$multiplier_counter];
                     
                     if(!isset($product_polynomial_expression[$multiplicand_counter + $multiplier_counter])){
-                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = $actual_product;
+                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0] = $actual_product;
                     }else{
-                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] += $actual_product;
+                        $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0] += $actual_product;
                     }
-                    $new_value = $product_polynomial_expression[$multiplicand_counter + $multiplier_counter];
-                    $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = $this->DetermineQuotientAndResidue([[$new_value, $modulo]])[0][1];
+
+                    $new_value = $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0];
+                    $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = [$this->DetermineQuotientAndResidue([[$new_value, $modulo]])[0][1]];
                 }
+            }
+
+            for($degree = 0; $degree < count($product_polynomial_expression); $degree++){
+                array_push($product_polynomial_expression[$degree], count($product_polynomial_expression) - $degree - 1);
             }
     
             return $product_polynomial_expression;
@@ -883,9 +888,9 @@
                     return ["polynomial_expression" => [], "base_polynomial_expressions" => []];
                 }
 
-                $base_polynomial_expression = [1/$denominator];
+                $base_polynomial_expression = [[1/$denominator, count($base_polynomial_roots)]];
                 for($counter = count($base_polynomial_roots) - 1; $counter >= 0; $counter--){
-                    array_push($base_polynomial_expression, (1/$denominator)*$this->DetermineCoefficientByVieta($base_polynomial_roots, $counter));
+                    array_push($base_polynomial_expression, [(1/$denominator)*$this->DetermineCoefficientByVieta($base_polynomial_roots, $counter), $counter]);
                 }
 
                 array_push($lagrange_interpolation["base_polynomial_expressions"], $base_polynomial_expression);
@@ -894,13 +899,19 @@
             // Give the final polyinomial expression:
             // Multiply each base polynomial expression with the second coordinate of the corresponding point;
             // Add the multiplied polynomial expressions together.
-            $final_polynomial_expression = [];
+            $final_polynomial_expression_coefficients = [];
             foreach($lagrange_interpolation["base_polynomial_expressions"] as $polynomial_counter => $polynomial_expression){
                 $multiplied_polynomial_expression = [];
-                foreach($polynomial_expression as $coefficient_counter => $coefficient){
-                    array_push($multiplied_polynomial_expression, $coefficient*$points[$polynomial_counter][1]);
+                foreach($polynomial_expression as $coefficient_counter => $coefficient_degree_pair){
+                    array_push($multiplied_polynomial_expression, $coefficient_degree_pair[0]*$points[$polynomial_counter][1]);
                 }
-                $final_polynomial_expression = $this->AddPolynomialExpressions($final_polynomial_expression, $multiplied_polynomial_expression);
+                $final_polynomial_expression_coefficients = $this->AddPolynomialExpressions($final_polynomial_expression_coefficients, $multiplied_polynomial_expression);
+            }
+
+            // Make polynomial expression from the coefficients
+            $final_polynomial_expression = [];
+            for($degree = 0; $degree < count($final_polynomial_expression_coefficients); $degree++){
+                array_push($final_polynomial_expression, [$final_polynomial_expression_coefficients[$degree], count($final_polynomial_expression_coefficients) - $degree - 1]);
             }
             
             $lagrange_interpolation["polynomial_expression"] = $final_polynomial_expression;
@@ -943,16 +954,16 @@
                     if($value_counter === 0){
                         array_push($coefficients, $new_value);
                     }
-                    array_push($newton_interpolation["table_data"], $new_value);
                     array_push($temproary_previous_values, $new_value);
                 }
                 $previous_values = $temproary_previous_values;
+                array_push($newton_interpolation["table_data"], $temproary_previous_values);
                 $step++;
                 $division_count--;
             }
 
             // Creating the final polynomial expression: 
-            $final_polynomial_expression = [];
+            $final_polynomial_expression_coefficients = [];
             foreach($coefficients as $coefficient_counter => $coefficient){
                 $polynomial_member_roots = [];
                 for($root_counter = 0; $root_counter < $coefficient_counter; $root_counter++){
@@ -963,7 +974,12 @@
                 for($counter = count($polynomial_member_roots) - 1; $counter >= 0; $counter--){
                     array_push($polynomial_member_coefficients, $coefficient*$this->DetermineCoefficientByVieta($polynomial_member_roots, $counter));
                 }
-                $final_polynomial_expression = $this->AddPolynomialExpressions($final_polynomial_expression, $polynomial_member_coefficients);
+                $final_polynomial_expression_coefficients = $this->AddPolynomialExpressions($final_polynomial_expression_coefficients, $polynomial_member_coefficients);
+            }
+
+            $final_polynomial_expression = [];
+            for($degree = 0; $degree < count($final_polynomial_expression_coefficients); $degree++){
+                array_push($final_polynomial_expression, [$final_polynomial_expression_coefficients[$degree], count($final_polynomial_expression_coefficients) - $degree - 1]);
             }
 
             $newton_interpolation["polynomial_expression"] = $final_polynomial_expression;
