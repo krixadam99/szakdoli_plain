@@ -1,7 +1,7 @@
 <?php
 
     class MainModel {        
-        private $database;
+        protected $database;
         
         public function __construct($database){
             $this->database = new DatabaseHandler($database);

@@ -1,4 +1,31 @@
-//Variables
+// Functions:
+function ChangeAttributeInURL(parameter, new_value){
+    let actual_path = window.location.href
+    if(actual_path.includes(parameter)){
+        let new_path = actual_path.split("?")[0] + "?"
+        let parts = actual_path.split("?")[1].split("&")
+        let counter = 0
+        for(let part of parts){
+            if(part.includes(parameter)){
+                new_path += parameter + "=" + new_value
+                if(counter < parts.length -1){
+                    new_path += "&"
+                }
+            }else{
+                new_path += part
+                if(counter < parts.length -1){
+                    new_path += "&"
+                }
+            }
+            counter += 1
+        }
+        window.location = new_path
+    }else{
+        window.location = actual_path + "&" + parameter + "=" + new_value
+    }
+}
+
+// Variables
 let logout_button = document.querySelector("#sign_out_button")
 let nav_buttons = document.querySelectorAll("nav")
 let nav_button_number = nav_buttons.length
@@ -9,8 +36,11 @@ let group_selector = document.querySelector("#group_selector")
 let solution_inputs = document.querySelectorAll(".solution_input")
 let body = document.querySelector("body")
 let small_cards = document.querySelectorAll(".small_card")
+let small_exam_generation_card = document.getElementById("small_exam_generation")
+let big_exam_generation_card = document.getElementById("big_exam_generation")
+let seminar_tasks_generation_card = document.getElementById("seminar_tasks_generation")
 
-//Event-handlers
+// Event-handlers
 if(logout_button){
     logout_button.addEventListener("click", ()=>{
         window.location = "./index.php"
@@ -71,6 +101,22 @@ if(body){
             small_card.style["background-color"] = "inherit"
         })
     }
+}
+
+if(group_selector){
+    group_selector.addEventListener("change", ()=>{ChangeAttributeInURL("group", group_selector.options[group_selector.options.selectedIndex].value)})
+}
+
+if(small_exam_generation_card){
+    small_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "small")})
+}
+
+if(big_exam_generation_card){
+    big_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "big")})
+}
+
+if(seminar_tasks_generation_card){
+    seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "seminar")})
 }
 
 

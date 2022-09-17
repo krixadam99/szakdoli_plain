@@ -40,7 +40,7 @@
     <main>
         <div class="group_selector">
             <label>Válasszon csoportot</label>
-            <select id="group_selector" onchange="ChangeRows(this.options[this.options.selectedIndex].value)">
+            <select id="group_selector">
                 <?php foreach($approved_teacher_groups as $key => $approved_teacher_group):?>
                     <?php if($approved_teacher_group["subject_name"] == $_SESSION["subject"]):?>
                         <option <?=isset($_SESSION["group"]) && $_SESSION["group"] === $approved_teacher_group["subject_group"]?"selected":""?>><?=$approved_teacher_group["subject_group"]?></option>
@@ -52,27 +52,4 @@
     </main>
 </body>
 <script type="module" src="./views/js/mainContent.js"></script>
-<script>
-    function ChangeRows(selected_group){
-        let actual_path = window.location.href
-        let new_path = actual_path.split("?")[0] + "?"
-        let parts = actual_path.split("?")[1].split("&")
-        let counter = 0
-        for(let part of parts){
-            if(part.includes("group")){
-                new_path += "group=" + selected_group
-                if(counter < parts.length -1){
-                    new_path += "&"
-                }
-            }else{
-                new_path += part
-                if(counter < parts.length -1){
-                    new_path += "&"
-                }
-            }
-            counter += 1
-        }
-        window.location = new_path
-    }
-</script>
 </html>

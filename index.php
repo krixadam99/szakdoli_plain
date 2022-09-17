@@ -10,7 +10,7 @@
     //Set some SESSION variables, like subject name etc.
     //Do not let the user overwrite the session variables, when making a post request (like by letting them to overwrite the action url) 
     if(count($_POST) === 0){
-        //If subject, group, or topic is set in the url, then let's overwrite it, else let's clear them 
+        //If subject, group, topic, or exam_type is set in the url, then let's overwrite it, else let's clear them 
         if(isset($_GET["subject"])){
             $_SESSION["subject"] = $_GET["subject"];
         }else{
@@ -19,7 +19,7 @@
     
         if(isset($_GET["group"])){
             $_SESSION["group"] = $_GET["group"];
-        }else{
+        }else{  
             $_SESSION["group"] = "";
         }
 
@@ -27,6 +27,12 @@
             $_SESSION["topic"] = $_GET["topic"];
         }else{
             $_SESSION["topic"] = "";
+        }
+
+        if(isset($_GET["exam_type"])){
+            $_SESSION["exam_type"] = $_GET["exam_type"];
+        }else{
+            unset($_SESSION["exam_type"]);
         }
     }
 

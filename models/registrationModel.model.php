@@ -5,17 +5,13 @@
             parent::__construct($database);
         }
 
-        public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = "") : void {  
+        public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
             $is_admin = 0;
             $query = "INSERT INTO users VALUES(\"".$neptun_code."\", \"".$user_email."\", \"".password_hash($user_password,PASSWORD_BCRYPT)."\", \"$is_admin\")";
             $this->database->UpdateDatabase($query);
 
-            $user_status = "";
-            $subject_name = $subject_name;
             $pending_status = 1;
-            $subject_group = $subject_group;
-
             if($user_status == "Demonstrátor"){
                 $user_status = "teacher";
             }else{

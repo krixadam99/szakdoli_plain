@@ -1,8 +1,6 @@
 <?php
-
     $incorrect_parameters = $this->GetIncorrectParameters();
     $correct_parameters = $this->GetCorrectParameters();
-
 ?>
 
 <!DOCTYPE html>

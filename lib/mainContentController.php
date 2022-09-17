@@ -177,7 +177,7 @@
                                 }
                             }else{
                                 if($user_record["pending_status"] == "0"){
-                                    $practice_results = $model->GetPracticeResults($this->neptun_code)[0];
+                                    $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
                                     foreach($practice_results as $key => $value){
                                         if(is_int(strpos($key, "practice"))){
                                             $this->practice_results[$key] = $value;
@@ -241,6 +241,16 @@
                     header("Location: ./index.php?site=notifications");
                     exit();
                 }
+            }
+        }
+
+        /**
+         * 
+         */
+        protected function RedirectToIfWrongParam($session_parameter_name, $acceptable_values, $where_to){
+            if(isset($_SESSION[$session_parameter_name]) && !in_array($_SESSION[$session_parameter_name], $acceptable_values)){
+                header("Location: ./index.php?site=$where_to");
+                exit();
             }
         }
     }

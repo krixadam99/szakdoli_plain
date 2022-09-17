@@ -194,7 +194,7 @@ hr {
     margin: 2% 4% 2% 4%;
 }
 
-.definitions_container, .task_container{
+.definitions_container {
     border: 1px solid black;
     box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
     transition: 0.4s;
@@ -392,4 +392,24 @@ ul {
     top: 10px;
     right: 35%;
     font-size:smaller;
+}
+
+/*Task generator page styles*/
+
+.task_generator_container {
+    margin: 2% 4% auto 4%;
+    display: flex;
+}
+
+.task_generation_settings {
+    width: 50%;
+    margin-right: 1%;
+    margin-left: 0%;
+}
+
+.preview {
+    width: 48%;
+    margin-left: 1%;
+    margin-right: 0%;
+    border: 1px solid black;
 }
