@@ -39,6 +39,7 @@ let small_cards = document.querySelectorAll(".small_card")
 let small_exam_generation_card = document.getElementById("small_exam_generation")
 let big_exam_generation_card = document.getElementById("big_exam_generation")
 let seminar_tasks_generation_card = document.getElementById("seminar_tasks_generation")
+let topic_select = document.querySelector(".topic_select")
 
 // Event-handlers
 if(logout_button){
@@ -119,6 +120,25 @@ if(seminar_tasks_generation_card){
     seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "seminar")})
 }
 
+if(topic_select){
+    topic_select.addEventListener("change", ()=>{
+        let selected_index = topic_select.options.selectedIndex
 
+        console.log(selected_index)
+        
+        let subtopic_selects = document.querySelectorAll(".subtopic_select")
+        console.log(subtopic_selects)
+        for(let subtopic_select_counter = 0; subtopic_select_counter < subtopic_selects.length; subtopic_select_counter++) {
+            if(subtopic_select_counter === selected_index){
+                console.log(subtopic_selects[subtopic_select_counter])
+                subtopic_selects[subtopic_select_counter].style["display"] = "inline"
+                subtopic_selects[subtopic_select_counter].disabled = ""
+            }else{
+                subtopic_selects[subtopic_select_counter].style["display"] = "none"
+                subtopic_selects[subtopic_select_counter].disabled = "disabled"
+            }
+        }
+    })
+}
 
 

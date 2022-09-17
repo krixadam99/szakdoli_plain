@@ -18,6 +18,13 @@
         private $approved_student_subject;
         private $practice_results;
 
+        protected $dimat_i_topics;
+        protected $dimat_i_subtopics;
+        protected $dimat_i_topics_descriptions;
+        protected $dimat_ii_topics;
+        protected $dimat_ii_subtopics;
+        protected $dimat_ii_topics_descriptions;
+
         /**
          * 
          * The contructor of the MainContentController class.
@@ -42,6 +49,84 @@
             $this->approved_student_groups = [];
             $this->approved_student_subject = "";
             $this->practice_results = [];
+
+            $this->dimat_i_topics = [
+                "Halmazok és műveletek", 
+                "Relációk alapvető definíciói",
+                "Relációk kompozíciója és relációk tulajdonságai",
+                "Függvény, mint reláció",
+                "Komplex számok alapvető tulajdonságai",
+                "Komplex számok trigonometrikus alakja",
+                "Komplex számok hatványozása és gyökvonás",
+                "Binomiális tétel és faktoriális",
+                "Gráfok alapvető tulajdonságai",
+                "Gráfok megszerkeszthetősége"
+            ];
+
+            $this->dimat_i_subtopics = array(
+                1 => [],
+                2 => [],
+                3 => [],
+                4 => [],
+                5 => [],
+                6 => [],
+                7 => [],
+                8 => [],
+                9 => [],
+                10 => []
+            );
+
+            $this->dimat_i_topics_descriptions = [
+                "Unió, metszet, különbség, komplementer, szimmetrikus differencia", 
+                "Értelmezési tartomány, értékkészlet, megszorítás halmazra, inverz, kép és őskép",
+                "Kompozíció, reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
+                "Függvények, injekció, szürjekció, bijekció",
+                "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
+                "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
+                "Hatványozás és gyökvonás trigonometrikus alak segítségével",
+                "Polinomok kifejtése, a binomiális tétel alkalmazása",
+                "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
+                "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
+            ];
+
+            $this->dimat_ii_topics =  [
+                "Maradékos osztás és osztók száma", 
+                "Redukált és teljes maradékrendszerek",
+                "Eukleidészi algoritmus", 
+                "Lineáris kongruenciák",
+                "Lineáris diofantikus egyenletek",
+                "Kínai maradéktétel",
+                "Horner- rendezés használata", 
+                "Polinomok osztása és szorzása", 
+                "Lagrange- és Newton-féle interpolációs polinomok", 
+                "Egyenletek gyökkeresése"
+            ];
+
+            $this->dimat_ii_subtopics = array(
+                1 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése"],
+                2 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
+                3 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus", "Kibővített Eukleidészi algoritmus"],
+                4 => ["Lineáris kongruenciák megoldása", "Euler-Fermat és kis Fermat-tétel"],
+                5 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
+                6 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
+                7 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
+                8 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
+                9 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"],
+                10 => ["..."]
+            );
+
+            $this->dimat_ii_topics_descriptions = [
+                "Maradékos osztások, pozitív szám prímfelbontása, pozitív osztók számának meghatározása, kongruens szám keresése", 
+                "Teljes maradékrendszer megadása reprezentatív elemekkel, redukált maradékrendszer megadása reprezentatív elemekkel, Euler-féle fí függvény",
+                "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus, a kibővített Eukleidészi algoritmus",
+                "Lineáris kongruenciák megoldása, az Euler-Fermat és kis Fermat-tétel",
+                "Lineáris diofantikus egyenletek megoldása",
+                "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
+                "Polinomok helyettesítési értékének meghatározása Horner- rendezéssel",
+                "Polinomok (maradékos) osztása és szorzása",
+                "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra",
+                "Viéte- formulák, Schönemann-Eisenstein és Gauss tétel, szimmetrikus és antiszimmetrikus egyenletek"
+            ];
         }
 
         /**

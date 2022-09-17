@@ -24,8 +24,12 @@
     if(isset($_SESSION["subject"])){
         if($_SESSION["subject"] == "i"){
             $subject = "Diszkrét matematika I.";
+            $main_topics = $this->dimat_i_topics;
+            $sub_topics = $this->dimat_i_subtopics;
         }elseif($_SESSION["subject"] == "ii"){
             $subject = "Diszkrét matematika II.";
+            $main_topics = $this->dimat_ii_topics;
+            $sub_topics = $this->dimat_ii_subtopics;
         }else{
             header("Location: ./index.php?site=notifications");
         }
@@ -84,17 +88,49 @@
             <h1><?=$subject?> <?=$exam_type?> generálása</h1>
             <hr> 
             <div class="task_generator_container">
-                <div class="task_generation_settings">
+                <form method="POST" class="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) !== 0?"width:50%":"width:85%"?>" action="./index.php?site=createPreview">
+                    <?php $section_name = "header"?>
+                    <div class="pdf_page_section">
+                        <label class="pdf_page_section_label">Fejléc</label>
+                        <hr class="full_hr">
+                        <?php include("./partials/styleBox.php")?>
+                        <textarea id="header_text_area" name="header_text" rows="8"><?=isset($_SESSION["preview"]["header_text"])?$_SESSION["preview"]["header_text"]:"Ide írd a fejléc szövegét..."?></textarea>
+                    </div>
+
+                    <?php $section_name = "title"?>
+                    <div class="pdf_page_section">
+                        <label class="pdf_page_section_label">Cím</label>
+                        <hr class="full_hr">
+                        <?php include("./partials/styleBox.php")?>
+                        <textarea id="title_text_area" name="title_text" rows="1"><?=isset($_SESSION["preview"]["title_text"])?$_SESSION["preview"]["title_text"]:"Ide írd a címet..."?></textarea>
+                    </div>
+                    
                     <?php if($_SESSION["exam_type"] === "big"):?>
 
                     <?php elseif($_SESSION["exam_type"] === "small"):?>
-
+                        <?php 
+                            $section_name = "task_0";
+                        ?>
+                        <div class="pdf_page_section">
+                            <label class="pdf_page_section_label">Feladat kiválasztása (az itt beállított stílus egységesen lesz alkalmazva)</label>
+                            <hr class="full_hr">
+                            <?php include("./partials/styleBox.php")?>
+                            <?php include("./partials/taskChoice.php")?>
+                        </div>
                     <?php elseif($_SESSION["exam_type"] === "seminar"):?>
 
                     <?php endif?>
-                </div>
-                <div class="preview">
                     
+                    <?php $section_name = "footer"?>
+                    <div class="pdf_page_section" style="margin-bottom: 3%">
+                        <label class="pdf_page_section_label">Lábléc</label>
+                        <hr class="full_hr">
+                        <?php include("./partials/styleBox.php")?>
+                        <textarea id="footer_text_area" name="footer_text" rows="8"><?=isset($_SESSION["preview"]["footer_text"])?$_SESSION["preview"]["footer_text"]:"Ide írd a lábléc szövegét..."?></textarea>
+                    </div>
+                    <button class="preview_button" type="submit">Feladatsor generálása</button>
+                </form>
+                <div class="preview" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) !== 0?"width:48%":"display:none"?>">
                 </div>
             </div>
         <?php endif?>

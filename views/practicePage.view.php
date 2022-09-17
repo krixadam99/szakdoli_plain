@@ -19,57 +19,13 @@
     if($approved_student_subject == "i"){
         $subject_name = "Diszkrét matematika I. gyakorlás";
         $topic_division = [4, 3, 1, 2];
-        $practice_topics = [
-            "Halmazok és műveletek", 
-            "Relációk alapvető definíciói",
-            "Relációk kompozíciója és relációk tulajdonságai",
-            "Függvény, mint reláció",
-            "Komplex számok alapvető tulajdonságai",
-            "Komplex számok trigonometrikus alakja",
-            "Komplex számok hatványozása és gyökvonás",
-            "Binomiális tétel és faktoriális",
-            "Gráfok alapvető tulajdonságai",
-            "Gráfok megszerkeszthetősége"
-        ];
-        $topic_descriptions = [
-            "Unió, metszet, különbség, komplementer, szimmetrikus differencia", 
-            "Értelmezési tartomány, értékkészlet, megszorítás halmazra, inverz, kép és őskép",
-            "Kompozíció, reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
-            "Függvények, injekció, szürjekció, bijekció",
-            "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
-            "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
-            "Hatványozás és gyökvonás trigonometrikus alak segítségével",
-            "Polinomok kifejtése, a binomiális tétel alkalmazása",
-            "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
-            "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
-        ];
+        $practice_topics = $this->dimat_i_topics;
+        $topic_descriptions = $this->dimat_i_topics_descriptions;
     }elseif($approved_student_subject == "ii"){
         $subject_name = "Diszkrét matematika II. gyakorlás";
         $topic_division = [6, 4];
-        $practice_topics = [
-            "Maradékos osztás és osztók száma", 
-            "Redukált és teljes maradékrendszerek",
-            "Eukleidészi algoritmus", 
-            "Lineáris kongruenciák",
-            "Lineáris diofantikus egyenletek",
-            "Kínai maradéktétel",
-            "Horner-táblázat használata", 
-            "Polinomok osztása és szorzása", 
-            "Lagrange- és Newton-féle interpolációs polinomok", 
-            "Egyenletek gyökkeresése"
-        ];
-        $topic_descriptions = [
-            "Maradékos osztások, prímfelbontás, pozitív osztók száma, kongruenciák", 
-            "Maradékosztályok reprezentatív elemekkel, Euler-féle fí függvény, Redukált maradékrendszerek szorzása",
-            "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
-            "Lineáris kongruenciák megoldása, az Euler-Fermat és kis Fermat-tétel",
-            "Lineáris diofantikus egyenletek megoldása",
-            "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
-            "Polinomok helyettesítési értékének meghatározása Horner-táblázattal",
-            "Polinomok (maradékos) osztása és szorzása",
-            "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra",
-            "Viéte- formulák, Schönemann-Eisenstein és Gauss tétel, szimmetrikus és antiszimmetrikus egyenletek"
-        ];
+        $practice_topics = $this->dimat_ii_topics;
+        $topic_descriptions = $this->dimat_ii_topics_descriptions;
     }
 
     $practice_results = $this->GetPracticeResults();

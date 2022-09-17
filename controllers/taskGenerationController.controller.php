@@ -32,6 +32,10 @@
         public function TaskGeneration(){
             //Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
+                // Setting the preview to default, if not set
+                if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
+                    $_SESSION["preview"] = [];
+                }
                 $this->SetMembers();
 
                 //Only teachers can see this page,others will be redirected to the notifications page
@@ -43,6 +47,40 @@
             }else{
                 header("Location: ./index.php?site=login");
             }
+        }
+
+        /**
+         * 
+         */
+        public function CreatePreview(){
+            if(isset($_SESSION["neptun_code"])){
+                $_SESSION["preview"] = $_POST;
+
+                $task_counter = 0;
+                foreach($_POST as $key => $value){
+                    if(is_string($key) &&  is_numeric(strpos($key, "_main_topic"))){
+                        $main_task_index = $value;
+                        if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"])){
+                            $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
+                            $_SESSION["preview"]["task_$task_counter"] = $this->GenerateTask($main_task_index, $subtask_index);
+                        }
+                    }
+                }
+
+                $subject = $_SESSION["subject"]??"";
+                $exam_type = $_SESSION["exam_type"]??"";
+                header("Location: ./index.php?site=taskGeneration&" . "subject=$subject&" . "exam_type=$exam_type");
+            }else{
+                header("Location: ./index.php?site=login");
+            }
+        }
+
+        /**
+         * 
+         */
+        private function GenerateTask($main_task_index, $subtask_index){
+            $task = array("task_indices" => [$main_task_index, $subtask_index], "task_description" => "", "task_solution" => "");
+            return $task;
         }
     }
 
