@@ -80,7 +80,7 @@
     $controller_connection->get_method_connection("practice", "PracticeController", "Practice");
     $controller_connection->get_method_connection("practiceShowAnswers", "PracticeController", "PracticeAnswers");
     $controller_connection->get_method_connection("grades", "GradesController", "Grades");
-
+    
     //POST methods connection
     $controller_connection->post_method_connection("validateLogin", "LoginController", "ValidateLogin");
     $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");

@@ -8,6 +8,7 @@
         protected $task_description;
         protected $task_solutions;
         protected $definitions;
+        protected $topic;
 
         /**
          * 
@@ -32,6 +33,14 @@
          * @return string A string of the topic related definitions. 
         */
         public function GetDefinitions(){ return $this->definitions; }
+
+        /**
+         * 
+         * This method returns the topic of the tasks.
+         * 
+         * @return string Returns the topic's string. 
+        */
+        public function GetTopic(){ return $this->topic; }
 
         /**
          * 
@@ -62,6 +71,16 @@
          * @return void
         */
         public function SetDefinitions($definitions){ $this->definitions = $definitions; }
+
+        /**
+         * 
+         * This method assigns a new value to the class's $topic variable.
+         * 
+         * @param string $topic The topic of the tasks which will be assigned to the class's $topic member.
+         * 
+         * @return void
+        */
+        public function SetTopic($topic){ $this->definitions = $topic; }
     }
 
 ?>

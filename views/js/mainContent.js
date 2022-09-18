@@ -40,6 +40,9 @@ let small_exam_generation_card = document.getElementById("small_exam_generation"
 let big_exam_generation_card = document.getElementById("big_exam_generation")
 let seminar_tasks_generation_card = document.getElementById("seminar_tasks_generation")
 let topic_select = document.querySelector(".topic_select")
+let save_pdf_button = document.getElementById("save_pdf_button")
+let preview = document.getElementById("preview")
+let new_task_generator_button = document.getElementById("new_task_generator_button")
 
 // Event-handlers
 if(logout_button){
@@ -141,4 +144,18 @@ if(topic_select){
     })
 }
 
+if(save_pdf_button){
+    save_pdf_button.addEventListener("click", (event)=>{
+        event.preventDefault()
 
+        let new_window = window.open()
+        let preview_content = document.getElementById("preview").innerHTML
+        console.log(preview_content)
+        self.focus()
+        new_window.document.open()
+        new_window.document.write('<html><body>' +  preview_content + '</body></html>')
+        new_window.document.close()
+        new_window.print();
+        new_window.close();
+    })
+}

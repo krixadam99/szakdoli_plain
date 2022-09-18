@@ -88,7 +88,7 @@
             <h1><?=$subject?> <?=$exam_type?> generálása</h1>
             <hr> 
             <div class="task_generator_container">
-                <form method="POST" class="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) !== 0?"width:50%":"width:85%"?>" action="./index.php?site=createPreview">
+                <form method="POST" id="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"width:85%"?>" action="./index.php?site=createPreview">
                     <?php $section_name = "header"?>
                     <div class="pdf_page_section">
                         <label class="pdf_page_section_label">Fejléc</label>
@@ -128,11 +128,73 @@
                         <?php include("./partials/styleBox.php")?>
                         <textarea id="footer_text_area" name="footer_text" rows="8"><?=isset($_SESSION["preview"]["footer_text"])?$_SESSION["preview"]["footer_text"]:"Ide írd a lábléc szövegét..."?></textarea>
                     </div>
-                    <button class="preview_button" type="submit">Feladatsor generálása</button>
+                    <?php if(!isset($_SESSION["preview"]) || isset($_SESSION["preview"]) && count($_SESSION["preview"]) == 0):?>
+                        <button id="generator_button" type="submit" style="margin-left:45%">Feladatsor generálása</button>
+                    <?php endif?>
                 </form>
-                <div class="preview" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) !== 0?"width:48%":"display:none"?>">
+                <div id="preview" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"display:none"?>">
+                        <!--div id="editor_panel">
+                            <div id="font_editor">
+                                <div id="font_color">
+                                </div>
+                            </div>
+                            <div id="text_editor">
+                                <div id="left_align">
+                                </div>
+                                <div id="center_align">
+                                </div>
+                                <div id="right_align">
+                                </div>
+                                <div id="justify_align">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="a4_document">
+                            <div class="a4_page">
+                            </div>
+                            <div class="a4_page">
+                            </div>
+                            <div class="a4_page">
+                            </div>
+                        </div-->
+                        <div>
+                            <?php if(isset($_SESSION["preview_tasks"])):?>
+
+                                <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $task):?>
+                                    <?=$main_task_counter + 1?>. feladatcsoport:
+                                    <br>
+                                    <?php
+                                        $task["task_description"] = explode("\n", $task["task_description"]);
+                                        $task["task_solution"] = explode("\n", $task["task_solution"]);
+                                    ?>
+                                    <b><?=$task["task_description"][0]?></b>
+                                    <br>
+                                    <?php for($group_counter = 1; $group_counter < count($task["task_description"]); $group_counter++):?>
+                                        <?=$group_counter?>. csoport:
+                                        <br>
+                                        <?=$task["task_description"][$group_counter]?>
+                                        <br>
+                                    <?php endfor?>
+
+                                    <b><?=$task["task_solution"][0]?></b>
+                                    <br>
+                                    <?php for($group_counter = 1; $group_counter < count($task["task_solution"]); $group_counter++):?>
+                                        <?=$group_counter?>. csoport:
+                                        <br>
+                                        <?=$task["task_solution"][$group_counter]?>
+                                        <br>
+                                    <?php endfor?>
+                                <?php endforeach?>
+                            <?php endif?>
+                        </div>
                 </div>
             </div>
+            <?php if(isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0):?>
+                <div class="pdf_page_button_container">
+                    <button id="save_pdf_button">Előnézet mentése</button>
+                    <button id="new_task_generator_button">Új feladatsor generálása</button>
+                </div>
+            <?php endif?>
         <?php endif?>
     </main>
 </body>

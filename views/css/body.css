@@ -356,7 +356,7 @@ ul {
     margin: 2% 38% 2% 2%;
 }
 
-.stair_table tr, .residue_system_table tr {
+.stair_table tr, .residue_system_table tr, .prime_factorization_table tr {
     background-color:white;
 }
 
@@ -401,16 +401,17 @@ ul {
     display: flex;
 }
 
-.task_generation_settings {
+#task_generation_settings {
     margin-right: 1%;
     margin-left: 0%;
 }
 
-.preview {
+#preview {
     margin-left: 1%;
     margin-right: 0%;
     border: 1px solid black;
-    height: 800px
+    height: 800px;
+    overflow: scroll;
 }
 
 .pdf_page_section {
@@ -457,10 +458,114 @@ textarea {
     resize: none;
 }
 
-.preview_button {
-    margin: 2% auto 5% 45%;
+#save_pdf_button, #generator_button, #new_task_generator_button {
     width: 15%;
     border-radius: 50px;
     border: 1px solid black;
     background-color: rgb(254, 255, 255);
 }
+
+.pdf_page_button_container {
+    display: flex;
+}
+
+#save_pdf_button {
+    margin: 2% 2% 5% auto;
+}
+
+#new_task_generator_button {
+    margin: 2% auto 5% 2%;
+}
+
+#editor_panel {
+    background-color: rgb(244, 242, 242);
+    width: 100%;
+    height: 5%;
+    display: flex;
+    position: sticky;
+    top: 0;
+}
+
+#font_editor {
+    width: 60%;
+    display: flex;
+}
+
+#text_editor {
+    width: 40%;
+    display: flex;
+    border-left: 1px solid black
+}
+
+#text_editor div {
+    margin: auto;
+    width: 13%;
+    height: 65%;
+    border: 1px solid grey;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#left_align{
+    background-image: url("./pics/left_alignment.jpg");
+}
+
+#center_align{
+    background-image: url("./pics/center_alignment.jpg");
+}
+
+#right_align{
+    background-image: url("./pics/right_alignment.jpg");
+}
+
+#justify_align{
+    background-image: url("./pics/justify_alignment.jpg");
+}
+
+.a4_document {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.a4_page {
+    margin: 5% 5% 5% 5%;
+    height: 90%;
+    width: 90%;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border: 1px solid black;
+}
+
+.prime_factorization_table {
+    border-collapse: collapse;
+}
+
+.prime_factorization_table td:first-of-type{
+    border-right: 1px solid black;
+    padding-right: 10px;
+}
+
+.prime_factorization_table td:last-of-type{
+    padding-left: 2px;
+    
+}
+
+/*
+@media print {
+    #preview {
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin: 0%;
+    }
+
+    #task_generation_settings {
+        display: none
+    }
+}
+*/

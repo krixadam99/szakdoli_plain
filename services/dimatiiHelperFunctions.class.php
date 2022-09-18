@@ -40,6 +40,31 @@
 
         /**
          * 
+         * This method is responsible for creating the given amount of distinct numbers.
+         * 
+         * @param int $number_of_numbers The number of distinct numbers the method must return.
+         * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
+         * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
+         * @param bool $is_first_positive Should we guarantee that the first number is positive, or not. The default value is false.
+         * @param bool $is_second_positive Should we guarantee that the second number is positive, or not. The default value is false.
+         * 
+         * @return array Returns the given amount of distinct numbers.
+         */
+        public function CreateDistinctNumbers($number_of_numbers, $lower = -1000, $upper = 1000){
+            $return_numbers = [];
+            for($counter = 0; $counter < $number_of_numbers; $counter++){
+                $element = mt_rand($lower, $upper);
+
+                while(in_array($element, $return_numbers)){
+                    $element = mt_rand($lower, $upper);
+                }
+                array_push($return_numbers, $element);
+            }
+            return $return_numbers;
+        }
+
+        /**
+         * 
          * This method is responsible for creating the given amount of pairs of numbers.
          * 
          * @param int $number_of_pairs The number of pairs the method must return.

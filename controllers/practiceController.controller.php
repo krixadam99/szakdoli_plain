@@ -97,6 +97,7 @@
                 $_SESSION["definitions"] = $dimat_i_tasks->GetDefinitions();
             }else if($subject == "ii"){
                 $dimat_ii_tasks = new DimatiiTasks($topic_number);
+                $dimat_ii_tasks->PracticePageTaskGeneration();
                 $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescription();
                 $_SESSION["solution"] = $dimat_ii_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();

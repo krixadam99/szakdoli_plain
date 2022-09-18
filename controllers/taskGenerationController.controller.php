@@ -55,14 +55,18 @@
         public function CreatePreview(){
             if(isset($_SESSION["neptun_code"])){
                 $_SESSION["preview"] = $_POST;
+                $_SESSION["preview_tasks"] = [];
 
                 $task_counter = 0;
                 foreach($_POST as $key => $value){
                     if(is_string($key) &&  is_numeric(strpos($key, "_main_topic"))){
                         $main_task_index = $value;
-                        if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"])){
+                        if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"]) && isset($_POST[explode("_main_topic",$key)[0] . "_task_quantity"])){
                             $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
-                            $_SESSION["preview"]["task_$task_counter"] = $this->GenerateTask($main_task_index, $subtask_index);
+                            $subtask_count = $_POST[explode("_main_topic",$key)[0] . "_task_quantity"];
+                            if(is_numeric($subtask_count) && intval($subtask_count) > 0){
+                                array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, intval($subtask_count)));
+                            }
                         }
                     }
                 }
@@ -78,8 +82,90 @@
         /**
          * 
          */
-        private function GenerateTask($main_task_index, $subtask_index){
-            $task = array("task_indices" => [$main_task_index, $subtask_index], "task_description" => "", "task_solution" => "");
+        private function GenerateTask($main_task_index, $subtask_index, $subtask_count){
+            $task = array("task_descriptions" => "", "task_solutions" => "");
+            $new_task = [];
+
+            if($_SESSION["subject"] == "i"){
+                switch($main_task_index){
+                    case "0":{
+
+                    }break;
+                    case "1":{
+
+                    }break;
+                    case "2":{
+
+                    }break;
+                    case "3":{
+
+                    }break;
+                    case "4":{
+
+                    }break;
+                    case "5":{
+
+                    }break;
+                    case "6":{
+
+                    }break;
+                    case "7":{
+
+                    }break;
+                    case "8":{
+
+                    }break;
+                    case "9":{
+
+                    }break;
+                    default:break;
+                };
+            }elseif($_SESSION["subject"] == "ii"){
+                switch($main_task_index){
+                    case "0":{
+                        $dimat_ii_tasks = new DimatiiTasks("0");
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_tasks->CreateDivisionPairs($subtask_count);break;
+                            case "1": $new_task = $dimat_ii_tasks->CreatePrimeFactorizationNumbers($subtask_count); break;
+                            case "2":break;
+                            case "3":break;
+                            default:break;
+                        }
+                    }break;
+                    case "1":{
+
+                    }break;
+                    case "2":{
+
+                    }break;
+                    case "3":{
+
+                    }break;
+                    case "4":{
+
+                    }break;
+                    case "5":{
+
+                    }break;
+                    case "6":{
+
+                    }break;
+                    case "7":{
+
+                    }break;
+                    case "8":{
+
+                    }break;
+                    case "9":{
+
+                    }break;
+                    default:break;
+                };
+            }
+            
+            $task["task_description"] = $new_task["task_text"];
+            $task["task_solution"] = $new_task["solution_text"];
+
             return $task;
         }
     }
