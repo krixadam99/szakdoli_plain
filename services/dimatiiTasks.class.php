@@ -90,18 +90,18 @@
             // 2 numbers for prime factorization subtask (1 number/ subtask);
             // 2 numbers for divisor counting subtask (1 number/ subtask);
             // 2 pairs for congruency subtask (1 pair/ subtask).
-            $divide_pairs = $this->CreateDivisionPairs(2);
-            $prime_factorization_numbers = $this->CreatePrimeFactorizationNumbers(2);
-            $positive_divisor_count_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 100, 1000)[0];
-            $congruency_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(2, -1000, 1000, false, true);
+            $divide_pairs = $this->CreateDivisionPairsSubtask(2);
+            $prime_factorization_numbers = $this->CreatePrimeFactorizationSubtask(2);
+            $positive_divisor_count_numbers = $this->CreateDivisorCountSubtask(2);
+            $congruency_pairs = $this->CreateCongruentNumbersSubtask(2);
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő osztással, osztók számával és kongruencia definíciójával kapcsolatos feladatokat!",
                 "divide_pairs" => $divide_pairs["data"],
                 "prime_factorization_numbers" => $prime_factorization_numbers["data"],
-                "positive_divisor_count_numbers" => $positive_divisor_count_numbers,
-                "congruency_pairs" => $congruency_pairs
+                "positive_divisor_count_numbers" => $positive_divisor_count_numbers["data"],
+                "congruency_pairs" => $congruency_pairs["data"]
             );
             $this->task_description = $task_array;
 
@@ -109,8 +109,8 @@
             $solution_array = [
                 "divide_pairs_solution" => $divide_pairs["solution"],
                 "prime_factorization_solution" => $prime_factorization_numbers["solution"],
-                "positive_divisor_count_solution" => $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers),
-                "congruence" => $congruency_pairs
+                "positive_divisor_count_solution" => $positive_divisor_count_numbers["solution"],
+                "congruence" => $congruency_pairs["data"]
             ];
             $this->task_solutions = $solution_array;
 
@@ -494,27 +494,24 @@
         }
 
         /**
-         * This public method will create division pairs for the first task of Discrete Mathematics II.
+         * This public method will create division pairs for for the first subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_pairs The number of pairs which is a positive whole number.
          * 
-         * @return array Returns an associative array containing the data, the task text, the raw solution and the solution's text.
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateDivisionPairs($number_of_pairs){
+        public function CreateDivisionPairsSubtask($number_of_pairs){
             $division_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000);
             $task_description = "Add meg a következő osztások eredményét az egész számok körében!\n";
-            foreach($division_pairs as $index => $division_pair){
-                $task_description = $task_description . "<label class=\"task_description\">". $division_pair[0] . "/" . $division_pair[1] . "</label>";
-                if($index !== count($division_pairs) - 1){
-                    $task_description = $task_description . "\n";
-                }
-            }
-
             $solutions = $this->dimat_helper_functions->DetermineQuotientAndResidue($division_pairs);
             $task_solution = "Megoldás:\n";
-            foreach($solutions as $index => $solution){
-                $task_solution = $task_solution . "<label class=\"task_solution\">". $division_pairs[$index][0] . " = " . $solution[0] . " * " . $division_pairs[$index][1] . " + " . $solution[1] . "</label>";
-                if($index !== count($solutions) - 1){
+            
+            for($division_counter = 0; $division_counter < $number_of_pairs; $division_counter++){
+                $task_description = $task_description . "<label class=\"task_description\">". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . "</label>";
+                $task_solution = $task_solution . "<label class=\"task_solution\">". $division_pairs[$division_counter][0] . " = " . $solutions[$division_counter][0] . " * " . $division_pairs[$division_counter][1] . " + " . $solutions[$division_counter][1] . "</label>";
+                
+                if($division_counter !== count($division_pairs) - 1){
+                    $task_description = $task_description . "\n";
                     $task_solution = $task_solution . "\n";
                 }
             }
@@ -523,13 +520,13 @@
         }
 
         /**
-         * This public method will create division pairs for the first task of Discrete Mathematics II.
+         * This public method will create distinct numbers for the second subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
-         * @return array Returns an associative array containing the data, the task text, the raw solution and the solution's text.
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreatePrimeFactorizationNumbers($number_of_numbers){
+        public function CreatePrimeFactorizationSubtask($number_of_numbers){
             $prime_factorization_numbers = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, 100, 1000);
             $solutions = $this->dimat_helper_functions->DeterminePrimeFactorization($prime_factorization_numbers);
             $task_solution = "Megoldás:\n";
@@ -556,6 +553,83 @@
             }
             
             return array("data" => $prime_factorization_numbers , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+
+        /**
+         * This public method will create distinct numbers for the third subtask of the first task of Discrete Mathematics II.
+         * 
+         * @param int $number_of_numbers The number of numbers which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateDivisorCountSubtask($number_of_numbers){
+            $positive_divisor_count_numbers = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, 100, 1000);
+            $prima_factorizations = $this->dimat_helper_functions->DeterminePrimeFactorization($positive_divisor_count_numbers);
+            $solutions = $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers);
+            $task_solution = "Megoldás:\n";
+            $task_description = "Add meg a következő számok osztóinak számát!\n";
+
+            for($index = 0; $index < $number_of_numbers; $index++){
+                $task_description = $task_description . "<label class=\"task_description\">d(". $positive_divisor_count_numbers[$index] . ") = " . "</label>";
+                
+                $number = intval($positive_divisor_count_numbers[$index]);
+                $actual_text = "<table class=\"prime_factorization_table\">";
+                $multplication_form = "";
+                $exponential_form = "";
+                foreach($prima_factorizations[$index] as $factor_index => $factor){
+                    for($exp_counter = 0; $exp_counter < $factor[1]; $exp_counter++){
+                        $actual_text = $actual_text . "<tr><td>" . $number . "</td><td>". $factor[0] . "</td></tr>";
+                        $number /= intval($factor[0]);
+                    }
+
+                    if($factor_index !== 0){
+                        $multplication_form = $multplication_form . " * ";
+                        $exponential_form = $exponential_form . " * ";
+                    }
+                    $exponential_form = $exponential_form . "( " . $factor[1] ." + 1)";
+                    $multplication_form = $multplication_form . $factor[0] . "<span class=\"exp\">" . $factor[1] . "</span>";
+                }
+                $actual_text = $actual_text . "</table>";
+                $task_solution = $task_solution . $actual_text . "<label>d(" 
+                    . $positive_divisor_count_numbers[$index] . ") = "
+                    . $multplication_form . " = " . $exponential_form . " = "
+                    . $solutions[$index] . "</label>";
+                
+                if($index !== count($positive_divisor_count_numbers) - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $positive_divisor_count_numbers , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+
+        /**
+         * This public method will create distinct pair of numbers for the fourth subtask of the first task of Discrete Mathematics II.
+         * 
+         * @param int $number_of_numbers The number of pairs which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateCongruentNumbersSubtask($number_of_pairs){
+            $congruences = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000, false, true);
+            $task_solution = "Megoldás:\n";
+            $task_description = "Adj meg a következő kongruenciák esetén olyan számot, amellyel igaz állítást kapsz!\n";
+
+            for($index = 0; $index < $number_of_pairs; $index++){
+                $task_description = $task_description . "<label class=\"task_description\">". $congruences[$index][0] . " \u{2261} x (mod " . $congruences[$index][1] . ")</label>";
+                $task_solution = $task_solution . "<label class=\"task_solutionn\">". 
+                    $congruences[$index][0] . " \u{2261} x (mod " . $congruences[$index][1] . ") \u{2194} " .
+                    $congruences[$index][1] . " \u{2223} ". $congruences[$index][0] . " - x" . " \u{2194} " . 
+                    "x = " . $congruences[$index][0] . " + " . $congruences[$index][1] . "*k (k \u{2208} \u{2124})</label>";
+                
+                if($index !== count($congruences) - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $congruences , "task_text" => $task_description, "solution" => $task_solution, "solution_text" => $task_solution);
         }
     }
 ?>

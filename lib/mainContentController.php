@@ -103,7 +103,7 @@
             ];
 
             $this->dimat_ii_subtopics = array(
-                1 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése"],
+                1 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése", "..."],
                 2 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
                 3 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus", "Kibővített Eukleidészi algoritmus"],
                 4 => ["Lineáris kongruenciák megoldása", "Euler-Fermat és kis Fermat-tétel"],

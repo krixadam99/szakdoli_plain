@@ -125,10 +125,10 @@
                     case "0":{
                         $dimat_ii_tasks = new DimatiiTasks("0");
                         switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_tasks->CreateDivisionPairs($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_tasks->CreatePrimeFactorizationNumbers($subtask_count); break;
-                            case "2":break;
-                            case "3":break;
+                            case "0": $new_task = $dimat_ii_tasks->CreateDivisionPairsSubtask($subtask_count);break;
+                            case "1": $new_task = $dimat_ii_tasks->CreatePrimeFactorizationSubtask($subtask_count); break;
+                            case "2": $new_task = $dimat_ii_tasks->CreateDivisorCountSubtask($subtask_count);break;
+                            case "3": $new_task = $dimat_ii_tasks->CreateCongruentNumbersSubtask($subtask_count);break;
                             default:break;
                         }
                     }break;

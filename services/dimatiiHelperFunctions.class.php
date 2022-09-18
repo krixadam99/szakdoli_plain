@@ -42,6 +42,9 @@
          * 
          * This method is responsible for creating the given amount of distinct numbers.
          * 
+         * The method also checks if the requested number of numbers is not more, than the size of the range, from where the method picks the numbers randomly.
+         * If it is bigger, than the method returns the range from where it would have picked numbers randomly.
+         * 
          * @param int $number_of_numbers The number of distinct numbers the method must return.
          * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
          * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
@@ -51,16 +54,24 @@
          * @return array Returns the given amount of distinct numbers.
          */
         public function CreateDistinctNumbers($number_of_numbers, $lower = -1000, $upper = 1000){
-            $return_numbers = [];
-            for($counter = 0; $counter < $number_of_numbers; $counter++){
-                $element = mt_rand($lower, $upper);
-
-                while(in_array($element, $return_numbers)){
+            if($number_of_numbers <= max($upper, $lower) - min($upper, $lower) + 1){
+                $return_numbers = [];
+                for($counter = 0; $counter < $number_of_numbers; $counter++){
                     $element = mt_rand($lower, $upper);
+    
+                    while(in_array($element, $return_numbers)){
+                        $element = mt_rand($lower, $upper);
+                    }
+                    array_push($return_numbers, $element);
                 }
-                array_push($return_numbers, $element);
+                return $return_numbers;
+            }else{
+                $return_numbers = [];
+                for($counter = min($upper, $lower); $counter <= max($upper, $lower); $counter++){
+                    array_push($return_numbers, $counter);
+                }
+                return $return_numbers;
             }
-            return $return_numbers;
         }
 
         /**
