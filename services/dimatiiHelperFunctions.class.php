@@ -534,7 +534,7 @@
          * 
          * @param int $input_value The input for which the method determines the number of positive integers up to and are relatively primes to it as well.
          * 
-         * @return int Returns the positive integers up to the given input that are relatively primes to it.
+         * @return array Returns an associative array containing the solution and the prime factorization of the number
          */
         public function DetermineEulerPhiValue($input_value){
             if($input_value >= 0){
@@ -545,9 +545,9 @@
                     $exponent = $factor[1];
                     $euler_phi_value *= pow($prime, $exponent - 1)*($prime - 1); // $factor - $prime ^ (exponent - 1), e.g.: phi(2^3) = 8 - 4 = 4 (1, 3, 5, 7) 
                 }
-                return $euler_phi_value;
+                return ["solution" => $euler_phi_value, "prime_factorization" => $prime_factorization];
             }else{
-                return 0;
+                return ["solution" => 0, "prime_factorization" => []];
             }
         }
 
@@ -621,14 +621,14 @@
                     // Since in each turn a smaller (or equal) number will be substracted from the bigger, the coefficient next to the x will be always non-negative (an invariant characteristic)
                     array_push($return_array["steps"], [$a, $b, $modulo, $helper_congruence_a, $helper_congruence_b]);
                     while($helper_congruence_a !== 0 && $a !== 0){
-                    if($helper_congruence_a > $a){
-                            $helper_congruence_a -= $a;
-                            $helper_congruence_b -= $b;
-                    }else{
-                            $a -= $helper_congruence_a;
-                            $b -= $helper_congruence_b;
-                    }
-                    array_push($return_array["steps"], [$a, $b, $modulo, $helper_congruence_a, $helper_congruence_b]);
+                        if($helper_congruence_a > $a){
+                                $helper_congruence_a -= $a;
+                                $helper_congruence_b -= $b;
+                        }else{
+                                $a -= $helper_congruence_a;
+                                $b -= $helper_congruence_b;
+                        }
+                        array_push($return_array["steps"], [$a, $b, $modulo, $helper_congruence_a, $helper_congruence_b]);
                     }
 
                     // Getting the solution

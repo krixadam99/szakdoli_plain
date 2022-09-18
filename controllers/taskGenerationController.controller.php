@@ -121,9 +121,9 @@
                     default:break;
                 };
             }elseif($_SESSION["subject"] == "ii"){
+                $dimat_ii_subtasks = new DimatiiSubtasks();
                 switch($main_task_index){
                     case "0":{
-                        $dimat_ii_subtasks = new DimatiiSubtasks();
                         switch($subtask_index){
                             case "0": $new_task = $dimat_ii_subtasks->CreateDivisionPairsSubtask($subtask_count);break;
                             case "1": $new_task = $dimat_ii_subtasks->CreatePrimeFactorizationSubtask($subtask_count); break;
@@ -133,13 +133,26 @@
                         }
                     }break;
                     case "1":{
-
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_subtasks->CreateCompleteResidueSystemSubtask($subtask_count);break;
+                            case "1": $new_task = $dimat_ii_subtasks->CreateReducedResidueSystemSubtask($subtask_count); break;
+                            case "2": $new_task = $dimat_ii_subtasks->CreateEulerPhiFunctionSubtask($subtask_count);break;
+                            default:break;
+                        }
                     }break;
                     case "2":{
-
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_subtasks->CreateEucleidanAlgorithmSubtask($subtask_count);break;
+                            case "1": ; break;
+                            default:break;
+                        }
                     }break;
                     case "3":{
-
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_subtasks->CreateLinearCongruenceSubtask($subtask_count);break;
+                            case "1": ; break;
+                            default:break;
+                        }
                     }break;
                     case "4":{
 

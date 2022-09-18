@@ -356,7 +356,7 @@ ul {
     margin: 2% 38% 2% 2%;
 }
 
-.stair_table tr, .residue_system_table tr, .prime_factorization_table tr {
+.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr {
     background-color:white;
 }
 
@@ -537,7 +537,7 @@ textarea {
     border: 1px solid black;
 }
 
-.prime_factorization_table {
+.prime_factorization_table, .eucleidan_solution_table {
     border-collapse: collapse;
 }
 
@@ -549,6 +549,10 @@ textarea {
 .prime_factorization_table td:last-of-type{
     padding-left: 2px;
     
+}
+
+.eucleidan_solution_table td {
+    width: 30px;
 }
 
 /*

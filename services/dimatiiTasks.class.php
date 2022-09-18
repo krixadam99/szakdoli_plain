@@ -135,25 +135,24 @@
             // 2 numbers for complete residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system size subtask (1 number/ subtask);
-            // 2 reduced residue system (2 rrs/ subtask).
-            $crs_numbers = [mt_rand(2,15)];
-            $rrs_numbers = [mt_rand(2,25)];
-            $rrs_size_numbers = $this->dimat_helper_functions->CreatePairsOfNumbers(1, 1000, 5000)[0];
+            $crs_numbers = $this->dimatii_subtasks->CreateCompleteResidueSystemSubtask(1,2,15);
+            $rrs_numbers = $this->dimatii_subtasks->CreateReducedResidueSystemSubtask(1,2,25);;
+            $rrs_size_numbers = $this->dimatii_subtasks->CreateEulerPhiFunctionSubtask(2);
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő maradékrendszerekkel kapcsolatos feladatokat!",
-                "crs_numbers" => $crs_numbers,
-                "rrs_numbers" => $rrs_numbers,
-                "rrs_size_numbers" => $rrs_size_numbers
+                "crs_numbers" => $crs_numbers["data"],
+                "rrs_numbers" => $rrs_numbers["data"],
+                "rrs_size_numbers" => $rrs_size_numbers["data"]
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "crs_systems" => $this->dimat_helper_functions->DetermineCompleteResidueSystem($crs_numbers[0]),
-                "rrs_systems" => $this->dimat_helper_functions->DetermineReducedResidueSystem($rrs_numbers[0]),
-                "rrs_size_numbers" => [$this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[0]), $this->dimat_helper_functions->DetermineEulerPhiValue($rrs_size_numbers[1])]
+                "crs_systems" => $crs_numbers["solution"][0],
+                "rrs_systems" => $rrs_numbers["solution"][0],
+                "rrs_size_numbers" => $rrs_size_numbers["solution"]
             ];
             $this->task_solutions = $solution_array;
         }
@@ -171,41 +170,28 @@
         private function CreateTaskThree(){
             // Task creation part:
             // 3 pairs of numbers for gcd (1 pair of numbers/ subtask);
-            $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers(3, 30, 200);
-            $step_counts = [];
+            $gcd_pairs = $this->dimatii_subtasks->CreateEucleidanAlgorithmSubtask(3, 30, 200);
             
-            $eucleidan_algorithm = [];
-            $gcd_array = [];
-            $lcm_array = [];
-            foreach($gcd_pairs as $index => $pair){
-                $algorithm = $this->dimat_helper_functions->DetermineGCDWithEucleidan($pair);
-                array_push($eucleidan_algorithm, $algorithm["steps"]);
-                array_push($gcd_array, $algorithm["solution"]); // We need the smaller number from the last step (it is the residue of the last but one step)
-                if($algorithm["solution"] !== 0){
-                    array_push($lcm_array, ($pair[0]*$pair[1])/$algorithm["solution"]);
-                }else{
-                    array_push($lcm_array, "inf");
-                }
-                array_push($step_counts, count($algorithm["steps"]));
-            }
-
             // 1 pair of numbers for extended eucleidan algorithm (1 pair of numbers/ subtask)
 
+            $step_counts = [];
+            foreach($gcd_pairs["solution"][0] as $pair_counter => $algorithm){
+                array_push($step_counts, count($algorithm));
+            }
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
-                "gcd_pairs" => $gcd_pairs,
-                "step_counts" => $step_counts,
-                "solution" => [$eucleidan_algorithm, $gcd_array, $lcm_array]
+                "gcd_pairs" => $gcd_pairs["data"],
+                "step_counts" => $step_counts
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "eucleidan_algorithm" => $eucleidan_algorithm,
-                "gcd" => $gcd_array,
-                "lcm" => $lcm_array
+                "eucleidan_algorithm" => $gcd_pairs["solution"][0],
+                "gcd" => $gcd_pairs["solution"][1],
+                "lcm" => $gcd_pairs["solution"][2] 
             ];
             $this->task_solutions = $solution_array;
         }
@@ -223,14 +209,7 @@
         private function CreateTaskFour(){
             // Task creation part:
             // 3 distinct triplets of numbers for linear congruences (1 triplet of numbers/ subtask).
-            $linear_congrences = $this->dimat_helper_functions->CreateSolvableLinearCongruences(3, true, -100, 100);
-            $linear_congrences_algorithm = [];
-            $solutions = [];
-            foreach($linear_congrences as $index => $triplet){
-                $algorithm = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($triplet);
-                array_push($linear_congrences_algorithm, $algorithm["steps"]);
-                array_push($solutions, $algorithm["solution"]);
-            }
+            $linear_congrences = $this->dimatii_subtasks->CreateLinearCongruenceSubtask(3);
 
             // 2 pairs of numbers for Euler-Fermat theorem (1 pair of numbers/ subtask).
 
@@ -239,14 +218,14 @@
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
-                "linear_congrences" => $linear_congrences,
+                "linear_congrences" => $linear_congrences["data"],
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "linear_congruences" => $linear_congrences_algorithm, 
-                "solutions" => $solutions,
+                "linear_congruences" => $linear_congrences["solution"][0], 
+                "solutions" => $linear_congrences["solution"][1],
             ];
             $this->task_solutions = $solution_array;
         }
