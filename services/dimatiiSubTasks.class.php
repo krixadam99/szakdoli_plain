@@ -585,23 +585,43 @@
                         $task_solution = $task_solution . "<div class=\"paragraph\"><b>2. lépés: 1. és 2. kongruencia egyesítése</b></div>";
                         $first_congruence = $steps[0];
                         $second_congruence = $steps[1];
+                        $bottom_index_c_first = "1";
+                        $bottom_index_c_second= "2";
+                        $modulo_bottom_index = "1,2";
                         $congruence_counter += 2;
                     }else{
                         $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $congruence_counter + 1 . ". lépés: 1. - $congruence_counter. és " .  $congruence_counter + 1  . ". kongruencia egyesítése:</b></div>";
                         $first_congruence = $steps[$number_of_congruences_per_system + $merged_counter];
                         $second_congruence = $steps[$congruence_counter];
+                        $bottom_index_c_first = "1," . $congruence_counter;
+                        $bottom_index_c_second= $congruence_counter + 1;
+                        $modulo_bottom_index = $bottom_index_c_first;
                         $congruence_counter++;
                         $merged_counter++;
                     }
+
                     $task_solution = $task_solution . "<div class=\"paragraph\">";
                     $task_solution = $task_solution . $this->CreateCongruenceText("x", $first_congruence) . "<br>";
                     $task_solution = $task_solution . $this->CreateCongruenceText("x", $second_congruence) . "<br>";
                     $task_solution = $task_solution . "</div>";
                     
+                    $bottom_index = $merged_counter + 1;
                     $diophantine_equation_solution = $detailed_steps[$coungruence_counter + $merged_counter];
-                    $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $merged_counter + 2 . ".1. lépés: az m<span class=\"bottom\">" . $merged_counter + 1 . ",1</span> * " .  $first_congruence[2] . " + m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></div>";
-                    $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("m<span class=\"bottom\">" . $merged_counter + 1 . ",1</span>", "m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]);
-                    $task_solution = $task_solution . $this->CreateCongruenceText("x", $steps[$number_of_congruences_per_system + $merged_counter]) . "<br>";
+                    $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $merged_counter + 2 . ".1. lépés: az m<span class=\"bottom\">" . $bottom_index . ",1</span> * " .  $first_congruence[2] . " + m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></div>";
+                    $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("m<span class=\"bottom\">" . $modulo_bottom_index . ",1</span>", "m<span class=\"bottom\">" . $modulo_bottom_index . ",2</span>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]);
+                
+                    $solution = $diophantine_equation_solution["solution"];
+                    $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $merged_counter + 2 . ".2. lépés: Új együtthatók megállapítása</b></div>";
+                    $task_solution = $task_solution . "<div class=\"paragraph\"><b>c<span class=\"bottom\">1, " . $bottom_index + 1 . "</span> =</b>"
+                    . "m<span class=\"bottom\">" . $modulo_bottom_index . ",1</span> * " . "m<span class=\"bottom\">" . $bottom_index_c_first . "</span> * " . "c<span class=\"bottom\">" . $bottom_index_c_second . "</span>" . " + "
+                    . "m<span class=\"bottom\">" . $modulo_bottom_index . ",2</span> * " . "m<span class=\"bottom\">" . $bottom_index_c_second . "</span> * " . "c<span class=\"bottom\">" . $bottom_index_c_first . "</span>"  .  " = "
+                    . "<b>" . $solution[0][1] . " * " . $first_congruence[2] . " * " . $second_congruence[1] . " + " . $solution[1][0] . " * " . $second_congruence[2] . " * " . $first_congruence[1] ." = "
+                    . $solution[0][1] * $first_congruence[2] * $second_congruence[1] + $solution[1][0] * $second_congruence[2] * $first_congruence[1]
+                    . "</b></div>";
+
+                    $task_solution = $task_solution . "<div class=\"paragraph\">";
+                    $task_solution = $task_solution . "<b>" . $this->CreateCongruenceText("x", $steps[$number_of_congruences_per_system + $merged_counter]) . "</b>";
+                    $task_solution = $task_solution . "</div>";
                 }
 
                 if($counter < $number_of_congruence_systems - 1){
