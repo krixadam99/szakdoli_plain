@@ -276,28 +276,21 @@
             // Task creation part:
             // 1 triplet of whole numbers that are at least 2 representing congruences for getting numbers that satisfy 2 simultaneous congruences (1 triplet of numbers/ subtask).
             // 1 triplet of whole numbers that are between -50 and 50 representing congruences for getting numbers that satisfy 4 simultaneous congruences (1 triplet of numbers/ subtask).
-            $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, 2, 1000);
-            while($this->dimat_helper_functions->DetermineGCDWithIteration([$divide_triplets[0][2],$divide_triplets[1][2]]) !== 1){
-                $divide_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, 2, 1000);
-            }
-            $first_divide_triplet = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($divide_triplets[0])["solution"];
-            $second_divide_triplet = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($divide_triplets[1])["solution"];
-
-            $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
+            $first_congruence_system_triplets = $this->dimatii_subtasks->CreateCRTNumberResiduesSubtask(1,2,100);
             $second_congruence_system_triplets = $this->dimatii_subtasks->CreateCRTSubtask(1, 4, -50, 50);
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
-                "divide_triplets" => $divide_triplets,
-                "first_congruence_system_triplets" => $first_congruence_system_triplets,
+                "divide_triplets" => $first_congruence_system_triplets["data"][0],
+                "first_congruence_system_triplets" => $first_congruence_system_triplets["data"][0],
                 "second_congruence_system_triplets" => $second_congruence_system_triplets["data"][0]
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "first_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($first_congruence_system_triplets),
+                "first_crt_solution" => $first_congruence_system_triplets["solution"][0],
                 "second_crt_solution" => $second_congruence_system_triplets["solution"][0],
             ];
             $this->task_solutions = $solution_array;
@@ -315,21 +308,19 @@
          */
         private function CreateTaskSeven(){
             // Creating 2 polynomials with degree of 2 and 4.
-            // Picking 2 and 4 wole numbers from the range of -20 and 20, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
+            // Picking 2 and 4 wole numbers from the range of -10 and 10, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
             $horner_schemes_first = $this->dimatii_subtasks->CreateHornerSchemeSubtask(2,-10,10);
-            
+           
+            // Creating 1 polynomial.
+            // Creating 1 input between -10 and 10.
+            $horner_schemes_second = $this->dimatii_subtasks->CreatePolynomialDivisionHornerSchemeSubtask(1,-10,10);
+
             // Task array declaration.
             $task_array = array(
                 "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
                 "polynomials" => $horner_schemes_first["data"],
-                "divide_polynomials" => []
+                "divide_polynomials" => $horner_schemes_second["data"][0]
             );
-
-            // Creating 1 polynomials with degree of 5.
-            // Creating 1 input between -20 and 20. Non of the has to be a root of the polynomial expression
-            [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression(5, -5, 5);
-            $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, -5, 5);
-            $task_array["divide_polynomials"] = [5, $polynomial_expression, $places];
 
             // Adding data to the task array.
             $this->task_description = $task_array;
@@ -338,7 +329,7 @@
             $solution_array = [
                 "first_horner_scheme" => $horner_schemes_first["solution"][0],
                 "second_horner_scheme" => $horner_schemes_first["solution"][1],
-                "third_horner_scheme" => [$task_array["divide_polynomials"][2], $this->dimat_helper_functions->DetermineHornerSchemes($task_array["divide_polynomials"][1], $task_array["divide_polynomials"][2])],
+                "third_horner_scheme" => [$horner_schemes_second["data"][0][2], $horner_schemes_second["solution"][0]],
             ];
             $this->task_solutions = $solution_array;
         }
