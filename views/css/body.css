@@ -561,6 +561,10 @@ textarea {
     border-bottom: 1px solid black;
 }
 
+.paragraph{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
 
 /*
 @media print {

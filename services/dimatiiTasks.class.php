@@ -284,21 +284,21 @@
             $second_divide_triplet = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($divide_triplets[1])["solution"];
 
             $first_congruence_system_triplets = [$first_divide_triplet, $second_divide_triplet];
-            $second_congruence_system_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT(4, -50, 50);
+            $second_congruence_system_triplets = $this->dimatii_subtasks->CreateCRTSubtask(1, 4, -50, 50);
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
                 "divide_triplets" => $divide_triplets,
                 "first_congruence_system_triplets" => $first_congruence_system_triplets,
-                "second_congruence_system_triplets" => $second_congruence_system_triplets
+                "second_congruence_system_triplets" => $second_congruence_system_triplets["data"][0]
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
                 "first_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($first_congruence_system_triplets),
-                "second_crt_solution" => $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($second_congruence_system_triplets),
+                "second_crt_solution" => $second_congruence_system_triplets["solution"][0],
             ];
             $this->task_solutions = $solution_array;
         }

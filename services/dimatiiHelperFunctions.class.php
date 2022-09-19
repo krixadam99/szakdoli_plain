@@ -825,20 +825,24 @@
          * @return array Returns an array containing each step and the solution of the algorithm.
          */
         public function DetermineLinearCongruenceSystemSolution($congruences){
-            $return_array = array("steps" => [], "solution" => []);
+            $return_array = array("steps" => [], "solution" => [], "detailed_steps" => []);
             $simplified_congruences = [];
             foreach($congruences as $index => $congruence){
-                array_push($simplified_congruences, $this->DetermineLinearCongruenceSolution($congruence)["solution"]);
+                $liner_congruence_solution = $this->DetermineLinearCongruenceSolutionSmart($congruence);
+                array_push($simplified_congruences, $liner_congruence_solution["solution"]);
+                array_push($return_array["detailed_steps"], $liner_congruence_solution["steps"]);
             }
             $return_array["steps"] = array_merge($return_array["steps"], $simplified_congruences);
 
             $merged_solution = $this->DetermineMergedSolutionForCongruencies($simplified_congruences[0], $simplified_congruences[1]);
-            array_push($return_array["steps"], $merged_solution);
+            array_push($return_array["detailed_steps"], $merged_solution["diophantine_solution"]);
+            array_push($return_array["steps"], $merged_solution["solution"]);
             for($counter = 2; $counter < count($simplified_congruences); $counter++){
-                $merged_solution = $this->DetermineMergedSolutionForCongruencies($merged_solution, $simplified_congruences[$counter]);
-                array_push($return_array["steps"], $merged_solution);
+                $merged_solution = $this->DetermineMergedSolutionForCongruencies($merged_solution["solution"], $simplified_congruences[$counter]);
+                array_push($return_array["steps"], $merged_solution["solution"]);
+                array_push($return_array["detailed_steps"], $merged_solution["diophantine_solution"]);
             }
-            $return_array["solution"] = $merged_solution;
+            $return_array["solution"] = $merged_solution["solution"];
             
             return $return_array;
         }
@@ -1199,14 +1203,15 @@
          * @param array $first_congruence A triplet representing a linear congruence in the form of [coefficient of x, right side of congruence, modulo].
          * @param array $second_congruence A triplet representing a linear congruence in the form of [coefficient of x, right side of congruence, modulo].
          * 
-         * @return array Returns a merged linear congruence for the given linear congruences.
+         * @return array Returns a merged linear congruence for the given linear congruences and the required steps.
          */
         private function DetermineMergedSolutionForCongruencies($first_congruence, $second_congruence){
             [$a_1, $c_1, $m_1] = $first_congruence;
             [$a_2, $c_2, $m_2] = $second_congruence;
             
             // Diophantine equation: $m_1*x + $m_2*y = 1
-            [$solution_x, $solution_y] = $this->DetermineDiophantineEquationSolution([$m_1, $m_2, 1]);
+            $diophantine_equation_solution = $this->DetermineDiophantineEquationSolution([$m_1, $m_2, 1]);
+            [$solution_x, $solution_y] = $diophantine_equation_solution["solution"];
 
             // Where all the xs = $solution_x[1] + $solution_x[2]*k (k any integer) and ys= $solution_y[0] + $solution_y[1]*k (k the same integer used for the xs)
             $basic_solution_x = $solution_x[1];
@@ -1224,7 +1229,7 @@
                 }
             }
 
-            return [1, $c_12, $m_12];
+            return array("solution" => [1, $c_12, $m_12], "diophantine_solution" => $diophantine_equation_solution);
         }
 
         /**

@@ -425,7 +425,7 @@
                     }
                 }
                 
-                $task_solution =  $task_solution . $this->CreateModuloEquivalence($final_b, $final_modulo, "Végeredmény:");
+                $task_solution =  $task_solution . $this->CreateModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:");
 
 
                 if($index !== count($triplets) - 1){
@@ -438,7 +438,7 @@
         }
 
         /**
-         * This public method will create triplets of numbers, solution, task and solution texts for the first subtask of the fourth task of Discrete Mathematics II.
+         * This public method will create triplets of numbers, solution, task and solution texts for the first subtask of the fifth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution of diophantine equations.
          * 
@@ -472,7 +472,7 @@
                 $solution = $diophantine_solutions[$index];
                 
                 $task_description = $task_description . "<label class=\"task_description\"> Add meg a " . $diophantine_equation[0] . " * x " . $this->PlusMinus($diophantine_equation[1]) . abs($diophantine_equation[1]) . " * y = " . $diophantine_equation[2] . " lineáris diofantikus egyenlet megoldását!</label>";
-                $task_solution = $task_solution . $this->CreateDiophantineSolutionText($diophantine_equation, $steps, $solution);
+                $task_solution = $task_solution . $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
 
                 if($index !== count($triplets) - 1){
                     $task_description = $task_description . "\n";
@@ -484,7 +484,7 @@
         }
 
         /**
-         * This public method will create triplets of numbers, solution, task and solution texts for the second subtask of the fourth task of Discrete Mathematics II.
+         * This public method will create triplets of numbers, solution, task and solution texts for the second subtask of the fifth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for a number division, where the numbers have conditions dividorwise.
          * 
@@ -530,7 +530,7 @@
                 $steps = $diophantine_algorithm[$index];
                 $solution = $diophantine_solutions[$index];
                 $task_description = $task_description . "<label class=\"task_description\"> Bontsd fel a " . $diophantine_equation[2] . " számot úgy két szám összegére, hogy az egyik osztható " . $diophantine_equation[0] . " , a másik pedig a " . $diophantine_equation[1] . " számmal!</label>";
-                $task_solution = $task_solution .  $this->CreateDiophantineSolutionText($diophantine_equation, $steps, $solution);
+                $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
                 $task_solution = $task_solution . "Az első szám így: x * " .  $diophantine_equation[0]  .  ", a második szám pedig: y * " .  $diophantine_equation[1] . " (például:" . $diophantine_equation[0]*$solution[0][1] . " és " . $diophantine_equation[1]*$solution[1][0] . ")<br>";
                 
                 if($index !== count($triplets) - 1){
@@ -542,15 +542,84 @@
             return array("data" => $diophantine_equations , "task_text" => $task_description, "solution" => $diophantine_solutions, "solution_text" => $task_solution);
         }
 
+        /**
+         * This public method will create linear congruence systems, solution, task and solution texts for the first subtask of the sixth task of Discrete Mathematics II.
+         * 
+         * The subtask is about giving the solution for congruence systems.
+         * 
+         * @param int $number_of_congruence_systems The number of congruence systems which is a positive whole number. The default value is 1.
+         * @param int $number_of_congruences_per_system The number of congruences per system which is a positive whole number. The default value is 3.
+         * @param int $lower The lower bound of the range from which the triplets representing congruences will be picked randomly. The default value is -50.
+         * @param int $upper The upper bound of the range from which the triplets representing congruences will be picked randomly. The default value is 50.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateCRTSubtask($number_of_congruence_systems = 1, $number_of_congruences_per_system = 3, $lower = -50, $upper = 50){
+            $congruence_systems = [];
+            $solutions = [];
+            $task_solution = "";
+            $task_description = "";
 
+            for($counter = 0; $counter < $number_of_congruence_systems; $counter++){
+                $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
+                while(in_array($new_congruence_system, $congruence_systems)){
+                    $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
+                }
+                array_push($congruence_systems, $new_congruence_system);
+                
+                $actual_solution = $this->dimat_helper_functions->DetermineLinearCongruenceSystemSolution($new_congruence_system);
+                array_push($solutions, $actual_solution);
+                $steps = $actual_solution["steps"];
+                $detailed_steps = $actual_solution["detailed_steps"];
+                
+                $task_description = $task_description . "<label class=\"task_description\"> Add meg a következő lineáris kongruenciarendszer megoldását!</label><br>";
+                $task_solution = $task_solution . "<b>1. lépés: lineáris kongruenciák egyszerűsítése</b><br>";
+                for($coungruence_counter = 0; $coungruence_counter < count($new_congruence_system); $coungruence_counter++){
+                    $task_description = $task_description . "<label class=\"task_description\">" . $this->CreateCongruenceText("x", $new_congruence_system[$coungruence_counter]) . "</label><br>";
+                    $task_solution = $task_solution . $coungruence_counter + 1 . ". lineáris kongruencia megoldása:<br>" . $this->CreateCongruenceSolutionText("x", $detailed_steps[$coungruence_counter]) . "<br>";
+                }
+
+                $merged_counter = 0;
+                for($congruence_counter = 0; $congruence_counter < $number_of_congruences_per_system;){
+                    if($congruence_counter === 0){
+                        $task_solution = $task_solution . "<div class=\"paragraph\"><b>2. lépés: 1. és 2. kongruencia egyesítése</b></div>";
+                        $first_congruence = $steps[0];
+                        $second_congruence = $steps[1];
+                        $congruence_counter += 2;
+                    }else{
+                        $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $congruence_counter + 1 . ". lépés: 1. - $congruence_counter. és " .  $congruence_counter + 1  . ". kongruencia egyesítése:</b></div>";
+                        $first_congruence = $steps[$number_of_congruences_per_system + $merged_counter];
+                        $second_congruence = $steps[$congruence_counter];
+                        $congruence_counter++;
+                        $merged_counter++;
+                    }
+                    $task_solution = $task_solution . "<div class=\"paragraph\">";
+                    $task_solution = $task_solution . $this->CreateCongruenceText("x", $first_congruence) . "<br>";
+                    $task_solution = $task_solution . $this->CreateCongruenceText("x", $second_congruence) . "<br>";
+                    $task_solution = $task_solution . "</div>";
+                    
+                    $diophantine_equation_solution = $detailed_steps[$coungruence_counter + $merged_counter];
+                    $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $merged_counter + 2 . ".1. lépés: az m<span class=\"bottom\">" . $merged_counter + 1 . ",1</span> * " .  $first_congruence[2] . " + m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></div>";
+                    $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("m<span class=\"bottom\">" . $merged_counter + 1 . ",1</span>", "m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]);
+                    $task_solution = $task_solution . $this->CreateCongruenceText("x", $steps[$number_of_congruences_per_system + $merged_counter]) . "<br>";
+                }
+
+                if($counter < $number_of_congruence_systems - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $congruence_systems , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
 
         /**
          * This private method append a congruence equivalence to the end of a text.
          */
-        private function CreateModuloEquivalence($final_b, $final_modulo, $text){
-            return "<label class=\"task_solution\">$text" . " x \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
-                                . $final_modulo . "\u{2223}  x" . $this->PlusMinus($final_b) . abs($final_b) . " \u{2194} "
-                                . "<b>x = " . $final_b . $this->PlusMinus($final_modulo) . abs($final_modulo) . "*k (k \u{2208} \u{2124})</b></label><br>";
+        private function CreateModuloEquivalence($variable_name, $final_b, $final_modulo, $text){
+            return "<label class=\"task_solution\">$text" . " $variable_name \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
+                                . $final_modulo . "\u{2223}  $variable_name" . $this->PlusMinus($final_b) . abs($final_b) . " \u{2194} "
+                                . "<b>$variable_name = " . $final_b . $this->PlusMinus($final_modulo) . abs($final_modulo) . "*k (k \u{2208} \u{2124})</b></label><br>";
         }
 
         /**
@@ -563,10 +632,17 @@
         /**
          * 
          */
-        private function CreateCongruenceSolutionText($congruence_steps){
+        private function CreateCongruenceText($variable_name = "x", $congruence){
+            return  $congruence[0] . "*$variable_name \u{2261} " . $congruence[1] . " (mod " .  $congruence[2] . ")";
+        }
+
+        /**
+         * 
+         */
+        private function CreateCongruenceSolutionText($variable_name = "x", $congruence_steps){
             $task_solution = "";
             foreach($congruence_steps as $step_counter => $step){
-                $task_solution = $task_solution . "<label class=\"task_solution\">" . $step[0] . "*x \u{2261} " . $step[1] . " (mod" .  $step[2] . ")</label><br>";
+                $task_solution = $task_solution . "<label class=\"task_solution\">" . $step[0] . "*$variable_name \u{2261} " . $step[1] . " (mod " .  $step[2] . ")</label><br>";
             }
             return $task_solution;
         }
@@ -574,19 +650,19 @@
         /**
          * This private method creates the solution text for diophantine equations.
          */
-        private function CreateDiophantineSolutionText($diophantine_equation, $steps, $solution){
+        private function CreateDiophantineSolutionText($first_variable_name = "x", $second_variable_name = "y", $diophantine_equation, $steps, $solution){
             $task_solution = "";
             
             $y_coef_sign = $this->PlusMinus($diophantine_equation[1]);
             $x_coef_sign = $this->PlusMinus(-1*$diophantine_equation[0]);
             $diophantine_equation[1] = abs($diophantine_equation[1]);
-            $task_solution = $task_solution . "<label class=\"task_solution\">" . $diophantine_equation[0] . "*x " . $this->PlusMinus($diophantine_equation[1]) . $diophantine_equation[1] . "*y = " . $diophantine_equation[2] . " | -1*" . $diophantine_equation[1] . "*y \u{2192} <br>" 
-                . "<label class=\"task_solution\">" . $diophantine_equation[0] . "*x = "  . $diophantine_equation[2] . $this->PlusMinus(-1*$diophantine_equation[1]) . $diophantine_equation[1] . "*y " . " | (mod" . $diophantine_equation[1] . ") \u{2192} <br>";
-            $task_solution = $task_solution . $this->CreateCongruenceSolutionText($steps);
-            $task_solution = $task_solution . $this->CreateModuloEquivalence($solution[0][1], $solution[0][2], "");
-            $task_solution = $task_solution . "<label class=\"task_solution\"><b>y=</b>(" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . "*x)/(" . $diophantine_equation[1] . ")"  . "</label>" 
-            . "<label class=\"task_solution\"> = (" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . " * (" . $solution[0][1] . $this->PlusMinus($solution[0][2]) .  abs($solution[0][2])  . "*k))/(" . $diophantine_equation[1] . ")"  . "</label>"
-            . "<label class=\"task_solution\"> =<b>" .  $solution[1][0] . $this->PlusMinus($solution[1][1]) .  abs($solution[1][1])  . "*k (k \u{2208} \u{2124})</b></label><br>";
+            $task_solution = $task_solution . "<div class=\"paragraph\">" . $diophantine_equation[0] . "*$first_variable_name" . $this->PlusMinus($diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name = " . $diophantine_equation[2] . " | -1*" . $diophantine_equation[1] . "*$second_variable_name \u{2194} <br>" 
+                . $diophantine_equation[0] . "*$first_variable_name = "  . $diophantine_equation[2] . $this->PlusMinus(-1*$diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name " . " | (mod" . $diophantine_equation[1] . ") \u{2192} <br>";
+            $task_solution = $task_solution . $this->CreateCongruenceSolutionText($first_variable_name, $steps);
+            $task_solution = $task_solution . $this->CreateModuloEquivalence($first_variable_name, $solution[0][1], $solution[0][2], "");
+            $task_solution = $task_solution . "<b>$second_variable_name=</b>(" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . "*$first_variable_name)/(" . $diophantine_equation[1] . ")"
+            . " = (" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . " * (" . $solution[0][1] . $this->PlusMinus($solution[0][2]) .  abs($solution[0][2])  . "*k))/(" . $diophantine_equation[1] . ")"
+            . " =<b>" .  $solution[1][0] . $this->PlusMinus($solution[1][1]) .  abs($solution[1][1])  . "*k (k \u{2208} \u{2124})</b></div>";
             
             return $task_solution;
         }
