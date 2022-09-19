@@ -635,15 +635,7 @@
                     // We have to choose the congruence with non-zero left side coefficient
                     if($helper_congruence_a === 0){
                         // Simplify the right side coefficient in the congruence where the left side coefficient is zero
-                        if($helper_congruence_b < 0){
-                            while($helper_congruence_b - $modulo >= 0){
-                                $helper_congruence_b -= $modulo;
-                            }
-                        }else{
-                            while($helper_congruence_b + $modulo <= 0){
-                                $helper_congruence_b += $modulo;
-                            }
-                        }
+                        $helper_congruence_b = $this->MinimizeCongruenceResidue($helper_congruence_b, $modulo);
 
                         if($helper_congruence_b !== 0){
                             $return_array["solution"] = "NINCSEN";
@@ -659,29 +651,13 @@
                             }
 
                             // Minimize the right side coefficient in the solution
-                            if($b >= 0){
-                                while($b - $modulo >= 0){
-                                    $b -= $modulo;
-                                }
-                            }else{
-                                while($b <= 0){
-                                    $b += $modulo;
-                                }
-                            }
+                            $b = $this->MinimizeCongruenceResidue($b, $modulo);
 
                             $return_array["solution"] = [$a,$b,$modulo];
                         }
                     }else{
                         // Simplify the right side coefficient in the congruence where the left side coefficient is zero
-                        if($b >= 0){
-                            while($b - $modulo >= 0){
-                                $b -= $modulo;
-                            }
-                        }else{
-                            while($b + $modulo <= 0){
-                                $b += $modulo;
-                            }
-                        }
+                        $b = $this->MinimizeCongruenceResidue($b, $modulo);
 
                         if($b !== 0){
                             $return_array["solution"] = "NINCSEN";
@@ -695,19 +671,98 @@
                             $helper_congruence_a = 1;
 
                             // Minimize the right side coefficient in the solution
-                            if($helper_congruence_b >= 0){
-                                while($helper_congruence_b - $modulo >= 0){
-                                    $helper_congruence_b -= $modulo;
-                                }
-                            }else{
-                                while($helper_congruence_b <= 0){
-                                    $helper_congruence_b += $modulo;
-                                }
-                            }
+                            $helper_congruence_b = $this->MinimizeCongruenceResidue($helper_congruence_b, $modulo);
 
                             $return_array["solution"] = [$helper_congruence_a, $helper_congruence_b, $modulo];
                         }
                     }
+                }else{
+                    $return_array["solution"] = "NINCSEN";
+                }
+            }else{
+                $return_array["solution"] = [0,$b,$modulo];
+            }
+            
+
+            return $return_array;
+        }
+
+         /**
+         * This method uses an alternative linear congruence solver algorithm to give the final congruence for a given linear congruence.
+         * 
+         * @param array $triplet The triplet for which the method will determine the linear congruence and algorithm steps.
+         * 
+         * @return array Returns an associative array containing each step of the algorithm in the form of [first operand, second operand, modulo] and the solution.
+         */
+        public function DetermineLinearCongruenceSolutionSmart($triplet){
+            $return_array = array("steps" => [], "solution" => []);
+            
+            $a = $triplet[0];
+            $b = $triplet[1];
+            $modulo = abs($triplet[2]); // $c can be negative and positive, the congruence means the same
+            
+            // Make $a and $b coefficients positive
+            while($a < 0){
+                $a += $modulo;
+            } 
+            while($b < 0){
+                $b += $modulo;
+            }
+
+            if($a !== 0){
+                // Check if congruence is solvable
+                $gcd_ac = $this->DetermineGCDWithIteration([$a, $modulo]);
+                if($b % $gcd_ac === 0){
+                    if($a !==  $triplet[0] || $b !== $triplet[1]){
+                        array_push($return_array["steps"], [$a, $b, $modulo]);
+                    }
+                    
+                    // Divide every coefficient and the modulo with the greatest common divisor of the non-modulo coefficients 
+                    [$prev_a, $prev_b, $prev_modulo] = [$a, $b, $modulo];
+                    [$a, $b, $modulo] = $this->SimplifyLinearCongruence($a,$b,$modulo);
+                    if($a !==  $prev_a || $b !== $prev_b || $modulo !== $prev_modulo){
+                        array_push($return_array["steps"], [$a, $b, $modulo]);
+                    }
+
+                    // In every turn, the product of a multiplier and the modulo will be added to the right side of the congruence (not the coefficient of the variable)
+                    // The multiplier will have the smallest possible absolute value, additionally the multiplier*modulo + non-variable coefficient should be non-relatively prime to the variable's coefficient (so that we can divide with the gcd of these two).
+                    array_push($return_array["steps"], [$a, $b, $modulo]);
+                    while($b % $a !== 0){
+                        $multiplier = 1;
+                        $first_new_b = $b + $multiplier*$modulo;
+                        $second_new_b = $b - $multiplier*$modulo;
+                        $positive_relatively_prime = $this->DetermineGCDWithIteration([$first_new_b,$a]) === 1;
+                        $negative_relatively_prime = $this->DetermineGCDWithIteration([$second_new_b,$a]) === 1;
+                        while($positive_relatively_prime && $negative_relatively_prime){
+                            $multiplier++;
+                            $first_new_b = $b + $multiplier*$modulo;
+                            $second_new_b = $b - $multiplier*$modulo;
+                            $positive_relatively_prime = $this->DetermineGCDWithIteration([$first_new_b,$a]) === 1;
+                            $negative_relatively_prime = $this->DetermineGCDWithIteration([$second_new_b,$a]) === 1;
+                        }
+
+                        if($negative_relatively_prime ){
+                            $b += $multiplier*$modulo;
+                        }else{
+                            $b -= $multiplier*$modulo;
+                        }
+                        array_push($return_array["steps"], [$a, $b, $modulo]);
+
+                        [$prev_a, $prev_b, $prev_modulo] = [$a, $b, $modulo];
+                        [$a, $b, $modulo] = $this->SimplifyLinearCongruence($a,$b,$modulo);
+                        if($a !==  $prev_a || $b !== $prev_b || $modulo !== $prev_modulo){
+                            array_push($return_array["steps"], [$a, $b, $modulo]);
+                        }
+                    }
+                    
+                    [$prev_a, $prev_b, $prev_modulo] = [$a, $b, $modulo];
+                    [$a, $b, $modulo] = $this->SimplifyLinearCongruence($a,$b,$modulo);
+                    $b = $this->MinimizeCongruenceResidue($b, $modulo);
+                    if($a !==  $prev_a || $b !== $prev_b || $modulo !== $prev_modulo){
+                        array_push($return_array["steps"], [$a, $b, $modulo]);
+                    }
+
+                    $return_array["solution"] = [$a, $b, $modulo];
                 }else{
                     $return_array["solution"] = "NINCSEN";
                 }
@@ -727,7 +782,7 @@
          * @return array Returns an array containing the solution of the algorithm.
          */
         public function DetermineDiophantineEquationSolution($triplet){
-            $return_array = [];
+            $return_array = array("steps" => [], "solution" => []);
             $a = $triplet[0];
             $b = $triplet[1];
             $c = $triplet[2];
@@ -741,19 +796,20 @@
             // x \equiv $d (mod $e)
             // x - $d = $e * k (k \in \doubleZ)
             // x = $e * k + $d (k \in \doubleZ)
-            $first_congruence_solution = $this->DetermineLinearCongruenceSolution($congruence);
+            $first_congruence_solution = $this->DetermineLinearCongruenceSolutionSmart($congruence);
+            $return_array["steps"] = $first_congruence_solution["steps"];
             $x_solution = $first_congruence_solution["solution"];
             $d = $x_solution[1];
             $e = $x_solution[2];
             if($x_solution !== "NINCSEN"){
-                array_push($return_array, $x_solution);
+                array_push($return_array["solution"], $x_solution);
 
                 // y = ($c - $a * x) / $b
                 // x = $e * k + $d (k \in \doubleZ)
                 // y = ($c - $a * $e * k - $a * $d) / $b
-                array_push($return_array, [($c - $a*$d)/$b, ($a*$e)/$b]);
+                array_push($return_array["solution"], [($c - $a*$d)/$b, ($a*$e)/$b]);
             }else{
-                array_push($return_array, ["NINCSEN"]);
+                array_push($return_array["solution"], ["NINCSEN"]);
             }
             return $return_array;
         }
@@ -1098,6 +1154,42 @@
                 }
             }
             return true;
+        }
+
+        /**
+         * 
+         */
+        private function SimplifyLinearCongruence($a, $b, $modulo){
+            $new_a = $a;
+            $new_b = $b;
+            $new_modulo = $modulo;
+
+            $gcd_ab = $this->DetermineGCDWithIteration([$a, $b]);
+            if($gcd_ab !== 0){
+                $new_a = $a / $gcd_ab;
+                $new_b = $b / $gcd_ab; 
+                $new_modulo = $modulo / $this->DetermineGCDWithIteration([$gcd_ab, $modulo]); 
+            }
+
+            return [$new_a,$new_b,$new_modulo];
+        }
+
+        /**
+         * 
+         */
+        private function MinimizeCongruenceResidue($residue, $modulo){
+            if($modulo > 0){
+                if($residue >= 0){
+                    while($residue - $modulo >= 0){
+                        $residue -= $modulo;
+                    }
+                }else{
+                    while($residue + $modulo <= 0){
+                        $residue += $modulo;
+                    }
+                }
+            }
+            return $residue;
         }
 
         /**

@@ -244,47 +244,20 @@
             // Task creation part:
             // 1 triplet of numbers of whole numbers at least 2 for artitioning a number into smaller numbers (1 triplet of numbers/ subtask).
             // 2 triplet of numbers of whole numbers between -50 and 50 representing congruences, that are solvable (1 triplet of numbers/ subtask).
-            $congruency_triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences(2, true, -50, 50); // ax \equiv b (mod c)
-            
-            // Divide b into two numbers, so that the first is divisable by a, and the second is divisible by c
-            // ax + cy = b
-            // Let b between 100-1000
-            // Let a and c be strictly smaller than b
-            $b = mt_rand(100,1000);
-            $c = mt_rand(2,1000);
-            $a = mt_rand(2,1000);
-            while($a > $b 
-                || $c > $b 
-                || $a === $c 
-                || $b % $this->dimat_helper_functions->DetermineGCDWithIteration([$a,$c]) !== 0){
-                $c = mt_rand(100,1000);
-                $a = mt_rand(100,1000);
-            }
-            // $ax \equiv $b (mod $c) => $a*x + $c*y = $b
-            array_push($congruency_triplets, [$a,$b,$c]);
-
-            $diophantine_algorithm = [];
-            $diophantine_equation = [];
-            foreach($congruency_triplets as $equation_counter => $triplet){
-                // Triplet in the form of $triplet[0]*x \equiv $triplet[1] (mod $triplet[2]) -> $triplet[0]*x - $triplet[1] = $triplet[2]*y
-                // Equation in the form of $triplet[0]*x + $triplet[2]*y = $triplet[1]
-                $actual_diophantine_equation = [$triplet[0], $triplet[2], $triplet[1]];
-                $algorithm_steps = $this->dimat_helper_functions->DetermineDiophantineEquationSolution($actual_diophantine_equation);
-                array_push($diophantine_algorithm, $algorithm_steps);
-                array_push($diophantine_equation, $actual_diophantine_equation);
-            }
+            $diophantine_equations = $this->dimatii_subtasks->CreateDiophantineEquationSubtask(2, -50, 50); // ax \equiv b (mod c)
+            $third_subtask = $this->dimatii_subtasks->CreateNumberDivisionWithConditionsSubtask(1);
 
             // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő diofantoszi egyenletekkel kapcsolatos feladatokat!",
-                "diophantine_equations" => [$diophantine_equation[0], $diophantine_equation[1]],
-                "partition_number" => $diophantine_equation[2]
+                "diophantine_equations" => $diophantine_equations["data"],
+                "partition_number" => $third_subtask["data"][0]
             );
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "diophantine_equations" => $diophantine_algorithm,
+                "diophantine_equations" => $diophantine_equations["solution"],
             ];
             $this->task_solutions = $solution_array;
         }

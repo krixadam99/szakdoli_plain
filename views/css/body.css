@@ -541,7 +541,7 @@ textarea {
     border-collapse: collapse;
 }
 
-.prime_factorization_table td:first-of-type{
+.prime_factorization_table td:first-of-type, .eucleidan_solution_table td:first-of-type{
     border-right: 1px solid black;
     padding-right: 10px;
 }
@@ -553,7 +553,14 @@ textarea {
 
 .eucleidan_solution_table td {
     width: 30px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
+
+.eucleidan_solution_table tr:first-of-type {
+    border-bottom: 1px solid black;
+}
+
 
 /*
 @media print {
