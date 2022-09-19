@@ -164,7 +164,7 @@
                     case "5":{
                         switch($subtask_index){
                             case "0": $new_task = $dimat_ii_subtasks->CreateCRTSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreateNumberDivisionWithConditionsSubtask($subtask_count); break;
+                            case "1": $new_task = $dimat_ii_subtasks->CreateCRTNumberResiduesSubtask($subtask_count); break;
                             default:break;
                         }
                     }break;
