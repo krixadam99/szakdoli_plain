@@ -159,3 +159,5 @@ if(save_pdf_button){
         new_window.close();
     })
 }
+
+//let timer = setInterval(function(){window.location = window.location},1000);

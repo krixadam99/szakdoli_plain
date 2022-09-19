@@ -314,21 +314,16 @@
          * @return void
          */
         private function CreateTaskSeven(){
+            // Creating 2 polynomials with degree of 2 and 4.
+            // Picking 2 and 4 wole numbers from the range of -20 and 20, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
+            $horner_schemes_first = $this->dimatii_subtasks->CreateHornerSchemeSubtask(2,-10,10);
+            
             // Task array declaration.
             $task_array = array(
                 "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
-                "polynomials" => [],
+                "polynomials" => $horner_schemes_first["data"],
                 "divide_polynomials" => []
             );
-            
-            // Creating 2 polynomials with degree of 2 and 4.
-            // Picking 2 and 4 wole numbers from the range of -20 and 20, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
-            for($counter = 0; $counter < 2; $counter++){
-                $polynomial_degree = 2*$counter + 2;
-                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-                $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots, -20, 20);
-                array_push($task_array["polynomials"], [$polynomial_degree, $polynomial_expression, $places]);
-            }
 
             // Creating 1 polynomials with degree of 5.
             // Creating 1 input between -20 and 20. Non of the has to be a root of the polynomial expression
@@ -341,8 +336,8 @@
 
             //Solutions part:
             $solution_array = [
-                "first_horner_scheme" => $this->dimat_helper_functions->DetermineHornerSchemes($task_array["polynomials"][0][1], $task_array["polynomials"][0][2]),
-                "second_horner_scheme" => $this->dimat_helper_functions->DetermineHornerSchemes($task_array["polynomials"][1][1], $task_array["polynomials"][1][2]),
+                "first_horner_scheme" => $horner_schemes_first["solution"][0],
+                "second_horner_scheme" => $horner_schemes_first["solution"][1],
                 "third_horner_scheme" => [$task_array["divide_polynomials"][2], $this->dimat_helper_functions->DetermineHornerSchemes($task_array["divide_polynomials"][1], $task_array["divide_polynomials"][2])],
             ];
             $this->task_solutions = $solution_array;

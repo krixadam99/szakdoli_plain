@@ -636,6 +636,133 @@
         }
 
         /**
+         * This public method will create polynomials and places, solution, task and solution texts for the first subtask of the seventh task of Discrete Mathematics II.
+         * 
+         * The subtask is about giving the Horner-scheme for polynomials with places.
+         * 
+         * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
+         * @param int $lower The lower bound of the range from which the places will be picked randomly. The default value is -10.
+         * @param int $upper The upper bound of the range from which the places will be picked randomly. The default value is 10.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+            $tasks = [];
+            $polynomials = [];
+            $places = [];
+            $solutions = [];
+            $task_solution = "";
+            $task_description = "";
+
+            for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
+                // Creating $number_of_polynomials polynomials with degree between 2 and 5.
+                // Picking 2-5 (same as degree) wole numbers from the range of -20 and 20, where degree - 2 needs to be actual roots of the first and second polynomial expressions respectively.
+                $polynomial_degree = mt_rand(2,5);
+                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                while(in_array($polynomial_expression, $polynomials)){
+                    [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                }
+                $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots, -20, 20);
+                array_push($tasks, [$polynomial_degree, $polynomial_expression, $places]);
+                array_push($polynomials, $polynomial_expression);
+
+                $horner_schemes = $this->dimat_helper_functions->DetermineHornerSchemes($polynomial_expression, $places);
+                array_push($solutions,$horner_schemes);
+                $texts = $this->CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes);
+                $task_description = $task_description . $texts["task_description"];
+                $task_solution = $task_solution . $texts["task_solution"];
+
+
+                if($polynomial_counter < $number_of_polynomials - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+
+        /**
+         * This public method will create polynomials and a plave, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * 
+         * The subtask is determining the polynomial division (where the divisor is a first degree polynomial expression) with the help of the Horner- scheme.
+         * 
+         * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
+         * @param int $lower The lower bound of the range from which the places will be picked randomly. The default value is -10.
+         * @param int $upper The upper bound of the range from which the places will be picked randomly. The default value is 10.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreatePolynomialDivisionHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+            $tasks = [];
+            $polynomials = [];
+            $places = [];
+            $solutions = [];
+            $task_solution = "";
+            $task_description = "";
+
+            for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
+                // Creating $number_of_polynomials polynomials with degree between 2 and 5.
+                // Picking 2-5 (same as degree) wole numbers from the range of -20 and 20, where degree - 2 needs to be actual roots of the first and second polynomial expressions respectively.
+                $polynomial_degree = mt_rand(2,5);
+                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                while(in_array($polynomial_expression, $polynomials)){
+                    [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                }
+                $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, $lower, $upper);
+                array_push($tasks, [$polynomial_degree, $polynomial_expression, $places]);
+                array_push($polynomials, $polynomial_expression);
+
+                $horner_schemes = $this->dimat_helper_functions->DetermineHornerSchemes($polynomial_expression, $places);
+                array_push($solutions,$horner_schemes);
+                $texts = $this->CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes);
+                $task_solution = $task_solution . $texts["task_solution"];
+                
+                $task_description = $task_description . "Add meg a ";
+                $degree = count($polynomial_expression) - 1;
+                foreach($polynomial_expression as $coefficient_counter => $coefficient){
+                    if($coefficient != 0){
+                        if($coefficient_counter !== 0){
+                            $task_description = $task_description . $this->PlusMinus($coefficient) . abs($coefficient);
+                        }else{
+                            $task_description = $task_description . $coefficient;
+                        }
+                    }
+                    $task_description = $task_description . "*x<span class=\"exp\">" . $degree - $coefficient_counter . "</span>";
+                }
+                $task_description = $task_description . " polinom x" . $this->PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!";
+
+                $residue_text = "<div class=\"paragraph\">Az eredmény: ";
+                $division_text = "<div class=\"paragraph\">A maradék: ";
+                $residue_degree = $degree - 1;
+                foreach($horner_schemes[0] as $cell_counter => $cell_value){
+                    if($residue_degree - $cell_counter >= 0){
+                        if($cell_value != 0){
+                            if($cell_counter != 0){
+                                $residue_text = $residue_text . $this->PlusMinus($cell_value) . abs($cell_value);
+                            }else{
+                                $residue_text = $residue_text . $cell_value;
+                            }
+                            $residue_text = $residue_text. "*x<span class=\"exp\">" . $degree - $cell_counter . "</span>";
+                        }
+                    }else if($residue_degree - $cell_counter < 0){
+                        $division_text = $division_text . $cell_value;
+                    }
+                }
+                $residue_text = $residue_text . "</div>";
+                $division_text = $division_text . "</div>";
+                $task_solution = $task_solution . $residue_text . $division_text;
+
+                if($polynomial_counter < $number_of_polynomials - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+
+        /**
          * This private method append a congruence equivalence to the end of a text.
          */
         private function CreateModuloEquivalence($variable_name, $final_b, $final_modulo, $text){
@@ -692,10 +819,10 @@
         /**
          * This private method creates the solution text for diophantine equations.
          */
-        private function CreateCRTSolutionText($new_congruence_system, $solution){
+        private function CreateCRTSolutionText($new_congruence_system, $actual_solution){
             $number_of_congruences_per_system = count($new_congruence_system);
-            $steps = $solution["steps"];
-            $detailed_steps = $solution["detailed_steps"];
+            $steps = $actual_solution["steps"];
+            $detailed_steps = $actual_solution["detailed_steps"];
 
             $task_description = "<label class=\"task_description\"> Add meg a következő lineáris kongruenciarendszer megoldását!</label><br>";
             $task_solution = "<b>1. lépés: lineáris kongruenciák egyszerűsítése</b><br>";
@@ -731,7 +858,7 @@
                 $task_solution = $task_solution . "</div>";
                 
                 $bottom_index = $merged_counter + 1;
-                $diophantine_equation_solution = $detailed_steps[$congruence_counter + $merged_counter];
+                $diophantine_equation_solution = $detailed_steps[$number_of_congruences_per_system + $merged_counter];
                 $task_solution = $task_solution . "<div class=\"paragraph\"><b>" . $merged_counter + 2 . ".1. lépés: az m<span class=\"bottom\">" . $bottom_index . ",1</span> * " .  $first_congruence[2] . " + m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></div>";
                 $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("m<span class=\"bottom\">" . $modulo_bottom_index . ",1</span>", "m<span class=\"bottom\">" . $modulo_bottom_index . ",2</span>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]);
             
@@ -749,6 +876,48 @@
                 $task_solution = $task_solution . "</div>";
             }
             
+            return array("task_description"=>$task_description, "task_solution"=>$task_solution);
+        }
+
+        /**
+         * 
+         */
+        private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
+            $task_description = "Add meg a ";
+            $task_solution = "<table class=\"solution_table\">";
+            $task_solution = $task_solution . "<tr><th>x<span class=\"bottom\">i</span></th>";
+            $degree = count($polynomial_expression) - 1;
+            foreach($polynomial_expression as $coefficient_counter => $coefficient){
+                if($coefficient != 0){
+                    if($coefficient_counter !== 0){
+                        $task_description = $task_description . $this->PlusMinus($coefficient) . abs($coefficient);
+                    }else{
+                        $task_description = $task_description . $coefficient;
+                    }
+                }
+                $task_description = $task_description . "*x<span class=\"exp\">" . $degree - $coefficient_counter . "</span>";
+                $task_solution = $task_solution . "<th>p<span class=\"bottom\">" . $degree - $coefficient_counter . "</span> = " . $coefficient . "</th>";
+            }
+            $task_description = $task_description . " polinom helyettesítési értékét a ";
+            $task_solution = $task_solution . "<th>P[x<span class=\"bottom\">i</span>]</th>";
+            $task_solution = $task_solution . "</tr>";
+            
+            foreach($horner_schemes as $row_counter => $horner_scheme){
+                if($row_counter !== 0){
+                    $task_description = $task_description . ", ";
+                }
+                $task_description = $task_description . $places[$row_counter];
+
+                $task_solution = $task_solution . "<tr>";
+                $task_solution = $task_solution . "<td>x<span class=\"bottom\">" . $row_counter + 1 . "</span> = " . $places[$row_counter] . "</td><td></td>";
+                foreach($horner_scheme as $cell_counter => $cell_data){
+                    $task_solution = $task_solution . "<td>" . $cell_data . "</td>";
+                }
+                $task_solution = $task_solution . "</tr>";
+            }
+            $task_description = $task_description . " helyeken!";
+            $task_solution = $task_solution . "</table>";
+
             return array("task_description"=>$task_description, "task_solution"=>$task_solution);
         }
     }

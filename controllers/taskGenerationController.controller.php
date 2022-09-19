@@ -169,7 +169,11 @@
                         }
                     }break;
                     case "6":{
-
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_subtasks->CreateHornerSchemeSubtask($subtask_count);break;
+                            case "1": $new_task = $dimat_ii_subtasks->CreatePolynomialDivisionHornerSchemeSubtask($subtask_count); break;
+                            default:break;
+                        }
                     }break;
                     case "7":{
 

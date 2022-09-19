@@ -853,7 +853,7 @@
          * @param array $polynomial_expression An indexed array containing the coefficients of a polynomial expression from the main coefficient to the constant part's coefficient (descending order based on the degree).
          * @param array $places The places where the method determines the Horner scheme. 
          * 
-         * @return array Returns an indexed array containing the Horner schemes for each polynomial expression and places.
+         * @return array Returns an indexed array containing the Horner schemes for each place and the polynomial expression.
          */
         public function DetermineHornerSchemes($polynomial_expression, $places){
             $horner_schemes = [];
@@ -1173,6 +1173,9 @@
                 $new_a = $a / $gcd_ab;
                 $new_b = $b / $gcd_ab; 
                 $new_modulo = $modulo / $this->DetermineGCDWithIteration([$gcd_ab, $modulo]); 
+            }else if($a !== 0 && $b === 0){
+                $new_a /= $a;
+                $new_modulo = $modulo / $this->DetermineGCDWithIteration([$a, $modulo]);
             }
 
             return [$new_a,$new_b,$new_modulo];
@@ -1188,7 +1191,7 @@
                         $residue -= $modulo;
                     }
                 }else{
-                    while($residue + $modulo <= 0){
+                    while($residue <= 0){
                         $residue += $modulo;
                     }
                 }
