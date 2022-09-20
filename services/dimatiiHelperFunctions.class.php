@@ -54,6 +54,7 @@
          * @return array Returns the given amount of distinct numbers.
          */
         public function CreateDistinctNumbers($number_of_numbers, $lower = -1000, $upper = 1000){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             if($number_of_numbers <= max($upper, $lower) - min($upper, $lower) + 1){
                 $return_numbers = [];
                 for($counter = 0; $counter < $number_of_numbers; $counter++){
@@ -87,28 +88,40 @@
          * @return array Returns the given amount of pairs of numbers.
          */
         public function CreatePairsOfNumbers($number_of_pairs, $lower = -1000, $upper = 1000, $is_first_positive = false, $is_second_positive = false){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+            $range = $upper - $lower + 1;
             $return_pairs = [];
-            for($counter = 0; $counter < $number_of_pairs; $counter++){
-                $first_element = mt_rand($lower, $upper);
-                if($is_first_positive){
-                    $first_element = mt_rand(1, $upper);
-                }
-                $second_element = mt_rand($lower, $upper);
-                if($is_second_positive){
-                    $second_element = mt_rand(1, $upper);
-                }
-
-                while($first_element == $second_element || in_array([$first_element, $second_element], $return_pairs)){
-                    $first_element = mt_rand($lower, $upper);
+            if($number_of_pairs <= $range*($range-1)){
+                for($counter = 0; $counter < $number_of_pairs; $counter++){
+                    $first_element = mt_rand(max(1,$lower), $upper);
                     if($is_first_positive){
                         $first_element = mt_rand(1, $upper);
                     }
                     $second_element = mt_rand($lower, $upper);
                     if($is_second_positive){
-                        $second_element = mt_rand(1, $upper);
+                        $second_element = mt_rand(max(1,$lower), $upper);
+                    }
+    
+                    while($first_element == $second_element || in_array([$first_element, $second_element], $return_pairs)){
+                        $first_element = mt_rand($lower, $upper);
+                        if($is_first_positive){
+                            $first_element = mt_rand(max(1,$lower), $upper);
+                        }
+                        $second_element = mt_rand($lower, $upper);
+                        if($is_second_positive){
+                            $second_element = mt_rand(max(1,$lower), $upper);
+                        }
+                    }
+                    array_push($return_pairs, [$first_element, $second_element]);
+                }
+            }else{
+                for($outer_counter = $lower; $outer_counter < $upper; $outer_counter++){
+                    for($inner_counter = $lower; $inner_counter < $upper; $inner_counter++){
+                        if($outer_counter !== $inner_counter){
+                            array_push($return_pairs, [$outer_counter, $inner_counter]);
+                        }
                     }
                 }
-                array_push($return_pairs, [$first_element, $second_element]);
             }
             return $return_pairs;
         }
@@ -145,6 +158,7 @@
          * @return array Returns the given amount of triplets of numbers.
          */
         public function CreateTripletsOfNumbersWithoutZero($number_of_triplets, $lower = -1000, $upper = 1000){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
@@ -172,6 +186,7 @@
          * @return array Returns the given amount of triplets of numbers.
          */
         public function CreateSolvableLinearCongruences($number_of_triplets, $without_zeros = true, $lower = -1000, $upper = 1000){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
@@ -214,6 +229,7 @@
          * @return array Returns the given amount of triplets of numbers (one triplet is one congruence).
          */
         public function CreateSolvableLinearCongruencesForCRT($number_of_triplets, $lower = -1000, $upper = 1000){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $triplet = $this->CreateTripletOfNumbers($lower, $upper);
@@ -262,6 +278,7 @@
             // x^($degree-2)'s coefficient = (x_1*...*x_degree-2) + -> ($degree | $degree-2) addition
             // ... x^1's coefficient = (x_1*...*x_degree-1) + -> ($degree | 1) addition
             // x^0's coefficient = x_1*...*x_degree -> ($degree | 0) = 1 addition
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $roots = [];
             $negated_roots = [];
             for($counter = 0; $counter < $degree; $counter++){
@@ -297,6 +314,7 @@
          * @return array Returns an array containing the places, where the values will be calculated upon substituting the places into the polynomial expression's variables.
          */
         public function CreatePlacesWithRoots($number_of_places, $number_of_roots, $roots, $lower = -10, $upper = 10){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $return_places = [];
             
             // Distinct roots
@@ -355,6 +373,7 @@
          * @return array Returns the given amount of points.
          */
         public function CreatePoints($number_of_points, $lower = -1000, $upper = 1000, $polynomial_expression = []){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
             $return_points = [];
             $first_coordinates = []; 
             for($counter = 0; $counter < $number_of_points; $counter++){
@@ -1132,6 +1151,8 @@
          * @return array Returns the given amount of triplets of numbers.
          */
         private function CreateTripletOfNumbers($lower = 0, $upper = 1000){
+            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+            
             $first_element = mt_rand($lower, $upper);
             $second_element = mt_rand($lower, $upper);
             $third_element = mt_rand($lower>0?$lower:1, $upper);
@@ -1153,6 +1174,15 @@
                 }
             }
             return true;
+        }
+
+        /**
+         * 
+         */
+        private function EnsureCorrectRange($lower, $upper){
+            $min = min($lower,$upper);
+            $max = max($lower,$upper);
+            return [$min, $max];
         }
 
         /**

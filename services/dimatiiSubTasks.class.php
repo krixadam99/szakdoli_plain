@@ -394,7 +394,7 @@
         }
 
         /**
-         * This public method will create triplets of numbers for the first subtask of the fourth task of Discrete Mathematics II.
+         * This private method will create triplets of numbers for the first subtask of the fourth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution of a linear congruence.
          * 
@@ -404,10 +404,10 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateLinearCongruenceSubtask($number_of_triplets, $lower = -30, $upper = 30){
+        private function CreateLinearCongruenceSubtask($number_of_triplets, $lower = -30, $upper = 30){
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adjad meg a következő lineáris kongruenciák megoldását!\n";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             $linear_congrences_algorithm = [];
             $solutions = [];
@@ -417,14 +417,14 @@
                 array_push($solutions, $algorithm["solution"]);
             }
 
-            for($index = 0; $index < count($triplets); $index++){
-                $actual_solution = $triplets[$index];
-                $actual_steps = $linear_congrences_algorithm[$index];
-                $first_number = $triplets[$index][0];
-                $second_number = $triplets[$index][1];
-                $third_number = $triplets[$index][2];
+            for($linear_congruence_counter = 0; $linear_congruence_counter < count($triplets); $linear_congruence_counter++){
+                $actual_steps = $linear_congrences_algorithm[$linear_congruence_counter];
+                $first_number = $triplets[$linear_congruence_counter][0];
+                $second_number = $triplets[$linear_congruence_counter][1];
+                $third_number = $triplets[$linear_congruence_counter][2];
 
-                $task_description = $task_description . "<label class=\"task_description\">" . $first_number . "*x \u{2261} " . $second_number . " mod(" . $third_number . ")</label>";
+                $task_description =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $linear_congruence_counter + 1 . ". csoport: </label><label class=\"task_description\">" . $first_number . "*x \u{2261} " . $second_number . " mod(" . $third_number . ")</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div>";
                 
                 for($step_counter = 0; $step_counter < count($actual_steps) - 1; $step_counter++){
                     $previous_step = $actual_steps[$step_counter];
@@ -444,13 +444,12 @@
                     $helper_new_mod = $next_step[2];
 
                     if($previous_a >= $helper_previous_a){
-                        $task_solution = $task_solution . 
-                            "<label class=\"task_solution\">" . $previous_a . "*x \u{2261} " . $previous_b . " mod(" . $previous_mod . ") - " . 
+                        $printable_solution = $printable_solution . "<label class=\"task_solution\">" . $previous_a . "*x \u{2261} " . $previous_b . " mod(" . $previous_mod . ") - " . 
                             $helper_previous_a . "*x \u{2261} " . $helper_previous_b . " mod(" . $helper_previous_mod . ") \u{2192} " . 
                             $new_a . "*x \u{2261} " . $new_b . " mod(" . $new_mod . ");   " . 
                             $helper_new_a . "*x \u{2261} " . $helper_new_b . " mod(" . $helper_new_mod . ")</label><br>";
                     }else{
-                        $task_solution = $task_solution . 
+                        $printable_solution = $printable_solution . 
                             "<label class=\"task_solution\">" . $helper_previous_a . "*x \u{2261} " . $helper_previous_b . " mod(" . $helper_previous_mod . ") - " . 
                             $previous_a . "*x \u{2261} " . $previous_b . " mod(" . $previous_mod . ") \u{2192} " . 
                             $helper_new_a . "*x \u{2261} " . $helper_new_b . " mod(" . $helper_new_mod . ");   " . 
@@ -484,20 +483,18 @@
                     }
                 }
                 
-                $task_solution =  $task_solution . $this->CreateModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:");
+                $printable_solution =  $printable_solution . $this->CreateModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:");
 
 
-                if($index !== count($triplets) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $triplets , "task_text" => $task_description, "solution" => [$linear_congrences_algorithm, $solutions], "solution_text" => $task_solution);
+            return array("data" => $triplets , "descriptions" => $descriptions, "solutions" => [$linear_congrences_algorithm, $solutions], "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create triplets of numbers, solution, task and solution texts for the first subtask of the fifth task of Discrete Mathematics II.
+         * This private method will create triplets of numbers, solution, task and solution texts for the first subtask of the fifth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution of diophantine equations.
          * 
@@ -507,10 +504,10 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateDiophantineEquationSubtask($number_of_triplets, $lower = -50, $upper = 50){
+        private function CreateDiophantineEquationSubtask($number_of_triplets, $lower = -50, $upper = 50){
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             $diophantine_algorithm = [];
             $diophantine_solutions = [];
@@ -525,25 +522,23 @@
                 array_push($diophantine_equations, $actual_diophantine_equation);
             }
 
-            for($index = 0; $index < count($triplets); $index++){
-                $diophantine_equation = $diophantine_equations[$index];
-                $steps = $diophantine_algorithm[$index];
-                $solution = $diophantine_solutions[$index];
+            for($diophantine_equation_counter = 0; $diophantine_equation_counter < count($triplets); $diophantine_equation_counter++){
+                $diophantine_equation = $diophantine_equations[$diophantine_equation_counter];
+                $steps = $diophantine_algorithm[$diophantine_equation_counter];
+                $solution = $diophantine_solutions[$diophantine_equation_counter];
                 
-                $task_description = $task_description . "<label class=\"task_description\"> Add meg a " . $diophantine_equation[0] . " * x " . $this->PlusMinus($diophantine_equation[1]) . abs($diophantine_equation[1]) . " * y = " . $diophantine_equation[2] . " lineáris diofantikus egyenlet megoldását!</label>";
-                $task_solution = $task_solution . $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label><label class=\"task_description\"> Add meg a " . $diophantine_equation[0] . " * x " . $this->PlusMinus($diophantine_equation[1]) . abs($diophantine_equation[1]) . " * y = " . $diophantine_equation[2] . " lineáris diofantikus egyenlet megoldását!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label></div>" . $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
 
-                if($index !== count($triplets) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $diophantine_equations , "task_text" => $task_description, "solution" => $diophantine_solutions, "solution_text" => $task_solution);
+            return array("data" => $diophantine_equations , "descriptions" => $descriptions, "solutions" => $diophantine_solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create triplets of numbers, solution, task and solution texts for the second subtask of the fifth task of Discrete Mathematics II.
+         * This private method will create triplets of numbers, solution, task and solution texts for the second subtask of the fifth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for a number division, where the numbers have conditions dividorwise.
          * 
@@ -553,10 +548,10 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateNumberDivisionWithConditionsSubtask($number_of_triplets){
+        private function CreateNumberDivisionWithConditionsSubtask($number_of_triplets){
             $triplets = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($counter = 0; $counter < $number_of_triplets; $counter++){
                 $b = mt_rand(200,1000);
@@ -584,25 +579,24 @@
                 array_push($diophantine_equations, $actual_diophantine_equation);
             }
 
-            for($index = 0; $index < count($triplets); $index++){
-                $diophantine_equation = $diophantine_equations[$index];
-                $steps = $diophantine_algorithm[$index];
-                $solution = $diophantine_solutions[$index];
-                $task_description = $task_description . "<label class=\"task_description\"> Bontsd fel a " . $diophantine_equation[2] . " számot úgy két szám összegére, hogy az egyik osztható " . $diophantine_equation[0] . " , a másik pedig a " . $diophantine_equation[1] . " számmal!</label>";
-                $task_solution = $task_solution .  $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
-                $task_solution = $task_solution . "Az első szám így: x * " .  $diophantine_equation[0]  .  ", a második szám pedig: y * " .  $diophantine_equation[1] . " (például:" . $diophantine_equation[0]*$solution[0][1] . " és " . $diophantine_equation[1]*$solution[1][0] . ")<br>";
+            for($diophantine_equation_counter = 0; $diophantine_equation_counter < count($triplets); $diophantine_equation_counter++){
+                $diophantine_equation = $diophantine_equations[$diophantine_equation_counter];
+                $steps = $diophantine_algorithm[$diophantine_equation_counter];
+                $solution = $diophantine_solutions[$diophantine_equation_counter];
                 
-                if($index !== count($triplets) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label><label class=\"task_description\"> Bontsd fel a " . $diophantine_equation[2] .  "-" . PrintServices::UseCorrectObjectSuffix($diophantine_equation[2]) . " úgy két szám összegére, hogy az egyik osztható " . $diophantine_equation[0] . "-" . PrintServices::UseCorrectAdverb($diophantine_equation[0]) . ", a másik pedig a " . $diophantine_equation[1] . "-" . PrintServices::UseCorrectAdverb($diophantine_equation[1]) . "!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label></div>" . $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
+                $printable_solution = $printable_solution .  "<div class=\"paragraph\"><label class=\"task_solution\">Az első szám így: x * " .  $diophantine_equation[0]  .  ", a második szám pedig: y * " .  $diophantine_equation[1] . " (például: " . $diophantine_equation[0]*$solution[0][1] . " és " . $diophantine_equation[1]*$solution[1][0] . ")</label></div>";
+                
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $diophantine_equations , "task_text" => $task_description, "solution" => $diophantine_solutions, "solution_text" => $task_solution);
+            return array("data" => $diophantine_equations , "descriptions" => $descriptions, "solutions" => $diophantine_solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create linear congruence systems, solution, task and solution texts for the first subtask of the sixth task of Discrete Mathematics II.
+         * This private method will create linear congruence systems, solution, task and solution texts for the first subtask of the sixth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for congruence systems.
          * 
@@ -613,13 +607,13 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateCRTSubtask($number_of_congruence_systems = 1, $number_of_congruences_per_system = 3, $lower = -50, $upper = 50){
+        private function CreateCRTSubtask($number_of_congruence_systems = 1, $number_of_congruences_per_system = 3, $lower = -50, $upper = 50){
             $congruence_systems = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
-            for($counter = 0; $counter < $number_of_congruence_systems; $counter++){
+            for($congruence_systems_counter = 0; $congruence_systems_counter < $number_of_congruence_systems; $congruence_systems_counter++){
                 $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
                 while(in_array($new_congruence_system, $congruence_systems)){
                     $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
@@ -629,21 +623,19 @@
                 array_push($solutions, $actual_solution);
 
                 $texts = $this->CreateCRTSolutionText($new_congruence_system, $actual_solution);
-                $task_description = $task_description . $texts["task_description"];
-                $task_solution = $task_solution . $texts["task_solution"];
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_description"];
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];
                 
 
-                if($counter < $number_of_congruence_systems - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $congruence_systems , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $congruence_systems , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create linear congruence systems, solution, task and solution texts for the second subtask of the sixth task of Discrete Mathematics II.
+         * This private method will create linear congruence systems, solution, task and solution texts for the second subtask of the sixth task of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for congruence systems ....
          * 
@@ -654,13 +646,13 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateCRTNumberResiduesSubtask($number_of_congruence_systems = 1, $lower = 2, $upper = 100){
+        private function CreateCRTNumberResiduesSubtask($number_of_congruence_systems = 1, $lower = 2, $upper = 100){
             $congruence_systems = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
-            for($counter = 0; $counter < $number_of_congruence_systems; $counter++){
+            for($congruence_systems_counter = 0; $congruence_systems_counter < $number_of_congruence_systems; $congruence_systems_counter++){
                 $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT(2, $lower, $upper);
                 for($index = 0; $index < count($new_congruence_system); $index++){
                     $new_congruence_system[$index][0] = 1;
@@ -680,22 +672,19 @@
                 array_push($solutions, $actual_solution);
 
                 $texts = $this->CreateCRTSolutionText($new_congruence_system, $actual_solution);
-                $task_description = $task_description . "<div class=\"paragraph\">Adj egy olyan számot, ami " . $new_congruence_system[0][2] ." osztva " . $new_congruence_system[0][1] . " maradékot ad és "
-                . $new_congruence_system[1][2] ." osztva " . $new_congruence_system[1][1] . " maradékot ad!</div>";
-                $task_solution = $task_solution . $texts["task_solution"];
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_systems_counter + 1 . ". csoport: </label><label class=\"task_description\">Adj egy olyan számot, ami " . $new_congruence_system[0][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[0][2]) . " osztva " . $new_congruence_system[0][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[0][1]) . " és "
+                . $new_congruence_system[1][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[1][2]) . " osztva " . $new_congruence_system[1][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[1][1]) . " ad maradékul!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];
                 
-
-                if($counter < $number_of_congruence_systems - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $congruence_systems , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $congruence_systems , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create polynomials and places, solution, task and solution texts for the first subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create polynomials and places, solution, task and solution texts for the first subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about giving the Horner-scheme for polynomials with places.
          * 
@@ -705,13 +694,13 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+        private function CreateHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
             $tasks = [];
             $polynomials = [];
             $places = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
                 // Creating $number_of_polynomials polynomials with degree between 2 and 5.
@@ -727,22 +716,21 @@
 
                 $horner_schemes = $this->dimat_helper_functions->DetermineHornerSchemes($polynomial_expression, $places);
                 array_push($solutions,$horner_schemes);
+                
                 $texts = $this->CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes);
-                $task_description = $task_description . $texts["task_description"];
-                $task_solution = $task_solution . $texts["task_solution"];
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . $texts["task_description"];
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];
 
 
-                if($polynomial_counter < $number_of_polynomials - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create polynomials and a place, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create polynomials and a place, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is determining the polynomial division (where the divisor is a first degree polynomial expression) with the help of the Horner- scheme.
          * 
@@ -752,13 +740,13 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreatePolynomialDivisionHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialDivisionHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
             $tasks = [];
             $polynomials = [];
             $places = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
                 // Creating $number_of_polynomials polynomials with degree between 2 and 5.
@@ -775,10 +763,11 @@
                 $horner_schemes = $this->dimat_helper_functions->DetermineHornerSchemes($polynomial_expression, $places);
                 array_push($solutions,$horner_schemes);
                 $texts = $this->CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes);
-                $task_solution = $task_solution . $texts["task_solution"];
                 
-                $task_description = $task_description . "Add meg a " . $this->CreatePolynomialText($polynomial_expression);
-                $task_description = $task_description . " polinom x" . $this->PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!";
+                
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];                
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a " . $this->CreatePolynomialText($polynomial_expression);
+                $task_description = $task_description . " polinom x" . $this->PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!</label></div>";
 
                 $residue_text = "<div class=\"paragraph\">Az eredmény: ";
                 $division_text = "<div class=\"paragraph\">A maradék: ";
@@ -800,19 +789,18 @@
                 }
                 $residue_text = $residue_text . "</div>";
                 $division_text = $division_text . "</div>";
-                $task_solution = $task_solution . $residue_text . $division_text;
+                $printable_solution = $printable_solution . $residue_text . $division_text;
 
-                if($polynomial_counter < $number_of_polynomials - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about determining the polynomial division (the first polynomial expressions will be divided with the second expressions).
          * 
@@ -822,12 +810,12 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreatePolynomialDivisionSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialDivisionSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
             $tasks = [];
             $dividands = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_pairs; $polynomial_counter++){
                 // Creating the dividand polynomial expression of degree between 3 and 5.
@@ -850,60 +838,59 @@
                 $quotient_coefficients = $division["quotient_coefficients"];
                 array_push($solutions, $division["solution"]);
                 
-                $task_description = $task_description . "Add meg a <b>(" . $this->CreatePolynomialText($dividand_polynomial_expression) . ")</b> / <b>(" . $this->CreatePolynomialText($divisor_polynomial_expression) . ")</b> hányados eredményét!";
-                $task_solution = $task_solution . "<table class=\"polynomial_division_table\">";
-                $task_solution = $task_solution . "<tr>";
-                $task_solution = $task_solution . "<th></th>" . $this->CreateTableRowWithPolynomial($dividand_polynomial_expression, count($dividand_polynomial_expression)-1, "<th>", "</th>");
-                $task_solution = $task_solution . "<th>:</th>";
-                $task_solution = $task_solution . $this->CreateTableRowWithPolynomial($divisor_polynomial_expression, count($divisor_polynomial_expression)-1, "<th>", "</th>");
-                $task_solution = $task_solution . "<th>=</th>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . $this->CreatePolynomialText($dividand_polynomial_expression) . ")</b> / <b>(" . $this->CreatePolynomialText($divisor_polynomial_expression) . ")</b> hányados eredményét!</label></div>";
+                
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . "<table class=\"polynomial_division_table\">";
+                $printable_solution = $printable_solution . "<tr>";
+                $printable_solution = $printable_solution . "<th></th>" . $this->CreateTableRowWithPolynomial($dividand_polynomial_expression, count($dividand_polynomial_expression)-1, "<th>", "</th>");
+                $printable_solution = $printable_solution . "<th>:</th>";
+                $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($divisor_polynomial_expression, count($divisor_polynomial_expression)-1, "<th>", "</th>");
+                $printable_solution = $printable_solution . "<th>=</th>";
                 if(count($quotient_coefficients) !== 0){
-                    $task_solution = $task_solution . $this->CreateTableRowWithPolynomial($quotient_coefficients, count($quotient_coefficients)-1, "<th>", "</th>");
+                    $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($quotient_coefficients, count($quotient_coefficients)-1, "<th>", "</th>");
                 }else{
-                    $task_solution = $task_solution . "<th>0</th>";
+                    $printable_solution = $printable_solution . "<th>0</th>";
                 }
 
                 $td_counter = 0;
                 foreach($division["steps"] as $step_counter => $step){
                     for($division_partial_step = 0; $division_partial_step < 2; $division_partial_step++){                        
-                        $task_solution = $task_solution . "<tr>";
+                        $printable_solution = $printable_solution . "<tr>";
                         for($blank_cell_counter = 0; $blank_cell_counter < $td_counter; $blank_cell_counter++){
-                            $task_solution = $task_solution . "<td></td>";
+                            $printable_solution = $printable_solution . "<td></td>";
                         }
                         $partial_step = $step[$division_partial_step];
                         
                         if($division_partial_step === 0){
-                            $task_solution = $task_solution .  "<td style=\"border-bottom:1px solid black\">-1*(</td>";
-                            $task_solution = $task_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td style=\"border-bottom:1px solid black\">", "</td>");
-                            $task_solution = $task_solution .  "<td style=\"border-bottom:1px solid black\">)</td>";
+                            $printable_solution = $printable_solution .  "<td style=\"border-bottom:1px solid black\">-1*(</td>";
+                            $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td style=\"border-bottom:1px solid black\">", "</td>");
+                            $printable_solution = $printable_solution .  "<td style=\"border-bottom:1px solid black\">)</td>";
                         }else{
-                            $task_solution = $task_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td>", "</td>");
+                            $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td>", "</td>");
                             $new_in_row = $dividand_polynomial_expression[count($divisor_polynomial_expression) + $step_counter] ?? "";
                             if($new_in_row !== ""){
-                                $task_solution = $task_solution . "<td>" . $this->PlusMinus($new_in_row) . "</td><td>" . $this->CreatePolynomialCoefficient(abs($new_in_row), count($partial_step), count($dividand_polynomial_expression) - 1 - floor($td_counter/2), true) . "</td>";
+                                $printable_solution = $printable_solution . "<td>" . $this->PlusMinus($new_in_row) . "</td><td>" . $this->CreatePolynomialCoefficient(abs($new_in_row), count($partial_step), count($dividand_polynomial_expression) - 1 - floor($td_counter/2), true) . "</td>";
                             }
                         }
 
                         $td_counter++;
 
-                        $task_solution = $task_solution . "</tr>";
+                        $printable_solution = $printable_solution . "</tr>";
                     }
                 }
 
-                $task_solution = $task_solution . "</tr>";
-                $task_solution = $task_solution . "</table>";
+                $printable_solution = $printable_solution . "</tr>";
+                $printable_solution = $printable_solution . "</table>";
 
-                if($polynomial_counter < $number_of_pairs - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about determining the polynomial multiplication.
          * 
@@ -913,12 +900,12 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreatePolynomialMultiplicationSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialMultiplicationSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
             $tasks = [];
             $multiplicands = [];
             $solutions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_pairs; $polynomial_counter++){
                 // Creating the multiplicand polynomial expression of degree between 3 and 5.
@@ -944,23 +931,21 @@
                 $before_modulo = $product["before_modulo"];
                 array_push($solutions, $product["product"]);
                 
-                $task_description = $task_description . "Add meg a <b>(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ")</b> * <b>(" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!";
-                $task_solution = $task_solution . "(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ") * (" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ") = (";
-                $task_solution = $task_solution . $this->CreatePolynomialTextByPairs($before_modulo);
-                $task_solution = $task_solution . ") % " . $modulo . " = ";
-                $task_solution = $task_solution . $this->CreatePolynomialTextByPairs($product["product"]);
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ")</b> * <b>(" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . "(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ") * (" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ") = (";
+                $printable_solution = $printable_solution . $this->CreatePolynomialTextByPairs($before_modulo);
+                $printable_solution = $printable_solution . ") % " . $modulo . " = ";
+                $printable_solution = $printable_solution . $this->CreatePolynomialTextByPairs($product["product"]);
 
-                if($polynomial_counter < $number_of_pairs - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about giving the Lagrange interpolation for the generated points.
          * 
@@ -970,12 +955,12 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateLagrangeInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
+        private function CreateLagrangeInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
                 $polynomial_degree = mt_rand(2,3);
@@ -992,8 +977,8 @@
                 array_push($solutions, $interpolation);
                 $base_polynomial_expressions = $interpolation["base_polynomial_expressions"];
 
-                $task_description = $task_description . "Add meg a Lagrange- interpoláció segítségével azt a polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!";
-
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree + 1 . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
                 $sum_text = "";
                 foreach($base_polynomial_expressions as $base_polynomial_counter => $base_polynomial_expression){
                     if($base_polynomial_counter !== 0){
@@ -1002,23 +987,21 @@
                         $sum_text = $sum_text . $points[$base_polynomial_counter][1];
                     }
                     $polynomial_text = $this->CreatePolynomialTextByPairs($base_polynomial_expression);
-                    $task_solution = $task_solution . "<div class=\paragraph\>l<span class=\"bottom\">(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</span> = ";
-                    $task_solution = $task_solution . $polynomial_text . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\paragraph\>l<span class=\"bottom\">(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</span> = ";
+                    $printable_solution = $printable_solution . $polynomial_text . "</div>";
                     $sum_text = $sum_text . " * (" .  $polynomial_text . ")";
                 }
-                $task_solution = $task_solution . "<div class=\paragraph\><b>L[x] = </b>" . $sum_text . " = <b>" . $this->CreatePolynomialTextByPairs($interpolation["polynomial_expression"]) . "</b></div>";
+                $printable_solution = $printable_solution . "<div class=\paragraph\><b>L[x] = </b>" . $sum_text . " = <b>" . $this->CreatePolynomialTextByPairs($interpolation["polynomial_expression"]) . "</b></div>";
 
-                if($polynomial_counter < $number_of_points - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about giving the Newton interpolation for the generated points.
          * 
@@ -1028,18 +1011,18 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateNewtonInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
+        private function CreateNewtonInterpolationSubtask($number_of_points = 3, $lower = -5, $upper = 5){
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];
-            $task_solution = "";
-            $task_description = "";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
-                $polynomial_degree = mt_rand(4,5);
+                $polynomial_degree = mt_rand(3,4);
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
                 while(in_array($polynomial_expression, $polynomial_expressions)){
-                    $polynomial_degree = mt_rand(4,5);
+                    $polynomial_degree = mt_rand(3,4);
                     [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
                 }
                 array_push($polynomial_expressions, $polynomial_expressions);
@@ -1050,33 +1033,34 @@
                 array_push($solutions, $interpolation);
                 $table_data = $interpolation["table_data"];
 
-                $task_description = $task_description . "Add meg a Newton- interpoláció segítségével azt a polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!";
-                $task_solution = $task_solution . "<table class=\"stair_table\">";
-                $task_solution = $task_solution . "<tr>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree + 1 . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = $printable_solution . "<table class=\"stair_table\">";
+                $printable_solution = $printable_solution . "<tr>";
                 for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
                     if($column_counter === 0){
-                        $task_solution = $task_solution . "<th>x<span class=\"bottom\">i</span></th>";
+                        $printable_solution = $printable_solution . "<th>x<span class=\"bottom\">i</span></th>";
                     }elseif($column_counter === 1){
-                        $task_solution = $task_solution . "<th>y<span class=\"bottom\">i</span></th>";
+                        $printable_solution = $printable_solution . "<th>y<span class=\"bottom\">i</span></th>";
                     }else{
-                        $task_solution = $task_solution . "<th>" . $column_counter - 1 . ".lépés</th>";
+                        $printable_solution = $printable_solution . "<th>" . $column_counter - 1 . ".lépés</th>";
                     }
                 }
-                $task_solution = $task_solution . "</tr>";
+                $printable_solution = $printable_solution . "</tr>";
                 for($row_counter=0; $row_counter < 2*count($points); $row_counter++){
-                    $task_solution = $task_solution . "<tr>";
+                    $printable_solution = $printable_solution . "<tr>";
                     for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
                         $width = ($column_counter === 0 || $column_counter === 1)?10:80/count($points);
                         if($column_counter === 0 || $column_counter === 1){
                             if($row_counter % 2 === 0){
-                                $task_solution = $task_solution . "<td style=\"border-left: 1px solid black; border-top: 1px solid black; width: $width%; border-right: 1px solid black\">" 
+                                $printable_solution = $printable_solution . "<td style=\"border-left: 1px solid black; border-top: 1px solid black; width: $width%; border-right: 1px solid black\">" 
                                 . $points[$row_counter/2][$column_counter]??"" . "</td>";
                             }else{
-                                $task_solution = $task_solution . "<td style=\"border-left: 1px solid black; width: $width%; border-right: 1px solid black;"; 
+                                $printable_solution = $printable_solution . "<td style=\"border-left: 1px solid black; width: $width%; border-right: 1px solid black;"; 
                                 if($row_counter === 2*count($points) - 1){
-                                    $task_solution = $task_solution . "border-bottom: 1px solid black; padding-top:3%";
+                                    $printable_solution = $printable_solution . "border-bottom: 1px solid black; padding-top:3%";
                                 }
-                                $task_solution = $task_solution . "\"></td>";
+                                $printable_solution = $printable_solution . "\"></td>";
                             }
                         }else{
                             if($row_counter - $column_counter > -2 && $row_counter < 2*count($points) - ($column_counter-1)){
@@ -1101,31 +1085,29 @@
                                         $cell_content = $cell_content . $content[floor(($row_counter - $column_counter + 1)/2)]??"";
                                     }
 
-                                    $task_solution = $task_solution . "<td style=\"border-top: 1px solid black; width: <?=$width?>%; border-right: 1px solid black\">$cell_content</td>";
+                                    $printable_solution = $printable_solution . "<td style=\"border-top: 1px solid black; width: <?=$width?>%; border-right: 1px solid black\">$cell_content</td>";
                                 }else{
-                                    $task_solution = $task_solution . "<td class =\"no_content_cell\" style=\" width: $width%;";
+                                    $printable_solution = $printable_solution . "<td class =\"no_content_cell\" style=\" width: $width%;";
                                     if($row_counter === 2*count($points) - ($column_counter-1) - 1){
-                                        $task_solution = $task_solution . "border-bottom: 1px solid black";
+                                        $printable_solution = $printable_solution . "border-bottom: 1px solid black";
                                     }
-                                    $task_solution = $task_solution . "\"></td>";
+                                    $printable_solution = $printable_solution . "\"></td>";
                                 }
                             }else{
-                                $task_solution = $task_solution . "<td style =\"border: 0px\"></td>";
+                                $printable_solution = $printable_solution . "<td style =\"border: 0px\"></td>";
                             }
                         }
                     }
-                    $task_solution = $task_solution . "</tr>";
+                    $printable_solution = $printable_solution . "</tr>";
                 }
-                $task_solution = $task_solution . "</table>";  
+                $printable_solution = $printable_solution . "</table>";  
 
                 
-                if($polynomial_counter < $number_of_points - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $tasks , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
@@ -1156,12 +1138,13 @@
             $steps = $actual_solution["steps"];
             $detailed_steps = $actual_solution["detailed_steps"];
 
-            $task_description = "<label class=\"task_description\"> Add meg a következő lineáris kongruenciarendszer megoldását!</label><br>";
-            $task_solution = "<b>1. lépés: lineáris kongruenciák egyszerűsítése</b><br>";
+            $task_description = "<div class=\"paragraph\"><label class=\"task_description\"> Add meg a következő lineáris kongruenciarendszer megoldását!</label><br>";
+            $task_solution = "<div class=\"paragraph\"><b>1. lépés: lineáris kongruenciák egyszerűsítése</b><br></div>";
             for($coungruence_counter = 0; $coungruence_counter < count($new_congruence_system); $coungruence_counter++){
                 $task_description = $task_description . "<label class=\"task_description\">" . $this->CreateCongruenceText("x", $new_congruence_system[$coungruence_counter]) . "</label><br>";
                 $task_solution = $task_solution . $coungruence_counter + 1 . ". lineáris kongruencia megoldása:<br>" . $this->CreateCongruenceSolutionText("x", $detailed_steps[$coungruence_counter]) . "<br>";
             }
+            $task_description = $task_description . "</div>";
 
             $merged_counter = 0;
             for($congruence_counter = 0; $congruence_counter < $number_of_congruences_per_system;){
@@ -1215,12 +1198,16 @@
          * 
          */
         private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
-            $task_description = "Add meg a ";
+            $task_description = "<div class=\"paragraph\"><label class=\"task_description\">Add meg a ";
             $task_solution = "<table class=\"solution_table\">";
             $task_solution = $task_solution . "<tr><th>x<span class=\"bottom\">i</span></th>";
             $degree = count($polynomial_expression) - 1;
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
-                $task_description = $task_description . $this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
+                if($coefficient_counter !== 0){
+                    $task_description = $task_description . $this->PlusMinus($coefficient);
+                    $coefficient = abs($coefficient);
+                }
+                $task_description = $task_description .$this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
                 $task_solution = $task_solution . "<th>p<span class=\"bottom\">" . $degree - $coefficient_counter . "</span> = " . $coefficient . "</th>";
             }
             $task_description = $task_description . " polinom helyettesítési értékét a ";
@@ -1240,7 +1227,7 @@
                 }
                 $task_solution = $task_solution . "</tr>";
             }
-            $task_description = $task_description . " helyeken!";
+            $task_description = $task_description . " helyeken!</label></div>";
             $task_solution = $task_solution . "</table>";
 
             return array("task_description"=>$task_description, "task_solution"=>$task_solution);

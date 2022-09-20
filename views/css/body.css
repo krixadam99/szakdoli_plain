@@ -551,8 +551,8 @@ textarea {
     
 }
 
-.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th {
-    width: 1%;
+.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th, .stair_table td {
+    width: 2%;
     white-space: nowrap;
     padding-top: 2px;
     padding-bottom: 2px;

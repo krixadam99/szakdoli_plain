@@ -101,9 +101,9 @@
          * This protected method append a congruence equivalence to the end of a text.
          */
         protected function CreateModuloEquivalence($variable_name, $final_b, $final_modulo){
-            return " $variable_name \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
+            return "$variable_name \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
                                 . $final_modulo . "\u{2223}  $variable_name" . $this->PlusMinus($final_b) . abs($final_b) . " \u{2194} "
-                                . "<b>$variable_name = " . $final_b . $this->PlusMinus($final_modulo) . abs($final_modulo) . "*k (k \u{2208} \u{2124})</b>";
+                                . "<b>$variable_name = " . $final_b . $this->PlusMinus($final_modulo) . abs($final_modulo) . "*k (k \u{2208} \u{2124})</b><br>";
         }
 
         /**
