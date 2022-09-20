@@ -356,7 +356,7 @@ ul {
     margin: 2% 38% 2% 2%;
 }
 
-.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr {
+.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr, .polynomial_division_table tr {
     background-color:white;
 }
 
@@ -537,7 +537,7 @@ textarea {
     border: 1px solid black;
 }
 
-.prime_factorization_table, .eucleidan_solution_table {
+.prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
     border-collapse: collapse;
 }
 
@@ -551,11 +551,13 @@ textarea {
     
 }
 
-.eucleidan_solution_table td {
+.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th {
     width: 30px;
     padding-top: 2px;
     padding-bottom: 2px;
+    text-align: center;
 }
+
 
 .eucleidan_solution_table tr:first-of-type {
     border-bottom: 1px solid black;

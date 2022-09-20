@@ -345,12 +345,15 @@
          * @return void
          */
         private function CreateTaskEight(){
+            $polynomial_division_subtask = $this->dimatii_subtasks->CreatePolynomialDivisionSubtask(1);
+            
             $task_array = array(
                 "task_description" => "Old meg a következő polinomok osztásával és szorzásával kapcsolatos feladatokat!",
-                "divide_polynomials" => [],
+                "divide_polynomials" => $polynomial_division_subtask["data"][0],
                 "multiply_polynomials" => [],
-                "solution" => []
             );
+
+
             
             for($counter = 0; $counter < 2; $counter++){
                 $first_polynomial_degree = mt_rand(3,5);
@@ -358,7 +361,7 @@
                 [$first_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($first_polynomial_degree);
                 [$second_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($second_polynomial_degree);
                 if($counter === 0){
-                    $key = "divide_polynomials";
+                    $key = "";
                 }else{
                     $key = "multiply_polynomials";
                 }
@@ -369,17 +372,12 @@
                 ];
             }
 
-            $task_array["solution"] = [
-                "polynomial_division" => $this->dimat_helper_functions->DividePolynomialExpressions($task_array["divide_polynomials"][0][1], $task_array["divide_polynomials"][1][1]),
-                "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])
-            ];
-
             // Adding data to the task array.
             $this->task_description = $task_array;
 
             //Solutions part:
             $solution_array = [
-                "polynomial_division" => $this->dimat_helper_functions->DividePolynomialExpressions($task_array["divide_polynomials"][0][1], $task_array["divide_polynomials"][1][1]),
+                "polynomial_division" => $polynomial_division_subtask["solution"][0],
                 "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])
             ];
 

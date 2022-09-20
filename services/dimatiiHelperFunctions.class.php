@@ -880,13 +880,15 @@
          * @param array $dividend_polynomial_expression An indexed array containing the coefficients of the dividend polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
          * @param array $divisor_polynomial_expression An indexed array containing the coefficients of the divisor polynomial expression. The coefficients are in descending order from the main coefficient to the constant member. 
          * 
-         * @return array Returns an indexed array containing the quotient and residue polynomial expressions.
+         * @return array Returns an associative array containing the quotient and residue polynomial expressions as the result and the steps.
          */
         public function DividePolynomialExpressions($dividend_polynomial_expression, $divisor_polynomial_expression){
             if(count($dividend_polynomial_expression) !== 0 && count($divisor_polynomial_expression) !== 0){
                 $quotient = [];
                 $residue = [];
-                
+                $steps = [];
+                $quotient_coefficients = [];
+
                 // 1. 3x^2+3x+3 / x+2 -> 0-1
                 // 2. 3x^2+3x+3 / 2 -> 0-1-2
                 // 3. 3x^2+3x+3 / x^2 -> 0
@@ -898,13 +900,19 @@
                     // 3. 3                    
                     $actual_quotient_coefficient = $actual_coefficient/$divisor_polynomial_expression[0]; // $divisor_polynomial_expression[0] cannot be 0
                     array_push($quotient, [$actual_quotient_coefficient, count($dividend_polynomial_expression) - count($divisor_polynomial_expression) - $coefficient_counter]);
+                    array_push($quotient_coefficients, $actual_quotient_coefficient);
+        
         
                     // 1. 0x^2 - 3x + 3; 0x^2 - 0x + 9
                     // 2. 0x^2 + 3x + 3; 0x^2 + 0x + 3; 0
                     // 3. 0x^2 + 3x + 3
+                    $current_steps = [[],[]];
                     for($substract_index = 0; $substract_index < count($divisor_polynomial_expression); $substract_index++){
                         $dividend_polynomial_expression[$substract_index + $coefficient_counter] -= $actual_quotient_coefficient*$divisor_polynomial_expression[$substract_index];
+                        array_push($current_steps[0], $actual_quotient_coefficient*$divisor_polynomial_expression[$substract_index]);
+                        array_push($current_steps[1], $dividend_polynomial_expression[$substract_index + $coefficient_counter]);
                     }
+                    array_push($steps, $current_steps);
                 }
         
                 foreach($dividend_polynomial_expression as $coefficient_counter => $coefficient){
@@ -913,9 +921,9 @@
                     }
                 }
         
-                return [$quotient, $residue];
+                return array("solution" => [$quotient, $residue], "steps" => $steps, "quotient_coefficients" => $quotient_coefficients);
             }else{
-                return [[],[]];
+                return array("solution" => [[], []], "steps" => []);
             }
         }
 
