@@ -1,8 +1,8 @@
 <?php
 
-    class DimatiiSubTasks {
+    class DimatiiSubTasks extends SubTask {
         private $dimat_helper_functions;
-
+        
         /**
          * 
          * The contructor for DimatiiSubTasks class.
@@ -12,93 +12,165 @@
         public function __construct(){
             $this->dimat_helper_functions = new DimatiiHelperFunctions();
         }
+
+        public function CreateSubtask($main_topic_number, $subtopic_number, $number_of_subtasks){
+            $subtask = [];
+            switch($main_topic_number){
+                case "0":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateDivisionPairsSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreatePrimeFactorizationSubtask($number_of_subtasks); break;
+                        case "2": $subtask = $this->CreateDivisorCountSubtask($number_of_subtasks);break;
+                        case "3": $subtask = $this->CreateCongruentNumbersSubtask($number_of_subtasks);break;
+                        default:break;
+                    }
+                }break;
+                case "1":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateCompleteResidueSystemSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateReducedResidueSystemSubtask($number_of_subtasks); break;
+                        case "2": $subtask = $this->CreateEulerPhiFunctionSubtask($number_of_subtasks);break;
+                        default:break;
+                    }
+                }break;
+                case "2":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateEucleidanAlgorithmSubtask($number_of_subtasks);break;
+                        case "1": ; break;
+                        default:break;
+                    }
+                }break;
+                case "3":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateLinearCongruenceSubtask($number_of_subtasks);break;
+                        case "1": ; break;
+                        default:break;
+                    }
+                }break;
+                case "4":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateDiophantineEquationSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateNumberDivisionWithConditionsSubtask($number_of_subtasks); break;
+                        default:break;
+                    }
+                }break;
+                case "5":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateCRTSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateCRTNumberResiduesSubtask($number_of_subtasks); break;
+                        default:break;
+                    }
+                }break;
+                case "6":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateHornerSchemeSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreatePolynomialDivisionHornerSchemeSubtask($number_of_subtasks); break;
+                        default:break;
+                    }
+                }break;
+                case "7":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreatePolynomialDivisionSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreatePolynomialMultiplicationSubtask($number_of_subtasks); break;
+                        default:break;
+                    }
+                }break;
+                case "8":{
+                    switch($subtopic_number){
+                        case "0": $subtask = $this->CreateLagrangeInterpolationSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateNewtonInterpolationSubtask($number_of_subtasks); break;
+                        default:break;
+                    }
+                }break;
+                case "9":{
+
+                }break;
+                default:break;
+            };
+
+            return $subtask;
+        }
         
         /**
-         * This public method will create division pairs for for the first subtask of the first task of Discrete Mathematics II.
+         * This private method will create division pairs for for the first subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_pairs The number of pairs which is a positive whole number.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateDivisionPairsSubtask($number_of_pairs){
+        private function CreateDivisionPairsSubtask($number_of_pairs){
             $division_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000);
-            $task_description = "Add meg a következő osztások eredményét az egész számok körében!\n";
             $solutions = $this->dimat_helper_functions->DetermineQuotientAndResidue($division_pairs);
-            $task_solution = "Megoldás:\n";
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
             
             for($division_counter = 0; $division_counter < $number_of_pairs; $division_counter++){
-                $task_description = $task_description . "<label class=\"task_description\">". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . "</label>";
-                $task_solution = $task_solution . "<label class=\"task_solution\">". $division_pairs[$division_counter][0] . " = " . $solutions[$division_counter][0] . " * " . $division_pairs[$division_counter][1] . " + " . $solutions[$division_counter][1] . "</label>";
-                
-                if($division_counter !== count($division_pairs) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"paragraph\"><label class=\"task_description\">Add meg ". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . " osztás eredményét az egész számok körében</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"paragraph\">". $division_pairs[$division_counter][0] . " = " . $solutions[$division_counter][0] . " * " . $division_pairs[$division_counter][1] . " + " . $solutions[$division_counter][1] . "</div>";
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
             }
-            
-            return array("data" => $division_pairs , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+
+            return array("data" => $division_pairs , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create distinct numbers for the second subtask of the first task of Discrete Mathematics II.
+         * This private method will create distinct numbers for the second subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreatePrimeFactorizationSubtask($number_of_numbers){
+        private function CreatePrimeFactorizationSubtask($number_of_numbers){
             $prime_factorization_numbers = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, 100, 1000);
             $solutions = $this->dimat_helper_functions->DeterminePrimeFactorization($prime_factorization_numbers);
-            $task_solution = "Megoldás:\n";
-            $task_description = "Add meg a következő számok prímfelbontását!\n";
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
 
-            for($index = 0; $index < $number_of_numbers; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">". $prime_factorization_numbers[$index] . " prímfelbontása" . "</label>";
+            for($prime_factorization_counter = 0; $prime_factorization_counter < $number_of_numbers; $prime_factorization_counter++){
+                $task_description =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $prime_factorization_counter + 1 . ". csoport: </label></div><div class=\"paragraph\"><label class=\"task_description\">Add meg ". $prime_factorization_numbers[$prime_factorization_counter] . " prímfelbontását!</label></div>";
                 
-                $number = intval($prime_factorization_numbers[$index]);
-                $actual_text = "<table class=\"prime_factorization_table\">";
-                foreach($solutions[$index] as $factor_index => $factor){
+                $number = intval($prime_factorization_numbers[$prime_factorization_counter]);
+                $printable_solution =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $prime_factorization_counter + 1 . ". csoport: </label></div>" . "<table class=\"prime_factorization_table\">";
+                foreach($solutions[$prime_factorization_counter] as $factor_index => $factor){
                     for($exp_counter = 0; $exp_counter < $factor[1]; $exp_counter++){
-                        $actual_text = $actual_text . "<tr><td>" . $number . "</td><td>". $factor[0] . "</td></tr>";
+                        $printable_solution = $printable_solution . "<tr><td>" . $number . "</td><td>". $factor[0] . "</td></tr>";
                         $number /= intval($factor[0]);
                     }
                 }
-                $actual_text = $actual_text . "</table>";
-                $task_solution = $task_solution . $actual_text;
+                $printable_solution = $printable_solution . "</table>";
                 
-                if($index !== count($prime_factorization_numbers) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $prime_factorization_numbers , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $prime_factorization_numbers , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create distinct numbers for the third subtask of the first task of Discrete Mathematics II.
+         * This private method will create distinct numbers for the third subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateDivisorCountSubtask($number_of_numbers){
+        private function CreateDivisorCountSubtask($number_of_numbers){
             $positive_divisor_count_numbers = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, 100, 1000);
-            $prima_factorizations = $this->dimat_helper_functions->DeterminePrimeFactorization($positive_divisor_count_numbers);
+            $prime_factorizations = $this->dimat_helper_functions->DeterminePrimeFactorization($positive_divisor_count_numbers);
             $solutions = $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers);
-            $task_solution = "Megoldás:\n";
-            $task_description = "Add meg a következő számok osztóinak számát!\n";
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
 
-            for($index = 0; $index < $number_of_numbers; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">d(". $positive_divisor_count_numbers[$index] . ") = " . "</label>";
+            for($counter = 0; $counter < $number_of_numbers; $counter++){
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a ". $positive_divisor_count_numbers[$counter] . " osztóinak számát!</label></div>";
                 
-                $number = intval($positive_divisor_count_numbers[$index]);
-                $actual_text = "<table class=\"prime_factorization_table\">";
+                $number = intval($positive_divisor_count_numbers[$counter]);
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". csoport: </label></div><table class=\"prime_factorization_table\">";
                 $multplication_form = "";
                 $exponential_form = "";
-                foreach($prima_factorizations[$index] as $factor_index => $factor){
-                    for($exp_counter = 0; $exp_counter < $factor[1]; $exp_counter++){
-                        $actual_text = $actual_text . "<tr><td>" . $number . "</td><td>". $factor[0] . "</td></tr>";
+                foreach($prime_factorizations[$counter] as $factor_index => $factor){
+                    for($exponential_counter = 0; $exponential_counter < $factor[1]; $exponential_counter++){
+                        $printable_solution = $printable_solution . "<tr><td>" . $number . "</td><td>". $factor[0] . "</td></tr>";
                         $number /= intval($factor[0]);
                     }
 
@@ -109,91 +181,45 @@
                     $exponential_form = $exponential_form . "( " . $factor[1] ." + 1)";
                     $multplication_form = $multplication_form . $factor[0] . "<span class=\"exp\">" . $factor[1] . "</span>";
                 }
-                $actual_text = $actual_text . "</table>";
-                $task_solution = $task_solution . $actual_text . "<label>d(" 
-                    . $positive_divisor_count_numbers[$index] . ") = "
+                $printable_solution = $printable_solution . "</table>";
+
+                $printable_solution = $printable_solution . "<label>d(" 
+                    . $positive_divisor_count_numbers[$counter] . ") = "
                     . $multplication_form . " = " . $exponential_form . " = "
-                    . $solutions[$index] . "</label>";
+                    . $solutions[$counter] . "</label>";
                 
-                if($index !== count($positive_divisor_count_numbers) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $positive_divisor_count_numbers , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $positive_divisor_count_numbers, "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create distinct pair of numbers for the fourth subtask of the first task of Discrete Mathematics II.
+         * This private method will create distinct pair of numbers for the fourth subtask of the first task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of pairs which is a positive whole number.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateCongruentNumbersSubtask($number_of_pairs){
+        private function CreateCongruentNumbersSubtask($number_of_pairs){
             $congruences = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000, false, true);
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adj meg a következő kongruenciák esetén olyan számot, amellyel igaz állítást kapsz!\n";
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $task_description = [];
 
-            for($index = 0; $index < $number_of_pairs; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">". $congruences[$index][0] . " \u{2261} x (mod " . $congruences[$index][1] . ")</label>";
-                $task_solution = $task_solution . "<label class=\"task_solutionn\">". 
-                    $congruences[$index][0] . " \u{2261} x (mod " . $congruences[$index][1] . ") \u{2194} " .
-                    $congruences[$index][1] . " \u{2223} ". $congruences[$index][0] . " - x" . " \u{2194} " . 
-                    "x = " . $congruences[$index][0] . " + " . $congruences[$index][1] . "*k (k \u{2208} \u{2124})</label>";
-                
-                if($index !== count($congruences) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+            for($congruence_counter = 0; $congruence_counter < $number_of_pairs; $congruence_counter++){
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_counter + 1 . ". csoport: </label><label class=\"task_description\">Írj a ". $congruences[$congruence_counter][0] . " \u{2261} x (mod " . $congruences[$congruence_counter][1] . ") kongruenciában az x helyére egy egészet, hogy igaz állítást kapj!</label></div>";
+                $printable_solution =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_counter + 1 . ". csoport: </label><label class=\"task_solution\">" . $this->CreateModuloEquivalence("x",$congruences[$congruence_counter][0], $congruences[$congruence_counter][1]) . "</label></div>";
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $congruences , "task_text" => $task_description, "solution" => $task_solution, "solution_text" => $task_solution);
+            return array("data" => $congruences, "descriptions" => $descriptions, "solutions" => [], "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create distinct numbers for the first subtask of the second task of Discrete Mathematics II.
-         * 
-         * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
-         * @param int $upper The upper bound of the range from which the modulos will be picked randomly. The default value is 25.
-         * 
-         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
-         */
-        public function CreateCompleteResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 25){
-            $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
-            $solutions = [];
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adjad meg a következő teljes maradékrendszerek maradékosztályait azok 1-1 reprezentatív elemének megadásával!\n";
-
-            for($index = 0; $index < $number_of_numbers; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">\u{2124}/<span class=\"bottom\">". $modulos[$index] . "</span>\u{2124}</label>";
-                $solution = $this->dimat_helper_functions->DetermineCompleteResidueSystem($modulos[$index]);
-                array_push($solutions, $solution);
-
-                $set= "";
-                foreach($solution as $counter => $representative_element){
-                    if($counter !== 0){
-                        $set = $set . ", ";
-                    }
-                    $set = $set . "<label class=\"task_solutionn\" style=\"border-top:1px solid black\">". $representative_element . "</label>"; 
-                }
-                $task_solution = $task_solution . "{" . $set . "}";
-
-                if($index !== count($modulos) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
-            }
-            
-            return array("data" => $modulos , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
-        }
-
-        /**
-         * This public method will create distinct numbers for the second subtask of the second task of Discrete Mathematics II.
-         * 
-         * The subtask is about giving the residue classes by representative elements of the created reduced residue systems.
+         * This private method will create distinct numbers for the first subtask of the second task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
@@ -201,15 +227,15 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateReducedResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 15){
+        private function CreateCompleteResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 15){
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adjad meg a következő redukált maradékrendszerek maradékosztályait azok 1-1 reprezentatív elemének megadásával!\n";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
-            for($index = 0; $index < $number_of_numbers; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">(\u{2124}/<span class=\"bottom\">". $modulos[$index] . "</span>\u{2124})*</label>";
-                $solution = $this->dimat_helper_functions->DetermineReducedResidueSystem($modulos[$index]);
+            for($crs_counter = 0; $crs_counter < $number_of_numbers; $crs_counter++){
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $crs_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a \u{2124}/<span class=\"bottom\">". $modulos[$crs_counter] . "</span>\u{2124} teljes maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $solution = $this->dimat_helper_functions->DetermineCompleteResidueSystem($modulos[$crs_counter]);
                 array_push($solutions, $solution);
 
                 $set= "";
@@ -217,21 +243,57 @@
                     if($counter !== 0){
                         $set = $set . ", ";
                     }
-                    $set = $set . "<label class=\"task_solutionn\" style=\"border-top:1px solid black\">". $representative_element . "</label>"; 
+                    $set = $set . "<label style=\"border-top:1px solid black\">". $representative_element . "</label>"; 
                 }
-                $task_solution = $task_solution . "{" . $set . "}";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $crs_counter + 1 . ". csoport: </label><label class=\"task_solution\">\u{2124}/<span class=\"bottom\">". $modulos[$crs_counter] . "</span>\u{2124} = {" . $set . "}</label></div>";
 
-                if($index !== count($modulos) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $modulos , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $modulos, "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create distinct numbers for the third subtask of the second task of Discrete Mathematics II.
+         * This private method will create distinct numbers for the second subtask of the second task of Discrete Mathematics II.
+         * 
+         * The subtask is about giving the residue classes by representative elements of the created reduced residue systems.
+         * 
+         * @param int $number_of_numbers The number of numbers which is a positive whole number.
+         * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
+         * @param int $upper The upper bound of the range from which the modulos will be picked randomly. The default value is 25.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateReducedResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 25){
+            $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
+            $solutions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
+
+            for($rrs_counter = 0; $rrs_counter < $number_of_numbers; $rrs_counter++){
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $rrs_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a (\u{2124}/<span class=\"bottom\">". $modulos[$rrs_counter] . "</span>\u{2124})* redukált maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $solution = $this->dimat_helper_functions->DetermineReducedResidueSystem($modulos[$rrs_counter]);
+                array_push($solutions, $solution);
+
+                $set= "";
+                foreach($solution as $counter => $representative_element){
+                    if($counter !== 0){
+                        $set = $set . ", ";
+                    }
+                    $set = $set . "<label style=\"border-top:1px solid black\">". $representative_element . "</label>"; 
+                }
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $rrs_counter + 1 . ". csoport: </label><label class=\"task_solution\">(\u{2124}/<span class=\"bottom\">". $modulos[$rrs_counter] . "</span>\u{2124})* = {" . $set . "}</label></div>";
+
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
+            }
+            
+            return array("data" => $modulos, "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create distinct numbers for the third subtask of the second task of Discrete Mathematics II.
          * 
          * The subtask is about giving the size of a reduced residue systems by the Euler's phi function.
          * 
@@ -241,15 +303,15 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateEulerPhiFunctionSubtask($number_of_numbers, $lower = 1000, $upper = 5000){
+        private function CreateEulerPhiFunctionSubtask($number_of_numbers, $lower = 1000, $upper = 5000){
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adjad meg a következő redukált maradékrendszerek maradékosztályait azok 1-1 reprezentatív elemének megadásával!\n";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
-            for($index = 0; $index < $number_of_numbers; $index++){
-                $task_description = $task_description . "<label class=\"task_description\">|(\u{2124}/<span class=\"bottom\">". $modulos[$index] . "</span>\u{2124})|*</label>";
-                $solution = $this->dimat_helper_functions->DetermineEulerPhiValue($modulos[$index]);
+            for($rrs_size_counter = 0; $rrs_size_counter < $number_of_numbers; $rrs_size_counter++){
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $rrs_size_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a (\u{2124}/<span class=\"bottom\">". $modulos[$rrs_size_counter] . "</span>\u{2124})* redukált maradékrendszer méretét (maradékosztályainak számát)!</label></div>";
+                $solution = $this->dimat_helper_functions->DetermineEulerPhiValue($modulos[$rrs_size_counter]);
                 array_push($solutions, $solution["solution"]);
                 
                 $phi_part = "";
@@ -262,23 +324,22 @@
                     $phi_part = $phi_part . "\u{03C6}(" . $factor[0] . "<span class=\"exp\">" . $factor[1] . "</span>)"; 
                     $multiplication_part = $multiplication_part . $factor[0] . "<span class=\"exp\">(" . $factor[1] - 1 . ")</span> * (" .  $factor[0] . " - 1)"; 
                 }
-                $task_solution = $task_solution . "<label class=\"task_solution\">|(\u{2124}/<span class=\"bottom\">".
-                                 $modulos[$index] . "</span>\u{2124})|* = ". 
-                                 $phi_part . " = " .
-                                 $multiplication_part . " = " .
-                                 $solution["solution"]  . "</label>";
+                
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $rrs_size_counter + 1 . ". csoport: </label><label class=\"task_solution\">|(\u{2124}/<span class=\"bottom\">".
+                                $modulos[$rrs_size_counter] . "</span>\u{2124})*| = ". 
+                                $phi_part . " = " .
+                                $multiplication_part . " = " .
+                                $solution["solution"]  . "</label></div>";
 
-                if($index !== count($modulos) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $modulos , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+            return array("data" => $modulos, "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
         }
 
         /**
-         * This public method will create pairs of numbers for the first subtask of the third task of Discrete Mathematics II.
+         * This private method will create pairs of numbers for the first subtask of the third task of Discrete Mathematics II.
          * 
          * The subtask is about giving the gcd for each pair with the Eucleidan algorithm. Additionally, the lcm for these pairs will also be determined.
          * 
@@ -288,10 +349,10 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        public function CreateEucleidanAlgorithmSubtask($number_of_numbers, $lower = 30, $upper = 200){
+        private function CreateEucleidanAlgorithmSubtask($number_of_numbers, $lower = 30, $upper = 200){
             $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_numbers, $lower, $upper);
-            $task_solution = "Megoldás:\n";
-            $task_description = "Adjad meg a következő párok esetén a legnagyobb közös osztót és a legkisebb közös többszöröst!\n";
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $descriptions = [];
 
             $eucleidan_algorithm = [];
             $gcd_array = [];
@@ -307,31 +368,29 @@
                 }
             }
 
-            for($index = 0; $index < count($gcd_pairs); $index++){
-                $actual_gcd = $gcd_array[$index];
-                $actual_lcm = $lcm_array[$index];
-                $actual_steps = $eucleidan_algorithm[$index];
-                $first_number = $gcd_pairs[$index][0];
-                $second_number = $gcd_pairs[$index][1];
+            for($gcd_pair_counter = 0; $gcd_pair_counter < count($gcd_pairs); $gcd_pair_counter++){
+                $actual_gcd = $gcd_array[$gcd_pair_counter];
+                $actual_lcm = $lcm_array[$gcd_pair_counter];
+                $actual_steps = $eucleidan_algorithm[$gcd_pair_counter];
+                $first_number = $gcd_pairs[$gcd_pair_counter][0];
+                $second_number = $gcd_pairs[$gcd_pair_counter][1];
 
-                $task_description = $task_description . "<label class=\"task_description\">(" . $first_number . ", " . $second_number . ")</label>";
-                $task_solution = $task_solution . "<table class=\"eucleidan_solution_table\">";
-                $task_solution = $task_solution . "<tr><td>i</td><td>r<span class=\"bottom\">i-2</span><td>=</td><td>q<span class=\"bottom\">i</span></td><td> * </td><td>r<span class=\"bottom\">i-1</span><td>+</td><td>r<span class=\"bottom\">i</span></td></tr>";
+                $task_description =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $gcd_pair_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a " . $first_number . " és " . $second_number . " számok legnagyobb közös osztóját az Euklideszi algoritmus segítségével!</label></div>";
+                
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><table class=\"eucleidan_solution_table\">";
+                $printable_solution = $printable_solution . "<tr><td>i</td><td>r<span class=\"bottom\">i-2</span><td>=</td><td>q<span class=\"bottom\">i</span></td><td> * </td><td>r<span class=\"bottom\">i-1</span><td>+</td><td>r<span class=\"bottom\">i</span></td></tr>";
                 foreach($actual_steps as $step_counter => $actual_step){
-                    $task_solution = $task_solution . "<tr><td>" . $step_counter + 1 . ".</td><td>" . $actual_step[0] .  "</td><td>=</td><td>" . $actual_step[1] . "</td><td>*</td><td>" . $actual_step[2] . "</td><td>+</td><td>" . $actual_step[3] .  "</td></tr>";
+                    $printable_solution = $printable_solution . "<tr><td>" . $step_counter + 1 . ".</td><td>" . $actual_step[0] .  "</td><td>=</td><td>" . $actual_step[1] . "</td><td>*</td><td>" . $actual_step[2] . "</td><td>+</td><td>" . $actual_step[3] .  "</td></tr>";
                 }
-                $task_solution = $task_solution . "</table>";
-                $task_solution = $task_solution . "<label class=\"task_solution\">LNKO(" . $first_number . ", " . $second_number . ") = " . $actual_gcd . "</label><br>";
-                $task_solution = $task_solution . "<label class=\"task_solution\">LKKT(" . $first_number . ", " . $second_number . ") = " . $first_number  . " * " . $second_number . "/ " . $actual_gcd  . " = " . $actual_lcm . "</label>";
-
-
-                if($index !== count($gcd_pairs) - 1){
-                    $task_description = $task_description . "\n";
-                    $task_solution = $task_solution . "\n";
-                }
+                $printable_solution = $printable_solution . "</table>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"task_solution\">LNKO(" . $first_number . ", " . $second_number . ") = " . $actual_gcd . "</label></div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"task_solution\">LKKT(" . $first_number . ", " . $second_number . ") = " . $first_number  . " * " . $second_number . "/ " . $actual_gcd  . " = " . $actual_lcm . "</label></div>";
+                
+                array_push($descriptions, $task_description);
+                array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $gcd_pairs , "task_text" => $task_description, "solution" => [$eucleidan_algorithm, $gcd_array, $lcm_array], "solution_text" => $task_solution);
+            return array("data" => $gcd_pairs , "descriptions" => $descriptions, "solutions" => [$eucleidan_algorithm, $gcd_array, $lcm_array], "printable_solutions" => $printable_solutions);
         }
 
         /**
@@ -1068,40 +1127,6 @@
             
             return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
         }
-        
-        /**
-         * This private method append a congruence equivalence to the end of a text.
-         */
-        private function CreateModuloEquivalence($variable_name, $final_b, $final_modulo, $text){
-            return "<label class=\"task_solution\">$text" . " $variable_name \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
-                                . $final_modulo . "\u{2223}  $variable_name" . $this->PlusMinus($final_b) . abs($final_b) . " \u{2194} "
-                                . "<b>$variable_name = " . $final_b . $this->PlusMinus($final_modulo) . abs($final_modulo) . "*k (k \u{2208} \u{2124})</b></label><br>";
-        }
-
-        /**
-         * This private method returns a plus, or minus based on the argument's sign.
-         */
-        private function PlusMinus($value){
-            return $value < 0?" - ":" + ";
-        }
-
-        /**
-         * 
-         */
-        private function CreateCongruenceText($variable_name = "x", $congruence){
-            return  $congruence[0] . "*$variable_name \u{2261} " . $congruence[1] . " (mod " .  $congruence[2] . ")";
-        }
-
-        /**
-         * 
-         */
-        private function CreateCongruenceSolutionText($variable_name = "x", $congruence_steps){
-            $task_solution = "";
-            foreach($congruence_steps as $step_counter => $step){
-                $task_solution = $task_solution . "<label class=\"task_solution\">" . $step[0] . "*$variable_name \u{2261} " . $step[1] . " (mod " .  $step[2] . ")</label><br>";
-            }
-            return $task_solution;
-        }
 
         /**
          * This private method creates the solution text for diophantine equations.
@@ -1219,100 +1244,6 @@
             $task_solution = $task_solution . "</table>";
 
             return array("task_description"=>$task_description, "task_solution"=>$task_solution);
-        }
-
-        /**
-         * 
-         */
-        private function CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree, $zero_coefficient = false){
-            $text = "";
-            
-            if($coefficient != 0 || $zero_coefficient){
-                $text = $text . $coefficient;
-
-                if($degree > $coefficient_counter){
-                    if($degree - 1 === $coefficient_counter){
-                        $text = $text . "*x";
-                    }else{
-                        $text = $text . "*x<span class=\"exp\">" . $degree - $coefficient_counter . "</span>";
-                    }
-                }
-            }
-
-            return $text;
-        }
-
-        /**
-         * 
-         */
-        private function CreatePolynomialText($polynomial_expression){
-            $task_description = "";
-
-            $degree = count($polynomial_expression) - 1;
-            foreach($polynomial_expression as $coefficient_counter => $coefficient){
-                if($coefficient_counter !== 0 && $coefficient !== 0){
-                    $task_description = $task_description . $this->PlusMinus($coefficient);
-                    $coefficient = abs($coefficient);
-                }
-                $task_description = $task_description . $this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
-            }
-
-            return $task_description;
-        }
-
-        /**
-         * 
-         */
-        private function CreatePolynomialTextByPairs($pairs){
-            $text = "";
-            foreach($pairs as $coefficient_counter => $pair){
-                [$coefficient, $actual_degree] = $pair;
-                if($coefficient !== 0){
-                    if($coefficient_counter !== 0){
-                        $text = $text . $this->PlusMinus($coefficient) . abs($coefficient); 
-                    }else{
-                        $text = $text . $coefficient; 
-                    }
-                    
-                    if($actual_degree !== 0){
-                        $text = $text . "*x";
-                        if($actual_degree !== 1){
-                            $text = $text . "<span class=\"exp\">" . $actual_degree ."</span>";
-                        }
-                    }
-                }
-            }
-            return $text;
-        }
-        
-
-        /**
-         * 
-         */
-        private function CreateTableRowWithPolynomial($polynomial_expression, $degree, $open_tag, $close_tag){
-            $text = "";
-            foreach($polynomial_expression as $coefficient_counter => $coefficient){
-                if($coefficient_counter !== 0){
-                    $text = $text . $open_tag . $this->PlusMinus($coefficient) . $close_tag;
-                    $coefficient = abs($coefficient);
-                }
-                $text = $text . $open_tag . $this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree, true) . $close_tag;
-            }
-            return $text;
-        }
-
-        /**
-         * 
-         */
-        private function CreatePointsText($points){
-            $text = "";
-            foreach($points as $point_counter => $point){
-                if($point_counter !== 0){
-                    $text = $text . ", ";
-                }
-                $text = $text . "(" . $point[0]. ", " . $point[1] . ")";
-            }
-            return $text;
         }
     }
 

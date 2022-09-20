@@ -4,7 +4,7 @@
      * 
      * A task will contain the task description, the solutions for the subtasks and the definitions related to the tasks. 
     */
-    abstract class Tasks {
+    abstract class Task {
         protected $task_description;
         protected $task_solutions;
         protected $definitions;

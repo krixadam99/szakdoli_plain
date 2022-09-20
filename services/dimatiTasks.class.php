@@ -3,7 +3,7 @@
      * This is a helper class which contains task generator functions related to Discrete Mathematics I..
      * 
     */
-    class DimatiTasks extends Tasks{        
+    class DimatiTasks extends Task{        
         private $set_names;
         private $complex_number_names;
         private $dimat_helper_functions;

@@ -159,31 +159,18 @@
                         </div-->
                         <div>
                             <?php if(isset($_SESSION["preview_tasks"])):?>
-
-                                <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $task):?>
-                                    <?=$main_task_counter + 1?>. feladatcsoport:
-                                    <br>
-                                    <?php
-                                        $task["task_description"] = explode("\n", $task["task_description"]);
-                                        $task["task_solution"] = explode("\n", $task["task_solution"]);
+                                <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
+                                    <?= $main_task_counter + 1?>. feladatcsoport:
+                                    <?php 
+                                        $descriptions = $main_task["descriptions"]??[];
+                                        $printable_solutions = $main_task["printable_solutions"]??[];
                                     ?>
-                                    <b><?=$task["task_description"][0]?></b>
-                                    <br>
-                                    <?php for($group_counter = 1; $group_counter < count($task["task_description"]); $group_counter++):?>
-                                        <?=$group_counter?>. csoport:
-                                        <br>
-                                        <?=$task["task_description"][$group_counter]?>
-                                        <br>
-                                    <?php endfor?>
-
-                                    <b><?=$task["task_solution"][0]?></b>
-                                    <br>
-                                    <?php for($group_counter = 1; $group_counter < count($task["task_solution"]); $group_counter++):?>
-                                        <?=$group_counter?>. csoport:
-                                        <br>
-                                        <?=$task["task_solution"][$group_counter]?>
-                                        <br>
-                                    <?php endfor?>
+                                    <?php foreach($descriptions as $description_counter => $description):?>
+                                        <?=$description?>
+                                    <?php endforeach?>
+                                    <?php foreach($printable_solutions as $printable_solution_counter => $printable_solution):?>
+                                        <?=$printable_solution?>
+                                    <?php endforeach?>
                                 <?php endforeach?>
                             <?php endif?>
                         </div>

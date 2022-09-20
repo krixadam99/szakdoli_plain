@@ -3,7 +3,7 @@
      * This is a helper class which contains task generator functions related to Discrete Mathematics II..
      * 
     */
-    class DimatiiTasks extends Tasks{        
+    class DimatiiTasks extends Task {        
         private $dimat_helper_functions;
         private $dimatii_subtasks;
 
@@ -92,10 +92,10 @@
             // 2 numbers for prime factorization subtask (1 number/ subtask);
             // 2 numbers for divisor counting subtask (1 number/ subtask);
             // 2 pairs for congruency subtask (1 pair/ subtask).
-            $divide_pairs = $this->dimatii_subtasks->CreateDivisionPairsSubtask(2);
-            $prime_factorization_numbers = $this->dimatii_subtasks->CreatePrimeFactorizationSubtask(2);
-            $positive_divisor_count_numbers = $this->dimatii_subtasks->CreateDivisorCountSubtask(2);
-            $congruency_pairs = $this->dimatii_subtasks->CreateCongruentNumbersSubtask(2);
+            $divide_pairs = $this->dimatii_subtasks->CreateSubtask("0", "0", 2);
+            $prime_factorization_numbers = $this->dimatii_subtasks->CreateSubtask("0", "1", 2);
+            $positive_divisor_count_numbers = $this->dimatii_subtasks->CreateSubtask("0", "2", 2);
+            $congruency_pairs = $this->dimatii_subtasks->CreateSubtask("0", "3", 2);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -109,9 +109,9 @@
 
             //Solutions part:
             $solution_array = [
-                "divide_pairs_solution" => $divide_pairs["solution"],
-                "prime_factorization_solution" => $prime_factorization_numbers["solution"],
-                "positive_divisor_count_solution" => $positive_divisor_count_numbers["solution"],
+                "divide_pairs_solution" => $divide_pairs["solutions"],
+                "prime_factorization_solution" => $prime_factorization_numbers["solutions"],
+                "positive_divisor_count_solution" => $positive_divisor_count_numbers["solutions"],
                 "congruence" => $congruency_pairs["data"]
             ];
             $this->task_solutions = $solution_array;
@@ -135,9 +135,9 @@
             // 2 numbers for complete residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system size subtask (1 number/ subtask);
-            $crs_numbers = $this->dimatii_subtasks->CreateCompleteResidueSystemSubtask(1,2,15);
-            $rrs_numbers = $this->dimatii_subtasks->CreateReducedResidueSystemSubtask(1,2,25);;
-            $rrs_size_numbers = $this->dimatii_subtasks->CreateEulerPhiFunctionSubtask(2);
+            $crs_numbers = $this->dimatii_subtasks->CreateSubtask("1", "0", 1);
+            $rrs_numbers = $this->dimatii_subtasks->CreateSubtask("1", "1", 1);
+            $rrs_size_numbers = $this->dimatii_subtasks->CreateSubtask("1", "2", 2);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -150,9 +150,9 @@
 
             //Solutions part:
             $solution_array = [
-                "crs_systems" => $crs_numbers["solution"][0],
-                "rrs_systems" => $rrs_numbers["solution"][0],
-                "rrs_size_numbers" => $rrs_size_numbers["solution"]
+                "crs_systems" => $crs_numbers["solutions"][0],
+                "rrs_systems" => $rrs_numbers["solutions"][0],
+                "rrs_size_numbers" => $rrs_size_numbers["solutions"]
             ];
             $this->task_solutions = $solution_array;
         }
@@ -170,12 +170,12 @@
         private function CreateTaskThree(){
             // Task creation part:
             // 3 pairs of numbers for gcd (1 pair of numbers/ subtask);
-            $gcd_pairs = $this->dimatii_subtasks->CreateEucleidanAlgorithmSubtask(3, 30, 200);
+            $gcd_pairs = $this->dimatii_subtasks->CreateSubtask("2", "0", 3);
             
             // 1 pair of numbers for extended eucleidan algorithm (1 pair of numbers/ subtask)
 
             $step_counts = [];
-            foreach($gcd_pairs["solution"][0] as $pair_counter => $algorithm){
+            foreach($gcd_pairs["solutions"][0] as $pair_counter => $algorithm){
                 array_push($step_counts, count($algorithm));
             }
 
@@ -189,9 +189,9 @@
 
             //Solutions part:
             $solution_array = [
-                "eucleidan_algorithm" => $gcd_pairs["solution"][0],
-                "gcd" => $gcd_pairs["solution"][1],
-                "lcm" => $gcd_pairs["solution"][2] 
+                "eucleidan_algorithm" => $gcd_pairs["solutions"][0],
+                "gcd" => $gcd_pairs["solutions"][1],
+                "lcm" => $gcd_pairs["solutions"][2] 
             ];
             $this->task_solutions = $solution_array;
         }

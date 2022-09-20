@@ -122,82 +122,10 @@
                 };
             }elseif($_SESSION["subject"] == "ii"){
                 $dimat_ii_subtasks = new DimatiiSubtasks();
-                switch($main_task_index){
-                    case "0":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateDivisionPairsSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreatePrimeFactorizationSubtask($subtask_count); break;
-                            case "2": $new_task = $dimat_ii_subtasks->CreateDivisorCountSubtask($subtask_count);break;
-                            case "3": $new_task = $dimat_ii_subtasks->CreateCongruentNumbersSubtask($subtask_count);break;
-                            default:break;
-                        }
-                    }break;
-                    case "1":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateCompleteResidueSystemSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreateReducedResidueSystemSubtask($subtask_count); break;
-                            case "2": $new_task = $dimat_ii_subtasks->CreateEulerPhiFunctionSubtask($subtask_count);break;
-                            default:break;
-                        }
-                    }break;
-                    case "2":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateEucleidanAlgorithmSubtask($subtask_count);break;
-                            case "1": ; break;
-                            default:break;
-                        }
-                    }break;
-                    case "3":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateLinearCongruenceSubtask($subtask_count);break;
-                            case "1": ; break;
-                            default:break;
-                        }
-                    }break;
-                    case "4":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateDiophantineEquationSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreateNumberDivisionWithConditionsSubtask($subtask_count); break;
-                            default:break;
-                        }
-                    }break;
-                    case "5":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateCRTSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreateCRTNumberResiduesSubtask($subtask_count); break;
-                            default:break;
-                        }
-                    }break;
-                    case "6":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateHornerSchemeSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreatePolynomialDivisionHornerSchemeSubtask($subtask_count); break;
-                            default:break;
-                        }
-                    }break;
-                    case "7":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreatePolynomialDivisionSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreatePolynomialMultiplicationSubtask($subtask_count); break;
-                            default:break;
-                        }
-                    }break;
-                    case "8":{
-                        switch($subtask_index){
-                            case "0": $new_task = $dimat_ii_subtasks->CreateLagrangeInterpolationSubtask($subtask_count);break;
-                            case "1": $new_task = $dimat_ii_subtasks->CreateNewtonInterpolationSubtask($subtask_count); break;
-                            default:break;
-                        }
-                    }break;
-                    case "9":{
-
-                    }break;
-                    default:break;
-                };
+                $subtask = $dimat_ii_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
+                $task["descriptions"] = $subtask["descriptions"];
+                $task["printable_solutions"] = $subtask["printable_solutions"];
             }
-            
-            $task["task_description"] = $new_task["task_text"];
-            $task["task_solution"] = $new_task["solution_text"];
 
             return $task;
         }
