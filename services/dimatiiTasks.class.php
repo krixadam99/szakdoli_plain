@@ -346,31 +346,13 @@
          */
         private function CreateTaskEight(){
             $polynomial_division_subtask = $this->dimatii_subtasks->CreatePolynomialDivisionSubtask(1);
+            $polynomial_multiplication_subtask = $this->dimatii_subtasks->CreatePolynomialMultiplicationSubtask(1);
             
             $task_array = array(
                 "task_description" => "Old meg a következő polinomok osztásával és szorzásával kapcsolatos feladatokat!",
                 "divide_polynomials" => $polynomial_division_subtask["data"][0],
-                "multiply_polynomials" => [],
+                "multiply_polynomials" => $polynomial_multiplication_subtask["data"][0],
             );
-
-
-            
-            for($counter = 0; $counter < 2; $counter++){
-                $first_polynomial_degree = mt_rand(3,5);
-                $second_polynomial_degree = mt_rand(1,3);
-                [$first_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($first_polynomial_degree);
-                [$second_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($second_polynomial_degree);
-                if($counter === 0){
-                    $key = "";
-                }else{
-                    $key = "multiply_polynomials";
-                }
-                $task_array[$key] = [
-                    [$first_polynomial_degree, $first_polynomial_expression], 
-                    [$second_polynomial_degree, $second_polynomial_expression], 
-                    mt_rand(2,80)
-                ];
-            }
 
             // Adding data to the task array.
             $this->task_description = $task_array;
@@ -378,7 +360,7 @@
             //Solutions part:
             $solution_array = [
                 "polynomial_division" => $polynomial_division_subtask["solution"][0],
-                "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])["product"]
+                "polynomial_multiplication" => $polynomial_multiplication_subtask["solution"][0]
             ];
 
             $this->task_solutions = $solution_array;
@@ -393,15 +375,13 @@
          * @return void
          */
         private function CreateTaskNine(){
+            $lagrange_interpolation = $this->dimatii_subtasks->CreateLagrangeInterpolationSubtask(1);
+            
             $task_array = array(
                 "task_description" => "Old meg a következő Lagrange- és Newton- féle interpolációkkal kapcsolatos feladatokat!",
-                "lagrange_points" => [],
+                "lagrange_points" => $lagrange_interpolation["data"][0],
                 "newton_points" => []
             );
-            
-            $first_polynomial_degree = mt_rand(2,3);
-            [$first_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($first_polynomial_degree);
-            $task_array["lagrange_points"] = $this->dimat_helper_functions->CreatePoints($first_polynomial_degree + 1, -5, 5, $first_polynomial_expression);
             
             $second_polynomial_degree = mt_rand(4,5);
             [$second_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($second_polynomial_degree);
@@ -412,7 +392,7 @@
 
             //Solutions part:
             $solution_array = [
-                "Lagrange_interpolation" => $this->dimat_helper_functions->DetermineLagrangeInterpolation($task_array["lagrange_points"]),
+                "Lagrange_interpolation" => $lagrange_interpolation["solution"][0],
                 "Newton_interpolation" => $this->dimat_helper_functions->DetermineNewtonInterpolation($task_array["newton_points"])
             ];
 

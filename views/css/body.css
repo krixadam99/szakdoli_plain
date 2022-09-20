@@ -552,7 +552,8 @@ textarea {
 }
 
 .eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th {
-    width: 30px;
+    width: 1%;
+    white-space: nowrap;
     padding-top: 2px;
     padding-bottom: 2px;
     text-align: center;

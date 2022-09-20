@@ -183,7 +183,11 @@
                         }
                     }break;
                     case "8":{
-
+                        switch($subtask_index){
+                            case "0": $new_task = $dimat_ii_subtasks->CreateLagrangeInterpolationSubtask($subtask_count);break;
+                            case "1": $new_task = $dimat_ii_subtasks->CreateNewtonInterpolationSubtask($subtask_count); break;
+                            default:break;
+                        }
                     }break;
                     case "9":{
 

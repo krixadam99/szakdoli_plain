@@ -899,6 +899,175 @@
             
             return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
         }
+
+        /**
+         * This public method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * 
+         * The subtask is about giving the Lagrange interpolation for the generated points.
+         * 
+         * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
+         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
+         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateLagrangeInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
+            $tasks = [];
+            $solutions = [];
+            $polynomial_expressions = [];
+            $task_solution = "";
+            $task_description = "";
+
+            for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
+                $polynomial_degree = mt_rand(2,3);
+                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+                while(in_array($polynomial_expression, $polynomial_expressions)){
+                    $polynomial_degree = mt_rand(2,3);
+                    [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+                }
+                array_push($polynomial_expressions, $polynomial_expressions);
+                $points = $this->dimat_helper_functions->CreatePoints($polynomial_degree + 1, $lower, $upper, $polynomial_expression);
+                array_push($tasks,$points);
+
+                $interpolation = $this->dimat_helper_functions->DetermineLagrangeInterpolation($points);
+                array_push($solutions, $interpolation);
+                $base_polynomial_expressions = $interpolation["base_polynomial_expressions"];
+
+                $task_description = $task_description . "Add meg a Lagrange- interpoláció segítségével azt a polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!";
+
+                $sum_text = "";
+                foreach($base_polynomial_expressions as $base_polynomial_counter => $base_polynomial_expression){
+                    if($base_polynomial_counter !== 0){
+                        $sum_text = $sum_text . $this->PlusMinus($points[$base_polynomial_counter][1]) . abs($points[$base_polynomial_counter][1]);
+                    }else{
+                        $sum_text = $sum_text . $points[$base_polynomial_counter][1];
+                    }
+                    $polynomial_text = $this->CreatePolynomialTextByPairs($base_polynomial_expression);
+                    $task_solution = $task_solution . "<div class=\paragraph\>l<span class=\"bottom\">(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</span> = ";
+                    $task_solution = $task_solution . $polynomial_text . "</div>";
+                    $sum_text = $sum_text . " * (" .  $polynomial_text . ")";
+                }
+                $task_solution = $task_solution . "<div class=\paragraph\><b>L[x] = </b>" . $sum_text . " = <b>" . $this->CreatePolynomialTextByPairs($interpolation["polynomial_expression"]) . "</b></div>";
+
+                if($polynomial_counter < $number_of_points - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+
+        /**
+         * This public method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * 
+         * The subtask is about giving the Newton interpolation for the generated points.
+         * 
+         * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
+         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
+         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreateNewtonInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
+            $tasks = [];
+            $solutions = [];
+            $polynomial_expressions = [];
+            $task_solution = "";
+            $task_description = "";
+
+            for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
+                $polynomial_degree = mt_rand(4,5);
+                [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+                while(in_array($polynomial_expression, $polynomial_expressions)){
+                    $polynomial_degree = mt_rand(4,5);
+                    [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
+                }
+                array_push($polynomial_expressions, $polynomial_expressions);
+                $points = $this->dimat_helper_functions->CreatePoints($polynomial_degree + 1, $lower, $upper, $polynomial_expression);
+                array_push($tasks,$points);
+
+                $interpolation = $this->dimat_helper_functions->DetermineNewtonInterpolation($points);
+                array_push($solutions, $interpolation);
+                $table_data = $interpolation["table_data"];
+
+                $task_description = $task_description . "Add meg a Newton- interpoláció segítségével azt a polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!";
+                $task_solution = $task_solution . "<table class=\"stair_table\">";
+                $task_solution = $task_solution . "<tr>";
+                for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
+                    if($column_counter === 0){
+                        $task_solution = $task_solution . "<th>x<span class=\"bottom\">i</span></th>";
+                    }elseif($column_counter === 1){
+                        $task_solution = $task_solution . "<th>y<span class=\"bottom\">i</span></th>";
+                    }else{
+                        $task_solution = $task_solution . "<th>" . $column_counter - 1 . ".lépés</th>";
+                    }
+                }
+                $task_solution = $task_solution . "</tr>";
+                for($row_counter=0; $row_counter < 2*count($points); $row_counter++){
+                    $task_solution = $task_solution . "<tr>";
+                    for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
+                        $width = ($column_counter === 0 || $column_counter === 1)?10:80/count($points);
+                        if($column_counter === 0 || $column_counter === 1){
+                            if($row_counter % 2 === 0){
+                                $task_solution = $task_solution . "<td style=\"border-left: 1px solid black; border-top: 1px solid black; width: $width%; border-right: 1px solid black\">" 
+                                . $points[$row_counter/2][$column_counter]??"" . "</td>";
+                            }else{
+                                $task_solution = $task_solution . "<td style=\"border-left: 1px solid black; width: $width%; border-right: 1px solid black;"; 
+                                if($row_counter === 2*count($points) - 1){
+                                    $task_solution = $task_solution . "border-bottom: 1px solid black; padding-top:3%";
+                                }
+                                $task_solution = $task_solution . "\"></td>";
+                            }
+                        }else{
+                            if($row_counter - $column_counter > -2 && $row_counter < 2*count($points) - ($column_counter-1)){
+                                if(abs($column_counter - $row_counter) % 2 === 1){
+                                    $column_index = $column_counter - 2;
+                                    $row_index = floor(($row_counter - $column_counter + 1)/2);
+                                    
+                                    $denominator_second_index =  $row_index + 1;
+                                    $denominator_first_index = $row_index + 1 + $column_index + 1;
+
+                                    $nominator_first =  "y<span class=\"bottom\">" . $denominator_first_index . "</span>";
+                                    $nominator_second = "y<span class=\"bottom\">" . $denominator_second_index . "</span>";
+                                    if($column_counter > 2){
+                                        $nominator_first =  "y<span class=\"bottom\">" . $denominator_second_index + 1 ."," . $denominator_second_index + $column_index + 1 . "</span>";
+                                        $nominator_second = "y<span class=\"bottom\">" . $denominator_first_index - $column_index - 1 ."," . $denominator_first_index - 1 . "</span>";
+                                    }
+
+                                    $cell_content = "($nominator_first - $nominator_second)/(x<span clss=\"bottom\">" . $denominator_first_index . "</span>-x<span clss=\"bottom\">" . $denominator_second_index . "</span>) = ";
+
+                                    $content = $table_data[$column_counter - 2]??"";
+                                    if(is_array($content)){
+                                        $cell_content = $cell_content . $content[floor(($row_counter - $column_counter + 1)/2)]??"";
+                                    }
+
+                                    $task_solution = $task_solution . "<td style=\"border-top: 1px solid black; width: <?=$width?>%; border-right: 1px solid black\">$cell_content</td>";
+                                }else{
+                                    $task_solution = $task_solution . "<td class =\"no_content_cell\" style=\" width: $width%;";
+                                    if($row_counter === 2*count($points) - ($column_counter-1) - 1){
+                                        $task_solution = $task_solution . "border-bottom: 1px solid black";
+                                    }
+                                    $task_solution = $task_solution . "\"></td>";
+                                }
+                            }else{
+                                $task_solution = $task_solution . "<td style =\"border: 0px\"></td>";
+                            }
+                        }
+                    }
+                    $task_solution = $task_solution . "</tr>";
+                }
+                $task_solution = $task_solution . "</table>";  
+
+                
+                if($polynomial_counter < $number_of_points - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
         
         /**
          * This private method append a congruence equivalence to the end of a text.
@@ -1128,6 +1297,20 @@
                     $coefficient = abs($coefficient);
                 }
                 $text = $text . $open_tag . $this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree, true) . $close_tag;
+            }
+            return $text;
+        }
+
+        /**
+         * 
+         */
+        private function CreatePointsText($points){
+            $text = "";
+            foreach($points as $point_counter => $point){
+                if($point_counter !== 0){
+                    $text = $text . ", ";
+                }
+                $text = $text . "(" . $point[0]. ", " . $point[1] . ")";
             }
             return $text;
         }
