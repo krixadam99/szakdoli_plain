@@ -752,11 +752,10 @@
             return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
         }
 
-        
         /**
          * This public method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
-         * The subtask is determining the polynomial division (the first polynomial expressions will be divided with the second expressions).
+         * The subtask is about determining the polynomial division (the first polynomial expressions will be divided with the second expressions).
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
          * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
@@ -777,8 +776,8 @@
                 $dividand_polynomial_degree = mt_rand(3,5);
                 [$dividand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree);
                 while(in_array($dividand_polynomial_expression, $dividands)){
-                    $dividand_polynomial_degree = mt_rand(1,$dividand_polynomial_degree);
-                    [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree, $lower, $upper);
+                    $dividand_polynomial_degree = mt_rand(3,5);
+                    [$dividand_polynomial_degree, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree, $lower, $upper);
                 }
 
                 // Creating the divisor polynomial expression
@@ -792,7 +791,7 @@
                 $quotient_coefficients = $division["quotient_coefficients"];
                 array_push($solutions, $division["solution"]);
                 
-                $task_description = $task_description . "Add meg a <b> " . $this->CreatePolynomialText($dividand_polynomial_expression) . "</b> / <b>" . $this->CreatePolynomialText($divisor_polynomial_expression) . "</b> hányados eredményét!";
+                $task_description = $task_description . "Add meg a <b>(" . $this->CreatePolynomialText($dividand_polynomial_expression) . ")</b> / <b>(" . $this->CreatePolynomialText($divisor_polynomial_expression) . ")</b> hányados eredményét!";
                 $task_solution = $task_solution . "<table class=\"polynomial_division_table\">";
                 $task_solution = $task_solution . "<tr>";
                 $task_solution = $task_solution . "<th></th>" . $this->CreateTableRowWithPolynomial($dividand_polynomial_expression, count($dividand_polynomial_expression)-1, "<th>", "</th>");
@@ -844,8 +843,63 @@
             return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
         }
 
-        
+        /**
+         * This public method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * 
+         * The subtask is about determining the polynomial multiplication.
+         * 
+         * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
+         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
+         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        public function CreatePolynomialMultiplicationSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
+            $tasks = [];
+            $multiplicands = [];
+            $solutions = [];
+            $task_solution = "";
+            $task_description = "";
 
+            for($polynomial_counter = 0; $polynomial_counter < $number_of_pairs; $polynomial_counter++){
+                // Creating the multiplicand polynomial expression of degree between 3 and 5.
+                // If this polynomial expression is already created, then a new one will be created.
+                $multiplicand_polynomial_degree = mt_rand(3,5);
+                [$multiplicand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($multiplicand_polynomial_degree, $lower, $upper);
+                while(in_array($multiplicand_polynomial_expression, $multiplicands)){
+                    $multiplicand_polynomial_degree = mt_rand(3,5);
+                    [$multiplicand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($multiplicand_polynomial_degree, $lower, $upper);
+                }
+
+                // Creating the multiplier polynomial expression
+                $multiplier_polynomial_degree = mt_rand(1,5);
+                [$multiplier_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($multiplier_polynomial_degree);
+
+                // Creating a modulo between 2 and 80
+                $modulo = mt_rand(2,80);
+                array_push($tasks, [[$multiplicand_polynomial_degree, $multiplicand_polynomial_expression],[$multiplier_polynomial_degree, $multiplier_polynomial_expression], $modulo]);
+                array_push($multiplicands, $multiplicand_polynomial_expression);
+
+                // Getting the product polynomial expressions
+                $product = $this->dimat_helper_functions->MultiplyPolynomialExpressions($multiplicand_polynomial_expression, $multiplier_polynomial_expression, $modulo);
+                $before_modulo = $product["before_modulo"];
+                array_push($solutions, $product["product"]);
+                
+                $task_description = $task_description . "Add meg a <b>(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ")</b> * <b>(" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!";
+                $task_solution = $task_solution . "(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ") * (" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ") = (";
+                $task_solution = $task_solution . $this->CreatePolynomialTextByPairs($before_modulo);
+                $task_solution = $task_solution . ") % " . $modulo . " = ";
+                $task_solution = $task_solution . $this->CreatePolynomialTextByPairs($product["product"]);
+
+                if($polynomial_counter < $number_of_pairs - 1){
+                    $task_description = $task_description . "\n";
+                    $task_solution = $task_solution . "\n";
+                }
+            }
+            
+            return array("data" => $tasks , "task_text" => $task_description, "solution" => $solutions, "solution_text" => $task_solution);
+        }
+        
         /**
          * This private method append a congruence equivalence to the end of a text.
          */
@@ -1027,7 +1081,7 @@
 
             $degree = count($polynomial_expression) - 1;
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
-                if($coefficient_counter !== 0){
+                if($coefficient_counter !== 0 && $coefficient !== 0){
                     $task_description = $task_description . $this->PlusMinus($coefficient);
                     $coefficient = abs($coefficient);
                 }
@@ -1036,6 +1090,32 @@
 
             return $task_description;
         }
+
+        /**
+         * 
+         */
+        private function CreatePolynomialTextByPairs($pairs){
+            $text = "";
+            foreach($pairs as $coefficient_counter => $pair){
+                [$coefficient, $actual_degree] = $pair;
+                if($coefficient !== 0){
+                    if($coefficient_counter !== 0){
+                        $text = $text . $this->PlusMinus($coefficient) . abs($coefficient); 
+                    }else{
+                        $text = $text . $coefficient; 
+                    }
+                    
+                    if($actual_degree !== 0){
+                        $text = $text . "*x";
+                        if($actual_degree !== 1){
+                            $text = $text . "<span class=\"exp\">" . $actual_degree ."</span>";
+                        }
+                    }
+                }
+            }
+            return $text;
+        }
+        
 
         /**
          * 

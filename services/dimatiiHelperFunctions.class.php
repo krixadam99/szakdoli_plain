@@ -938,6 +938,7 @@
          */
         public function MultiplyPolynomialExpressions($multiplicand_polynomial_expression, $multiplier_polynomial_expression, $modulo){
             $product_polynomial_expression = [];
+            $product_polynomial_expression_before_modulo = [];
         
             // (x^2 + 2x + 3)*(2x^2 + 2x) => [1,2,3]*[2,2,0] = [2,2+4,0+4+6,0+6,0] = [2,6,10,6,0]
             for($multiplicand_counter = 0; $multiplicand_counter < count($multiplicand_polynomial_expression); $multiplicand_counter++){
@@ -946,20 +947,24 @@
                     
                     if(!isset($product_polynomial_expression[$multiplicand_counter + $multiplier_counter])){
                         $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0] = $actual_product;
+                        $product_polynomial_expression_before_modulo[$multiplicand_counter + $multiplier_counter][0] = $actual_product;
                     }else{
                         $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0] += $actual_product;
+                        $product_polynomial_expression_before_modulo[$multiplicand_counter + $multiplier_counter][0] += $actual_product;
                     }
 
                     $new_value = $product_polynomial_expression[$multiplicand_counter + $multiplier_counter][0];
                     $product_polynomial_expression[$multiplicand_counter + $multiplier_counter] = [$this->DetermineQuotientAndResidue([[$new_value, $modulo]])[0][1]];
+                    $product_polynomial_expression_before_modulo[$multiplicand_counter + $multiplier_counter] = [$new_value];
                 }
             }
 
             for($degree = 0; $degree < count($product_polynomial_expression); $degree++){
                 array_push($product_polynomial_expression[$degree], count($product_polynomial_expression) - $degree - 1);
+                array_push($product_polynomial_expression_before_modulo[$degree], count($product_polynomial_expression) - $degree - 1);
             }
     
-            return $product_polynomial_expression;
+            return array("product" => $product_polynomial_expression, "before_modulo" => $product_polynomial_expression_before_modulo);
         }
 
         /**

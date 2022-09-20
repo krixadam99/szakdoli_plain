@@ -378,7 +378,7 @@
             //Solutions part:
             $solution_array = [
                 "polynomial_division" => $polynomial_division_subtask["solution"][0],
-                "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])
+                "polynomial_multiplication" => $this->dimat_helper_functions->MultiplyPolynomialExpressions($task_array["multiply_polynomials"][0][1], $task_array["multiply_polynomials"][1][1], $task_array["multiply_polynomials"][2])["product"]
             ];
 
             $this->task_solutions = $solution_array;
