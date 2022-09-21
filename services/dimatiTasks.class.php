@@ -108,45 +108,16 @@
          * @return void 
         */
         private function CreateTaskTwo(){
-            //Set generation
-            $this->dimat_helper_functions->SetMaximumNumber(20);
-            $this->dimat_helper_functions->SetMinimumNumber(1);
-            [$set_A, $set_B] = $this->dimat_helper_functions->CreateSets(2, 20, false);
-
-            $number_of_pairs = mt_rand(6, 12);
-            $same = mt_rand(0, 1)==0?false:true;
-            $first_set = [];
-            $second_set = [];
-            if($same){
-                $is_A = mt_rand(0,1)==0?true:false;
-                if($is_A){
-                    $first_set = $set_A;
-                    $second_set = $set_A;
-                }else{
-                    $first_set = $set_B;
-                    $second_set = $set_B;
-                }
-            }else{
-                $first_set = $set_A;
-                $second_set = $set_B;
-            }
-
-            $relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, $number_of_pairs);
-            
-            $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 8, false);
-            $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 8, false);
-            $make_domain_to_set = $this->dimat_helper_functions->GetPartOfSet($second_set, 8, false);
+            $relation_task = $this->dimati_subtasks->CreateSubtask("1", "0", 1, true);
 
             $task_array = array(
                 "task_description" => "Sorold fel az elemeket a reláció definícióinál! Az elemeket ','-vel válaszd el, a rendezett párokat (elem,elem) alakban add meg!",
-                "sets" => array("A" => $first_set, "B" => $second_set, "N" => $narrow_to_set, "I" => $make_image_to_set, "D" => $make_domain_to_set),
-                "relation" => $relation
+                "sets" => $relation_task["data"]["sets"],
+                "relations" => $relation_task["data"]["relations"]
             );
 
-            $solution_array = [];
-
             $this->task_description = $task_array;
-            $this->task_solutions = $solution_array;
+            $this->task_solutions = $relation_task["solutions"];
         }
 
         /**

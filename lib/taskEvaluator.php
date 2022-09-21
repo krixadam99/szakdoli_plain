@@ -481,12 +481,17 @@
          * @param array $real_value An indexed array containing the set's elements.
          * @param string $input_name A string, the key of the element in the user's given answers' array.
          * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * @param bool $only_numbers Let only numbers to be evaluated.
          * 
          * @return void
          */
-        protected function EvaluateInputsWithSets($real_value, $input_name, $answer_id){
+        protected function EvaluateInputsWithSets($real_value, $input_name, $answer_id, $only_numbers = true){
             $given_answer_raw = $this->given_answers[$input_name]??"";
-            $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw);
+            if($only_numbers){
+                $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw);
+            }else{
+                $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
+            }
             
             $answer_text = $this->CreatePrintableSet($given_answer);
             $solution_text = $this->CreatePrintableSet($real_value);
@@ -508,12 +513,17 @@
          * @param array $real_value An indexed array containing oredered pairs, i.e., [first element, second element] pairs.
          * @param string $input_name A string, the key of the element in the user's given answers' array.
          * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
-         * 
+         * @param bool $only_numbers Let only numbers to be evaluated.
+         *
          * @return void
          */
-        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id){
+        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id, $only_numbers = true){
             $given_answer_raw = $this->given_answers[$answer_counter]??"";
-            $given_answer = $this->CreateRelation($this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw));
+            if($only_numbers){
+                $given_answer = $this->CreateRelation($this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw));
+            }else{
+                $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
+            }
             
             $answer_text = $this->CreatePrintableRelation($given_answer);
             $solution_text = $this->CreatePrintableRelation($real_value);

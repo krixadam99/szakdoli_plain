@@ -99,7 +99,7 @@
                     $task_counter += 1;
                 }
                 $id = $task_counter . "_" . $subtask_counter;
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -118,33 +118,22 @@
          * @return void
         */
         private function CheckSecondTaskSolution(){
-            foreach($this->real_solutions as $index => $real_solution){
-                $given_answer = $this->given_answers[$this->solution_counter]??"";
-                $given_solution = $this->ExtractSolutionFromInput($given_answer);
-                $was_correct = false;
-                if($this->solution_counter == 2 || $this->solution_counter == 3){
-                    $first_relation = $this->CreateRelation($given_solution);
-                    $answer_text = $this->CreatePrintableRelation($first_relation);
-                    $solution_text = $this->CreatePrintableRelation($real_solution);
-                    $was_correct = $this->AreRelationsEqual($real_solution, $first_relation);         
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions as $solution_array_key => $real_solution){
+                if($subtask_counter % 6 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
+                }
+                $id = $task_counter . "_" . $subtask_counter;
+                
+                if($subtask_counter == 2 || $subtask_counter == 3){
+                    $this->EvaluateInputsWithRelations($real_solution, $solution_array_key, $id, false);
                 }else{
-                    $was_correct = $this->AreSetsEqual($given_solution, $real_solution);
-                    $answer_text = $this->CreatePrintableSet($given_solution);
-                    $solution_text = $this->CreatePrintableSet($real_solution);
+                    $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
                 }
-
-                if($was_correct){
-                    $this->count_correct += 1;
-                }
-
-                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
-                    array(
-                        "answer" => $given_answer,
-                        "answer_text" => $answer_text,
-                        "solution_text" => $solution_text,
-                        "correct" => $was_correct
-                    );
                 $this->solution_counter++;
+                $subtask_counter++;
             }
         }
 

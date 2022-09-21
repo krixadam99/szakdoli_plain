@@ -40,7 +40,7 @@
 
                 //Only teachers can see this page,others will be redirected to the notifications page
                 if(count($this->GetApprovedTeacherGroups()) != 0){
-                    //include(ROOT_DIRECTORY . "/views/taskGenerationPage.view.php");
+                    include(ROOT_DIRECTORY . "/views/taskGenerationPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
                 }

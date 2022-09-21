@@ -113,7 +113,7 @@
                     array_push($picked_names, $picked_name);
                 }
 
-                $number_of_elements = mt_rand(min(3,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
+                $number_of_elements = mt_rand(min(6,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){
@@ -337,12 +337,16 @@
             }
             
             for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ){
-                array_push($universe, $numeric_counter);
+                if(mt_rand(0,10) < 4 || in_array($numeric_counter,$set)){
+                    array_push($universe, $numeric_counter);
+                }
             }
 
             foreach($this->possible_abc_characters as $index => $possible_abc_character){
                 if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
-                    array_push($universe, $possible_abc_character);
+                    if(mt_rand(0,10) < 4 || in_array($possible_abc_character,$set)){
+                        array_push($universe, $possible_abc_character);
+                    }
                 }
             }
 

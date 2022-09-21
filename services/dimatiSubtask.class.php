@@ -104,7 +104,7 @@
 
                 //Make the operations and the solutions
                 if($full_task){
-                    $sets = $this->dimat_helper_functions->CreateSets(4, 10);
+                    $sets = $this->dimat_helper_functions->CreateSets(4, 10, true);
                     array_push($set_of_sets, $sets);
                     [$actual_operation_dictionary, $actual_solutions] = $this->CreateFullSetTask($sets, $subtask_counter);
                     array_push($operation_dictionary,$actual_operation_dictionary);
@@ -175,7 +175,7 @@
             
             $task_data = array("relations" => [], "sets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
-                [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, mt_rand(6,10), false, false);
+                [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, mt_rand(8,12), false, false);
                 $number_of_pairs = mt_rand(6, 12);
                 $same = mt_rand(0, 1)==0?false:true;
                 if($same){ // Is the relation homogenious?
@@ -191,12 +191,12 @@
                 while(in_array($relation, $task_data["relations"])){
                     $relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, $number_of_pairs);
                 }
-                $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 8, false);
-                $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 8, false);
-                $make_domain_to_set = $this->dimat_helper_functions->GetPartOfSet($second_set, 8, false);
+                $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
+                $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
+                $make_domain_to_set = $this->dimat_helper_functions->GetPartOfSet($second_set, 4, false);
 
                 array_push($task_data["relations"], $relation);
-                array_push($task_data["sets"], array("A" => $first_set, "A" => $second_set, "N" => $narrow_to_set, "I" => $make_image_to_set, "D" => $make_domain_to_set));
+                array_push($task_data["sets"], array("A" => $first_set, "B" => $second_set, "N" => $narrow_to_set, "I" => $make_image_to_set, "D" => $make_domain_to_set));
                 $actual_sets = array("A" => $first_set, "B" => $second_set, "N" => $narrow_to_set, "I" => $make_image_to_set, "D" => $make_domain_to_set);
 
                 //Make the operations and the solutions
@@ -214,13 +214,16 @@
                     $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                     $set_counter = 0;
                     if($same){
-                        $task_text = "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"]) . " halmazok, valamint a";
+                        $task_text = $task_text. "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"]) . " halmaz, valamint az ";
                         $task_text = $task_text . "R \u{2286} A \u{00D7} A, ";
+                        $printable_solution = $printable_solution . "R \u{2286} A \u{00D7} A, ";
                     }else{
-                        $task_text = "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"])  . " és " . $this->CreateSetText("B", $actual_sets["B"]) . " halmazok, valamin a";
+                        $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"])  . " és " . $this->CreateSetText("B", $actual_sets["B"]) . " halmazok, valamint az ";
                         $task_text = $task_text . "R \u{2286} A \u{00D7} B, ";
+                        $printable_solution = $printable_solution . "R \u{2286} A \u{00D7} B, ";
                     }
                     $task_text = $task_text . $this->CreateRelationText("R", $relation) . "</div>";
+                    $printable_solution = $printable_solution . $this->CreateRelationText("R", $relation);
 
                     $previous_task = "";
                     for($counter = 0; $counter < 2; $counter++){
@@ -250,11 +253,11 @@
                             };break;
                             case 5:{
                                 $task_text_part = "Add meg a reláció " . $this->CreateSetText("I", $actual_sets["I"]) . " halmazon felvett képét!";
-                                $solution_text_part =  $this->CreateSetText("R<span class=\"bottom\">" . $this->CreateSetText("I", $actual_sets["I"], false) . "</span>", $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set));
+                                $solution_text_part =  $this->CreateSetText("R(" . $this->CreateSetText("I", $actual_sets["I"], false) . ")", $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set));
                             };break;
                             case 6:{
                                 $task_text_part = "Add meg a reláció " . $this->CreateSetText("D", $actual_sets["D"]) . " halmazon felvett ősképét!";
-                                $solution_text_part =  $this->CreateSetText("R<span class=\"bottom\">" . $this->CreateSetText("D", $actual_sets["D"], false) . "</span>", $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set));
+                                $solution_text_part =  $this->CreateSetText("R<span class=\"exp\">-1</span>(" . $this->CreateSetText("D", $actual_sets["D"], false) . ")", $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set));
                             };break;
                             default:break;
                         }

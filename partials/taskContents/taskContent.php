@@ -71,6 +71,23 @@
         return $set;
     }
 
+    function PrintRelation($relation_name, $relation_elements, $is_homogenious = false){
+        if($is_homogenious){
+            $relation = " $relation_name \u{2286} A \u{00D7} A, $relation_name = { ";
+        }else{
+            $relation = " $relation_name \u{2286} A \u{00D7} B, $relation_name = { ";
+        }
+        
+        foreach($relation_elements as $index => $relation_element){
+            if($index !== 0){
+                $relation = $relation . ", ";
+            }
+            $relation = $relation . "(". $relation_element[0] . ", " . $relation_element[1] . ")";
+        }
+        $relation = $relation . "}";
+        return $relation;
+    }
+
     function PrintPolynomialExpression($polynomial_degree, $polynomial_expression_coefficients){
         foreach($polynomial_expression_coefficients as $coefficient_index => $coefficient){
             $actual_index = $polynomial_degree - $coefficient_index;
