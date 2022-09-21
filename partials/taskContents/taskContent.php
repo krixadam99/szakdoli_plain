@@ -59,6 +59,18 @@
         return $suffix;
     }
 
+    function PrintSet($set_name, $elements){
+        $set = $set_name . " = { ";
+        foreach($elements as $index => $element){
+            if($index !== 0){
+                $set = $set . ", ";
+            }
+            $set = $set . $element;
+        }
+        $set = $set . "}";
+        return $set;
+    }
+
     function PrintPolynomialExpression($polynomial_degree, $polynomial_expression_coefficients){
         foreach($polynomial_expression_coefficients as $coefficient_index => $coefficient){
             $actual_index = $polynomial_degree - $coefficient_index;

@@ -108,8 +108,9 @@
                 while(in_array($picked_name,$picked_names) && $number_of_sets < count($this->set_names)){
                     $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
                 }
+                array_push($picked_names, $picked_name);
 
-                $number_of_elements = mt_rand(min(5,abs($maximum_number_of_elements)),max(5,abs($maximum_number_of_elements)));
+                $number_of_elements = mt_rand(min(1,abs($maximum_number_of_elements)),max(1,abs($maximum_number_of_elements))); // Minimum min(1,$maximum_number_of_elements), and maxium max(1,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){

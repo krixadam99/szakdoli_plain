@@ -4,7 +4,6 @@
      * 
     */
     class DimatiTasks extends Task{        
-        private $set_names;
         private $complex_number_names;
         private $dimat_helper_functions;
 
@@ -24,14 +23,15 @@
             $this->task_description = [];
             $this->task_solutions= [];
             $this->definitions = "";
+            $this->topic = $topic;
 
-            $this->set_names = ["A", "B", "C", "D"]; // The set names used throughout the task generation.
             $this->complex_number_names = ["v", "w", "x", "y", "z"]; // The complex number names used throughout the task generation.
             $this->dimat_helper_functions = new DimatiHelperFunctions();
-            $this->dimati_subtasks = new DimatiiSubtask();
+            $this->dimati_subtasks = new DimatiSubtask();
 
             mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...).
         }
+
         public function PracticePageTaskGeneration(){
             switch($this->topic){
                 case "0":{
@@ -87,17 +87,16 @@
          * @return void 
         */
         private function CreateTaskOne(){
-            $set_task = $this->dimati_subtasks->CreateSubtask("0", "0", 2);
-            
+            $set_task = $this->dimati_subtasks->CreateSubtask("0", "0", 1, true);
 
             $task_array = array(
                 "task_description" => "Add meg az eredményét a következő műveleteknek! Válaszodban a karaktereket ','-vel válaszd el!",
-                "sets" => array("A" => $set_A, "B" => $set_B, "C" => $set_C, "D" => $set_D), 
-                "operations" => $operation_dictionary
+                "sets" => $set_task["data"][0], 
+                "operations" => $set_task["data"][1]
             );
 
             $this->task_description = $task_array;
-            $this->task_solutions = $solution_array;
+            $this->task_solutions = $set_task["solutions"];
         }
 
         /**
