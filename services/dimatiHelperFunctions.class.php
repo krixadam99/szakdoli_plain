@@ -4,8 +4,19 @@
      * 
     */
     class DimatiHelperFunctions {
+        /**
+        * This variable contains all of the possible set names, which are uppercase English alphabet characters.
+        *
+        * @var array An array containing all of the uppercase English alphabet characters.
+        */
         private $set_names;
         private $complex_number_names;
+
+        /**
+        * This variable contains all of the possible characters, which are lowercase English alphabet characters.
+        *
+        * @var array An array containing all of the lowercase English alphabet characters.
+        */
         private $possible_abc_characters;
         private $maximum_number;
         private $minimum_number;
@@ -21,7 +32,10 @@
         public function __construct(){
             $this->maximum_number = 10;
             $this->minimum_number = 1;
-            $this->set_names = ["A", "B", "C", "D"];
+            $this->set_names = [
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+                "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" 
+            ];
             $this->complex_number_names = ["v", "w", "x", "y", "z"];
             $this->possible_abc_characters = [
                 "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
@@ -29,15 +43,6 @@
             ];
         }
 
-        /**
-         *
-         * This method is responsible for setting the upper bound of the range from which numbers will be picked randomly.
-         *  
-         * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly.
-         * @return void
-        */
-        public function SetMaximumNumber($maximum_number){ $this->maximum_number = $maximum_number;}
-        
         /**
          *
          * This method is responsible for setting the lowe bound of the range from which numbers will be picked randomly.
@@ -49,20 +54,62 @@
 
         /**
          *
-         * This method is responsible for creating sets.
-         * 
-         * Creating sets, where each of the sets will consist the same amount of elements.
-         * It can also be set if the elements can repeat in the sets, or not.
+         * This method is responsible for setting the upper bound of the range from which numbers will be picked randomly.
          *  
-         * @param int $set_number The number of sets that will be generated.
-         * @param int $number_of_elements The number of elements that will be put into the sets.
-         * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
+         * @param int $maximum_number The upper bound for the range from which numbers will be picked randomly.
          * @return void
         */
-        public function CreateSets($set_number, $number_of_elements, $is_bag = false){
+        public function SetMaximumNumber($maximum_number){ $this->maximum_number = $maximum_number;}
+
+        /**
+         * 
+         */
+        public function GetSetNames(){ return $this->set_names;}
+
+        /**
+         * 
+         */
+        public function GetComplexNumberNames(){ return $this->complex_number_names;}
+
+        /**
+         * 
+         */
+        public function GetPossibleAbcCharacters(){ return $this->possible_abc_characters;}
+
+        /**
+         * 
+         */
+        public function GetMinimumNumber(){ return $this->minimum_number;}
+
+        /**
+         * 
+         */
+        public function GetMaximumNumber(){ return $this->maximum_number;}
+
+        /**
+         *
+         * This method is responsible for creating sets.
+         * 
+         * Each of the sets will consist the same amount of elements.
+         * It can also be set if the elements can repeat in the sets (bags), or not.
+         *  
+         * @param int $number_of_sets The number of sets that will be generated.
+         * @param int $maximum_number_of_elements The maximum number of elements that will be put into the sets. The default is 5.
+         * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
+         * @return array Returns an associative array containing the sets and their names.
+        */
+        public function CreateSets($number_of_sets, $maximum_number_of_elements = 5, $is_bag = false){
             $return_sets = [];
-            for($set_counter = 0; $set_counter < $set_number; $set_counter++){
+            $picked_names = [];
+
+            for($set_counter = 0; $set_counter < $number_of_sets; $set_counter++){
                 $new_set = [];
+                $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
+                while(in_array($picked_name,$picked_names) && $number_of_sets < count($this->set_names)){
+                    $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
+                }
+
+                $number_of_elements = mt_rand(min(5,abs($maximum_number_of_elements)),max(5,abs($maximum_number_of_elements)));
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){
@@ -70,9 +117,11 @@
                     }else{
                         $new_element = $this->CreateRandomElement();
                     }
-                    array_push($new_set, $new_element);
+                    if($new_element != "%FULL%"){
+                        array_push($new_set, $new_element);
+                    }
                 }
-                array_push($return_sets,$new_set);
+                $return_sets[$picked_name] = $new_set;
             }
             return $return_sets;
         }
@@ -104,24 +153,30 @@
             }
         }
 
-        public function CreateNewPairOfSets($array, $first_set, $second_set){
-            $is_new_pair = count($array) == 0;
-            $first_index = array_search($first_set, $this->set_names);
-            $second_index = array_search($second_set, $this->set_names);
-            while(!$is_new_pair){
-                $is_new_pair = !in_array([$first_set, $second_set], $array[0]);
-                if(!$is_new_pair){
-                    $first_index = mt_rand(0, 3);
-                    $second_index = mt_rand(0, 3);
-                    $first_set = $this->set_names[$first_index];
-                    $second_set = $this->set_names[$second_index];
-                    while($second_set == $first_set){
-                        $second_index = mt_rand(0, 3);
-                        $second_set = $this->set_names[$second_index];
-                    }
+        /**
+         * This public method creates a new pair of set indices.
+         * 
+         * We get the number of created sets. This method will pick two indices between 0 and the number of the created sets, then it gives back if this pair is a new one.
+         * Operations will be exectued between the sets with the first and second indices.
+         * Additionally, this method checks, if new pairs can be picked or not.
+         * 
+         * @param array $chosen_set_indices An indexed array containing the previously chosen set index pairs in the form of [first_set_index, second_set_index].
+         * @param int $number_of_sets A whole number, this is the number of created sets. We wish to pick a pair from the range of 0 and this number (inclusively).
+         * 
+         * @return array Returns an indexed array containing a new pair of set indices.
+         */
+        public function PickNewPairOfSets($chosen_set_indices, $number_of_sets){
+            if(count($chosen_set_indices) < $number_of_sets*($number_of_sets - 1)){
+                $first_index = mt_rand(0, $number_of_sets-1);
+                $second_index = mt_rand(0, $number_of_sets-1);
+                while($first_index == $second_index || in_array([$first_index, $second_index], $chosen_set_indices)){
+                    $first_index = mt_rand(0, $number_of_sets-1);
+                    $second_index = mt_rand(0, $number_of_sets-1);
                 }
+                return [$first_index, $second_index];
+            }else{
+                return ["",""];
             }
-            return [$first_index, $second_index];
         }
 
         public function CreateNewPairOfNumbers($array, $first_number, $second_number){
@@ -144,18 +199,28 @@
             return [$first_index, $second_index];
         }
 
-        public function CreateNewSetElement($array, $first_set){
-            $is_new_pair = count($array) == 0;
-            $first_index = array_search($first_set, $this->set_names);
-            
-            while(!$is_new_pair){
-                $is_new_pair = $first_set != $array[0][0];
-                if(!$is_new_pair){
-                    $first_index = mt_rand(0, 3);
-                    $first_set = $this->set_names[$first_index];
+
+        /**
+         * This public method creates a new set index.
+         * 
+         * We get the number of created sets. This method will pick an index between 0 and the number of the created sets, then it gives back if this index is a new one.
+         * Additionally, this method checks, if new index can be picked or not.
+         * 
+         * @param array $chosen_set_index An indexed array containing the previously chosen set indices.
+         * @param int $number_of_sets A whole number, this is the number of created sets. We wish to pick a new index from the range of 0 and this number (inclusively).
+         * 
+         * @return array Returns an indexed array containing a new index.
+         */
+        public function PickNewSetElement($chosen_set_index, $number_of_sets){
+            if(count($chosen_set_index) < $number_of_sets){
+                $first_index = mt_rand(0, $number_of_sets-1);
+                while(in_array($first_index, $chosen_set_index)){
+                    $first_index = mt_rand(0, $number_of_sets-1);
                 }
+                return $first_index;
+            }else{
+                return "";
             }
-            return $first_index;
         }
 
         /**
@@ -228,46 +293,50 @@
 
         /**
          *
-         * This function is responsible for getting the universe of set.
+         * This function is responsible for getting the universe of the given set.
          * 
-         * @param int $index The index of the set for which the function will return the universe.
-         * @param array $sets An array containing the possible sets.
-         * @return array An array containing the universe of the given set of the form [...element].
+         * For numbers, all of the numbers will be picked from the smallest number of the set to the biggest number of the set.
+         * For alphabet charactes, all of the alphabet charatcers will be picked between the smallest and biggest alphabet characters of the set (small and big as their index in the alphabet).
+         * 
+         * @param array $set An indexed array containing the elements of the set.
+         * @return array An array containing the universe of the given set of the form [element,element...].
         */
-        public function GetUniverse($index, $sets=[]){
+        public function GetUniverse($set){
             $universe = [];
-            if(isset($sets[$index])){                
-                $first_operand = $sets[$index];
-                $minimum_number = $this->maximum_number;
-                $maximum_number = $this->minimum_number;
-                $minimum_alphabetic = "z";
-                $maximum_alpabetic = "a";
-                foreach($first_operand as $index => $element){
-                    if(is_int($element)){
-                        if($element < $minimum_number){
-                            $minimum_number = $element;
-                        }
-                        if($element > $maximum_number){
-                            $maximum_number = $element;
-                        }
-                    }else{
-                        if($element < $minimum_alphabetic){
-                            $minimum_alphabetic = $element;
-                        }
-                        if($element > $maximum_alpabetic){
-                            $maximum_alpabetic = $element;
-                        }
+            
+            // Minimax search for numbers and alphabet characters
+            $minimum_number = $this->maximum_number;
+            $maximum_number = $this->minimum_number;
+            $minimum_alphabetic = "z";
+            $maximum_alpabetic = "a";
+            foreach($set as $index => $element){
+                if(is_int($element)){
+                    if($element < $minimum_number){
+                        $minimum_number = $element;
+                    }
+                    if($element > $maximum_number){
+                        $maximum_number = $element;
+                    }
+                }else{
+                    if($element < $minimum_alphabetic){
+                        $minimum_alphabetic = $element;
+                    }
+                    if($element > $maximum_alpabetic){
+                        $maximum_alpabetic = $element;
                     }
                 }
-                
-                for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ) array_push($universe, $numeric_counter);
-                foreach($this->possible_abc_characters as $index => $possible_abc_character){
-                    if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
-                        array_push($universe, $possible_abc_character);
-                    }
-                }
-    
             }
+            
+            for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ){
+                array_push($universe, $numeric_counter);
+            }
+
+            foreach($this->possible_abc_characters as $index => $possible_abc_character){
+                if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
+                    array_push($universe, $possible_abc_character);
+                }
+            }
+
             return $universe;
         } 
 
@@ -705,15 +774,37 @@
             return $root;
         }
 
+        /**
+         * This private method will either pick a random number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character. The number or alphabetic character choice is also randmoly made.
+         * 
+         * Additionally, this method checks if the set's size is smaller than the possible number of elements. This is a security check, to avoid a forever loop.
+         * 
+         * @param array $set An indexed array containing the elements of a set.
+         * 
+         * @return int|string Returns either a whole number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character. Or it returns the "%FULL%" string which means, that no more element could be picked. 
+         */
         private function CreateNewRandomElement($set){
-            $random_element = $this->CreateRandomElement();
+            $number_range = $this->maximum_number - $this->minimum_number + 1;
+            $alphabet_range = count($this->possible_abc_characters);
 
-            while(in_array($random_element, $set)) {
+            // Check the size of the set (it should be smaller than the number of possible set elements).
+            if(count($set) < $number_range + $alphabet_range){
                 $random_element = $this->CreateRandomElement();
+
+                while(in_array($random_element, $set)) {
+                    $random_element = $this->CreateRandomElement();
+                }
+                return $random_element;
+            }else{
+                return "%FULL%";
             }
-            return $random_element;
         }
 
+        /**
+         * This private method will either pick a random number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character. The number or alphabetic vharacter choice is also randmoly made.
+         * 
+         * @return int|string Returns either a whole number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character.
+         */
         private function CreateRandomElement(){
             $element_type = mt_rand(0, 1);
             $random_element = 0;

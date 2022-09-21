@@ -4,7 +4,6 @@
      * 
     */
     class DimatiiTasks extends Task {        
-        private $dimat_helper_functions;
         private $dimatii_subtasks;
 
         /**
@@ -23,8 +22,7 @@
             $this->task_solutions = [];
             $this->definitions = "";
             $this->topic = $topic;
-            $this->dimatii_subtasks = new DimatiiSubTasks();
-            $this->dimat_helper_functions = new DimatiiHelperFunctions();
+            $this->dimatii_subtasks = new DimatiiSubtask();
             mt_srand(time()); // Seeding the random number generator with the current time.
         }
 

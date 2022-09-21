@@ -84,48 +84,16 @@
          */
         private function GenerateTask($main_task_index, $subtask_index, $subtask_count){
             $task = array("task_descriptions" => "", "task_solutions" => "");
-            $new_task = [];
-
+            
             if($_SESSION["subject"] == "i"){
-                switch($main_task_index){
-                    case "0":{
-
-                    }break;
-                    case "1":{
-
-                    }break;
-                    case "2":{
-
-                    }break;
-                    case "3":{
-
-                    }break;
-                    case "4":{
-
-                    }break;
-                    case "5":{
-
-                    }break;
-                    case "6":{
-
-                    }break;
-                    case "7":{
-
-                    }break;
-                    case "8":{
-
-                    }break;
-                    case "9":{
-
-                    }break;
-                    default:break;
-                };
+                $dimat_subtasks = new DimatiSubtask();
             }elseif($_SESSION["subject"] == "ii"){
-                $dimat_ii_subtasks = new DimatiiSubtasks();
-                $subtask = $dimat_ii_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
-                $task["descriptions"] = $subtask["descriptions"];
-                $task["printable_solutions"] = $subtask["printable_solutions"];
+                $dimat_subtasks = new DimatiiSubtask();
             }
+
+            $subtask = $dimat_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
+            $task["descriptions"] = $subtask["descriptions"];
+            $task["printable_solutions"] = $subtask["printable_solutions"];
 
             return $task;
         }

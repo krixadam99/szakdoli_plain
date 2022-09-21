@@ -28,10 +28,12 @@
             $this->set_names = ["A", "B", "C", "D"]; // The set names used throughout the task generation.
             $this->complex_number_names = ["v", "w", "x", "y", "z"]; // The complex number names used throughout the task generation.
             $this->dimat_helper_functions = new DimatiHelperFunctions();
+            $this->dimati_subtasks = new DimatiiSubtask();
 
             mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...).
-            
-            switch($topic){
+        }
+        public function PracticePageTaskGeneration(){
+            switch($this->topic){
                 case "0":{
                     $this->CreateTaskOne();
                 };
@@ -85,55 +87,8 @@
          * @return void 
         */
         private function CreateTaskOne(){
-            //We will have 4 sets
-            //Each set has 10 elements
-            [$set_A, $set_B, $set_C, $set_D] = $this->dimat_helper_functions->CreateSets(4, 10, false);
+            $set_task = $this->dimati_subtasks->CreateSubtask("0", "0", 2);
             
-            //Make the operations and the solutions
-            $operation_dictionary = array("union" => [], "intersection" => [], "substraction" => [], "complementer" => [], "symmetric difference" => []);
-            $solution_array = [];
-            for($operation_counter = 0; $operation_counter < 10; $operation_counter++){
-                $operation = $operation_counter%5;
-                
-                $first_index = mt_rand(0, 3);
-                $second_index = mt_rand(0, 3);
-                $first_set = $this->set_names[$first_index];
-                $second_set = $this->set_names[$second_index];
-                while($second_set == $first_set){
-                    $second_index = mt_rand(0, 3);
-                    $second_set = $this->set_names[$second_index];
-                }
-
-                switch($operation){
-                    case 0:{
-                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfSets($operation_dictionary["union"], $first_set, $second_set);
-                        array_push($operation_dictionary["union"], [$this->set_names[$new_indices[0]],$this->set_names[$new_indices[1]]]);
-                        $solution_array["solution_" . $operation_counter] = $this->GetSolutionForSets($new_indices, "union", [$set_A, $set_B, $set_C, $set_D]);
-                    };break;
-                    case 1:{
-                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfSets($operation_dictionary["intersection"], $first_set, $second_set);
-                        array_push($operation_dictionary["intersection"], [$this->set_names[$new_indices[0]],$this->set_names[$new_indices[1]]]);
-                        $solution_array["solution_" . $operation_counter] = $this->GetSolutionForSets($new_indices, "intersection", [$set_A, $set_B, $set_C, $set_D]);
-                    };break;
-                    case 2:{
-                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfSets($operation_dictionary["substraction"], $first_set, $second_set);
-                        array_push($operation_dictionary["substraction"], [$this->set_names[$new_indices[0]],$this->set_names[$new_indices[1]]]);
-                        $solution_array["solution_" . $operation_counter] = $this->GetSolutionForSets($new_indices, "substraction", [$set_A, $set_B, $set_C, $set_D]);
-                    };break;
-                    case 3:{
-                        $new_index = $this->dimat_helper_functions->CreateNewSetElement($operation_dictionary["complementer"], $first_set);
-                        $universe = $this->dimat_helper_functions->GetUniverse($new_index, [$set_A, $set_B, $set_C, $set_D]);
-                        array_push($operation_dictionary["complementer"], [$this->set_names[$new_index], $universe]);
-                        $solution_array["solution_" . $operation_counter] = $this->GetSolutionForSets([$new_index], "complementer", [$set_A, $set_B, $set_C, $set_D], $universe);
-                    };break;
-                    case 4:{
-                        $new_indices = $this->dimat_helper_functions->CreateNewPairOfSets($operation_dictionary["symmetric difference"], $first_set, $second_set);
-                        array_push($operation_dictionary["symmetric difference"], [$this->set_names[$new_indices[0]],$this->set_names[$new_indices[1]]]);
-                        $solution_array["solution_" . $operation_counter] = $this->GetSolutionForSets($new_indices, "symmetric difference", [$set_A, $set_B, $set_C, $set_D]);
-                    };break;
-                    default:break;
-                }
-            }
 
             $task_array = array(
                 "task_description" => "Add meg az eredményét a következő műveleteknek! Válaszodban a karaktereket ','-vel válaszd el!",
@@ -582,94 +537,6 @@
         */
         private function CreateTaskTen(){
             
-        }
-
-        private function GetSolutionForSets($indices, $operation, $sets, $universe = []){
-            $set_A = $sets[0];
-            $set_B = $sets[1];
-            $set_C = $sets[2];
-            $set_D = $sets[3];
-            $first_operand = [];
-            $second_operand = [];
-            $solution = [];
-
-            if(count($indices) == 2){                
-                switch($indices[0]){
-                    case 0: $first_operand = $set_A; break;
-                    case 1: $first_operand = $set_B; break;
-                    case 2: $first_operand = $set_C; break;
-                    case 3: $first_operand = $set_D; break;
-                    default: break;
-                }    
-                
-                switch($indices[1]){
-                    case 0: $second_operand = $set_A; break;
-                    case 1: $second_operand = $set_B; break;
-                    case 2: $second_operand = $set_C; break;
-                    case 3: $second_operand = $set_D; break;
-                    default: break;
-                }
-            }else if(count($indices) == 1){
-                switch($indices[0]){
-                    case 0: $first_operand = $set_A; break;
-                    case 1: $first_operand = $set_B; break;
-                    case 2: $first_operand = $set_C; break;
-                    case 3: $first_operand = $set_D; break;
-                    default: break;
-                }   
-            }
-
-            switch($operation){
-                case "union":{
-                    $solution = $first_operand;
-                    foreach($second_operand as $index => $element){
-                        if(!in_array($element,$solution)){
-                            array_push($solution,$element);
-                        }
-                    }
-                };break;
-                case "intersection":{
-                    $solution = [];
-                    foreach($second_operand as $index => $element){
-                        if(in_array($element, $first_operand)){
-                            array_push($solution,$element);
-                        }
-                    }
-                };break;
-                case "substraction":{
-                    $solution = [];
-                    foreach($first_operand as $index => $element){
-                        if(!in_array($element,$second_operand)){
-                            array_push($solution,$element);
-                        }
-                    }
-                };break;
-                case "complementer":{
-                    $solution = [];
-                    foreach($universe as $index => $element){
-                        if(!in_array($element,$first_operand)){
-                            array_push($solution,$element);
-                        }
-                    }
-                };break;
-                case "symmetric difference":{
-                    $solution = [];
-                    
-                    foreach($first_operand as $index => $element){
-                        if(!in_array($element,$second_operand)){
-                            array_push($solution,$element);
-                        }
-                    }
-
-                    foreach($second_operand as $index => $element){
-                        if(!in_array($element,$first_operand)){
-                            array_push($solution,$element);
-                        }
-                    }
-                };break;
-            }
-
-            return $solution;
         }
     }
 

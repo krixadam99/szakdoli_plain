@@ -6,6 +6,11 @@
         /**
          * 
          */
+        protected abstract function CreateSubtask($main_task_index, $subtask_index, $subtask_count);
+        
+        /**
+         * 
+         */
         protected function CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree, $zero_coefficient = false){
             $text = "";
             

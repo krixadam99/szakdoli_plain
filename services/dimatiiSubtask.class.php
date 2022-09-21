@@ -1,11 +1,11 @@
 <?php
 
-    class DimatiiSubTasks extends SubTask {
+    class DimatiiSubtask extends SubTask {
         private $dimat_helper_functions;
         
         /**
          * 
-         * The contructor for DimatiiSubTasks class.
+         * The contructor for DimatiiSubtask class.
          * 
          * @return void
          */
@@ -83,7 +83,9 @@
                     }
                 }break;
                 case "9":{
-
+                    switch($subtopic_number){
+                        default:break;
+                    }
                 }break;
                 default:break;
             };
@@ -948,6 +950,8 @@
          * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about giving the Lagrange interpolation for the generated points.
+         * Importantly, the polynomial expressions (which happen to be the solutions for the subtasks) are generated first, then the points will be created for each of them. The number of points are greater, or eqaul than the degree of the respective polinomial expression + 1, and all of them will lie on their corresponding polynomial expression.
+         * This alternative approach (this reverse method) is used, because this way the coefficients of the interpolation polynomial expressions will be inherently whole numbers (since the created polynomial expressions' coefficients are whole numbers all the time), that is, "will be nice".
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
          * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
@@ -977,7 +981,7 @@
                 array_push($solutions, $interpolation);
                 $base_polynomial_expressions = $interpolation["base_polynomial_expressions"];
 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree + 1 . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
                 $sum_text = "";
                 foreach($base_polynomial_expressions as $base_polynomial_counter => $base_polynomial_expression){
@@ -1004,6 +1008,10 @@
          * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
          * 
          * The subtask is about giving the Newton interpolation for the generated points.
+         * Importantly, the polynomial expressions (which happen to be the solutions for the subtasks) are generated first, then the points will be created for each of them. The number of points are greater, or eqaul than the degree of the respective polinomial expression + 1, and all of them will lie on their corresponding polynomial expression.
+         * This alternative approach (this reverse method) is used, because this way the coefficients of the interpolation polynomial expressions will be inherently whole numbers (since the created polynomial expressions' coefficients are whole numbers all the time), that is, "will be nice".
+         * Other than this, this function will use the Newton interpolation to create the final polynomial expressions (the ones generated above).
+         * It also creates a visual solution containing the table form of the solution, this will be used in the test (or seminar task) generation part.
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
          * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
@@ -1033,7 +1041,7 @@
                 array_push($solutions, $interpolation);
                 $table_data = $interpolation["table_data"];
 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree + 1 . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
                 $printable_solution = $printable_solution . "<table class=\"stair_table\">";
                 $printable_solution = $printable_solution . "<tr>";

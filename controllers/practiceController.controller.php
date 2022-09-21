@@ -92,6 +92,7 @@
         private function GenerateTask($subject, $topic_number){
             if($subject == "i"){
                 $dimat_i_tasks = new DimatiTasks($topic_number);
+                $dimat_i_tasks->PracticePageTaskGeneration();
                 $_SESSION["task"] = $dimat_i_tasks->GetTaskDescription();
                 $_SESSION["solution"] = $dimat_i_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_i_tasks->GetDefinitions();
