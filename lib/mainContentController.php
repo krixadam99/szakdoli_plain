@@ -64,7 +64,7 @@
             ];
 
             $this->dimat_i_subtopics = array(
-                1 => [],
+                1 => ["Műveletek halmazok között"],
                 2 => [],
                 3 => [],
                 4 => [],

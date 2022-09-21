@@ -91,7 +91,7 @@
 
             $task_array = array(
                 "task_description" => "Add meg az eredményét a következő műveleteknek! Válaszodban a karaktereket ','-vel válaszd el!",
-                "sets" => $set_task["data"][0], 
+                "set_of_sets" => $set_task["data"][0], 
                 "operations" => $set_task["data"][1]
             );
 

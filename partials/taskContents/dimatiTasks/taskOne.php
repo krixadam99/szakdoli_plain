@@ -1,21 +1,19 @@
-<?php foreach($_SESSION["task"]["sets"] as $set_name => $elements):?>
-    <label class="task_label">
-        <?= PrintSet($set_name, $elements)?>
-    </label>
-    <br>
-<?php endforeach?>
-<br>
-<?php foreach($_SESSION["task"]["operations"] as $subtask_counter => $subtask):?>
-    <?php $operation_names = array_keys($subtask)?>
+<?php foreach($_SESSION["task"]["set_of_sets"] as $subtask_counter => $actual_sets):?>
+    <?php foreach($actual_sets as $set_name => $set_elements):?>
+        <label class="task_label">
+            <?= PrintSet($set_name, $set_elements)?>
+        </label>
+        <br>
+    <?php endforeach?> 
     <?php $operation_counter = 0?>
-    <?php foreach($subtask as $operation_name => $operation):?>
+    <?php foreach($_SESSION["task"]["operations"][$subtask_counter] as $operation_name => $operation):?>
         <?php $task_counter = $subtask_counter . "_" . $operation_counter?>
         <?php $counter_text = $subtask_counter + 1 . "." . $operation_counter + 1?>
         <div class="small_task_container">
             <label class="task_label">
                 <?php if($operation_name === "union"):?>
                     <?=$counter_text?>. részfeladat: <?=$operation[$operation_counter/5][0]?> <?="\u{222A}"?> <?=$operation[$operation_counter/5][1]?>
-                <?php elseif($operation_name === "substraction"):?>
+                <?php elseif($operation_name === "intersection"):?>
                     <?=$counter_text?>. részfeladat: <?=$operation[$operation_counter/5][0]?> <?="\u{2229}"?> <?=$operation[$operation_counter/5][1]?>
                 <?php elseif($operation_name === "substraction"):?>
                     <?=$counter_text?>. részfeladat: <?=$operation[$operation_counter/5][0]?> <?="\\"?> <?=$operation[$operation_counter/5][1]?>

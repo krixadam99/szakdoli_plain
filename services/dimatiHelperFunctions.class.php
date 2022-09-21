@@ -110,7 +110,7 @@
                 }
                 array_push($picked_names, $picked_name);
 
-                $number_of_elements = mt_rand(min(1,abs($maximum_number_of_elements)),max(1,abs($maximum_number_of_elements))); // Minimum min(1,$maximum_number_of_elements), and maxium max(1,$maximum_number_of_elements) elements
+                $number_of_elements = mt_rand(min(3,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){

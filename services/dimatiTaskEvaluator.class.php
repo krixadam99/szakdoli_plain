@@ -20,7 +20,7 @@
             $this->solution_counter = 0;
             $this->count_correct = 0;
             $this->real_solutions = $_SESSION["solution"];
-            $this->given_answers = array_values($given_answers);
+            $this->given_answers = $given_answers;
         }
         
         /**
@@ -91,24 +91,17 @@
          * @return void
         */
         private function CheckFirstTaskSolution(){
-            foreach($this->real_solutions as $index => $real_solution){
-                $given_answer = $this->given_answers[$this->solution_counter]??"";
-                $given_solution = $this->ExtractSolutionFromInput($given_answer);
-                $was_correct = false;
-                if($this->AreSetsEqual($given_solution, $real_solution)){
-                    $this->count_correct += 1;
-                    $was_correct = true;
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions as $solution_array_key => $real_solution){
+                if($subtask_counter % 5 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
                 }
-
-                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
-                    array(
-                        "answer" => $given_answer, 
-                        "answer_text" => $this->CreatePrintableSet($given_solution),
-                        "solution_text" => $this->CreatePrintableSet($real_solution),
-                        "correct" => $was_correct
-                    );
-
+                $id = $task_counter . "_" . $subtask_counter;
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id);
                 $this->solution_counter++;
+                $subtask_counter++;
             }
         }
 

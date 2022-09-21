@@ -11,6 +11,21 @@
         /**
          * 
          */
+        protected function CreateSetText($set_name, $set_element){
+            $text = $set_name . " = {";
+            foreach($set_element as $element_counter => $element){
+                if($element_counter !== 0){
+                    $text = $text . ", ";
+                }
+                $text = $text . $element;
+            }
+            $text = $text . "}";
+            return $text;
+        }
+
+        /**
+         * 
+         */
         protected function CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree, $zero_coefficient = false){
             $text = "";
             

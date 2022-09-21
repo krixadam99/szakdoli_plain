@@ -68,7 +68,7 @@
                     $previous_point = floatval($this->GetPracticeResults()["practice_" . $practice_number]);
 
                     if($this->GetApprovedStudentSubject() === "i"){
-                        $task_evaluator = new DimatiTaskEvaluator(array_values($_POST));
+                        $task_evaluator = new DimatiTaskEvaluator($_POST);
                     }else if($this->GetApprovedStudentSubject() === "ii"){
                         $task_evaluator = new DimatiiTaskEvaluator($_POST);
                     }else{
