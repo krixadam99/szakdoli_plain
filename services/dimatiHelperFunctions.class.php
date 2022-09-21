@@ -95,20 +95,23 @@
          *  
          * @param int $number_of_sets The number of sets that will be generated.
          * @param int $maximum_number_of_elements The maximum number of elements that will be put into the sets. The default is 5.
+         * @param bool $is_associative This decides whether the sets are associative, or given by indices.
          * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
          * @return array Returns an associative array containing the sets and their names.
         */
-        public function CreateSets($number_of_sets, $maximum_number_of_elements = 5, $is_bag = false){
+        public function CreateSets($number_of_sets, $maximum_number_of_elements = 5, $is_associative = false, $is_bag = false){
             $return_sets = [];
             $picked_names = [];
 
             for($set_counter = 0; $set_counter < $number_of_sets; $set_counter++){
                 $new_set = [];
-                $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
-                while(in_array($picked_name,$picked_names) && $number_of_sets < count($this->set_names)){
+                if($is_associative){
                     $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
+                    while(in_array($picked_name,$picked_names) && $number_of_sets < count($this->set_names)){
+                        $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
+                    }
+                    array_push($picked_names, $picked_name);
                 }
-                array_push($picked_names, $picked_name);
 
                 $number_of_elements = mt_rand(min(3,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
@@ -122,7 +125,12 @@
                         array_push($new_set, $new_element);
                     }
                 }
-                $return_sets[$picked_name] = $new_set;
+                
+                if($is_associative){
+                    $return_sets[$picked_name] = $new_set;
+                }else{
+                    array_push($return_sets, $new_set);
+                }
             }
             return $return_sets;
         }

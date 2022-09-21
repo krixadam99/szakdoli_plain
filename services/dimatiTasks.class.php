@@ -143,14 +143,7 @@
                 "relation" => $relation
             );
 
-            $solution_array = array(
-                "solution_0" => $this->dimat_helper_functions->GetDomainOfRelation($relation),
-                "solution_1" => $this->dimat_helper_functions->GetImageOfRelation($relation),
-                "solution_2" => $this->dimat_helper_functions->GetRestrictedRelation($relation, $narrow_to_set),
-                "solution_3" => $this->dimat_helper_functions->GetInverseRelation($relation),
-                "solution_4" => $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set),
-                "solution_5" => $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set)
-            );
+            $solution_array = [];
 
             $this->task_description = $task_array;
             $this->task_solutions = $solution_array;

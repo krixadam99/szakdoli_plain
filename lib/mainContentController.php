@@ -65,7 +65,7 @@
 
             $this->dimat_i_subtopics = array(
                 1 => ["Műveletek halmazok között"],
-                2 => [],
+                2 => ["Relációk alapvető tulajdonságai"],
                 3 => [],
                 4 => [],
                 5 => [],

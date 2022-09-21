@@ -11,13 +11,41 @@
         /**
          * 
          */
-        protected function CreateSetText($set_name, $set_element){
-            $text = $set_name . " = {";
-            foreach($set_element as $element_counter => $element){
+        protected function CreateSetText($set_name, $set_elements, $with_name = true){
+            $text = "";
+            if($with_name){
+                $text = $set_name . " = {";
+            }else{
+                $text = "{";
+            }
+
+
+            foreach($set_elements as $element_counter => $element){
                 if($element_counter !== 0){
                     $text = $text . ", ";
                 }
                 $text = $text . $element;
+            }
+            $text = $text . "}";
+            return $text;
+        }
+
+        /**
+         * 
+         */
+        protected function CreateRelationText($relation_name, $relation_elements, $with_name = true){
+            $text = "";
+            if($with_name){
+                $text = $relation_name . " = {";
+            }else{
+                $text = "{";
+            }
+            
+            foreach($relation_elements as $element_counter => $element){
+                if($element_counter !== 0){
+                    $text = $text . ", ";
+                }
+                $text = $text . "(" . $element[0] . ", " . $element[1] . ")";
             }
             $text = $text . "}";
             return $text;
