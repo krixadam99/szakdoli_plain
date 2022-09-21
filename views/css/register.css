@@ -8,7 +8,7 @@ body{
     background-attachment: fixed;
     background-size: calc(600px + 0.6vw) calc(600px + 0.6vw);
     background-repeat: repeat;
-    animation: moving_symbols 20s, color_changing 24s ease infinite;
+    animation: moving_symbols 20s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }

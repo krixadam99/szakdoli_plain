@@ -66,14 +66,14 @@
             $this->dimat_i_subtopics = array(
                 1 => ["Műveletek halmazok között"],
                 2 => ["Relációk alapvető tulajdonságai"],
-                3 => [],
-                4 => [],
-                5 => [],
-                6 => [],
-                7 => [],
-                8 => [],
-                9 => [],
-                10 => []
+                3 => ["Relációk kompozíciója", "Relációk tulajdonságai", "Reláció készítése"],
+                4 => ["Függvény-e a reláció", "Szürjektív, injektív és bijektív függvények"],
+                5 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek", "Másodfokú egyenletek a komplex számtest felett"],
+                6 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
+                7 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
+                8 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],
+                9 => ["Gráfok alapvető tulajdonságai"],
+                10 => ["Gráfok megszerkeszthetősége"]
             );
 
             $this->dimat_i_topics_descriptions = [
