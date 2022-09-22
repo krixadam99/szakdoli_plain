@@ -64,8 +64,8 @@
                         if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"]) && isset($_POST[explode("_main_topic",$key)[0] . "_task_quantity"])){
                             $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
                             $subtask_count = $_POST[explode("_main_topic",$key)[0] . "_task_quantity"];
-                            if(is_numeric($subtask_count) && intval($subtask_count) > 0){
-                                array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, intval($subtask_count)));
+                            if(is_numeric($subtask_count)){
+                                array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, $subtask_count));
                             }
                         }
                     }

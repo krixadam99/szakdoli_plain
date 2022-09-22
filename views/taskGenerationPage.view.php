@@ -88,23 +88,7 @@
             <h1><?=$subject?> <?=$exam_type?> generálása</h1>
             <hr> 
             <div class="task_generator_container">
-                <form method="POST" id="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"width:85%"?>" action="./index.php?site=createPreview">
-                    <?php $section_name = "header"?>
-                    <div class="pdf_page_section">
-                        <label class="pdf_page_section_label">Fejléc</label>
-                        <hr class="full_hr">
-                        <?php include("./partials/styleBox.php")?>
-                        <textarea id="header_text_area" name="header_text" rows="8"><?=isset($_SESSION["preview"]["header_text"])?$_SESSION["preview"]["header_text"]:"Ide írd a fejléc szövegét..."?></textarea>
-                    </div>
-
-                    <?php $section_name = "title"?>
-                    <div class="pdf_page_section">
-                        <label class="pdf_page_section_label">Cím</label>
-                        <hr class="full_hr">
-                        <?php include("./partials/styleBox.php")?>
-                        <textarea id="title_text_area" name="title_text" rows="1"><?=isset($_SESSION["preview"]["title_text"])?$_SESSION["preview"]["title_text"]:"Ide írd a címet..."?></textarea>
-                    </div>
-                    
+                <form method="POST" id="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"width:85%"?>" action="./index.php?site=createPreview">                    
                     <?php if($_SESSION["exam_type"] === "big"):?>
 
                     <?php elseif($_SESSION["exam_type"] === "small"):?>
@@ -112,22 +96,14 @@
                             $section_name = "task_0";
                         ?>
                         <div class="pdf_page_section">
-                            <label class="pdf_page_section_label">Feladat kiválasztása (az itt beállított stílus egységesen lesz alkalmazva)</label>
+                            <label class="pdf_page_section_label">Feladat kiválasztása</label>
                             <hr class="full_hr">
-                            <?php include("./partials/styleBox.php")?>
                             <?php include("./partials/taskChoice.php")?>
                         </div>
                     <?php elseif($_SESSION["exam_type"] === "seminar"):?>
 
                     <?php endif?>
                     
-                    <?php $section_name = "footer"?>
-                    <div class="pdf_page_section" style="margin-bottom: 3%">
-                        <label class="pdf_page_section_label">Lábléc</label>
-                        <hr class="full_hr">
-                        <?php include("./partials/styleBox.php")?>
-                        <textarea id="footer_text_area" name="footer_text" rows="8"><?=isset($_SESSION["preview"]["footer_text"])?$_SESSION["preview"]["footer_text"]:"Ide írd a lábléc szövegét..."?></textarea>
-                    </div>
                     <?php if(!isset($_SESSION["preview"]) || isset($_SESSION["preview"]) && count($_SESSION["preview"]) == 0):?>
                         <button id="generator_button" type="submit" style="margin-left:45%">Feladatsor generálása</button>
                     <?php endif?>
@@ -179,7 +155,7 @@
             <?php if(isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0):?>
                 <div class="pdf_page_button_container">
                     <button id="save_pdf_button">Előnézet mentése</button>
-                    <button id="new_task_generator_button">Új feladatsor generálása</button>
+                    <button id="new_task_generator_button" type="submit" form="task_generation_settings">Új feladatsor generálása</button>
                 </div>
             <?php endif?>
         <?php endif?>

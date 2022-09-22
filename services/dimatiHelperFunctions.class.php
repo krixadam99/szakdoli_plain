@@ -113,7 +113,7 @@
                     array_push($picked_names, $picked_name);
                 }
 
-                $number_of_elements = mt_rand(min(6,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
+                $number_of_elements = mt_rand(min(3,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){
@@ -705,6 +705,80 @@
             return $this->IsSurjective($relation, $image) && $this->IsInjective($relation);
         }
 
+        /**
+         * This public method returns all of the possible relations for a given base set
+         */
+        public function GetAllPossibleRelations($base_set){
+            $all_relations = [[]];
+
+            // Determine all possible combinations of the base set of size 2
+            // These are combinations, that is, elements, where the order doesn't matter
+            // But firstly, We need all pairs, that's why we need the inverses of the elements, also the reflexive elements
+            $all_pairs = $this->DetermineCombinationOfList($base_set, 2);
+
+            // [1,2,3,4] -> [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]] + [[2,1],[3,1],[4,1],[3,2],[4,2],[4,3]] + [[1,1], [2,2], [3,3], [4,4]]
+            foreach($all_pairs as $element_counter => $pair){
+                array_push($all_pairs, [$pair[1],$pair[0]]);
+            }
+            foreach($base_set as $element_counter => $element){
+                array_push($all_pairs, [$element,$element]);
+            }
+            array_push($all_relations, $all_pairs);
+
+            for($relation_size_counter = 1; $relation_size_counter < count($all_pairs); $relation_size_counter++){
+                $all_relation_with_size = $this->DetermineCombinationOfList($all_pairs, $relation_size_counter); // Here literal combinations will be picked, so the order doesn't matter
+                $all_relations = array_merge($all_relations, $all_relation_with_size);
+            }
+
+            return $all_relations;
+        }
+
+        /**
+         * This public method will filter the relations by the characteristics.
+         */
+        public function FilterRelationsWithCharacteristics($base_set, $all_relations, $characteristics, $lower_bound){
+            $correct_relations = [];
+
+            foreach($all_relations as $relation_counter => $relation){
+                if($lower_bound <= count($relation)){
+                    $missed = false;
+                
+                    foreach($characteristics as $characteristic_name => $satisfies){
+                        switch($characteristic_name){
+                            case "Reflexív":{
+                                $missed = $this->IsReflexiveRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            case "Irreflexív":{
+                                $missed = $this->IsIrreflexiveRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            case "Szimmetrikus":{
+                                $missed = $this->IsSymmetricRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            case "Antiszimmetrikus":{
+                                $missed = $this->IsAntiSymmetricRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            case "Asszimetrikus":{
+                                $missed = $this->IsAssymmetricRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            case "Tranzitív":{
+                                $missed = $this->IsTransitiveRelation($base_set, $relation) != $satisfies;
+                            };break;
+                            default:;break;
+                        }
+    
+                        if($missed){
+                            break;
+                        }
+                    }
+    
+                    if(!$missed){
+                        array_push($correct_relations, $relation);
+                    }
+                }
+            }
+            return $correct_relations; 
+        }
+
         public function SolveQuadraticEquation($a, $b, $c){
             $return_values = [];
             $discriminator = $b**2 - 4*$a*$c;
@@ -785,6 +859,51 @@
                 array_push($root, 1, (2*mt_rand(1, $n-1)*pi())/$n);
             }
             return $root;
+        }
+
+        /**
+         * 
+         * This private recursive method creates a list containing possible combinations of the elements of the given list, where the number of elements per list is also given. The order of these elements per combination does not matter!
+         * 
+         * The list will be iterated through by embedded iterations, where the "deepest level" is the same as the required amount of elements per combination.
+         * Every iteration will start from the element following the "parent" iteration's actual element and ends at the element of the index of the original (list's size - original number of elements per combination + level of iteration (embedding count)).
+         * The element pushing happens on the deppest level.
+         * Since embedding n number of iterations is tedious and certainly not a good practice, the easiest way to implement this task is to make it recursive.
+         * 
+         * @param array $original_list The original list of which the method will give the combinations.
+         * @param int $number_of_remained_iterations The number of remained iterations. This decreases by every recursive call.
+         * @param array $actual_elements This is a list of elements. It is growing every turn, and will finally contain a combination when it gets to the deepest level of iterations. When this finally contains as many elements as originally was required, then it gets pushed to the return array.
+         * @param int $previous_index The previous iteration's last element's index.
+         * 
+         * @return array An indexed array containing possible combinations of the original list's elements (required number of elements). In the final level all of the combinations are in the returned array.
+        */
+        private function DetermineCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
+            if($number_of_remained_iterations >= 1){ // At least 1 iterations remained
+                if($number_of_remained_iterations < count($original_list)){ // The number of remained iterations is not greater than, or equal to the number of elements of the original list 
+                    if($number_of_remained_iterations > 1){ // At least 2 iterations remained
+                        $return_list = [];
+                        for($counter = $previous_index; $counter < count($original_list) - $number_of_remained_iterations + 1; $counter++){
+                            $temporary_list = $actual_elements; // NOT reference, also this is needed, or else we should pop the last element of $actual_elements in the end of each iteration
+                            array_push($temporary_list, $original_list[$counter]);
+                            $combination_list = $this->DetermineCombinationOfList($original_list, $number_of_remained_iterations - 1, $temporary_list, $counter + 1); // A part of the final list of combinations
+                            $return_list = array_merge($return_list, $combination_list); // Merging the list of combinations with part of the possible combinations  
+                        }
+                        return $return_list;
+                    }elseif($number_of_remained_iterations === 1){ // There is only 1 iteration left
+                        $return_list = [];
+                        for($counter = $previous_index; $counter < count($original_list); $counter++){
+                            $temporary_list = $actual_elements; // NOT reference, also this is needed, or else we should pop the last element of $actual_elements in the end of each iteration
+                            array_push($temporary_list, $original_list[$counter]);
+                            array_push($return_list, $temporary_list);
+                        }
+                        return $return_list; // Returning a part of the final combination's list, this is the deepest level of iterations
+                    }
+                }else{
+                    return [$original_list];
+                }
+            }
+            
+            return [];
         }
 
         /**

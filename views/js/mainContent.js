@@ -126,19 +126,19 @@ if(seminar_tasks_generation_card){
 if(topic_select){
     topic_select.addEventListener("change", ()=>{
         let selected_index = topic_select.options.selectedIndex
-
-        console.log(selected_index)
         
-        let subtopic_selects = document.querySelectorAll(".subtopic_select")
-        console.log(subtopic_selects)
-        for(let subtopic_select_counter = 0; subtopic_select_counter < subtopic_selects.length; subtopic_select_counter++) {
-            if(subtopic_select_counter === selected_index){
-                console.log(subtopic_selects[subtopic_select_counter])
-                subtopic_selects[subtopic_select_counter].style["display"] = "inline"
-                subtopic_selects[subtopic_select_counter].disabled = ""
+        let subtopic_box= document.querySelector(".subtopic_box")
+        let subtopic_children= subtopic_box.children;
+        for(let subtopic_counter = 0; subtopic_counter < subtopic_children.length; subtopic_counter++) {
+            if(subtopic_counter === selected_index){
+                subtopic_children[subtopic_counter].style["display"] = "inline"
+                subtopic_children[subtopic_counter].disabled = ""
+                if(subtopic_children[subtopic_counter].tagName.toLocaleLowerCase() === "input"){
+                    subtopic_children[subtopic_counter].readOnly = true
+                }
             }else{
-                subtopic_selects[subtopic_select_counter].style["display"] = "none"
-                subtopic_selects[subtopic_select_counter].disabled = "disabled"
+                subtopic_children[subtopic_counter].style["display"] = "none"
+                subtopic_children[subtopic_counter].disabled = "disabled"
             }
         }
     })
@@ -150,7 +150,6 @@ if(save_pdf_button){
 
         let new_window = window.open()
         let preview_content = document.getElementById("preview").innerHTML
-        console.log(preview_content)
         self.focus()
         new_window.document.open()
         new_window.document.write('<html><body>' +  preview_content + '</body></html>')

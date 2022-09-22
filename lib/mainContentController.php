@@ -64,16 +64,16 @@
             ];
 
             $this->dimat_i_subtopics = array(
-                1 => ["Műveletek halmazok között"],
-                2 => ["Relációk alapvető tulajdonságai"],
-                3 => ["Relációk kompozíciója", "Relációk tulajdonságai", "Reláció készítése"],
-                4 => ["Függvény-e a reláció", "Szürjektív, injektív és bijektív függvények"],
-                5 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek", "Másodfokú egyenletek a komplex számtest felett"],
-                6 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
-                7 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
-                8 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],
-                9 => ["Gráfok alapvető tulajdonságai"],
-                10 => ["Gráfok megszerkeszthetősége"]
+                0 => ["Műveletek halmazok között"],
+                1 => ["Relációk alapvető tulajdonságai"],
+                2 => ["Relációk kompozíciója", "Relációk tulajdonságai", "Reláció készítése"],
+                3 => ["Függvény-e a reláció", "Szürjektív, injektív és bijektív függvények"],
+                4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek", "Másodfokú egyenletek a komplex számtest felett"],
+                5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
+                6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
+                7 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],
+                8 => ["Gráfok alapvető tulajdonságai"],
+                9 => ["Gráfok megszerkeszthetősége"]
             );
 
             $this->dimat_i_topics_descriptions = [
@@ -103,16 +103,16 @@
             ];
 
             $this->dimat_ii_subtopics = array(
-                1 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése", "..."],
-                2 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
-                3 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus", "Kibővített Eukleidészi algoritmus"],
-                4 => ["Lineáris kongruenciák megoldása", "Euler-Fermat és kis Fermat-tétel"],
-                5 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
-                6 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
-                7 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
-                8 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
-                9 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"],
-                10 => ["..."]
+                0 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése", "..."],
+                1 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
+                2 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus", "Kibővített Eukleidészi algoritmus"],
+                3 => ["Lineáris kongruenciák megoldása", "Euler-Fermat és kis Fermat-tétel"],
+                4 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
+                5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
+                6 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
+                7 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
+                8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"],
+                9 => ["..."]
             );
 
             $this->dimat_ii_topics_descriptions = [
