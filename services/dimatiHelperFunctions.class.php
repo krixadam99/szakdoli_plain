@@ -94,12 +94,13 @@
          * It can also be set if the elements can repeat in the sets (bags), or not.
          *  
          * @param int $number_of_sets The number of sets that will be generated.
+         * @param int $minimum_number_of_elements The minimum number of elements that will be put into the sets. The default is 3.
          * @param int $maximum_number_of_elements The maximum number of elements that will be put into the sets. The default is 5.
          * @param bool $is_associative This decides whether the sets are associative, or given by indices.
          * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
          * @return array Returns an associative array containing the sets and their names.
         */
-        public function CreateSets($number_of_sets, $maximum_number_of_elements = 5, $is_associative = false, $is_bag = false){
+        public function CreateSets($number_of_sets, $minimum_number_of_elements = 3, $maximum_number_of_elements = 5, $is_associative = false, $is_bag = false){
             $return_sets = [];
             $picked_names = [];
 
@@ -113,7 +114,7 @@
                     array_push($picked_names, $picked_name);
                 }
 
-                $number_of_elements = mt_rand(min(3,abs($maximum_number_of_elements)),max(3,abs($maximum_number_of_elements))); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
+                $number_of_elements = mt_rand(abs($minimum_number_of_elements),abs($maximum_number_of_elements)); // Minimum min(3,$maximum_number_of_elements), and maxium max(3,$maximum_number_of_elements) elements
                 for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                     $new_element = 0;
                     if(!$is_bag){
@@ -656,7 +657,6 @@
             }else{
                 return [];
             }
-
         }
 
         public function IsFunction($relation){
@@ -737,13 +737,12 @@
          * This public method will filter the relations by the characteristics.
          */
         public function FilterRelationsWithCharacteristics($base_set, $all_relations, $characteristics, $lower_bound){
-            $correct_relations = [];
-
-            foreach($all_relations as $relation_counter => $relation){
-                if($lower_bound <= count($relation)){
-                    $missed = false;
-                
-                    foreach($characteristics as $characteristic_name => $satisfies){
+            foreach($characteristics as $characteristic_name => $satisfies){
+                $filtered_array = [];
+                foreach($all_relations as $relation_counter => $relation){
+                    if($lower_bound <= count($relation)){
+                        $missed = false;
+                        
                         switch($characteristic_name){
                             case "Reflexív":{
                                 $missed = $this->IsReflexiveRelation($base_set, $relation) != $satisfies;
@@ -765,18 +764,16 @@
                             };break;
                             default:;break;
                         }
-    
-                        if($missed){
-                            break;
+
+                        if(!$missed){
+                            array_push($filtered_array, $relation);
                         }
                     }
-    
-                    if(!$missed){
-                        array_push($correct_relations, $relation);
-                    }
                 }
+                $all_relations = $filtered_array;
             }
-            return $correct_relations; 
+
+            return $all_relations; 
         }
 
         public function SolveQuadraticEquation($a, $b, $c){
