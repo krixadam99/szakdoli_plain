@@ -815,7 +815,7 @@
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     $second_trigonometric_form = $this->GetTrigonometricForm($second_number);
                     array_push($return_values, $first_trigonometric_form[0]*$second_trigonometric_form[0]);
-                    array_push($return_values, $first_trigonometric_form[1]*$second_trigonometric_form[1]);
+                    array_push($return_values, $first_trigonometric_form[1]+$second_trigonometric_form[1]);
                 }break;
                 case "division":{
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
@@ -833,11 +833,12 @@
                     }
                 }break;
                 case "root":{
+                    $return_values = array("size" => [], "arguments"=> []);
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     if($power != 0){
-                        array_push($return_values, $first_trigonometric_form[0]/$power);
+                        $return_values["size"] =  $first_trigonometric_form[0]/$power;
                         for($k=0; $k<abs($power); $k++){
-                            array_push($return_values, ($first_trigonometric_form[1]+2*$k*pi())/$power);
+                            array_push($return_values["arguments"], ($first_trigonometric_form[1]+2*$k*pi())/$power);
                         }
                     }else{
                         array_push($return_values, 1, 0);

@@ -47,14 +47,14 @@
                 case "5":{
                     switch($subtopic_number){
                         case "0": $subtask = $this->CreateComplexTrigonometricFormSubtask($number_of_subtasks, $full_task);break;
-                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateComplexOperationsTrigonometricSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
                 case "6":{
                     switch($subtopic_number){
-                        case "0": $subtask = $this->CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task);break;
-                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
+                        case "0": $subtask = $this->CreateComplexPowerTrigonometricSubtask($number_of_subtasks, $full_task);break;
+                        case "1": $subtask = $this->CreateComplexRootTrigonometricSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
@@ -725,6 +725,155 @@
                 $solutions = array_merge($solutions,[
                     "solution_0_" . $subtask_counter . "_0" => $trigonometric_forms[0],
                     "solution_0_" . $subtask_counter . "_1" => $trigonometric_forms[1]
+                ]);
+
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the second subtask of the sixth task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexOperationsTrigonometricSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
+            
+            $task_data = array("pairs_of_complex_numbers" => []);
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                $pair_of_complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                while(in_array($pair_of_complex_numbers,$task_data["pairs_of_complex_numbers"])){
+                    $pair_of_complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                }
+                array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
+
+                $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . " és " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . ", " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[1]) . ".</div>";
+
+                $operations = [$this->dimat_helper_functions->UseMoivre("multiplication", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1]), $this->dimat_helper_functions->UseMoivre("division", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1])];
+                $task_text = $task_text . "<div class=\"paragraph\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x * y = " .  $this->CreateComplexNumberTrigonometricText("", $operations[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x / y = " .  $this->CreateComplexNumberTrigonometricText("", $operations[1], true, false) . "</div>";
+
+                $solutions = array_merge($solutions,[
+                    "solution_1_" . $subtask_counter . "_0" => $operations[0],
+                    "solution_1_" . $subtask_counter . "_1" => $operations[1]
+                ]);
+
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the first subtask of the seventh task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexPowerTrigonometricSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+
+            $this->dimat_helper_functions->SetMinimumNumber(-10);
+            $this->dimat_helper_functions->SetMaximumNumber(10 + $number_of_subtasks);
+            
+            $task_data = array("complex_numbers" => [], "powers" => []);
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
+                while(in_array($complex_number,$task_data["complex_numbers"])){
+                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                }
+                $first_power = mt_rand(3,4);
+                $second_power = mt_rand(5,6);
+                array_push($task_data["complex_numbers"], $complex_number);
+                array_push($task_data["powers"], [$first_power, $second_power]);
+
+                $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám.</div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . ".</div>";
+
+                $operations = [$this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $first_power), $this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $second_power)];
+                $task_text = $task_text . "<div class=\"paragraph\">Add meg az x<span class=\"exp\">$first_power</span> és x<span class=\"exp\">$second_power</span> hatványozások eredményét!</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$first_power</span> = " .  $this->CreateComplexNumberTrigonometricText("", $operations[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$second_power</span>= " .  $this->CreateComplexNumberTrigonometricText("", $operations[1], true, false) . "</div>";
+
+                $solutions = array_merge($solutions,[
+                    "solution_0_" . $subtask_counter . "_0" => $operations[0],
+                    "solution_0_" . $subtask_counter . "_1" => $operations[1]
+                ]);
+
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the second subtask of the seventh task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexRootTrigonometricSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+
+            $this->dimat_helper_functions->SetMinimumNumber(-10);
+            $this->dimat_helper_functions->SetMaximumNumber(10 + $number_of_subtasks);
+            
+            $task_data = array("complex_numbers" => [], "roots" => []);
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
+                while(in_array($complex_number,$task_data["complex_numbers"])){
+                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                }
+                $first_root = mt_rand(3,4);
+                $second_root = mt_rand(5,6);
+                array_push($task_data["complex_numbers"], $complex_number);
+                array_push($task_data["roots"], [$first_root, $second_root]);
+
+                $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám.</div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . ".</div>";
+
+                $operations = [$this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $first_root), $this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $second_root)];
+                $task_text = $task_text . "<div class=\"paragraph\">Add meg az <span class=\"exp\">$first_root</span>\u{221A}x és <span class=\"exp\">$second_root</span>\u{221A}x gyökvonás eredményét!</div>";
+                
+                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$first_root</span>\u{221A}x = " . $this->CreateComplexNumberTrigonometricText("", ["<span class=\"exp\">$first_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$first_root"], false, false) . "</div>";
+                foreach($operations[0]["arguments"] as $root_counter => $root){
+                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . $this->CreateComplexNumberTrigonometricText("", [$operations[0]["size"], $root], false) . "</div>";
+                }
+
+                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$second_root</span>\u{221A}x = " . $this->CreateComplexNumberTrigonometricText("", ["<span class=\"exp\">$second_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$second_root"], false, false) . "</div>";
+                foreach($operations[1]["arguments"] as $root_counter => $root){
+                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . $this->CreateComplexNumberTrigonometricText("", [$operations[1]["size"], $root], false) . "</div>";
+                }
+
+                $solutions = array_merge($solutions,[
+                    "solution_1_" . $subtask_counter . "_0" => $operations[0],
+                    "solution_1_" . $subtask_counter . "_1" => $operations[1]
                 ]);
 
                 array_push($descriptions, $task_text);
