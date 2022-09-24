@@ -164,24 +164,24 @@
         }
 
         /**
-         * This public method creates a new pair of set indices.
+         * This public method creates a new pair of indices.
          * 
-         * We get the number of created sets. This method will pick two indices between 0 and the number of the created sets, then it gives back if this pair is a new one.
+         * We get the number of created elements. This method will pick two indices between 0 and the number of the created sets, then it gives back if this pair is a new one.
          * Operations will be exectued between the sets with the first and second indices.
          * Additionally, this method checks, if new pairs can be picked or not.
          * 
-         * @param array $chosen_set_indices An indexed array containing the previously chosen set index pairs in the form of [first_set_index, second_set_index].
-         * @param int $number_of_sets A whole number, this is the number of created sets. We wish to pick a pair from the range of 0 and this number (inclusively).
+         * @param array $chosen_indices An indexed array containing the previously chosen set index pairs in the form of [first_set_index, second_set_index].
+         * @param int $number_of_elements A whole number, this is the number of created sets. We wish to pick a pair from the range of 0 and this number (inclusively).
          * 
-         * @return array Returns an indexed array containing a new pair of set indices.
+         * @return array Returns an indexed array containing a new pair of indices.
          */
-        public function PickNewPairOfSets($chosen_set_indices, $number_of_sets){
-            if(count($chosen_set_indices) < $number_of_sets*($number_of_sets - 1)){
-                $first_index = mt_rand(0, $number_of_sets-1);
-                $second_index = mt_rand(0, $number_of_sets-1);
-                while($first_index == $second_index || in_array([$first_index, $second_index], $chosen_set_indices)){
-                    $first_index = mt_rand(0, $number_of_sets-1);
-                    $second_index = mt_rand(0, $number_of_sets-1);
+        public function PickNewPairOfIndices($chosen_indices, $number_of_elements){
+            if(count($chosen_indices) < $number_of_elements*($number_of_elements - 1)){
+                $first_index = mt_rand(0, $number_of_elements-1);
+                $second_index = mt_rand(0, $number_of_elements-1);
+                while($first_index == $second_index || in_array([$first_index, $second_index], $chosen_indices)){
+                    $first_index = mt_rand(0, $number_of_elements-1);
+                    $second_index = mt_rand(0, $number_of_elements-1);
                 }
                 return [$first_index, $second_index];
             }else{
@@ -211,21 +211,21 @@
 
 
         /**
-         * This public method creates a new set index.
+         * This public method creates a new index.
          * 
-         * We get the number of created sets. This method will pick an index between 0 and the number of the created sets, then it gives back if this index is a new one.
+         * We get the number of created elements. This method will pick an index between 0 and the number of the created elements, then it gives back if this index is a new one.
          * Additionally, this method checks, if new index can be picked or not.
          * 
-         * @param array $chosen_set_index An indexed array containing the previously chosen set indices.
-         * @param int $number_of_sets A whole number, this is the number of created sets. We wish to pick a new index from the range of 0 and this number (inclusively).
+         * @param array $chosen_index An indexed array containing the previously chosen set indices.
+         * @param int $number_of_elements A whole number, this is the number of created elements. We wish to pick a new index from the range of 0 and this number (inclusively).
          * 
          * @return array Returns an indexed array containing a new index.
          */
-        public function PickNewSetElement($chosen_set_index, $number_of_sets){
-            if(count($chosen_set_index) < $number_of_sets){
-                $first_index = mt_rand(0, $number_of_sets-1);
-                while(in_array($first_index, $chosen_set_index)){
-                    $first_index = mt_rand(0, $number_of_sets-1);
+        public function PickNewElement($chosen_index, $number_of_elements){
+            if(count($chosen_index) < $number_of_elements){
+                $first_index = mt_rand(0, $number_of_elements-1);
+                while(in_array($first_index, $chosen_index)){
+                    $first_index = mt_rand(0, $number_of_elements-1);
                 }
                 return $first_index;
             }else{
@@ -286,17 +286,27 @@
          * @return array Array containing the given number of complex numbers of the form [real part, imaginary part].
         */
         public function CreateComplexNumbers($number_of_elements){
+            $range_length =  $this->maximum_number - $this->minimum_number + 1;
             $complex_numbers = [];
-            for($counter = 0; $counter < $number_of_elements; $counter++){
-                $real_part = mt_rand($this->minimum_number, $this->maximum_number);
-                $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
-                $complex_number = [$real_part, $imaginary_part];
-                while(in_array($complex_number, $complex_numbers)){
+
+            if($number_of_elements <= $range_length * $range_length){ // Avoiding for-ever while loop
+                for($counter = 0; $counter < $number_of_elements; $counter++){
                     $real_part = mt_rand($this->minimum_number, $this->maximum_number);
                     $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
                     $complex_number = [$real_part, $imaginary_part];
+                    while(in_array($complex_number, $complex_numbers)){
+                        $real_part = mt_rand($this->minimum_number, $this->maximum_number);
+                        $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
+                        $complex_number = [$real_part, $imaginary_part];
+                    }
+                    array_push($complex_numbers, $complex_number);
                 }
-                array_push($complex_numbers, $complex_number);
+            }else{
+                for($real_part_counter = $this->minimum_number; $real_part_counter <= $this->maximum_number; $real_part_counter++){
+                    for($complex_part_counter = $this->minimum_number; $complex_part_counter <= $this->maximum_number; $complex_part_counter++){
+                        array_push($complex_numbers, [$real_part_counter,$complex_part_counter]);
+                    }
+                }
             }
             return $complex_numbers;
         }

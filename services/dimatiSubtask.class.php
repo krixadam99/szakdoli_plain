@@ -39,19 +39,22 @@
                 }break;
                 case "4":{
                     switch($subtopic_number){
-                        
+                        case "0": $subtask = $this->CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task);break;
+                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
                 case "5":{
                     switch($subtopic_number){
-                        
+                        case "0": $subtask = $this->CreateComplexTrigonometricFormSubtask($number_of_subtasks, $full_task);break;
+                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
                 case "6":{
                     switch($subtopic_number){
-                        
+                        case "0": $subtask = $this->CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task);break;
+                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
@@ -224,11 +227,10 @@
 
                     $previous_task = "";
                     for($counter = 0; $counter < 2; $counter++){
-                        $new_task = mt_rand(0,6);
+                        $new_task = mt_rand(0,5);
                         while($new_task === $previous_task){
-                            $new_task = mt_rand(0,6);
+                            $new_task = mt_rand(0,5);
                         }
-                        var_dump($new_task,$previous_task);
                         
                         $task_text_part = "";
                         switch($new_task){
@@ -244,15 +246,15 @@
                                 $task_text_part = "Add meg a reláció " . $this->CreateSetText("N", $actual_sets["N"]) . " halmazra vett megszorítását!";
                                 $solution_text_part =  $this->CreateRelationText("R<span class=\"bottom\">" . $this->CreateSetText("N", $actual_sets["N"], false) . "</span>", $this->dimat_helper_functions->GetRestrictedRelation($relation, $narrow_to_set));
                             };break;
-                            case 4:{
+                            case 3:{
                                 $task_text_part = "Add meg a reláció inverzét!";
                                 $solution_text_part =  $this->CreateRelationText("R<span class=\"exp\">-1</span>", $this->dimat_helper_functions->GetInverseRelation($relation));
                             };break;
-                            case 5:{
+                            case 4:{
                                 $task_text_part = "Add meg a reláció " . $this->CreateSetText("I", $actual_sets["I"]) . " halmazon felvett képét!";
                                 $solution_text_part =  $this->CreateSetText("R(" . $this->CreateSetText("I", $actual_sets["I"], false) . ")", $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set));
                             };break;
-                            case 6:{
+                            case 5:{
                                 $task_text_part = "Add meg a reláció " . $this->CreateSetText("D", $actual_sets["D"]) . " halmazon felvett ősképét!";
                                 $solution_text_part =  $this->CreateSetText("R<span class=\"exp\">-1</span>(" . $this->CreateSetText("D", $actual_sets["D"], false) . ")", $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set));
                             };break;
@@ -489,7 +491,7 @@
                 [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, 6, 12, false);
                 
                 $function = $this->dimat_helper_functions->MakeFunction($first_set, $second_set, mt_rand(4, 6));
-                // Make injective with 50% possibility, make surjective with the other 50%
+                // Make injective with 50% possibility, make surjective with 50% similarly
                 
                 array_push($task_data["functions"], $function);
                 array_push($task_data["pairs_of_sets"], [$first_set, $second_set]);
@@ -530,6 +532,209 @@
         }
 
         /**
+         * This private method will create ... for the first subtask of the fifth task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
+            
+            $task_data = array("complex_numbers" => []);
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
+                while(in_array($complex_number,$task_data["complex_numbers"])){
+                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
+                }
+                array_push($task_data["complex_numbers"], $complex_number);
+
+                //Make the operations and the solutions
+                if($full_task){
+                    $current_real_part = $complex_number[0];
+                    $current_imaginary_part = $complex_number[1];   
+                    $length = sqrt($current_real_part**2+$current_imaginary_part**2);
+                    $conjugate = [$current_real_part, -1*$current_imaginary_part];
+
+                    $solutions = array_merge($solutions,[
+                        "solution_0_" . $subtask_counter . "_0" => $current_real_part,
+                        "solution_0_" . $subtask_counter . "_1" => $current_imaginary_part,
+                        "solution_0_" . $subtask_counter . "_2" => $length,
+                        "solution_0_" . $subtask_counter . "_3" => $conjugate,
+                    ]);
+                }else{
+                    $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                    $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám</div>";
+                    $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                    $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . "</div>";
+
+                    $previous_task = "";
+                    for($counter = 0; $counter < 2; $counter++){
+                        $new_task = mt_rand(0,3);
+                        while($new_task === $previous_task){
+                            $new_task = mt_rand(0,3);
+                        }
+                        
+                        $task_text_part = "";
+                        switch($new_task){
+                            case 0:{
+                                $current_real_part = $complex_number[0];
+                                $task_text_part = "Add meg a komplex szám valós részét!";
+                                $solution_text_part = "Re(x) = " . $complex_number[0];
+                            };break;
+                            case 1:{
+                                $task_text_part = "Add meg a komplex szám képzetes részét!";
+                                $current_imaginary_part = $complex_number[1];   
+                                $solution_text_part = "Im(x) = " . $complex_number[1];
+                            };break;
+                            case 2:{
+                                $task_text_part = "Add meg a komplex szám hosszát!";
+                                $length = sqrt($complex_number[0]**2+$complex_number[1]**2);
+                                $solution_text_part =  "|x| = \u{221A}(" . $complex_number[0] . "<span class=\"exp\">2</span> + " . $complex_number[1] . "<span class=\"exp\">2</span>) = $length";
+                            };break;
+                            case 3:{
+                                $task_text_part = "Add meg a komplex szám konjugáltját!";
+                                $conjugate = [$complex_number[0], -1*$complex_number[1]];
+                                $solution_text_part =  "<span style=\"border-top:1px solid black; \">x</span> = " . $this->CreateComplexNumberAlgebraicText("", $conjugate, false);
+                            };break;
+                            default:break;
+                        }
+
+                        $previous_task = $new_task;
+                        $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $task_text_part . "</div>";
+                        $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $solution_text_part . "</div>";
+                    }
+                    
+                    array_push($descriptions, $task_text);
+                    array_push($printable_solutions, $printable_solution);
+                }            
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the second subtask of the fifth task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexOperationsAlgebraicSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
+            
+            $quadruple_of_complex_numbers = [];
+            $operation_dictionary = [];
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                $operation_names = ["addition", "multiplication", "substraction", "division"];
+                $operation_counter = 0;
+                $complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(4);
+                $set_of_complex_numbers = array("v" => $complex_numbers[0], "w" => $complex_numbers[1], "x" => $complex_numbers[2], "y" => $complex_numbers[3]);
+                array_push($quadruple_of_complex_numbers, $set_of_complex_numbers);
+
+                //Make the operations and the solutions
+                if($full_task){
+                    [$actual_operation_dictionary, $actual_solutions] = $this->CreateFullComplexOperationsTask($set_of_complex_numbers, $subtask_counter);
+                    array_push($operation_dictionary, $actual_operation_dictionary);
+                    $solutions = array_merge($solutions, $actual_solutions);
+                }else{                    
+                    $complex_numbers_text = "";
+                    $complex_number_counter = 0;
+                    foreach($set_of_complex_numbers as $complex_number_name => $complex_numbers){
+                        if($complex_number_counter !== 0){
+                            $complex_numbers_text = $complex_numbers_text . ", ";
+                        }
+                        $complex_numbers_text = $complex_numbers_text . $this->CreateComplexNumberAlgebraicText($complex_number_name, $complex_numbers, true);
+                        $complex_number_counter++;
+                    }
+
+                    $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"paragraph\">Adottak a ";
+                    $task_text =  $task_text . $complex_numbers_text . " komplex számok.</div>";
+                    $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"paragraph\">";
+                    $printable_solution =  $printable_solution . $complex_numbers_text . "</div>";
+
+                    $actual_operation_dictionary = array("addition" => [], "multiplication" => [], "substraction" => [], "division" => []);
+                    for($counter = 0; $counter < 2; $counter++){
+                        $operation_counter = mt_rand(0,3);
+                        [$new_element, $solution_for_new_element] = $this->CreateOperandsAndOperationForComplexNumbers($set_of_complex_numbers, count($set_of_complex_numbers), $operation_counter, $actual_operation_dictionary[$operation_names[$operation_counter]]);
+                        array_push($actual_operation_dictionary[$operation_names[$operation_counter]], $new_element);
+
+                        $operator = "";
+                        switch($operation_counter){
+                            case 0: $operator = " + ";break;
+                            case 1: $operator = " * ";break;
+                            case 2: $operator = " - ";break;
+                            case 3: $operator = " \\ ";break;
+                            default:break;
+                        }
+
+                        $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " $operator " . $new_element[1] . " művelet eredményét!</div>";
+                        $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $this->CreateComplexNumberAlgebraicText($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
+                    }
+                    
+                    array_push($descriptions, $task_text);
+                    array_push($printable_solutions, $printable_solution);
+                }            
+            }
+
+            return array("data" => [$quadruple_of_complex_numbers,$operation_dictionary] , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the first subtask of the sixth task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateComplexTrigonometricFormSubtask($number_of_subtasks, $full_task = false){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<b>Megoldás:</b>"];
+
+            $this->dimat_helper_functions->SetMinimumNumber(-100);
+            $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
+            
+            $task_data = array("pairs_of_complex_numbers" => []);
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                $pair_of_complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                while(in_array($pair_of_complex_numbers,$task_data["pairs_of_complex_numbers"])){
+                    $pair_of_complex_numbers = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                }
+                array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
+
+                $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . " és " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . ", " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[1]) . ".</div>";
+
+                $trigonometric_forms = [$this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[0]), $this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[1])];
+                $task_text = $task_text . "<div class=\"paragraph\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x = " .  $this->CreateComplexNumberTrigonometricText("", $trigonometric_forms[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">y = " .  $this->CreateComplexNumberTrigonometricText("", $trigonometric_forms[1], true, false) . "</div>";
+
+                $solutions = array_merge($solutions,[
+                    "solution_0_" . $subtask_counter . "_0" => $trigonometric_forms[0],
+                    "solution_0_" . $subtask_counter . "_1" => $trigonometric_forms[1]
+                ]);
+
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
          * 
          */
         private function CreateFullSetTask($sets, $subtask_counter){            
@@ -552,12 +757,12 @@
         private function CreateOperandsAndOperationForSets($sets, $number_of_sets, $operation_index, $set_indices){
             $actual_set_names = array_keys($sets);
             
-            $new_indices = $this->dimat_helper_functions->PickNewPairOfSets($set_indices, $number_of_sets);
+            $new_indices = $this->dimat_helper_functions->PickNewPairOfIndices($set_indices, $number_of_sets);
             $new_element = [$actual_set_names[$new_indices[0]??""],$actual_set_names[$new_indices[1]]??""];
             
             $operands = [[],[]];
             if($operation_index === 3){
-                $new_index = $this->dimat_helper_functions->PickNewSetElement($set_indices, $number_of_sets);
+                $new_index = $this->dimat_helper_functions->PickNewElement($set_indices, $number_of_sets);
                 $picked_set_name = $actual_set_names[$new_index];
                 $universe = $this->dimat_helper_functions->GetUniverse($sets[$picked_set_name]);
                 $new_element =  [$picked_set_name, $universe];
@@ -630,6 +835,65 @@
             }
 
             return $solution;
+        }
+
+        /**
+         * 
+         */
+        private function CreateFullComplexOperationsTask($set_of_complex_numbers, $subtask_counter){            
+            $operation_names = ["addition", "multiplication", "substraction", "division"];
+            $number_of_complex_numbers = count($set_of_complex_numbers);
+            $operation_dictionary = array("addition" => [], "multiplication" => [], "substraction" => [], "division" => []);
+            $solution_array = [];
+            for($operation_counter = 0; $operation_counter < 4; $operation_counter++){
+                [$new_element, $solution_for_new_element] = $this->CreateOperandsAndOperationForComplexNumbers($set_of_complex_numbers, $number_of_complex_numbers,  $operation_counter, $operation_dictionary[$operation_names[$operation_counter]]);
+                $solution_array["solution_1_" . $subtask_counter . "_" . $operation_counter] = $solution_for_new_element;
+                array_push($operation_dictionary[$operation_names[$operation_counter]], $new_element);
+            }
+
+            return [$operation_dictionary, $solution_array];
+        }
+
+        /**
+         * 
+         */
+        private function CreateOperandsAndOperationForComplexNumbers($set_of_complex_numbers, $number_of_complex_numbers, $operation_index, $complex_numbers_indices){
+            $actual_complex_numbers_names = array_keys($set_of_complex_numbers);
+            
+            $new_indices = $this->dimat_helper_functions->PickNewPairOfIndices($complex_numbers_indices, $number_of_complex_numbers);
+            $new_element = [$actual_complex_numbers_names[$new_indices[0]??""],$actual_complex_numbers_names[$new_indices[1]]??""];
+            $operands = [$set_of_complex_numbers[$new_element[0]]??[],$set_of_complex_numbers[$new_element[1]]??[]];
+
+            $first_number_real_part = $operands[0][0];
+            $first_number_imaginary_part = $operands[0][1];
+            $second_number_real_part = $operands[1][0];
+            $second_number_imaginary_part = $operands[1][1];
+            $result_real_part = 0;
+            $result_imaginary_part = 0;
+
+            switch($operation_index){
+                case 0:{
+                    $result_real_part = $first_number_real_part + $second_number_real_part;
+                    $result_imaginary_part = $first_number_imaginary_part + $second_number_imaginary_part;
+                };break;
+                case 1:{
+                    $result_real_part = $first_number_real_part * $second_number_real_part - $first_number_imaginary_part * $second_number_imaginary_part;
+                    $result_imaginary_part = $first_number_real_part * $second_number_imaginary_part + $first_number_imaginary_part * $second_number_real_part;
+                };break;
+                case 2:{
+                    $result_real_part = $first_number_real_part - $second_number_real_part;
+                    $result_imaginary_part = $first_number_imaginary_part - $second_number_imaginary_part;
+                };break;
+                case 3:{
+                    $length_of_second_number = $second_number_real_part**2 + $second_number_imaginary_part**2;
+                    $result_real_part = (1/$length_of_second_number)*($first_number_real_part * $second_number_real_part + $first_number_imaginary_part * $second_number_imaginary_part);
+                    $result_imaginary_part = (1/$length_of_second_number)*($first_number_imaginary_part * $second_number_real_part - $first_number_real_part * $second_number_imaginary_part);
+                };break;
+                default:;break;
+            }
+            $solution_for_new_element = [$result_real_part, $result_imaginary_part];
+            
+            return [$new_element, $solution_for_new_element];   
         }
     }
 

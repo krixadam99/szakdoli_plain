@@ -68,7 +68,7 @@
                 1 => ["Relációk alapvető tulajdonságai"],
                 2 => ["Relációk kompozíciója", "Relációk tulajdonságai", "Reláció készítése"],
                 3 => ["Függvény-e a reláció", "Szürjektív, injektív és bijektív függvények"],
-                4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek", "Másodfokú egyenletek a komplex számtest felett"],
+                4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek"],
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
                 7 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],

@@ -52,6 +52,7 @@
                 }
             }
             $query = $query."COMMIT;";
+            
             $this->database->UpdateDatabase($query, true);
         }
 

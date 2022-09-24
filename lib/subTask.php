@@ -52,6 +52,38 @@
         }
 
         /**
+         * 
+         */
+        protected function CreateComplexNumberAlgebraicText($complex_number_name, $complex_number, $with_name = true){
+            $text = "";
+            if($complex_number_name){
+                $text = $complex_number_name . " = ";
+            }
+
+            $text = $text . $complex_number[0] . $this->PlusMinus($complex_number[1]) . abs($complex_number[1]) . "*i";
+
+            return $text;
+        }
+
+        /**
+         * 
+         */
+        protected function CreateComplexNumberTrigonometricText($complex_number_name, $complex_number, $pi_form = true, $with_name = true){
+            $text = "";
+            if($complex_number_name){
+                $text = $complex_number_name . " = ";
+            }
+
+            if($pi_form){
+                $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{03C0}) + i*sin(" . $complex_number[1] . "\u{03C0})";
+            }else{
+                $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{00B0}) + i*sin(" . $complex_number[1] . "\u{00B0})";
+            }
+
+            return $text;
+        }
+
+        /**
          * This protected method append a congruence equivalence to the end of a text.
          */
         protected function CreateModuloEquivalence($variable_name, $final_b, $final_modulo){
