@@ -19,15 +19,27 @@
             parent::__construct();
         }
         
+        /**
+         *
+         * This method shows the practice page.
+         * 
+         * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
+         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
+         * If a logged in user navigated to the practice page, but isn't a student, that is, has no approved subject to practice, then they will be redirected to the notifications page.
+         * Session variables for answers, solution, definitions and task will be unset here, and if the topic number is correct (between 0 and 9 inclusively), then will be set by the GenerateTask method.
+         * 
+         * @return void
+        */
         public function Practice(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 if($this->GetApprovedStudentSubject() != ""){
                     $_SESSION["is_new_task"] = true;
-                    $_SESSION["answers"] = "";
-                    $_SESSION["solution"] = "";
-                    $_SESSION["definitions"] = "";
-                    $_SESSION["task"] = "";
+                    
+                    unset($_SESSION["answers"]);
+                    unset($_SESSION["solution"]);
+                    unset($_SESSION["definitions"]);
+                    unset($_SESSION["task"]);
                     
                     if(isset($_SESSION["topic"]) 
                         && intval($_SESSION["topic"]) <= 9
@@ -45,7 +57,16 @@
             }
         }
 
-        
+        /**
+         *
+         * This method shows the answers for the sent task page.
+         * 
+         * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
+         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
+         * If a logged in user navigated to the practice page, but isn't a student, that is, has no approved subject to practice, then they will be redirected to the notifications page.
+         * 
+         * @return void
+        */
         public function PracticeAnswers(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
@@ -59,13 +80,19 @@
             }
         }
 
+        /**
+         *
+         * This method evaluates the student's answers for the generated tasks and then updates the database with the correct point. 
+         *
+         * @return void
+        */
         public function HandInSolution(){
             if(isset($_SESSION["neptun_code"]) && $_SESSION["is_new_task"]){
                 $_SESSION["is_new_task"] = false;
                 if(count($_POST) != 0){
                     $this->SetMembers();
                     $practice_number = intval($_SESSION["topic"]) + 1;
-                    $previous_point = floatval($this->GetPracticeResults()["practice_" . $practice_number]);
+                    $previous_point = floatval($this->GetPracticeResults()["practice_" . $practice_number]??0);
 
                     if($this->GetApprovedStudentSubject() === "i"){
                         $task_evaluator = new DimatiTaskEvaluator($_POST);
@@ -77,6 +104,7 @@
 
                     $task_evaluator->CheckSolution($_SESSION["topic"]);
                     $update_point = round($task_evaluator->GetUpdatePoint(),2);
+                    
                     $model = new PracticeModel();
                     $model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
 
@@ -89,6 +117,14 @@
             }
         }
 
+        /**
+         *
+         * This method generates tasks for the logged in student to practice.
+         * 
+         * The task generation depends on the subject's id and the topic's number.
+         * 
+         * @return void
+        */
         private function GenerateTask($subject, $topic_number){
             if($subject == "i"){
                 $dimat_i_tasks = new DimatiTasks($topic_number);

@@ -50,7 +50,11 @@
         }
 
         /**
+         * This method creates the preview of the page containing the printable form of the requested amount of subtasks for a task-subtask pair and also the solutions for these tasks.
          * 
+         * The method also handles malicious user activities, like overwriting form html tags' names.
+         * 
+         * @return void
          */
         public function CreatePreview(){
             if(isset($_SESSION["neptun_code"])){
@@ -80,7 +84,15 @@
         }
 
         /**
+         * This method creates the given number of tasks for a task-subtask pair.
          * 
+         * The task generation depends on the current subject and then the task-subtask pair.
+         * 
+         * @param string $main_task_index The index of the selected main task.
+         * @param string $subtask_index The index of the selected subtask.
+         * @param string $subtask_count The number of tasks to be generated.
+         * 
+         * @return array Returns an associative array containing the tasks' descriptions and printable solutions. These variables contain html tags.
          */
         private function GenerateTask($main_task_index, $subtask_index, $subtask_count){
             $task = array("task_descriptions" => "", "task_solutions" => "");

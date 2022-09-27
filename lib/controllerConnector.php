@@ -1,6 +1,6 @@
 <?php
     /**
-     * This is the class which is responsible for connecting the end points, so it performs the routing.
+     * This is the class which is responsible for connecting the end points. This performs the routing.
     */
     class ControllerConnector{
         private $paths = [];

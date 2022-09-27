@@ -9,7 +9,7 @@
         
         /**
          *
-         * This method is responsible for showing the login page.
+         * This method shows the login page.
          * 
          * Once a client is directed to this page, the session variables will be all cleared.
          * 
@@ -23,9 +23,9 @@
 
         /**
          *
-         * This method is responsible for authenticating the client.
+         * This method authenticates the client.
          * 
-         * Post variable must not be renamed, else the client will be redirected to the page.
+         * Post variable shouldn't be renamed, else the client will be redirected to the page.
          * If there is no error, that is, the user provided an existing and valid neptun code, and the correct password corresponding to this neptun code, then they will be redirected to the notifications page.
          * 
          * @return void
@@ -39,7 +39,7 @@
                 $this->ValidateUser();
 
                 //If there is no error, then the user gets redirected to the notifications page, else to the login page
-                if(count($this->incorrect_parameters) == 0){
+                if(count($this->incorrect_parameters) === 0){
                     //The user gets logged in with the given neptun_code
                     $_SESSION["neptun_code"] = $_POST['neptun_code'];
                     
@@ -55,7 +55,7 @@
 
         /**
          *
-         * This method is responsible for validating the user's form.
+         * This method validates the user's form.
          * 
          * This method is not defined in the FormValidator class, only the signature is given there.
          * Here a valid form should satisfy the conditions related to neptun codes and passwords.
@@ -72,7 +72,7 @@
 
         /**
          *
-         * This method is responsible for validating the user's given neptun code.
+         * This method validates the user's given neptun code.
          * 
          * If the input is not the original place holder string or the empty string, i.e., the user actually typed something in the input, then we check if their neptun code exists, or not.
          * If their neptun code exists, then the input was valid, and the correct parameters will be updated with the neptun_code - given neptun code key-value pair.
@@ -94,7 +94,7 @@
 
         /**
          *
-         * This method is responsible for validating the user's given password.
+         * This method validates the user's given password.
          * 
          * If the input is not the original place holder string or the empty string, i.e., the user actually typed something in the input, then we check if the given password is identical to the one that belongs to the given (pre-validated) neptun code.
          * If the two passwords are the same, then the input was valid.

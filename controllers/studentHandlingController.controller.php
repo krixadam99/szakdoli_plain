@@ -51,9 +51,9 @@
          * Only teachers can handle students (TODO).
          * Pending students can be either deined, accepted or ignored.
          * Denied students can be accepted and accepted students can be denied.
-         * Accepted students has 0 as their pending request.
-         * Denied students has -1 as their pending request.
-         * Pending students has 1 as their pending request.
+         * Accepted students has "0" as their pending request.
+         * Denied students has "-1" as their pending request.
+         * Pending students has "1" as their pending request.
          * 
          * @return void
         */

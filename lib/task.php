@@ -1,6 +1,6 @@
 <?php
     /**
-     * This is an abstract class, which represents tasks.
+     * This is an abstract class, which represents a task.
      * 
      * A task will contain the task description, the solutions for the subtasks and the definitions related to the tasks. 
     */

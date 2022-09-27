@@ -1,7 +1,7 @@
 <?php
     /**
      * 
-     * This is a class which defines the basic data that will be user on every page (except index, login and registration pages).
+     * This is a class which defines the basic data that will be used on every page (except index, login and registration pages).
      * 
     */
     class MainContentController {
@@ -302,10 +302,10 @@
                 }
             }
 
-            // The topic must be a numeric value, and it must be 0 and 11 (inclusively).
+            // The topic must be a numeric value, and it must be between 0 and 9 (inclusively).
             if(isset($_SESSION["topic"]) && $_SESSION["topic"] != ""){
                 if(is_numeric($_SESSION["topic"])){
-                    if(intval($_SESSION["topic"]) > 11 || intval($_SESSION["topic"]) < 0){
+                    if(intval($_SESSION["topic"]) > 9 || intval($_SESSION["topic"]) < 0){
                         header("Location: ./index.php?site=notifications");
                         exit();
                     }
@@ -330,7 +330,13 @@
         }
 
         /**
+         * This method will redirect the users to the given page if the session variable's value at the given key is not in the acceptable.
          * 
+         * @param string $session_parameter_name The key of the session parameter we wish to check.
+         * @param array $acceptable_values An array containing the acceptable values for the given session variable.
+         * @param string $where_to The name of the page to redirect to, if the session variable was not appropriate.
+         * 
+         * @return void
          */
         protected function RedirectToIfWrongParam($session_parameter_name, $acceptable_values, $where_to){
             if(isset($_SESSION[$session_parameter_name]) && !in_array($_SESSION[$session_parameter_name], $acceptable_values)){
