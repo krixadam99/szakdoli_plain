@@ -252,91 +252,74 @@
          * @return void
         */
         private function CheckFourthTaskSolution(){
-            //Parsing the answers;
-            $real_solutions = array_values($this->real_solutions);
-
-            $first_answer = $this->ParseSelectSolutions(0,2);
-            $second_answers = [$this->ParseSelectSolutions(3,5),$this->ParseSelectSolutions(6,8),$this->ParseSelectSolutions(9,11)];
-
-            //Checking the first answers
-            $real_solution_0 = $real_solutions[0];
-            $this->solution_counter++;
-            if($this->CheckIfSelectsEqual($real_solution_0, $first_answer, 0)){
-                $this->count_correct += 1;
-            };
-
-            $real_solution_1 = $real_solutions[1];
-            $this->solution_counter++;
-            $answer_counter = 1;
-            foreach($real_solution_1 as $index => $given_answers){
-                if($this->CheckIfSelectsEqual($given_answers, $second_answers[$answer_counter-1], $answer_counter)){
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions["first_subtasks"] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $first_answer = $this->ParseSelectSolutions("solution_$id", 0, 0);
+                
+                if($this->CheckIfSelectsEqual($real_solution, $first_answer, $id)){
                     $this->count_correct += 1;
-                };
-                $answer_counter++;
+                }
+                
+                $this->solution_counter++;
+                $subtask_counter++;
             }
+
+            $subtask_counter = 0;
+            $task_counter = 1;
+            foreach($this->real_solutions["second_subtasks"] as $solution_array_key => $real_solutions){
+                $id = $task_counter . "_" . $subtask_counter;
+                $second_answers = $this->ParseSelectSolutions("solution_$id", 0,2);
+                if($this->CheckIfSelectsEqual($real_solutions, $second_answers, $id)){
+                    $this->count_correct += 1;
+                }
+                
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+            
         }
 
         /**
          * 
          * This private method compares the given answers with the solutions for Discrete mathematics I. subject 5th topic's tasks.
          * 
-         * There are 3 main tasks for this topic.
+         * There are 2 main tasks for this topic.
          * 
          * @return void
         */
         private function CheckFifthTaskSolution(){
-            $this->solution_counter = 0;
-            foreach($this->real_solutions as $index => $real_solution){
-                $given_answer = $this->given_answers[$this->solution_counter]??"";
-                $given_solution = $this->ExtractSolutionFromInput($given_answer);
-                $was_correct = false;
-                if(is_numeric($real_solution)){ // Numeric solution
-                    if(isset($given_solution[0]) && is_numeric($given_solution[0])){
-                        $answer_text = $given_solution[0];
-                        $was_correct = round($real_solution,2) == round($given_solution[0],2);
-                    }else{
-                        $answer_text = "";
-                    }
-                    $solution_text = $real_solution;
-                }else if(is_array($real_solution)){
-                    if(count($real_solution) == 2){
-                        if(!is_array($real_solution[0])){ // 2nd task, complex numbers as ordered pairs
-                            $real_part = $real_solution[0];
-                            $imaginary_part = $real_solution[1];
-
-                            if(isset($given_solution[0])){
-                                $was_correct = round($real_part,2) == round($given_solution[0],2);
-                            }
-                            if(isset($given_solution[1])){
-                                $was_correct = $was_correct && round($imaginary_part,2) == round($given_solution[1],2);
-                            }
-
-                            $solution_text = $this->CreatePrintableComplexNumber($real_solution, false);
-                            $answer_text = $this->CreatePrintableComplexNumber($given_solution, false);
-                        }else{ // 3rd task, discriminator was not 0
-                            $solution_text = $this->CreatePrintableComplexNumber($real_solution[0], false);
-                            $solution_text = $solution_text . ", " . $this->CreatePrintableComplexNumber($real_solution[1], false);
-                        }
-                    }else{ // 3rd task, discriminator was 0
-                        $real_solution = $real_solution[0][0];
-                        $solution_text = $real_solution;
-
-                    }
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[0] as $solution_array_key => $real_solution){
+                if($subtask_counter % 4 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
                 }
 
-                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
-                        array(
-                            "answer" => $given_answer,
-                            "answer_text" => $answer_text,
-                            "solution_text" => $solution_text,
-                            "correct" => $was_correct
-                        );
-
-                if($was_correct){
-                    $this->count_correct++;
+                $id = "0_" . $task_counter . "_" . $subtask_counter;
+                if($subtask_counter < 3){
+                    $this->EvaluateInputsWithNumbers($real_solution, $solution_array_key, $id, false);
+                }else{
+                    $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
                 }
-
                 $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[1] as $solution_array_key => $real_solution){
+                if($subtask_counter % 4 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
+                }
+
+                $id = "1_" . $task_counter . "_" . $subtask_counter;
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
             }
         }
 
@@ -344,32 +327,38 @@
          * 
          * This private method compares the given answers with the solutions for Discrete mathematics I. subject 6th topic's tasks.
          * 
-         * There are 3 main tasks for this topic.
+         * There are 2 main tasks for this topic.
          * 
          * @return void
         */
         private function CheckSixthTaskSolution(){
-            $this->solution_counter = 0;
-            foreach($this->given_answers as $index => $given_answer){
-                $real_solution = $_SESSION["solution"]["solution_" . $this->solution_counter]??"";
-                $was_correct = false;
-
-                if($real_solution != ""){
-                    
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[0] as $solution_array_key => $real_solution){
+                if($subtask_counter % 2 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
                 }
 
-                $_SESSION["answers"]["answer_" . $this->solution_counter] = 
-                        array(
-                            "answer" => $given_answer,
-                            "solution" => $real_solution,
-                            "correct" => $was_correct
-                        );
-
-                if($was_correct){
-                    $this->count_correct++;
-                }
-
+                $id = "0_" . $task_counter . "_" . $subtask_counter;
+                
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
                 $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[1] as $solution_array_key => $real_solution){
+                if($subtask_counter % 2 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
+                }
+
+                $id = "1_" . $task_counter . "_" . $subtask_counter;
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
             }
         }
 
@@ -380,6 +369,34 @@
          * @return void
         */
         private function CheckSeventhTaskSolution(){
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[0] as $solution_array_key => $real_solution){
+                if($subtask_counter % 2 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
+                }
+
+                $id = "0_" . $task_counter . "_" . $subtask_counter;
+                
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions[1] as $solution_array_key => $real_solution){
+                if($subtask_counter % 2 === 0 && $subtask_counter !== 0){
+                    $subtask_counter = 0;
+                    $task_counter += 1;
+                }
+
+                $id = "1_" . $task_counter . "_" . $subtask_counter;
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
         }
 
         /**

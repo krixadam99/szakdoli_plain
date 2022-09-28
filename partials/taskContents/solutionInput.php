@@ -2,7 +2,7 @@
     <?php if(isset($_SESSION["answers"]["answer_" . $task_counter])):?>
             <?php $current_answer= $_SESSION["answers"]["answer_" . $task_counter]?>
             <div class="solution_container">
-                <label><?=$solution_label??"Megoldásom: "?></label>
+                <?=$solution_label??"<label>Megoldásom: </label>"?>
                 <input type="text" name=<?="solution_" . $task_counter?> value="<?= $current_answer["answer"]?>" class=<?= $current_answer["correct"]?"correct":"wrong"?> readonly>
             </div>
             <div class="solution_label_container">
@@ -14,33 +14,31 @@
                     <?php endif?>
                 </label>
                 <label class="task_label">
-                    <?php 
-                        if(isset($answer_label)){
-                            echo($answer_label);
-                        }else{
-                            echo("A helyes válasz: ");
-                        }
-                    ?>    
-                    <?=$current_answer["solution_text"]??""?>
-                </label>
-            </div>
-    <?php else:?>
-        <div class="solution_container">
-            <label>
                 <?php 
                     if(isset($solution_label)){
                         echo($solution_label);
                     }else{
-                        echo("Megoldásom: ");
+                        echo("<label>Megoldásom: </label>");
                     }
-                ?>
-            </label>
-                <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
+                ?>   
+                <?=$current_answer["solution_text"]??""?>
+                </label>
+            </div>
+    <?php else:?>
+        <div class="solution_container">
+            <?php 
+                if(isset($solution_label)){
+                    echo($solution_label);
+                }else{
+                    echo("<label>Megoldásom: </label>");
+                }
+            ?>
+            <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
         </div>
     <?php endif?>
 <?php else:?>
     <div class="solution_container">
-        <label><?=$solution_label??"Megoldásom: "?></label>
+        <?=$solution_label??"Megoldásom: "?>
         <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
     </div>
 <?php endif?>

@@ -230,7 +230,7 @@ hr {
     text-align: justify;
     display: block;
     font-size: calc(11px + 0.3vw);
-    width: 100%;
+    width: auto;
     margin-bottom: 1%;
 }
 

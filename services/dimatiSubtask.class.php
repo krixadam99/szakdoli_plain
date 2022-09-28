@@ -40,7 +40,7 @@
                 case "4":{
                     switch($subtopic_number){
                         case "0": $subtask = $this->CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task);break;
-                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateComplexOperationsAlgebraicSubtask($number_of_subtasks, $full_task);break;
                         default:break;
                     }
                 }break;
@@ -447,7 +447,7 @@
                 [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, 3, 7, false);
                 $relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, mt_rand(2, 4));
                 array_push($task_data["relations"], $relation);
-                array_push($task_data["pairs_of_sets"], [$first_set, $second_set]);
+                array_push($task_data["pairs_of_sets"], array("A" => $first_set, "B" => $second_set));
                 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . " és " . PrintServices::CreatePrintableSet("B", $second_set) . " halmazok, valamint az ";
@@ -467,7 +467,7 @@
                 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
-                array_push($solutions, $is_function);
+                array_push($solutions, [$is_function]);
             }
 
             return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
@@ -494,7 +494,7 @@
                 // Make injective with 50% possibility, make surjective with 50% similarly
                 
                 array_push($task_data["functions"], $function);
-                array_push($task_data["pairs_of_sets"], [$first_set, $second_set]);
+                array_push($task_data["pairs_of_sets"], array("A" => $first_set, "B" => $second_set));
                 
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
@@ -798,7 +798,7 @@
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
                 [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
                 while(in_array($complex_number,$task_data["complex_numbers"])){
-                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
                 }
                 $first_power = mt_rand(3,4);
                 $second_power = mt_rand(5,6);
@@ -846,7 +846,7 @@
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
                 [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
                 while(in_array($complex_number,$task_data["complex_numbers"])){
-                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(2);
+                    [$complex_number] = $this->dimat_helper_functions->CreateComplexNumbers(1);
                 }
                 $first_root = mt_rand(3,4);
                 $second_root = mt_rand(5,6);

@@ -1,44 +1,43 @@
-<?php $array_trigonometric = true?>
-<?php $complex_number_names = ["v", "w", "x", "y", "z"]?>
-<?php foreach($_SESSION["task"]["complex_numbers"] as $complex_number_counter => $complex_number):?>
-    <label class="task_label">
-        <?=$complex_number_names[$complex_number_counter] . " = " . $complex_number[0]?><?=$complex_number[1]>=0?" + ":" "?><?=$complex_number[1] . "*i"?>
-    </label>
-    <br>
-<?php endforeach?>
-<br>
-
-<?php $task_counter = 0;?>
-<label class="task_label">
-    1. részfeladat: Add meg a fenti komplex számok trigonometrikus alakját! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(30.111°)+i*sin(30.111°)) helyett írj 4.11, 30.11-et)!
-</label>
-<br>
-<?php foreach($_SESSION["task"]["complex_numbers"] as $complex_number_counter => $complex_number):?>
+<?php foreach($_SESSION["task"]["first_subtasks"]["pairs_of_complex_numbers"] as $complex_number_pair_counter => $complex_numbers_pair):?>
+    <?php $bottom_index = $complex_number_pair_counter + 1?>
     <div class="small_task_container">
         <label class="task_label">
-            <?=$complex_number[0]?><?=$complex_number[1]>=0?" + ":" "?><?=$complex_number[1] . "*i"?> trigonometrikus alakja:
+            1.<?= $complex_number_pair_counter + 1 ?>. részfeladat: Add meg a
+                <?= PrintServices::CreatePrintableComplexNumberAlgebraic("v<span class=\"bottom\">$bottom_index</span>", $complex_numbers_pair[0])?>, 
+                <?= PrintServices::CreatePrintableComplexNumberAlgebraic("w<span class=\"bottom\">$bottom_index</span>", $complex_numbers_pair[1])?>
+            komplex számok trigonometrikus alakját! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(1.2*pi)+i*sin(1.2*pi)) helyett írj 4.11, 1.2-et)
         </label>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php 
+            $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> = </label>";
+            $task_counter = "0_" . $complex_number_pair_counter . "_0";
+            include("./partials/taskContents/solutionInput.php");
+        ?>
+        <?php 
+            $solution_label = "<label>w<span class=\"bottom\">$bottom_index</span> = </label>";
+            $task_counter = "0_" . $complex_number_pair_counter . "_1";
+            include("./partials/taskContents/solutionInput.php");
+        ?>
     </div>
-    <?php $task_counter++;?>
 <?php endforeach?>
-<br>
 
-<label class="task_label">
-    2. részfeladat: Végezd el a követekező műveleteket a Moivre-azonosságok segítségével! Az eredmény trigonometrikus alakját add meg! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(30.111°)+i*sin(30.111°)) helyett írj 4.11, 30.11-et)!
-</label>
-<?php $operations = $_SESSION["task"]["operations"]??"";?>
-<?php for($subtask_counter = 0; $subtask_counter<4; $subtask_counter++):?>
+<?php foreach($_SESSION["task"]["second_subtasks"]["pairs_of_complex_numbers"] as $complex_number_pair_counter => $complex_numbers_pair):?>
+    <?php $bottom_index = $complex_number_pair_counter + 1?>
     <div class="small_task_container">
         <label class="task_label">
-            <?php if($subtask_counter%2 == 0):?>
-                <?=$operations["multiplication"][$subtask_counter/2][0]?> * <?=$operations["multiplication"][$subtask_counter/2][1]?>
-            <?php elseif($subtask_counter%2 == 1):?>
-                <?=$operations["division"][$subtask_counter/2][0]?> / <?=$operations["division"][$subtask_counter/2][1]?>
-            <?php endif?>
+            2.<?= $complex_number_pair_counter + 1 ?>. részfeladat: Adottak a
+                <?= PrintServices::CreatePrintableComplexNumberAlgebraic("v<span class=\"bottom\">$bottom_index</span>", $complex_numbers_pair[0])?>, 
+                <?= PrintServices::CreatePrintableComplexNumberAlgebraic("w<span class=\"bottom\">$bottom_index</span>", $complex_numbers_pair[1])?>
+            komplex számok! Számold ki a komplex számok szorzatát és hányadosát a trigonometrikus alak felhasználásával! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(1.2*pi)+i*sin(1.2*pi)) helyett írj 4.11, 1.2-et)
         </label>
-        <br>
-        <?php include("./partials/taskContents/solutionInput.php")?>
-        <?php $task_counter++;?>
+        <?php 
+            $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> * w<span class=\"bottom\">$bottom_index</span> = </label>";
+            $task_counter = "1_" . $complex_number_pair_counter . "_0";
+            include("./partials/taskContents/solutionInput.php");
+        ?>
+        <?php 
+            $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> / w<span class=\"bottom\">$bottom_index</span> = </label>";
+            $task_counter = "1_" . $complex_number_pair_counter . "_1";
+            include("./partials/taskContents/solutionInput.php");
+        ?>
     </div>
-<?php endfor?>
+<?php endforeach?>
