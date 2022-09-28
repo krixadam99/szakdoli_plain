@@ -1,10 +1,12 @@
 <?php foreach($_SESSION["task"]["set_of_sets"] as $subtask_counter => $actual_sets):?>
-    <?php foreach($actual_sets as $set_name => $set_elements):?>
-        <label class="task_label">
-            <?= PrintSet($set_name, $set_elements)?>
-        </label>
-        <br>
-    <?php endforeach?> 
+    <div class="task_data">
+        <label class="task_label">Adottak a következő halmazok:</label>
+        <?php foreach($actual_sets as $set_name => $set_elements):?>
+            <label class="task_label">
+                <?= PrintServices::CreatePrintableSet($set_name, $set_elements)?>
+            </label>
+        <?php endforeach?> 
+    </div>
     <?php $operation_counter = 0?>
     <?php foreach($_SESSION["task"]["operations"][$subtask_counter] as $operation_name => $operation):?>
         <?php $task_counter = $subtask_counter . "_" . $operation_counter?>
@@ -32,7 +34,6 @@
                     <?=$counter_text?>. részfeladat: <?=$operation[$operation_counter/5][0]?> <?="\u{0394}"?> <?=$operation[$operation_counter/5][1]?>
                 <?php endif?>
             </label>
-            <br>
             <?php include("./partials/taskContents/solutionInput.php")?>
         </div>
         <?php $operation_counter++?>

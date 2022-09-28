@@ -1,6 +1,6 @@
 <?php
 
-    class DimatiSubtask extends SubTask {
+    class DimatiSubtask {
         private $dimat_helper_functions;
         
         /**
@@ -121,7 +121,7 @@
                         if($set_counter !== 0){
                             $sets_text = $sets_text . ", ";
                         }
-                        $sets_text = $sets_text . $this->CreateSetText($set_name, $set, true);
+                        $sets_text = $sets_text . PrintServices::CreatePrintableSet($set_name, $set, true);
                         $set_counter++;
                     }
 
@@ -137,8 +137,8 @@
                         array_push($actual_operation_dictionary[$operation_names[$operation_counter]], $new_element);
 
                         if($operation_counter === 3){
-                            $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " halmaz komplementerét, ha az univerzum: " . $this->CreateSetText($new_element[0] . "<span class=\"bottom\">U</span>", $new_element[1]) . " </div>";
-                            $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $this->CreateSetText("<span style=\"border-top:1px solid black\">" . $new_element[0] . "</span>", $solution_for_new_element) . "</div>";    
+                            $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " halmaz komplementerét, ha az univerzum: " . PrintServices::CreatePrintableSet($new_element[0] . "<span class=\"bottom\">U</span>", $new_element[1]) . " </div>";
+                            $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . PrintServices::CreatePrintableSet("<span style=\"border-top:1px solid black\">" . $new_element[0] . "</span>", $solution_for_new_element) . "</div>";    
                         }else{
                             $operator = "";
                             switch($operation_counter){
@@ -150,7 +150,7 @@
                             }
 
                             $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " $operator " . $new_element[1] . " művelet eredményét!</div>";
-                            $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $this->CreateSetText($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
+                            $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . PrintServices::CreatePrintableSet($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
                         }
                     }
                     
@@ -214,16 +214,16 @@
                     $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                     $set_counter = 0;
                     if($same){
-                        $task_text = $task_text. "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"]) . " halmaz, valamint az ";
+                        $task_text = $task_text. "<div class=\"paragraph\">Adott a " .  PrintServices::CreatePrintableSet("A", $actual_sets["A"]) . " halmaz, valamint az ";
                         $task_text = $task_text . "R \u{2286} A \u{00D7} A, ";
                         $printable_solution = $printable_solution . "R \u{2286} A \u{00D7} A, ";
                     }else{
-                        $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  $this->CreateSetText("A", $actual_sets["A"])  . " és " . $this->CreateSetText("B", $actual_sets["B"]) . " halmazok, valamint az ";
+                        $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  PrintServices::CreatePrintableSet("A", $actual_sets["A"])  . " és " . PrintServices::CreatePrintableSet("B", $actual_sets["B"]) . " halmazok, valamint az ";
                         $task_text = $task_text . "R \u{2286} A \u{00D7} B, ";
                         $printable_solution = $printable_solution . "R \u{2286} A \u{00D7} B, ";
                     }
-                    $task_text = $task_text . $this->CreateRelationText("R", $relation) . "</div>";
-                    $printable_solution = $printable_solution . $this->CreateRelationText("R", $relation);
+                    $task_text = $task_text . PrintServices::CreatePrintableRelation("R", $relation) . "</div>";
+                    $printable_solution = $printable_solution . PrintServices::CreatePrintableRelation("R", $relation);
 
                     $previous_task = "";
                     for($counter = 0; $counter < 2; $counter++){
@@ -236,27 +236,27 @@
                         switch($new_task){
                             case 0:{
                                 $task_text_part = "Add meg a reláció értelmezési tartományát!";
-                                $solution_text_part =  $this->CreateSetText("R<span class=\"bottom\">domain</span>", $this->dimat_helper_functions->GetDomainOfRelation($relation));
+                                $solution_text_part =  PrintServices::CreatePrintableSet("R<span class=\"bottom\">domain</span>", $this->dimat_helper_functions->GetDomainOfRelation($relation));
                             };break;
                             case 1:{
                                 $task_text_part = "Add meg a reláció értékkészletét!";
-                                $solution_text_part =  $this->CreateSetText("R<span class=\"bottom\">image</span>", $this->dimat_helper_functions->GetImageOfRelation($relation));
+                                $solution_text_part =  PrintServices::CreatePrintableSet("R<span class=\"bottom\">image</span>", $this->dimat_helper_functions->GetImageOfRelation($relation));
                             };break;
                             case 2:{
-                                $task_text_part = "Add meg a reláció " . $this->CreateSetText("N", $actual_sets["N"]) . " halmazra vett megszorítását!";
-                                $solution_text_part =  $this->CreateRelationText("R<span class=\"bottom\">" . $this->CreateSetText("N", $actual_sets["N"], false) . "</span>", $this->dimat_helper_functions->GetRestrictedRelation($relation, $narrow_to_set));
+                                $task_text_part = "Add meg a reláció " . PrintServices::CreatePrintableSet("N", $actual_sets["N"]) . " halmazra vett megszorítását!";
+                                $solution_text_part =  PrintServices::CreatePrintableRelation("R<span class=\"bottom\">" . PrintServices::CreatePrintableSet("N", $actual_sets["N"], false) . "</span>", $this->dimat_helper_functions->GetRestrictedRelation($relation, $narrow_to_set));
                             };break;
                             case 3:{
                                 $task_text_part = "Add meg a reláció inverzét!";
-                                $solution_text_part =  $this->CreateRelationText("R<span class=\"exp\">-1</span>", $this->dimat_helper_functions->GetInverseRelation($relation));
+                                $solution_text_part =  PrintServices::CreatePrintableRelation("R<span class=\"exp\">-1</span>", $this->dimat_helper_functions->GetInverseRelation($relation));
                             };break;
                             case 4:{
-                                $task_text_part = "Add meg a reláció " . $this->CreateSetText("I", $actual_sets["I"]) . " halmazon felvett képét!";
-                                $solution_text_part =  $this->CreateSetText("R(" . $this->CreateSetText("I", $actual_sets["I"], false) . ")", $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set));
+                                $task_text_part = "Add meg a reláció " . PrintServices::CreatePrintableSet("I", $actual_sets["I"]) . " halmazon felvett képét!";
+                                $solution_text_part =  PrintServices::CreatePrintableSet("R(" . PrintServices::CreatePrintableSet("I", $actual_sets["I"], false) . ")", $this->dimat_helper_functions->GetImageBySet($relation, $make_image_to_set));
                             };break;
                             case 5:{
-                                $task_text_part = "Add meg a reláció " . $this->CreateSetText("D", $actual_sets["D"]) . " halmazon felvett ősképét!";
-                                $solution_text_part =  $this->CreateSetText("R<span class=\"exp\">-1</span>(" . $this->CreateSetText("D", $actual_sets["D"], false) . ")", $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set));
+                                $task_text_part = "Add meg a reláció " . PrintServices::CreatePrintableSet("D", $actual_sets["D"]) . " halmazon felvett ősképét!";
+                                $solution_text_part =  PrintServices::CreatePrintableSet("R<span class=\"exp\">-1</span>(" . PrintServices::CreatePrintableSet("D", $actual_sets["D"], false) . ")", $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set));
                             };break;
                             default:break;
                         }
@@ -295,15 +295,15 @@
                 array_push($task_data["set_triplets"], array("A" => $first_set, "B" => $second_set, "C" => $third_set));
                 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  $this->CreateSetText("A", $first_set)  . ", " . $this->CreateSetText("B", $second_set) . " és " . $this->CreateSetText("C", $third_set) .  " halmazok, valamint az ";
-                $task_text = $task_text . "R \u{2286} B \u{00D7} C, " . $this->CreateRelationText("R", $first_relation) . " és az  S \u{2286} A \u{00D7} B, " .$this->CreateRelationText("S", $second_relation) . " relációk.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . " és " . PrintServices::CreatePrintableSet("C", $third_set) .  " halmazok, valamint az ";
+                $task_text = $task_text . "R \u{2286} B \u{00D7} C, " . PrintServices::CreatePrintableRelation("R", $first_relation) . " és az  S \u{2286} A \u{00D7} B, " .PrintServices::CreatePrintableRelation("S", $second_relation) . " relációk.</div>";
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg az R \u{00B7} S kompozíció eredményét!</div>";
                 
                 $composition = $this->dimat_helper_functions->CreateCompositionOfRelations($first_relation, $second_relation);
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  $this->CreateSetText("A", $first_set)  . ", " . $this->CreateSetText("B", $second_set) . " és " . $this->CreateSetText("C", $third_set) .  ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{2286} B \u{00D7} C, " . $this->CreateRelationText("R", $first_relation) . " és S \u{2286} A \u{00D7} B, " .$this->CreateRelationText("S", $second_relation) . ".</div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{00B7} S = {(x,z) \u{2208} A \u{00D7} C | y \u{2203} B: (x,y) \u{2208} S \u{2227} (y,z) \u{2208} R } = " . $this->CreateRelationText("R \u{00B7} S", $composition, false) . "</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . " és " . PrintServices::CreatePrintableSet("C", $third_set) .  ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{2286} B \u{00D7} C, " . PrintServices::CreatePrintableRelation("R", $first_relation) . " és S \u{2286} A \u{00D7} B, " .PrintServices::CreatePrintableRelation("S", $second_relation) . ".</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{00B7} S = {(x,z) \u{2208} A \u{00D7} C | y \u{2203} B: (x,y) \u{2208} S \u{2227} (y,z) \u{2208} R } = " . PrintServices::CreatePrintableRelation("R \u{00B7} S", $composition, false) . "</div>";
                 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
@@ -334,8 +334,8 @@
                 array_push($task_data["base_sets"], $base_set);
                 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateSetText("A", $base_set) . " valamint az ";
-                $task_text = $task_text . "R \u{2286} A \u{00D7} A, " . $this->CreateRelationText("R", $relation) . " reláció.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  PrintServices::CreatePrintableSet("A", $base_set) . " valamint az ";
+                $task_text = $task_text . "R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció.</div>";
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg, hogy a következő tulajdonságok közül mellyeket teljesíti a fenti reláció: reflexív, irreflexív, szimmetrikus, antisszimmetrikus, asszimmetrikus, tranzitivitív, dichotóm, trichotóm, ekvivalencia reláció.</div>";
                 
                 // + What is missing...
@@ -351,8 +351,8 @@
                     $this->dimat_helper_functions->IsEquivalenceRelation($base_set, $relation)
                 );
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  $this->CreateSetText("A", $base_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{2286} A \u{00D7} A, " . $this->CreateRelationText("R", $relation) . ".</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  PrintServices::CreatePrintableSet("A", $base_set) . ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . ".</div>";
                 $printable_solution = $printable_solution . "<div class=\"paragraph\">Ez a reláció ";
                 foreach($characteristics as $characteristic_counter => $characteristic){
                     if($characteristic_counter !== 0){
@@ -391,7 +391,7 @@
                 $characteristics = $this->dimat_helper_functions->GetCharacteristics();
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateSetText("A", $personal_set) . ".</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  PrintServices::CreatePrintableSet("A", $personal_set) . ".</div>";
                 $task_text = $task_text . "<div class=\"paragraph\">Készíts olyan relációt, amely teljesíti a következő feltételeket:</div>";
                 $task_text = $task_text . "<ul>";
                 $characteristic_counter = 0;
@@ -417,14 +417,14 @@
                         break;
                     }
 
-                    $printable_solution = $printable_solution . "<div class=\"paragraph\">" . $this->CreateRelationText("", $filtered_relation, false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"paragraph\">" . PrintServices::CreatePrintableRelation("", $filtered_relation, false) . "</div>";
                 }
                 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
-                array_push($task_data["sets"], $filtered_relations);
+                array_push($task_data["sets"], $personal_set);
                 array_push($task_data["characteristics"], $characteristics);
-                array_push($solutions, $characteristics);
+                array_push($solutions, $filtered_relations);
             }
 
             return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
@@ -450,12 +450,12 @@
                 array_push($task_data["pairs_of_sets"], [$first_set, $second_set]);
                 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  $this->CreateSetText("A", $first_set)  . " és " . $this->CreateSetText("B", $second_set) . " halmazok, valamint az ";
-                $task_text = $task_text . "R \u{2286} A \u{00D7} B, " . $this->CreateRelationText("R", $relation) . " reláció. Döntsd el, hogy a reláció függvény-e!</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . " és " . PrintServices::CreatePrintableSet("B", $second_set) . " halmazok, valamint az ";
+                $task_text = $task_text . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció. Döntsd el, hogy a reláció függvény-e!</div>";
 
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  $this->CreateSetText("A", $first_set)  . ", " . $this->CreateSetText("B", $second_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">" . "R \u{2286} A \u{00D7} B, " . $this->CreateRelationText("R", $relation) . ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">" . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . ";</div>";
                 $printable_solution = $printable_solution . "<div class=\"paragraph\">A reláció";
                 
                 $is_function = $this->dimat_helper_functions->IsFunction($relation);
@@ -498,9 +498,9 @@
                 
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  $this->CreateSetText("A", $first_set)  . " és " . $this->CreateSetText("B", $second_set) . " halmazok, valamint az ";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . " és " . PrintServices::CreatePrintableSet("B", $second_set) . " halmazok, valamint az ";
                 $task_text = $task_text . "f \u{2208} A \u{2192} B, ";
-                $task_text = $task_text . $this->CreateRelationText("f", $function) . " függvény. Döntsd el, hogy a függvény mely tulajdonságokat teljesíti: injektív, szürjektív, bijektív.</div>";
+                $task_text = $task_text . PrintServices::CreatePrintableRelation("f", $function) . " függvény. Döntsd el, hogy a függvény mely tulajdonságokat teljesíti: injektív, szürjektív, bijektív.</div>";
 
                 $characteristics = array(
                     $this->dimat_helper_functions->IsSurjective($function, $second_set),
@@ -509,8 +509,8 @@
                 );
                 
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  $this->CreateSetText("A", $first_set)  . ", " . $this->CreateSetText("B", $second_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"paragraph\">f \u{2208} A \u{2192} B, " . $this->CreateRelationText("f", $function) . ".</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"paragraph\">f \u{2208} A \u{2192} B, " . PrintServices::CreatePrintableRelation("f", $function) . ".</div>";
                 $printable_solution = $printable_solution . "<div class=\"paragraph\">Ez a függvény ";
                 foreach($characteristics as $characteristic_counter => $characteristic){
                     if($characteristic_counter !== 0){
@@ -569,9 +569,9 @@
                     ]);
                 }else{
                     $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                    $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám</div>";
+                    $task_text = $task_text . "<div class=\"paragraph\">Adott a " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám</div>";
                     $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                    $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . "</div>";
+                    $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . "</div>";
 
                     $previous_task = "";
                     for($counter = 0; $counter < 2; $counter++){
@@ -600,7 +600,7 @@
                             case 3:{
                                 $task_text_part = "Add meg a komplex szám konjugáltját!";
                                 $conjugate = [$complex_number[0], -1*$complex_number[1]];
-                                $solution_text_part =  "<span style=\"border-top:1px solid black; \">x</span> = " . $this->CreateComplexNumberAlgebraicText("", $conjugate, false);
+                                $solution_text_part =  "<span style=\"border-top:1px solid black; \">x</span> = " . PrintServices::CreatePrintableComplexNumberAlgebraic("", $conjugate, false);
                             };break;
                             default:break;
                         }
@@ -653,7 +653,7 @@
                         if($complex_number_counter !== 0){
                             $complex_numbers_text = $complex_numbers_text . ", ";
                         }
-                        $complex_numbers_text = $complex_numbers_text . $this->CreateComplexNumberAlgebraicText($complex_number_name, $complex_numbers, true);
+                        $complex_numbers_text = $complex_numbers_text . PrintServices::CreatePrintableComplexNumberAlgebraic($complex_number_name, $complex_numbers, true);
                         $complex_number_counter++;
                     }
 
@@ -678,7 +678,7 @@
                         }
 
                         $task_text = $task_text . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " $operator " . $new_element[1] . " művelet eredményét!</div>";
-                        $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . $this->CreateComplexNumberAlgebraicText($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
+                        $printable_solution = $printable_solution . "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". részfeladat: </label>" . PrintServices::CreatePrintableComplexNumberAlgebraic($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
                     }
                     
                     array_push($descriptions, $task_text);
@@ -713,14 +713,14 @@
                 array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . " és " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . ", " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[1]) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</div>";
 
                 $trigonometric_forms = [$this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[0]), $this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[1])];
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">x = " .  $this->CreateComplexNumberTrigonometricText("", $trigonometric_forms[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">y = " .  $this->CreateComplexNumberTrigonometricText("", $trigonometric_forms[1], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[1], true, false) . "</div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_0_" . $subtask_counter . "_0" => $trigonometric_forms[0],
@@ -758,14 +758,14 @@
                 array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . " és " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $pair_of_complex_numbers[0]) . ", " . $this->CreateComplexNumberAlgebraicText("y", $pair_of_complex_numbers[1]) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("multiplication", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1]), $this->dimat_helper_functions->UseMoivre("division", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1])];
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">x * y = " .  $this->CreateComplexNumberTrigonometricText("", $operations[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">x / y = " .  $this->CreateComplexNumberTrigonometricText("", $operations[1], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x * y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x / y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_1_" . $subtask_counter . "_0" => $operations[0],
@@ -806,14 +806,14 @@
                 array_push($task_data["powers"], [$first_power, $second_power]);
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $first_power), $this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $second_power)];
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg az x<span class=\"exp\">$first_power</span> és x<span class=\"exp\">$second_power</span> hatványozások eredményét!</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$first_power</span> = " .  $this->CreateComplexNumberTrigonometricText("", $operations[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$second_power</span>= " .  $this->CreateComplexNumberTrigonometricText("", $operations[1], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$first_power</span> = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">x<span class=\"exp\">$second_power</span>= " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_0_" . $subtask_counter . "_0" => $operations[0],
@@ -854,21 +854,21 @@
                 array_push($task_data["roots"], [$first_root, $second_root]);
 
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . " komplex szám.</div>";
+                $task_text = $task_text . "<div class=\"paragraph\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  $this->CreateComplexNumberAlgebraicText("x", $complex_number) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $first_root), $this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $second_root)];
                 $task_text = $task_text . "<div class=\"paragraph\">Add meg az <span class=\"exp\">$first_root</span>\u{221A}x és <span class=\"exp\">$second_root</span>\u{221A}x gyökvonás eredményét!</div>";
                 
-                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$first_root</span>\u{221A}x = " . $this->CreateComplexNumberTrigonometricText("", ["<span class=\"exp\">$first_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$first_root"], false, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$first_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$first_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$first_root"], false, false) . "</div>";
                 foreach($operations[0]["arguments"] as $root_counter => $root){
-                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . $this->CreateComplexNumberTrigonometricText("", [$operations[0]["size"], $root], false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[0]["size"], $root], false) . "</div>";
                 }
 
-                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$second_root</span>\u{221A}x = " . $this->CreateComplexNumberTrigonometricText("", ["<span class=\"exp\">$second_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$second_root"], false, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"paragraph\"><span class=\"exp\">$second_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$second_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$second_root"], false, false) . "</div>";
                 foreach($operations[1]["arguments"] as $root_counter => $root){
-                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . $this->CreateComplexNumberTrigonometricText("", [$operations[1]["size"], $root], false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"paragraph\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[1]["size"], $root], false) . "</div>";
                 }
 
                 $solutions = array_merge($solutions,[

@@ -129,47 +129,28 @@
          * @return void 
         */
         private function CreateTaskThree(){
-            [$set_A, $set_B, $set_C] = $this->dimat_helper_functions->CreateSets(3, 5, false);
+            $relation_composition = $this->dimati_subtasks->CreateSubtask("2", "0", 1, true);
+            $relation_characteristics = $this->dimati_subtasks->CreateSubtask("2", "1", 1, true);
+            $relation_creation = $this->dimati_subtasks->CreateSubtask("2", "2", 1, true);
 
-            //Composition
-            $first_relation = $this->dimat_helper_functions->CreateDescartesProduct($set_B, $set_C, 6);
-            $second_relation = $this->dimat_helper_functions->CreateDescartesProduct($set_A, $set_B, 6);
-            $composition = $this->dimat_helper_functions->CreateCompositionOfRelations($first_relation, $second_relation);
-            
-            //Determine the characteristics
-            $base_set = $this->dimat_helper_functions->CreateSets(1, 3, false)[0];
-            $third_relation = $this->dimat_helper_functions->CreateDescartesProduct($base_set, $base_set, mt_rand(4, 10));
-            $solution_1 = array(
-                $this->dimat_helper_functions->IsReflexiveRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsIrreflexiveRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsSymmetricRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsAntisymmetricRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsAssymmetricRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsTransitiveRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsDichotomousRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsTrichotomousRelation($base_set, $third_relation),
-                $this->dimat_helper_functions->IsEquivalenceRelation($base_set, $third_relation)
-            );
-            
-            //Determine a proper relation with certain characteristics
-            $personal_set = $this->dimat_helper_functions->CreateSets(1, 4, false)[0];
-            $characteristics = $this->dimat_helper_functions->GetCharacteristics();
-            
             $task_array = array(
-                "task_description" => "Old meg a következő feladatokat!",
-                "sets" => array("A" => $set_A, "B" => $set_B, "C" => $set_C),
-                "relations" => array(
-                    "R \u{2286} B \u{00D7} C, R" => $first_relation, 
-                    "S \u{2286} A \u{00D7} B, S" => $second_relation),
-                "characteristics_relation" => array("D" => $base_set, "Q \u{2286} D \u{00D7} D, Q" => $third_relation),
-                "characteristics" => array("E" => $personal_set, "characteristics" => $characteristics)
+                "task_description" => "Old meg a következő relációk kompozíciójával és tulajdonságaival kapcsolatos feladatokat!",
+                "set_triplets" => $relation_composition["data"]["set_triplets"],
+                "relation_pairs" => $relation_composition["data"]["relation_pairs"],
+                "characteristics_relation" => $relation_characteristics["data"],
+                "characteristics" => $relation_creation["data"]
             );
 
-            $solution_array = array(
-                "solution_0" => $composition,
-                "solution_1" => $solution_1,
-                "solution_2" => [$personal_set, $characteristics]
-            );
+            $solution_array = array("first_subtasks" => [], "second_subtasks" => [], "third_subtasks" => []);
+            foreach($relation_composition["solutions"] as $solution_counter => $solution){
+                $solution_array["first_subtasks"] = array_merge($solution_array["first_subtasks"], array("solution_0_" . $solution_counter => $solution));
+            } 
+            foreach($relation_characteristics["solutions"] as $solution_counter => $solution){
+                $solution_array["second_subtasks"] = array_merge($solution_array["second_subtasks"], array("solution_1_" . $solution_counter => $solution));
+            } 
+            foreach($relation_creation["solutions"] as $solution_counter => $solution){
+                $solution_array["third_subtasks"] = array_merge($solution_array["third_subtasks"], array("solution_2_" . $solution_counter => $solution));
+            }            
 
             $this->task_description = $task_array;
             $this->task_solutions = $solution_array;

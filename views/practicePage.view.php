@@ -70,7 +70,7 @@
                 <div class="card_row">
                     <?php for($column_index = 0; $column_index < $column_number; ++$column_index):?>
                         <?php if($card_counter < count($practice_topics)):?>
-                            <div class="small_card" onclick="SmallCardClicked(this)" id=<?=$card_counter?>>
+                            <div class="small_card" onclick="SmallCardClicked(this)" id=<?="small_card_" . $card_counter?>>
                                 <label class="title"><?=$practice_topics[$card_counter]?></label>
                                 <label class="description"><?=$topic_descriptions[$card_counter]?></label>
                                 <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
@@ -119,9 +119,9 @@
                         <label class="title">Definíciók</label>
                         <label class="definitions"><?=isset($_SESSION["definitions"])?$_SESSION["definitions"]:""?></label>
                     </div>
-                    <div class= "task_container" style="<?php if(isset($_SESSION["was_correct"]) && $_SESSION["was_correct"] === true){echo "border: 2px solid green";}elseif(isset($_SESSION["was_correct"]) && $_SESSION["was_correct"] === false){echo "border: 2px solid red";}else{echo "border: 1px solid black";}?>">
+                    <div class= "task_container">
                         <div class="title_and_progress">
-                            <label class="title">Feladat</label>
+                            <label class="title">Feladatok</label>
                             <div class="level_container">
                                 <label class="level_counter">
                                     <?= ProgressCalculator(floatval($practice_results["practice_" . ($_SESSION["topic"] + 1)]))[0]?>
@@ -134,13 +134,11 @@
                             </div>
                         </div>
                         <div class="task">
+                            <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
+                                <label class="task_label"><?=$_SESSION["task"]["task_description"]?></label>
+                            <?php endif?>
                             <?php if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]):?>
                                 <form class="solution_form" method="POST" action="./index.php?site=handInSolution">
-                                    <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
-                                        <label class="task_label"><?=$_SESSION["task"]["task_description"]?></label>
-                                        <br>
-                                        <br>
-                                    <?php endif?>
                                     <?php include("./partials/taskContents/taskContent.php")?>
                                     <button type="submit" class="solution_button">Beküldés</button>
                                 </form>
@@ -158,7 +156,8 @@
 <script type="module" src="./views/js/mainContent.js"></script>
 <script>
     function SmallCardClicked(element){
-        window.location = "./index.php?site=practice&topic=" + element.id
+        let id = element.id.split("small_card_")[1]
+        window.location = "./index.php?site=practice&topic=" + id
     } 
 
     function NewTaskButtonClicked(element){

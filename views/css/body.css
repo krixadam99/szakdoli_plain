@@ -192,31 +192,27 @@ hr {
     display: flex;
     width: 92%;
     margin: 2% 4% 2% 4%;
-}
-
-.definitions_container {
+    border-radius: 2px;
     border: 1px solid black;
     box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
-    transition: 0.4s;
-    border-radius: 5px;
 }
 
 .definitions_container {
     width: 38%;
-    margin-right: 1%;
+    margin: 2% 0% 2% 1%;
+    border-right: 1px solid black;
     display: flex;
     flex-direction: column;
 }
 
 .definitions_container label {
-    font-size: calc(13px + 0.3vw);
     width: auto;
     margin: 2% auto 3% 5%;
 }
 
 .task_container {
     width: 60%;
-    margin-left: 1%;
+    margin: 2% 1% 2% 0%;
     display: flex;
     flex-direction: column;
 }
@@ -226,9 +222,16 @@ hr {
     margin: 0% 5%;
 }
 
+.task_data {
+    margin: 3% 0% 1% 0%;
+}
+
 .task_label{
     text-align: justify;
     display: block;
+    font-size: calc(11px + 0.3vw);
+    width: 100%;
+    margin-bottom: 1%;
 }
 
 .solution_container, .title_and_progress {
@@ -250,7 +253,7 @@ hr {
 }
 
 .solution_container, .multiple_solution_input_container, .single_solution_input_container {
-    margin: 1% 0% 3% 0%;
+    margin: 2% 0% 0% 0%;
 }
 
 .multiple_solution_input_container, .single_solution_input_container {
@@ -262,9 +265,14 @@ hr {
     margin: 0% 0% 5% 0%;
 }
 
+.solution_label_container {
+    display: flex;
+    flex-direction: column;
+    margin: 2% 0% 0% 0%;
+}
+
 .solution_container label {
     margin: 0% 2% 0% 0%;
-    width: auto
 }
 
 .solution_input {
@@ -292,25 +300,29 @@ hr {
 
 .solution_button, .request_new_task_button {
     width: 20%;
-    margin: 0% 40% 5% 40%; 
+    margin: 1% 40% 5% 40%; 
+    padding-top: 1%;
+    padding-bottom: 1%;
     border-radius: 50px;
-    background-color: white;
+    background-color: rgb(250, 248, 248);
     border: 1px solid black;
 }
 
 .correct {
     border-radius: 5px;
     border: 1px solid green;
+    color:rgb(134, 132, 132);
 }
 
 .wrong {
     border-radius: 5px;
     border: 1px solid red;
+    color:rgb(134, 132, 132);
 }
 
 .small_task_container{
     width: 100%;
-    margin: 2% 0% 5% 0%;
+    margin: 3% 0% 5% 0%;
 }
 
 ul {
@@ -568,22 +580,3 @@ textarea {
     margin-top: 1%;
     margin-bottom: 1%;
 }
-
-/*
-@media print {
-    #preview {
-        background-color: white;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        margin: 0%;
-    }
-
-    #task_generation_settings {
-        display: none
-    }
-}
-*/

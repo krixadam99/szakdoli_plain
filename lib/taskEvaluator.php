@@ -204,17 +204,16 @@
          * 
          * It will take the solution array containing all of the user's answers, and return the part of it determined by the starting and ending index (inclusicely).
          * 
+         * @param string $prefix The prefix of the select element name.
          * @param int $select_start The index of the first HTML select element.
          * @param int $select_end The index of the last HTML select element.
          * 
          * @return array Returns an indexed array containing the values of the HTML select elements.
         */
-        protected function ParseSelectSolutions($select_start, $select_end){
+        protected function ParseSelectSolutions($prefix, $select_start, $select_end){
             $answer = [];
             for($counter = $select_start; $counter <= $select_end; $counter++){
-                if(isset($this->solutions[$counter])){
-                    array_push($answer, $this->solutions[$counter]);
-                }
+                array_push($answer, $this->solutions[$prefix . "_" . $counter]??"");
             }
             return $answer;
         }
@@ -302,77 +301,6 @@
                 }
             }
             return $return_values;
-        }
-
-        /**
-         * 
-         * This method creates a printable version of the given set.
-         * 
-         * @param array $set The set which the function will convert into a string.
-         * 
-         * @return string Returns a printable version of the given set.
-        */
-        protected function CreatePrintableSet($set){
-            $printable_set = "{";
-            $is_first_element = true;
-            foreach($set as $index => $element){
-                if($is_first_element){
-                    $printable_set = $printable_set . $element;
-                    $is_first_element = false;
-                }else{
-                    $printable_set = $printable_set . ", " . $element;
-                }
-            }
-            $printable_set = $printable_set . "}";
-            return $printable_set;
-        }
-
-        /**
-         * 
-         * This method creates a printable version of the given relation.
-         * 
-         * @param array $relation The relation which the function will convert into a string, the relation must consist ordered pairs of the form [element, element].
-         * 
-         * @return string Returns a printable version of the given relation.
-        */
-        protected function CreatePrintableRelation($relation){
-            $printable_relation = "{";
-            for($relation_counter = 0; $relation_counter < count($relation); $relation_counter++){
-                if($relation_counter != 0){
-                    $printable_relation = $printable_relation . ", ";
-                }
-                $printable_relation = $printable_relation . "(" . $relation[$relation_counter][0] . ", " . $relation[$relation_counter][1] . ")";
-            }
-            $printable_relation = $printable_relation . "}";
-            return $printable_relation;
-        }
-
-        /**
-         * 
-         * This method creates a printable version of the complex number.
-         * 
-         * @param array $complex_numner The complex number which the function will convert into a string, the complex number either contains a real and imaginary part, or the length of the number and its argument.
-         * @param bool $is_trigonometric This parameter determines whether the complex number is of trigonometric form, or not.
-         * 
-         * @return string Returns a printable version of the given complex number.
-        */
-        protected function CreatePrintableComplexNumber($complex_number, $is_trigonometric = false){
-            $printable_complex_number = "";
-            if(!$is_trigonometric){
-                if(isset($complex_number[0])){
-                    $printable_complex_number = $printable_complex_number . $complex_number[0];
-                }
-                if(isset($complex_number[1])){
-                    if($complex_number[1] > 0){
-                        $printable_complex_number = $printable_complex_number . " + " . $complex_number[1] . "*i";
-                    }else if($complex_number[1] < 0){
-                        $printable_complex_number = $printable_complex_number . " - " . abs($complex_number[1]) . "*i";
-                    }
-                }
-            }else{
-                $printable_complex_number = $printable_complex_number . round($complex_number[0],2) . "*(cos(" . round($complex_number[1],2) . ") + i*sin(" . round($complex_number[1],2) . "))";
-            }
-            return $printable_complex_number;
         }
 
         /**
@@ -493,9 +421,9 @@
                 $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
             }
             
-            $answer_text = $this->CreatePrintableSet($given_answer);
-            $solution_text = $this->CreatePrintableSet($real_value);
-            $was_correct = $this->AreSetsEqual($given_answer, $real_value);
+            $answer_text = PrintServices::CreatePrintableSet("", $given_answer, false);
+            $solution_text = PrintServices::CreatePrintableSet("", $real_value, false);
+            $was_correct = $this->AreSetsEqual($given_answer, $real_value) && $given_answer_raw !== "Megoldásom...";
             if($was_correct){
                 $this->correct_answer_counter += 1;
             }
@@ -525,8 +453,8 @@
                 $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
             }
             
-            $answer_text = $this->CreatePrintableRelation($given_answer);
-            $solution_text = $this->CreatePrintableRelation($real_value);
+            $answer_text = PrintServices::CreatePrintableRelation("", $given_answer, false);
+            $solution_text = PrintServices::CreatePrintableRelation("", $real_value, false);
             
             $was_correct = $this->AreRelationsEqual($given_answer, $real_value);
             if($was_correct){

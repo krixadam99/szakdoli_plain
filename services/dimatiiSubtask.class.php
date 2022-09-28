@@ -1,6 +1,6 @@
 <?php
 
-    class DimatiiSubtask extends SubTask {
+    class DimatiiSubtask {
         private $dimat_helper_functions;
         
         /**
@@ -212,7 +212,7 @@
 
             for($congruence_counter = 0; $congruence_counter < $number_of_pairs; $congruence_counter++){
                 $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_counter + 1 . ". csoport: </label><label class=\"task_description\">Írj a ". $congruences[$congruence_counter][0] . " \u{2261} x (mod " . $congruences[$congruence_counter][1] . ") kongruenciában az x helyére egy egészet, hogy igaz állítást kapj!</label></div>";
-                $printable_solution =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_counter + 1 . ". csoport: </label><label class=\"task_solution\">" . $this->CreateModuloEquivalence("x",$congruences[$congruence_counter][0], $congruences[$congruence_counter][1]) . "</label></div>";
+                $printable_solution =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $congruence_counter + 1 . ". csoport: </label><label class=\"task_solution\">" . PrintServices::CreatePrintableModuloEquivalence("x",$congruences[$congruence_counter][0], $congruences[$congruence_counter][1]) . "</label></div>";
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
             }
@@ -485,7 +485,7 @@
                     }
                 }
                 
-                $printable_solution =  $printable_solution . $this->CreateModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:");
+                $printable_solution =  $printable_solution . PrintServices::CreatePrintableModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:");
 
 
                 array_push($descriptions, $task_description);
@@ -529,7 +529,7 @@
                 $steps = $diophantine_algorithm[$diophantine_equation_counter];
                 $solution = $diophantine_solutions[$diophantine_equation_counter];
                 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label><label class=\"task_description\"> Add meg a " . $diophantine_equation[0] . " * x " . $this->PlusMinus($diophantine_equation[1]) . abs($diophantine_equation[1]) . " * y = " . $diophantine_equation[2] . " lineáris diofantikus egyenlet megoldását!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label><label class=\"task_description\"> Add meg a " . $diophantine_equation[0] . " * x " . PrintServices::PlusMinus($diophantine_equation[1]) . abs($diophantine_equation[1]) . " * y = " . $diophantine_equation[2] . " lineáris diofantikus egyenlet megoldását!</label></div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $diophantine_equation_counter + 1 . ". csoport: </label></div>" . $this->CreateDiophantineSolutionText("x", "y", $diophantine_equation, $steps, $solution);
 
                 array_push($descriptions, $task_description);
@@ -768,8 +768,8 @@
                 
                 
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];                
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a " . $this->CreatePolynomialText($polynomial_expression);
-                $task_description = $task_description . " polinom x" . $this->PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a " . PrintServices::CreatePrintablePolynomial($polynomial_expression);
+                $task_description = $task_description . " polinom x" . PrintServices::PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!</label></div>";
 
                 $residue_text = "<div class=\"paragraph\">Az eredmény: ";
                 $division_text = "<div class=\"paragraph\">A maradék: ";
@@ -779,7 +779,7 @@
                     if($residue_degree - $cell_counter >= 0){
                         if($cell_value != 0){
                             if($cell_counter != 0){
-                                $residue_text = $residue_text . $this->PlusMinus($cell_value) . abs($cell_value);
+                                $residue_text = $residue_text . PrintServices::PlusMinus($cell_value) . abs($cell_value);
                             }else{
                                 $residue_text = $residue_text . $cell_value;
                             }
@@ -840,16 +840,16 @@
                 $quotient_coefficients = $division["quotient_coefficients"];
                 array_push($solutions, $division["solution"]);
                 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . $this->CreatePolynomialText($dividand_polynomial_expression) . ")</b> / <b>(" . $this->CreatePolynomialText($divisor_polynomial_expression) . ")</b> hányados eredményét!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . PrintServices::CreatePrintablePolynomial($dividand_polynomial_expression) . ")</b> / <b>(" . PrintServices::CreatePrintablePolynomial($divisor_polynomial_expression) . ")</b> hányados eredményét!</label></div>";
                 
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . "<table class=\"polynomial_division_table\">";
                 $printable_solution = $printable_solution . "<tr>";
-                $printable_solution = $printable_solution . "<th></th>" . $this->CreateTableRowWithPolynomial($dividand_polynomial_expression, count($dividand_polynomial_expression)-1, "<th>", "</th>");
+                $printable_solution = $printable_solution . "<th></th>" . PrintServices::CreatePrintableTableRowWithPolynomial($dividand_polynomial_expression, count($dividand_polynomial_expression)-1, "<th>", "</th>");
                 $printable_solution = $printable_solution . "<th>:</th>";
-                $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($divisor_polynomial_expression, count($divisor_polynomial_expression)-1, "<th>", "</th>");
+                $printable_solution = $printable_solution . PrintServices::CreatePrintableTableRowWithPolynomial($divisor_polynomial_expression, count($divisor_polynomial_expression)-1, "<th>", "</th>");
                 $printable_solution = $printable_solution . "<th>=</th>";
                 if(count($quotient_coefficients) !== 0){
-                    $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($quotient_coefficients, count($quotient_coefficients)-1, "<th>", "</th>");
+                    $printable_solution = $printable_solution . PrintServices::CreatePrintableTableRowWithPolynomial($quotient_coefficients, count($quotient_coefficients)-1, "<th>", "</th>");
                 }else{
                     $printable_solution = $printable_solution . "<th>0</th>";
                 }
@@ -865,13 +865,13 @@
                         
                         if($division_partial_step === 0){
                             $printable_solution = $printable_solution .  "<td style=\"border-bottom:1px solid black\">-1*(</td>";
-                            $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td style=\"border-bottom:1px solid black\">", "</td>");
+                            $printable_solution = $printable_solution . PrintServices::CreatePrintableTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td style=\"border-bottom:1px solid black\">", "</td>");
                             $printable_solution = $printable_solution .  "<td style=\"border-bottom:1px solid black\">)</td>";
                         }else{
-                            $printable_solution = $printable_solution . $this->CreateTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td>", "</td>");
+                            $printable_solution = $printable_solution . PrintServices::CreatePrintableTableRowWithPolynomial($partial_step, count($dividand_polynomial_expression) - 1 - floor($td_counter/2), "<td>", "</td>");
                             $new_in_row = $dividand_polynomial_expression[count($divisor_polynomial_expression) + $step_counter] ?? "";
                             if($new_in_row !== ""){
-                                $printable_solution = $printable_solution . "<td>" . $this->PlusMinus($new_in_row) . "</td><td>" . $this->CreatePolynomialCoefficient(abs($new_in_row), count($partial_step), count($dividand_polynomial_expression) - 1 - floor($td_counter/2), true) . "</td>";
+                                $printable_solution = $printable_solution . "<td>" . PrintServices::PlusMinus($new_in_row) . "</td><td>" . PrintServices::CreatePrintablePolynomialCoefficient(abs($new_in_row), count($partial_step), count($dividand_polynomial_expression) - 1 - floor($td_counter/2), true) . "</td>";
                             }
                         }
 
@@ -933,11 +933,11 @@
                 $before_modulo = $product["before_modulo"];
                 array_push($solutions, $product["product"]);
                 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ")</b> * <b>(" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!</label></div>";
-                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . "(" . $this->CreatePolynomialText($multiplicand_polynomial_expression) . ") * (" . $this->CreatePolynomialText($multiplier_polynomial_expression) . ") = (";
-                $printable_solution = $printable_solution . $this->CreatePolynomialTextByPairs($before_modulo);
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a <b>(" . PrintServices::CreatePrintablePolynomial($multiplicand_polynomial_expression) . ")</b> * <b>(" . PrintServices::CreatePrintablePolynomial($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!</label></div>";
+                $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . "(" . PrintServices::CreatePrintablePolynomial($multiplicand_polynomial_expression) . ") * (" . PrintServices::CreatePrintablePolynomial($multiplier_polynomial_expression) . ") = (";
+                $printable_solution = $printable_solution . PrintServices::CreatePrintablePolynomialByPairs($before_modulo);
                 $printable_solution = $printable_solution . ") % " . $modulo . " = ";
-                $printable_solution = $printable_solution . $this->CreatePolynomialTextByPairs($product["product"]);
+                $printable_solution = $printable_solution . PrintServices::CreatePrintablePolynomialByPairs($product["product"]);
 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
@@ -981,21 +981,21 @@
                 array_push($solutions, $interpolation);
                 $base_polynomial_expressions = $interpolation["base_polynomial_expressions"];
 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
                 $sum_text = "";
                 foreach($base_polynomial_expressions as $base_polynomial_counter => $base_polynomial_expression){
                     if($base_polynomial_counter !== 0){
-                        $sum_text = $sum_text . $this->PlusMinus($points[$base_polynomial_counter][1]) . abs($points[$base_polynomial_counter][1]);
+                        $sum_text = $sum_text . PrintServices::PlusMinus($points[$base_polynomial_counter][1]) . abs($points[$base_polynomial_counter][1]);
                     }else{
                         $sum_text = $sum_text . $points[$base_polynomial_counter][1];
                     }
-                    $polynomial_text = $this->CreatePolynomialTextByPairs($base_polynomial_expression);
+                    $polynomial_text = PrintServices::CreatePrintablePolynomialByPairs($base_polynomial_expression);
                     $printable_solution = $printable_solution . "<div class=\paragraph\>l<span class=\"bottom\">(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</span> = ";
                     $printable_solution = $printable_solution . $polynomial_text . "</div>";
                     $sum_text = $sum_text . " * (" .  $polynomial_text . ")";
                 }
-                $printable_solution = $printable_solution . "<div class=\paragraph\><b>L[x] = </b>" . $sum_text . " = <b>" . $this->CreatePolynomialTextByPairs($interpolation["polynomial_expression"]) . "</b></div>";
+                $printable_solution = $printable_solution . "<div class=\paragraph\><b>L[x] = </b>" . $sum_text . " = <b>" . PrintServices::CreatePrintablePolynomialByPairs($interpolation["polynomial_expression"]) . "</b></div>";
 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
@@ -1041,7 +1041,7 @@
                 array_push($solutions, $interpolation);
                 $table_data = $interpolation["table_data"];
 
-                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . $this->CreatePointsText($points) . "</b> pontokra!</label></div>";
+                $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
                 $printable_solution = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
                 $printable_solution = $printable_solution . "<table class=\"stair_table\">";
                 $printable_solution = $printable_solution . "<tr>";
@@ -1124,16 +1124,16 @@
         private function CreateDiophantineSolutionText($first_variable_name = "x", $second_variable_name = "y", $diophantine_equation, $steps, $solution){
             $task_solution = "";
             
-            $y_coef_sign = $this->PlusMinus($diophantine_equation[1]);
-            $x_coef_sign = $this->PlusMinus(-1*$diophantine_equation[0]);
+            $y_coef_sign = PrintServices::PlusMinus($diophantine_equation[1]);
+            $x_coef_sign = PrintServices::PlusMinus(-1*$diophantine_equation[0]);
             $diophantine_equation[1] = abs($diophantine_equation[1]);
-            $task_solution = $task_solution . "<div class=\"paragraph\">" . $diophantine_equation[0] . "*$first_variable_name" . $this->PlusMinus($diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name = " . $diophantine_equation[2] . " | -1*" . $diophantine_equation[1] . "*$second_variable_name \u{2194} <br>" 
-                . $diophantine_equation[0] . "*$first_variable_name = "  . $diophantine_equation[2] . $this->PlusMinus(-1*$diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name " . " | (mod" . $diophantine_equation[1] . ") \u{2192} <br>";
-            $task_solution = $task_solution . $this->CreateCongruenceSolutionText($first_variable_name, $steps);
-            $task_solution = $task_solution . $this->CreateModuloEquivalence($first_variable_name, $solution[0][1], $solution[0][2], "");
+            $task_solution = $task_solution . "<div class=\"paragraph\">" . $diophantine_equation[0] . "*$first_variable_name" . PrintServices::PlusMinus($diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name = " . $diophantine_equation[2] . " | -1*" . $diophantine_equation[1] . "*$second_variable_name \u{2194} <br>" 
+                . $diophantine_equation[0] . "*$first_variable_name = "  . $diophantine_equation[2] . PrintServices::PlusMinus(-1*$diophantine_equation[1]) . $diophantine_equation[1] . "*$second_variable_name " . " | (mod" . $diophantine_equation[1] . ") \u{2192} <br>";
+            $task_solution = $task_solution . PrintServices::CreatePrintableCongruenceSolution($first_variable_name, $steps);
+            $task_solution = $task_solution . PrintServices::CreatePrintableModuloEquivalence($first_variable_name, $solution[0][1], $solution[0][2], "");
             $task_solution = $task_solution . "<b>$second_variable_name=</b>(" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . "*$first_variable_name)/(" . $diophantine_equation[1] . ")"
-            . " = (" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . " * (" . $solution[0][1] . $this->PlusMinus($solution[0][2]) .  abs($solution[0][2])  . "*k))/(" . $diophantine_equation[1] . ")"
-            . " =<b>" .  $solution[1][0] . $this->PlusMinus($solution[1][1]) .  abs($solution[1][1])  . "*k (k \u{2208} \u{2124})</b></div>";
+            . " = (" . $diophantine_equation[2] . $x_coef_sign . abs($diophantine_equation[0]) . " * (" . $solution[0][1] . PrintServices::PlusMinus($solution[0][2]) .  abs($solution[0][2])  . "*k))/(" . $diophantine_equation[1] . ")"
+            . " =<b>" .  $solution[1][0] . PrintServices::PlusMinus($solution[1][1]) .  abs($solution[1][1])  . "*k (k \u{2208} \u{2124})</b></div>";
             
             return $task_solution;
         }
@@ -1149,8 +1149,8 @@
             $task_description = "<div class=\"paragraph\"><label class=\"task_description\"> Add meg a következő lineáris kongruenciarendszer megoldását!</label><br>";
             $task_solution = "<div class=\"paragraph\"><b>1. lépés: lineáris kongruenciák egyszerűsítése</b><br></div>";
             for($coungruence_counter = 0; $coungruence_counter < count($new_congruence_system); $coungruence_counter++){
-                $task_description = $task_description . "<label class=\"task_description\">" . $this->CreateCongruenceText("x", $new_congruence_system[$coungruence_counter]) . "</label><br>";
-                $task_solution = $task_solution . $coungruence_counter + 1 . ". lineáris kongruencia megoldása:<br>" . $this->CreateCongruenceSolutionText("x", $detailed_steps[$coungruence_counter]) . "<br>";
+                $task_description = $task_description . "<label class=\"task_description\">" . PrintServices::CreatePrintableCongruence("x", $new_congruence_system[$coungruence_counter]) . "</label><br>";
+                $task_solution = $task_solution . $coungruence_counter + 1 . ". lineáris kongruencia megoldása:<br>" . PrintServices::CreatePrintableCongruenceSolution("x", $detailed_steps[$coungruence_counter]) . "<br>";
             }
             $task_description = $task_description . "</div>";
 
@@ -1176,8 +1176,8 @@
                 }
 
                 $task_solution = $task_solution . "<div class=\"paragraph\">";
-                $task_solution = $task_solution . $this->CreateCongruenceText("x", $first_congruence) . "<br>";
-                $task_solution = $task_solution . $this->CreateCongruenceText("x", $second_congruence) . "<br>";
+                $task_solution = $task_solution . PrintServices::CreatePrintableCongruence("x", $first_congruence) . "<br>";
+                $task_solution = $task_solution . PrintServices::CreatePrintableCongruence("x", $second_congruence) . "<br>";
                 $task_solution = $task_solution . "</div>";
                 
                 $bottom_index = $merged_counter + 1;
@@ -1195,7 +1195,7 @@
                 . "</b></div>";
 
                 $task_solution = $task_solution . "<div class=\"paragraph\">";
-                $task_solution = $task_solution . "<b>" . $this->CreateCongruenceText("x", $steps[$number_of_congruences_per_system + $merged_counter]) . "</b>";
+                $task_solution = $task_solution . "<b>" . PrintServices::CreatePrintableCongruence("x", $steps[$number_of_congruences_per_system + $merged_counter]) . "</b>";
                 $task_solution = $task_solution . "</div>";
             }
             
@@ -1212,10 +1212,10 @@
             $degree = count($polynomial_expression) - 1;
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
                 if($coefficient_counter !== 0){
-                    $task_description = $task_description . $this->PlusMinus($coefficient);
+                    $task_description = $task_description . PrintServices::PlusMinus($coefficient);
                     $coefficient = abs($coefficient);
                 }
-                $task_description = $task_description .$this->CreatePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
+                $task_description = $task_description . PrintServices::CreatePrintablePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
                 $task_solution = $task_solution . "<th>p<span class=\"bottom\">" . $degree - $coefficient_counter . "</span> = " . $coefficient . "</th>";
             }
             $task_description = $task_description . " polinom helyettesítési értékét a ";

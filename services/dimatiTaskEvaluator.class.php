@@ -150,103 +150,97 @@
         private function CheckThirdTaskSolution(){
             $dimat_helper_functions = new DimatiHelperFunctions();
             
-            //Parsing the answers
-            $real_solutions = array_values($this->real_solutions);
-
-            $first_answer_relation = [];
-            if(isset($this->given_answers[0])){
-                $values = $this->ExtractSolutionFromInput($this->given_answers[0]);
-                $first_answer_relation = $this->CreateRelation($values);
+            $subtask_counter = 0;
+            $task_counter = 0;
+            foreach($this->real_solutions["first_subtasks"] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $this->EvaluateInputsWithRelations($real_solution, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
             }
 
-            $second_answer = $this->ParseSelectSolutions(1,9);
+            $subtask_counter = 0;
+            $task_counter = 1;
+            foreach($this->real_solutions["second_subtasks"] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $second_answers = $this->ParseSelectSolutions("solution_$id", 0,8);
 
-            $third_answer_relation = [];
-            if(isset($this->given_answers[2])){
-                $values = $this->ExtractSolutionFromInput($this->given_answers[2]);
-                $first_answer_relation = $this->CreateRelation($values);
-            }
-
-
-            //Checking the first answer
-            $first_solution_relation = $real_solutions[0]; 
-            $was_correct = $this->AreRelationsEqual($first_answer_relation, $first_solution_relation);
-            if($was_correct){
-                $this->count_correct += 1;
-            }
-            $_SESSION["answers"]["answer_0"] = 
-                array(
-                    "answer" => $this->given_answers[0],
-                    "anser_text" => $this->CreatePrintableRelation($first_answer_relation),
-                    "solution_text" =>$this->CreatePrintableRelation($real_solutions[0]),
-                    "correct" => $was_correct
-                );
-            $this->solution_counter++;
-
-
-            //Checking the second answer
-            $real_solution_1 = $real_solutions[1];
-            $this->solution_counter++;
-            if($this->CheckIfSelectsEqual($real_solution_1, $second_answer, 1)){
-                $this->count_correct += 1;
-            }
-            
-
-            //Checking the third answer
-            // TODO...
-            $real_solution_2 = $real_solutions[2];
-            $this->solution_counter++;
-            $personal_set =  $real_solution_2[0];
-            $characteristics =  $real_solution_2[1]; 
-            $all_correct = true;
-            foreach($characteristics as $characteristic => $is_true){
-                $is_answer_true = false;
-                switch($characteristic){
-                    case "Reflexív":{
-                        $is_answer_true = $dimat_helper_functions->IsReflexiveRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    case "Irreflexív":{
-                        $is_answer_true = $dimat_helper_functions->IsIrreflexiveRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    case "Szimmetrikus":{
-                        $is_answer_true = $dimat_helper_functions->IsSymmetricRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    case "Antiszimmetrikus":{
-                        $is_answer_true = $dimat_helper_functions->IsAntisymmetricRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    case "Asszimetrikus":{
-                        $is_answer_true = $dimat_helper_functions->IsAssymmetricRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    case "Tranzitív":{
-                        $is_answer_true = $dimat_helper_functions->IsTransitiveRelation($personal_set, $third_answer_relation);
-                    };
-                    break;
-                    default:break;
+                if($this->CheckIfSelectsEqual($real_solution, $second_answers, $id)){
+                    $this->count_correct += 1;
                 }
-                if(is_bool($is_answer_true)){
-                    if($is_true){
-                        $all_correct = $all_correct && $is_answer_true === true;
-                        $_SESSION["answers"]["answer_2_" . $characteristic] = array(
-                                "correct" => $is_answer_true === true
-                            );
-                    }else{
-                        $all_correct = $all_correct && $is_answer_true === false;
-                        $_SESSION["answers"]["answer_2_" . $characteristic] = 
-                            array(
-                                "correct" => $is_answer_true === false
-                            );
+
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 2;
+            foreach($this->real_solutions["third_subtasks"] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $given_answer_raw = $this->given_answers["solution_$id"]??"";
+                $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
+                
+                $personal_set = $_SESSION["task"]["characteristics"]["sets"][$subtask_counter];
+                $characteristics = $_SESSION["task"]["characteristics"]["characteristics"][$subtask_counter];
+                $correct_array = [];
+                foreach($characteristics as $characteristic => $is_true){
+                    $is_answer_true = false;
+                    switch($characteristic){
+                        case "Reflexív":{
+                            $is_answer_true = $dimat_helper_functions->IsReflexiveRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        case "Irreflexív":{
+                            $is_answer_true = $dimat_helper_functions->IsIrreflexiveRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        case "Szimmetrikus":{
+                            $is_answer_true = $dimat_helper_functions->IsSymmetricRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        case "Antiszimmetrikus":{
+                            $is_answer_true = $dimat_helper_functions->IsAntisymmetricRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        case "Asszimetrikus":{
+                            $is_answer_true = $dimat_helper_functions->IsAssymmetricRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        case "Tranzitív":{
+                            $is_answer_true = $dimat_helper_functions->IsTransitiveRelation($personal_set, $given_answer);
+                        };
+                        break;
+                        default:break;
                     }
+                    
+                    $correct_array = array_merge($correct_array, array($characteristic => $is_answer_true === $is_true));
                 }
+
+                $possible_relations = "<label class=\"task_label\">";
+                foreach($real_solution as $relation_counter => $relation){
+                    if($relation_counter > 1){
+                        break;
+                    }
+                    
+                    if($relation_counter !== 0){
+                        $possible_relations = $possible_relations . "; ";
+                    }
+                    $possible_relations = $possible_relations . PrintServices::CreatePrintableRelation("",$relation,false);
+                }
+                $possible_relations = $possible_relations . "</label>";
+    
+                $is_correct = false;
+                if(!in_array(false, array_values($correct_array))){
+                    $this->count_correct += 1;
+                    $is_correct = true;
+                }
+                $this->SetSessionAnswer($id, $given_answer_raw, PrintServices::CreatePrintableRelation("",$given_answer,false), $possible_relations, $is_correct);
+                $_SESSION["answers"]["answer_$id"] = array_merge($_SESSION["answers"]["answer_$id"], array("correct_array" => $correct_array));
+                
+                $this->solution_counter++;
+                $subtask_counter++;
             }
 
-            if($all_correct = true){
-                $this->count_correct += 1;
-            }
         }
 
         /**
