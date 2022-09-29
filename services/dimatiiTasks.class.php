@@ -21,6 +21,7 @@
             $this->task_description = [];
             $this->task_solutions = [];
             $this->definitions = "";
+            $this->solution_texts = [];
             $this->topic = $topic;
             $this->dimatii_subtasks = new DimatiiSubtask();
             mt_srand(time()); // Seeding the random number generator with the current time.
@@ -113,6 +114,10 @@
                 "congruence" => $congruency_pairs["data"]
             ];
             $this->task_solutions = $solution_array;
+
+            $this->solution_texts = array(
+                "prime_factorization_numbers" => $prime_factorization_numbers["printable_solutions"],
+            );
 
             // Definition part:
         }

@@ -14,14 +14,14 @@
                     <?php endif?>
                 </label>
                 <label class="task_label">
-                <?php 
-                    if(isset($solution_label)){
-                        echo($solution_label);
-                    }else{
-                        echo("<label>Megoldásom: </label>");
-                    }
-                ?>   
-                <?=$current_answer["solution_text"]??""?>
+                    <?php 
+                        if(isset($solution_label)){
+                            echo($solution_label);
+                        }else{
+                            echo("<label>Megoldásom: </label>");
+                        }
+                    ?>
+                    <?=$current_answer["solution_text"]??""?>
                 </label>
             </div>
     <?php else:?>

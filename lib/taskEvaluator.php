@@ -441,11 +441,13 @@
          * @param array $real_value An indexed array containing oredered pairs, i.e., [first element, second element] pairs.
          * @param string $input_name A string, the key of the element in the user's given answers' array.
          * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
-         * @param bool $only_numbers Let only numbers to be evaluated.
-         *
+         * @param bool $only_numbers Let only numbers to be evaluated. The default is true.
+         * @param bool $use_own_text Send back an alternative solution text. The default is false.
+         * @param string $answer_text The orinigally made printable text. The default is "".
+         * 
          * @return void
          */
-        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id, $only_numbers = true){
+        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id, $only_numbers = true, $use_own_text = false, $solution_text = ""){
             $given_answer_raw = $this->given_answers[$answer_counter]??"";
             if($only_numbers){
                 $given_answer = $this->CreateRelation($this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw));
@@ -454,7 +456,9 @@
             }
             
             $answer_text = PrintServices::CreatePrintableRelation("", $given_answer, false);
-            $solution_text = PrintServices::CreatePrintableRelation("", $real_value, false);
+            if(!$use_own_text){
+                $solution_text = PrintServices::CreatePrintableRelation("", $real_value, false);
+            }
             
             $was_correct = $this->AreRelationsEqual($given_answer, $real_value);
             if($was_correct){

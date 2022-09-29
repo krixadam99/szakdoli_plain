@@ -208,6 +208,20 @@
         }
 
         /**
+         * 
+         */
+        static function CreatePrintablePrimeFactorization($relation){
+            $text = "";
+            foreach($relation as $pair_counter => $pair){
+                if($pair_counter !== 0){
+                    $text = $text . " * ";
+                }
+                $text = $text . $pair[0] . "<span class=\"exp\">" .  $pair[1] . "</span>";
+            }
+            return $text;
+        }
+
+        /**
          * This method creates a congruence and an equivalent form.
          * 
          * @param string $variable_name The name of the variable.

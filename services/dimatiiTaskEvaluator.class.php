@@ -96,7 +96,8 @@
 
             // Check second subtask
             for($second_subtask_counter = 0; $second_subtask_counter < 2; $second_subtask_counter++){
-                $this->EvaluateInputsWithRelations($this->real_solutions["prime_factorization_solution"][$second_subtask_counter], "solution_" . "1_" . $second_subtask_counter, "1_" . $second_subtask_counter);
+                $answer_text = PrintServices::CreatePrintablePrimeFactorization($this->real_solutions["prime_factorization_solution"][$second_subtask_counter]);
+                $this->EvaluateInputsWithRelations($this->real_solutions["prime_factorization_solution"][$second_subtask_counter], "solution_" . "1_" . $second_subtask_counter, "1_" . $second_subtask_counter, true, true, $answer_text);
                 $this->solution_counter += 1;
             }
 
@@ -177,7 +178,7 @@
                                 $subtask_counter . "_" . $step_counter . "_" . $substep_counter + 1, 
                                 $given_answer_raw_multiplier,
                                 $given_answer_multpilier, 
-                                $multiplicand,
+                                $multiplier,
                                 $was_correct
                             );
 

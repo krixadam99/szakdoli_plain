@@ -21,7 +21,17 @@
                 <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_3"]??"";?>
                 <input type="text" name=<?="solution_" . $task_counter . "_3"?> value="<?=$current_answer["answer"]??"Maradék..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
             </div>
+            <?php if(isset($_SESSION["answers"])):?>
+                <?php
+                    $result = $_SESSION["answers"]["answer_" . $task_counter . "_0"]["solution_text"];  
+                    $quotient = $_SESSION["answers"]["answer_" . $task_counter . "_1"]["solution_text"];  
+                    $multiplier = $_SESSION["answers"]["answer_" . $task_counter . "_2"]["solution_text"];  
+                    $residue = $_SESSION["answers"]["answer_" . $task_counter . "_3"]["solution_text"];    
+                ?>
+                <label class="solution_label"><?=$counter + 1?>. lépés: <?=$result?> = <?=$quotient?> * <?=$multiplier?> + <?=$residue?></label>
+            <?php endif?>
         <?php endfor?>
+
         <div class="solution_container">
             <label>lnko(<?=$pair[0]?>, <?=$pair[1]?>) = </label>
             <?php $current_answer = $_SESSION["answers"]["answer_" .  $index . "_" . $_SESSION["task"]["step_counts"][$index]]??"";?>

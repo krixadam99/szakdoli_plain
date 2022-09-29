@@ -138,6 +138,7 @@
                 $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescription();
                 $_SESSION["solution"] = $dimat_ii_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();
+                $_SESSION["solution_texts"] = $dimat_ii_tasks->GetSolutionTexts();
             }
         }
     }

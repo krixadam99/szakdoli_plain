@@ -6,18 +6,21 @@
         <div class="multiple_solution_input_container">
             <?php 
                 $task_counter = "0_$division_index" . "_0";
-                $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"";
+                $current_answer_0_0_0= $_SESSION["answers"]["answer_" . $task_counter]??"";
             ?>
-            <?=$pair[0]?> = <?=$pair[1]?> * <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer["answer"]??"hányados..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+            <?=$pair[0]?> = <?=$pair[1]?> * <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer_0_0_0["answer"]??"hányados..."?>" class="<?=IsCorrect($current_answer_0_0_0)?>" <?=$current_answer_0_0_0 !== ""?"readonly":""?>>
             
             +
 
             <?php 
                 $task_counter = "0_$division_index". "_1" ;
-                $current_answer= $_SESSION["answers"]["answer_" . $task_counter]??"maradék...";
+                $current_answer_0_0_1= $_SESSION["answers"]["answer_" . $task_counter]??"maradék...";
             ?>
-            <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer["answer"]??"maradék..."?>" class="<?=IsCorrect($current_answer)?>">
+            <input type="text" name="<?="solution_" . $task_counter?>" value="<?=$current_answer_0_0_1["answer"]??"maradék..."?>" class="<?=IsCorrect($current_answer_0_0_1)?>">
         </div>
+        <?php if(isset($_SESSION["answers"]["answer_" . $task_counter])):?>
+            <label class="solution_label">A helyes megoldás: <?=$pair[0]?> = <?=$pair[1]?> * <?=$current_answer_0_0_0["solution_text"]?> + <?=$current_answer_0_0_1["solution_text"]?></label>
+        <?php endif?>
     <?php endforeach?>
 </div>
 <br>

@@ -7,6 +7,7 @@
     abstract class Task {
         protected $task_description;
         protected $task_solutions;
+        protected $solution_texts;
         protected $definitions;
         protected $topic;
 
@@ -33,6 +34,14 @@
          * @return string A string of the topic related definitions. 
         */
         public function GetDefinitions(){ return $this->definitions; }
+
+        /**
+         * 
+         * This method returns the solution texts related to the tasks.
+         * 
+         * @return string A string of the topic related solution texts. 
+        */
+        public function GetSolutionTexts(){ return $this->solution_texts; }
 
         /**
          * 
@@ -81,6 +90,16 @@
          * @return void
         */
         public function SetTopic($topic){ $this->definitions = $topic; }
+
+        /**
+         * 
+         * This method assigns a new value to the class's $solution_texts variable.
+         * 
+         * @param array $solution_texts The solution texts of the tasks which will be assigned to the class's $solution_texts member.
+         * 
+         * @return void
+        */
+        public function SetSolutionTexts($solution_texts){ $this->solution_texts = $solution_texts; }
     }
 
 ?>
