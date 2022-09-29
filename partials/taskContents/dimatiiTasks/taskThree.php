@@ -37,11 +37,18 @@
             <?php $current_answer = $_SESSION["answers"]["answer_" .  $index . "_" . $_SESSION["task"]["step_counts"][$index]]??"";?>
             <input type="text" name=<?="solution_". $index . "_" . $_SESSION["task"]["step_counts"][$index]?> value="<?=$current_answer["answer"]??"LNKO..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
         </div>
+        <?php if($current_answer !== ""):?>
+            <label class="solution_label">lnko(<?=$pair[0]?>, <?=$pair[1]?>) = <?=$current_answer["solution_text"]?></label>
+        <?php endif?>
+
         <div class="solution_container">
             <label>lkkt(<?=$pair[0]?>, <?=$pair[1]?>) = </label>
             <?php $current_answer = $_SESSION["answers"]["answer_" .  $index . "_" . $_SESSION["task"]["step_counts"][$index] + 1]??"";?>
             <input type="text" name=<?="solution_" . $index . "_" . $_SESSION["task"]["step_counts"][$index] + 1?> value="<?=$current_answer["answer"]??"LKKT..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
         </div>
+        <?php if($current_answer !== ""):?>
+            <label class="solution_label">lkkt(<?=$pair[0]?>, <?=$pair[1]?>) = <?=$current_answer["solution_text"]?></label>
+        <?php endif?>
     </div>
     <br>
 <?php endforeach?>

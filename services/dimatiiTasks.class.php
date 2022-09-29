@@ -258,6 +258,7 @@
             );
             $this->task_description = $task_array;
 
+            array_push($diophantine_equations["solutions"], $third_subtask["solutions"][0]);
             //Solutions part:
             $solution_array = [
                 "diophantine_equations" => $diophantine_equations["solutions"],

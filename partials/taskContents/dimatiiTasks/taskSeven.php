@@ -4,9 +4,9 @@
     <?php $task_counter = $task_index?>
     <label class="task_label">
         <?=$task_index + 1?>. részfeladat: Add meg a <?=$polynomial_names[$task_index]?> = 
-        <?php PrintPolynomialExpression($polynomial_task_details[0],$polynomial_task_details[1])?> 
+        <?php PrintServices::CreatePrintablePolynomial($polynomial_task_details[1])?> 
         polinom helyettesítési értékét a
-        <?= PrintPlaces($polynomial_task_details[2])?>
+        <?= PrintServices::CreatePrintablePlaces($polynomial_task_details[2])?>
         helyeken a Horner-táblázat segítségével!
     </label>
     <div class="small_task_container">
@@ -29,7 +29,7 @@
 <?php $task_counter = 2?>
 <label class="task_label">
     <?=3?>. részfeladat: Add meg a <?=$polynomial_names[2]?> = 
-    <?php PrintPolynomialExpression($divide_polynomials[0],$divide_polynomials[1])?> polinom hányadospolinomát és maradékát az (x <?=$divide_polynomials[2][0] > 0 ?" - ":" + "?> <?=abs($divide_polynomials[2][0])?>) 
+    <?php PrintServices::CreatePrintablePolynomialByPairs($divide_polynomials[0],$divide_polynomials[1])?> polinom hányadospolinomát és maradékát az (x <?=$divide_polynomials[2][0] > 0 ?" - ":" + "?> <?=abs($divide_polynomials[2][0])?>) 
     polinommal osztva! Az osztáshoz használd a Horner-táblázatot!
 </label>
 <div class="small_task_container">
