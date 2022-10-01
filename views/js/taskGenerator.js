@@ -24,65 +24,112 @@ function ModifyElementStyle(element, style_dictionary){
     }
 }
 
-function Editing(elements, new_value = "", style_key, children_type = "label"){
+function Editing(elements, new_value = "", style_key){
     for(let element of elements){
-        if(children_type !== ""){
-            let children = element.querySelectorAll("label")
-            if(children_type === "label"){
-                children = element.querySelectorAll("label")
-            }
-            
-            for(let child of children){
-                switch(style_key){
-                    case "size":{
-                        let new_size = `calc(${new_value}px + 0.3vw)`
-                        ModifyElementStyle(child, {"font-size": new_size})
-                    };break
-                    case "color":{
-                        ModifyElementStyle(child, {"color": new_value})
-                    };break
-                    case "family":{
-                        ModifyElementStyle(child, {"font-family": new_value})
-                    };break
-                    case "underlined":{
-                        if(child.style["text-decoration"] !== "underline"){
-                            ModifyElementStyle(child, {"text-decoration": "underline"})
-                        }else{
-                            ModifyElementStyle(child, {"text-decoration": ""})
-                        }
-                    };break
-                    case "crossed":{
-                        if(child.style["text-decoration"] !== "line-through"){
-                            ModifyElementStyle(child, {"text-decoration": "line-through"})
-                        }else{
-                            ModifyElementStyle(child, {"text-decoration": ""})
-                        }
-                    };break
-                    case "bold":{
-                        if(child.style["font-weight"] !== "bold"){
-                            ModifyElementStyle(child, {"font-weight": "bold"})
-                        }else{     
-                            ModifyElementStyle(child, {"font-weight": ""})
-                        }
-                    };break
-                    case "italic":{
-                        if(child.style["font-style"] !== "italic"){
-                            ModifyElementStyle(child, {"font-style": "italic"})
-                        }else{     
-                            ModifyElementStyle(child, {"font-style": ""})
-                        }
-                    };break
-                    default:break;
+        switch(style_key){
+            case "text-align":{
+                ModifyElementStyle(element.closest("div.paragraph"), {"text-align": new_value})
+            };break
+            case "size":{
+                let new_size = `calc(${new_value}px + 0.3vw)`
+                ModifyElementStyle(element, {"font-size": new_size})
+            };break
+            case "color":{
+                ModifyElementStyle(element, {"color": new_value})
+            };break
+            case "family":{
+                ModifyElementStyle(element, {"font-family": new_value})
+            };break
+            case "underlined":{
+                if(element.style["text-decoration"] !== "underline"){
+                    ModifyElementStyle(element, {"text-decoration": "underline"})
+                }else{
+                    ModifyElementStyle(element, {"text-decoration": ""})
                 }
-            }
-        }else{
-            if(style_key === "margin-bottom"){
-                ModifyElementStyle(element, {"margin-bottom": new_value + "%"})
-            }else if(style_key === "margin-top"){
-                ModifyElementStyle(element, {"margin-top": new_value + "%"})
-            }
+            };break
+            case "crossed":{
+                if(element.style["text-decoration"] !== "line-through"){
+                    ModifyElementStyle(element, {"text-decoration": "line-through"})
+                }else{
+                    ModifyElementStyle(element, {"text-decoration": ""})
+                }
+            };break
+            case "bold":{
+                if(element.style["font-weight"] !== "bold"){
+                    ModifyElementStyle(element, {"font-weight": "bold"})
+                }else{     
+                    ModifyElementStyle(element, {"font-weight": ""})
+                }
+            };break
+            case "italic":{
+                if(element.style["font-style"] !== "italic"){
+                    ModifyElementStyle(element, {"font-style": "italic"})
+                }else{     
+                    ModifyElementStyle(element, {"font-style": ""})
+                }
+            };break
+            case "margin-bottom":{
+                ModifyElementStyle(element.closest("div.paragraph"), {"margin-bottom": new_value})
+            };break
+            case "margin-top":{
+                ModifyElementStyle(element.closest("div.paragraph"), {"margin-top": new_value})
+            };break
+            default:break;
         }
     }
+}
+
+function AddButtonClickEffect(button, timeout = 200){
+    let original_box_shadow = button.style.boxShadow
+    button.style.boxShadow = "0px 0px 10px 0px rgba(132, 131, 131, 0.5)"
+    setTimeout(()=>{
+        button.style.boxShadow = original_box_shadow
+    },timeout)
+}
+
+function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
+    let original_text = ""
+    if(element.tagName === "INPUT"){
+        original_text = element.value
+    }else{
+        original_text = element.innerText
+    }
+    let next_element = element.nextElementSibling
+    let parent_element = element.closest(parent_selecter)
+
+    let new_element = document.createElement(new_element_tag_name)
+    if(new_element_tag_name === "input"){
+        new_element.value = original_text
+        new_element.style["border-radius"] = "3px"
+    }else{
+        new_element.innerText = original_text
+    }
+    parent_element.removeChild(element)
+    if(next_element){
+        parent_element.insertBefore(next_element, new_element)
+    }else{
+        parent_element.appendChild(new_element)
+    }
+
+    return new_element
+}
+
+function AddEventsToParagraphLabel(label_element){
+    label_element.addEventListener("click", ()=>{
+        label_element.style["background-color"] = "rgb(255, 237, 230)"
+
+        if(!chosen_labels_for_edition.includes(label_element)){
+            chosen_labels_for_edition.push(label_element)
+        }else{
+            label_element.style["background-color"] = "white"
+            chosen_labels_for_edition = RemoveElement(chosen_labels_for_edition, label_element)
+        }
+    })
+
+    label_element.addEventListener("dblclick", ()=>{
+        edited_label_parent = label_element.closest("div.paragraph")
+        ChangeElementToAnother(label_element, "div.paragraph", "input")
+    })
 }
 
 // Variables
@@ -94,7 +141,8 @@ let save_pdf_button = document.getElementById("save_pdf_button")
 let preview = document.getElementById("preview")
 let new_task_generator_button = document.getElementById("new_task_generator_button")
 let page_container = document.getElementById("page_container")
-let chosen_children_for_edition = []
+let chosen_labels_for_edition = []
+let edited_label_parent = NaN
 
 let font_size_input = document.getElementById("font_size_input")
 let font_color_input = document.getElementById("font_color_input")
@@ -151,83 +199,76 @@ if(topic_select){
 
 if(page_container){
     let page_container_elements = page_container.children
-    for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++) {
-        let actual_child = page_container_elements[children_counter]
-        actual_child.addEventListener("click", ()=>{
-            actual_child.style["background-color"] = "rgb(255, 237, 230)"
-            for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++) {
-                let other_child = page_container_elements[children_counter]
-                
-                if(other_child !== actual_child && !chosen_children_for_edition.includes(other_child)){
-                    other_child.style["background-color"] = "white"
-                }
-            }
-
-            if(!chosen_children_for_edition.includes(actual_child)){
-                chosen_children_for_edition.push(actual_child)
-            }else{
-                actual_child.style["background-color"] = "white"
-                chosen_children_for_edition = RemoveElement(chosen_children_for_edition, actual_child)
-            }
-        })
+    for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+        let labels = page_container_elements[children_counter].querySelectorAll("label")
+        for(let label_element of labels){
+            AddEventsToParagraphLabel(label_element)
+        }
     }  
 
-    page_container.addEventListener("dblclick", ()=>{
-        if(all_highlighted){
-            all_highlighted = false
-            chosen_children_for_edition = Array.from(page_container_elements)
-        }else{
-            chosen_children_for_edition = []
-            all_highlighted = true
-        }
-
-        for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
-            page_container_elements[children_counter].click()
+    page_container.addEventListener("click", (event)=>{
+        if(event.ctrlKey){
+            if(all_highlighted){
+                all_highlighted = false
+                chosen_labels_for_edition = []
+                for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+                    let labels = page_container_elements[children_counter].querySelectorAll("label")
+                    for(let label_element of labels){
+                        chosen_labels_for_edition.push(label_element)
+                    }
+                }
+            }else{
+                chosen_labels_for_edition = []
+                all_highlighted = true
+            }
+    
+            for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+                let labels = page_container_elements[children_counter].querySelectorAll("label")
+                for(let label_element of labels){   
+                    label_element.click()
+                }
+            }
         }
     })
 }
 
 if(left_alignment){
     left_alignment.addEventListener("click", ()=>{
-        for(let chosen_child_for_edition of chosen_children_for_edition){
-            ModifyElementStyle(chosen_child_for_edition, {"text-align": "left"})
-        }
+        Editing(chosen_labels_for_edition, "left", "text-align")
+        AddButtonClickEffect(left_alignment)
     })
 }
 
 if(center_alignment){
     center_alignment.addEventListener("click", ()=>{
-        for(let chosen_child_for_edition of chosen_children_for_edition){
-            ModifyElementStyle(chosen_child_for_edition, {"text-align": "center"})
-        }
+        Editing(chosen_labels_for_edition, "center", "text-align")
+        AddButtonClickEffect(center_alignment)
     })
 }
 
 if(right_alignment){
     right_alignment.addEventListener("click", ()=>{
-        for(let chosen_child_for_edition of chosen_children_for_edition){
-            ModifyElementStyle(chosen_child_for_edition, {"text-align": "right"})
-        }
+        Editing(chosen_labels_for_edition, "right", "text-align")
+        AddButtonClickEffect(right_alignment)
     })
 }
 
 if(justify_alignment){
     justify_alignment.addEventListener("click", ()=>{
-        for(let chosen_child_for_edition of chosen_children_for_edition){
-            ModifyElementStyle(chosen_child_for_edition, {"text-align": "justify"})
-        }
+        Editing(chosen_labels_for_edition, "justify", "text-align")
+        AddButtonClickEffect(justify_alignment)
     })
 }
 
 if(font_size_input){
     font_size_input.addEventListener("input", ()=>{
-        Editing(chosen_children_for_edition, font_size_input.value, "size")
+        Editing(chosen_labels_for_edition, font_size_input.value, "size")
     })
 }
 
 if(font_color_input){
     font_color_input.addEventListener("input", ()=>{
-        Editing(chosen_children_for_edition, font_color_input.value, "color")
+        Editing(chosen_labels_for_edition, font_color_input.value, "color")
     })
 }
 
@@ -235,43 +276,47 @@ if(font_family_select){
     font_family_select.addEventListener("change", ()=>{
         let chosen_family = font_family_select.options[font_family_select.options.selectedIndex].value
         console.log(chosen_family)
-        Editing(chosen_children_for_edition, chosen_family, "family")
+        Editing(chosen_labels_for_edition, chosen_family, "family")
     })
 }
 
 if(underlined_button){
     underlined_button.addEventListener("click", ()=>{
-        Editing(chosen_children_for_edition, "", "underlined")
+        Editing(chosen_labels_for_edition, "", "underlined")
+        AddButtonClickEffect(underlined_button)
     })
 }
 
 if(crossed_button){
     crossed_button.addEventListener("click", ()=>{
-        Editing(chosen_children_for_edition, "", "crossed")
+        Editing(chosen_labels_for_edition, "", "crossed")
+        AddButtonClickEffect(crossed_button)
     })
 }
 
 if(bold_button){
     bold_button.addEventListener("click", ()=>{
-        Editing(chosen_children_for_edition, "", "bold")
+        Editing(chosen_labels_for_edition, "", "bold")
+        AddButtonClickEffect(bold_button)
     })
 }
 
 if(italic_button){
     italic_button.addEventListener("click", ()=>{
-        Editing(chosen_children_for_edition, "", "italic")
+        Editing(chosen_labels_for_edition, "", "italic")
+        AddButtonClickEffect(italic_button)
     })
 }
 
 if(linebreak_before_input){
     linebreak_before_input.addEventListener("input", ()=>{
-        Editing(chosen_children_for_edition, linebreak_before_input.value, "margin-bottom", "")
+        Editing(chosen_labels_for_edition, linebreak_before_input.value + "%", "margin-bottom")
     })
 }
 
 if(linebreak_after_input){
     linebreak_after_input.addEventListener("input", ()=>{
-        Editing(chosen_children_for_edition, linebreak_after_input.value, "margin-top", "")
+        Editing(chosen_labels_for_edition, linebreak_after_input.value + "%", "margin-top")
     })
 }
 
@@ -281,9 +326,12 @@ if(save_pdf_button){
 
         all_highlighted = false
         let page_container_elements = page_container.children
-        chosen_children_for_edition = Array.from(page_container_elements)
+        chosen_labels_for_edition = Array.from(page_container_elements)
         for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
-            page_container_elements[children_counter].click()
+            let labels = page_container_elements[children_counter].querySelectorAll("label")
+            for(let label_element of labels){   
+                label_element.click()
+            }
         }
 
         let preview_content = document.getElementById("page_container").cloneNode(true)
@@ -295,3 +343,13 @@ if(save_pdf_button){
         new_window.close();
     })
 }
+
+window.addEventListener("click", (event)=>{
+    if(edited_label_parent){
+        let input = edited_label_parent.querySelector("input")
+        if(input && event.target !== input){
+            let label = ChangeElementToAnother(edited_label_parent.querySelector("input"), "div.paragraph", "label")
+            AddEventsToParagraphLabel(label)
+        }
+    }
+})

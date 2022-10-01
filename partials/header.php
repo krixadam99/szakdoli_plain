@@ -1,5 +1,11 @@
 <header>
     <div id="header_line">
+        <div id="notifications_button">
+            <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape">
+        </div>
+        <div id="messages_button">
+            <img src="./views/css/pics/messages.png" alt="messages_shape">
+        </div>
         <button id="sign_out_button">Kilépés</button>
     </div>
     

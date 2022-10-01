@@ -27,6 +27,7 @@ function ChangeAttributeInURL(parameter, new_value){
 
 // Variables
 let logout_button = document.querySelector("#sign_out_button")
+let notifications_button =  document.getElementById("notifications_button")
 let nav_buttons = document.querySelectorAll("nav")
 let nav_button_number = nav_buttons.length
 let submenu_navigation_links = document.querySelectorAll("a.submenu_row")
@@ -41,6 +42,12 @@ let small_cards = document.querySelectorAll(".small_card")
 if(logout_button){
     logout_button.addEventListener("click", ()=>{
         window.location = "./index.php"
+    })
+}
+
+if(notifications_button){
+    notifications_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=notifications"
     })
 }
 

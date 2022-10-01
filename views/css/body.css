@@ -536,14 +536,14 @@ ul {
     margin: auto;
     width: 13%;
     height: 65%;
-    border: 1px solid grey;
+    box-shadow: 0px 6px 10px 0px rgba(174, 171, 168, 0.5);
 }
 
 #text_decoration img  {
     margin: auto;
-    height: 80%;
-    width: 8%;
-    box-shadow: 0 1px 5px 0 rgba(174, 171, 168, 0.5);
+    height: 90%;
+    width: 15%;
+    box-shadow: 0px 6px 10px 0px rgba(174, 171, 168, 0.5);
 }
 
 #page_container {
