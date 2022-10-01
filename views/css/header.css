@@ -16,6 +16,7 @@ button {
     background-color:rgba(253, 233, 207, 1);
     margin: 0% 0% auto 0%;
     display: flex;
+    z-index: 100;
 }
 
 #header_line:nth-child(2) {
@@ -24,6 +25,7 @@ button {
     background-color:rgba(245, 211, 170, 0.8);
     margin: 0% 0% auto 0%;
     display: flex;
+    z-index: 100;
 }
 
 #sign_out_button {
@@ -52,6 +54,7 @@ nav {
     text-align: center;
     cursor: default;
     border-radius: 50px;
+    z-index: 100;
 }
 
 .actual_page{

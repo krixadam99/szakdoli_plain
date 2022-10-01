@@ -104,7 +104,7 @@
             $division_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000);
             $solutions = $this->dimat_helper_functions->DetermineQuotientAndResidue($division_pairs);
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             for($division_counter = 0; $division_counter < $number_of_pairs; $division_counter++){
                 $task_text = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"paragraph\"><label class=\"task_description\">Add meg ". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . " osztás eredményét az egész számok körében</label></div>";
@@ -127,7 +127,7 @@
             $prime_factorization_numbers = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, 100, 1000);
             $solutions = $this->dimat_helper_functions->DeterminePrimeFactorization($prime_factorization_numbers);
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             for($prime_factorization_counter = 0; $prime_factorization_counter < $number_of_numbers; $prime_factorization_counter++){
                 $task_description =  "<div class=\"paragraph\"><label class=\"group_number_label\">" . $prime_factorization_counter + 1 . ". csoport: </label></div><div class=\"paragraph\"><label class=\"task_description\">Add meg ". $prime_factorization_numbers[$prime_factorization_counter] . " prímfelbontását!</label></div>";
@@ -161,7 +161,7 @@
             $prime_factorizations = $this->dimat_helper_functions->DeterminePrimeFactorization($positive_divisor_count_numbers);
             $solutions = $this->dimat_helper_functions->DetermineNumberOfDivisors($positive_divisor_count_numbers);
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             for($counter = 0; $counter < $number_of_numbers; $counter++){
                 $task_description = "<div class=\"paragraph\"><label class=\"group_number_label\">" . $counter + 1 . ". csoport: </label><label class=\"task_description\">Add meg a ". $positive_divisor_count_numbers[$counter] . " osztóinak számát!</label></div>";
@@ -207,7 +207,7 @@
         private function CreateCongruentNumbersSubtask($number_of_pairs){
             $congruences = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_pairs, -1000, 1000, false, true);
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $task_description = [];
 
             for($congruence_counter = 0; $congruence_counter < $number_of_pairs; $congruence_counter++){
@@ -232,7 +232,7 @@
         private function CreateCompleteResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 15){
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($crs_counter = 0; $crs_counter < $number_of_numbers; $crs_counter++){
@@ -270,7 +270,7 @@
         private function CreateReducedResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 25){
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($rrs_counter = 0; $rrs_counter < $number_of_numbers; $rrs_counter++){
@@ -308,7 +308,7 @@
         private function CreateEulerPhiFunctionSubtask($number_of_numbers, $lower = 1000, $upper = 5000){
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($rrs_size_counter = 0; $rrs_size_counter < $number_of_numbers; $rrs_size_counter++){
@@ -353,7 +353,7 @@
          */
         private function CreateEucleidanAlgorithmSubtask($number_of_numbers, $lower = 30, $upper = 200){
             $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_numbers, $lower, $upper);
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             $eucleidan_algorithm = [];
@@ -408,7 +408,7 @@
          */
         private function CreateLinearCongruenceSubtask($number_of_triplets, $lower = -30, $upper = 30){
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             $linear_congrences_algorithm = [];
@@ -508,7 +508,7 @@
          */
         private function CreateDiophantineEquationSubtask($number_of_triplets, $lower = -50, $upper = 50){
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             $diophantine_algorithm = [];
@@ -552,7 +552,7 @@
          */
         private function CreateNumberDivisionWithConditionsSubtask($number_of_triplets){
             $triplets = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($counter = 0; $counter < $number_of_triplets; $counter++){
@@ -612,7 +612,7 @@
         private function CreateCRTSubtask($number_of_congruence_systems = 1, $number_of_congruences_per_system = 3, $lower = -50, $upper = 50){
             $congruence_systems = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($congruence_systems_counter = 0; $congruence_systems_counter < $number_of_congruence_systems; $congruence_systems_counter++){
@@ -651,7 +651,7 @@
         private function CreateCRTNumberResiduesSubtask($number_of_congruence_systems = 1, $lower = 2, $upper = 100){
             $congruence_systems = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($congruence_systems_counter = 0; $congruence_systems_counter < $number_of_congruence_systems; $congruence_systems_counter++){
@@ -701,7 +701,7 @@
             $polynomials = [];
             $places = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
@@ -747,7 +747,7 @@
             $polynomials = [];
             $places = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_polynomials; $polynomial_counter++){
@@ -816,7 +816,7 @@
             $tasks = [];
             $dividands = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_pairs; $polynomial_counter++){
@@ -906,7 +906,7 @@
             $tasks = [];
             $multiplicands = [];
             $solutions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_pairs; $polynomial_counter++){
@@ -963,7 +963,7 @@
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
@@ -1023,7 +1023,7 @@
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $descriptions = [];
 
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){

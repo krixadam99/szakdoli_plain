@@ -50,6 +50,24 @@
         }
 
         /**
+         * 
+         */
+        public function PrintPage(){
+            include(ROOT_DIRECTORY . "/views/printPage.view.php");
+            /*
+            //Users, who are not logged in won't see this page, they will be redirected to the login page
+            if(isset($_SESSION["neptun_code"])){
+                if(count($this->GetApprovedTeacherGroups()) != 0){
+                    include(ROOT_DIRECTORY . "/views/printPage.view.php");
+                }else{
+                    header("Location: ./index.php?site=notifications");
+                }
+            }else{
+                header("Location: ./index.php?site=login");
+            }*/
+        }
+
+        /**
          * This method creates the preview of the page containing the printable form of the requested amount of subtasks for a task-subtask pair and also the solutions for these tasks.
          * 
          * The method also handles malicious user activities, like overwriting form html tags' names.

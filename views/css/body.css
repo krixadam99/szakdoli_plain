@@ -413,21 +413,29 @@ ul {
     display: flex;
 }
 
-#task_generation_settings {
-    margin-right: 1%;
-    margin-left: 0%;
+#task_generation_settings, .pdf_page_button_container {
+    margin: 2% 9% auto 6%;
+    width: 85%;
 }
 
 #preview {
-    margin-left: 1%;
-    margin-right: 0%;
-    border: 1px solid black;
-    height: 800px;
+    margin: 2% 9% auto auto;
+    border: 2px solid black;
+    height: 600px;
+    width: 200px;
     overflow: scroll;
 }
 
+#pdf_page_title_container {
+    margin: 2% auto;
+}
+
+#pdf_page_title {
+    font-size: calc(17px + 0.3vw);
+}
+
 .pdf_page_section {
-    margin-bottom: 8%;
+    margin-bottom: 6%;
 }
 
 .pdf_page_section_label{
@@ -441,7 +449,7 @@ ul {
 }
 
 .pdf_page_style_container, .pdf_page_task_choice_container{
-    margin: 2% 0%;
+    margin: 2% 0% 0% 0%;
     display: flex;
     width: 95%;
 }
@@ -462,7 +470,7 @@ ul {
     border-top: 2px solid rgb(232, 196, 154);
 }
 
-textarea {
+.task_generation_textarea {
     width: 40%;
     margin-top: 2%;
     border-radius: 5px;
@@ -471,82 +479,77 @@ textarea {
 }
 
 #save_pdf_button, #generator_button, #new_task_generator_button {
-    width: 15%;
+    width: 20%;
     border-radius: 50px;
     border: 1px solid black;
     background-color: rgb(254, 255, 255);
 }
 
-.pdf_page_button_container {
-    display: flex;
-}
-
 #save_pdf_button {
-    margin: 2% 2% 5% auto;
+    margin: 2% 40% 5% 40%;
 }
 
 #new_task_generator_button {
-    margin: 2% auto 5% 2%;
+    margin: 2% 40% 5% 40%;
 }
 
 #editor_panel {
-    background-color: rgb(244, 242, 242);
+    background-color: rgba(244, 242, 242,1);
+    z-index: 10;
     width: 100%;
-    height: 5%;
+    height: 10%;
     display: flex;
     position: sticky;
     top: 0;
 }
 
-#font_editor {
-    width: 60%;
+#text_editor {
+    width: 55%;
     display: flex;
 }
 
-#text_editor {
-    width: 40%;
+#alignment_editor {
+    width: 20%;
     display: flex;
     border-left: 1px solid black
 }
 
+#linebreak_editor {
+    width: 25%;
+    border-left: 1px solid black
+}
+
 #text_editor div {
+    width: 20%;
+    display: flex;
+    height: 50%;
+    margin: auto;
+}
+
+#linebreak_editor div {
+    width: 80%;
+    display: flex;
+    margin: 1% auto;
+}
+
+#alignment_editor img{
     margin: auto;
     width: 13%;
     height: 65%;
     border: 1px solid grey;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
-#left_align{
-    background-image: url("./pics/left_alignment.jpg");
+#text_decoration img  {
+    margin: auto;
+    height: 80%;
+    width: 8%;
+    box-shadow: 0 1px 5px 0 rgba(174, 171, 168, 0.5);
 }
 
-#center_align{
-    background-image: url("./pics/center_alignment.jpg");
-}
-
-#right_align{
-    background-image: url("./pics/right_alignment.jpg");
-}
-
-#justify_align{
-    background-image: url("./pics/justify_alignment.jpg");
-}
-
-.a4_document {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-}
-
-.a4_page {
+#page_container {
     margin: 5% 5% 5% 5%;
     height: 90%;
     width: 90%;
-    padding-top: 30%;
-    padding-bottom: 30%;
-    border: 1px solid black;
 }
 
 .prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {

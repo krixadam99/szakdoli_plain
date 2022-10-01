@@ -87,79 +87,116 @@
             ?>
             <h1><?=$subject?> <?=$exam_type?> generálása</h1>
             <hr> 
-            <div class="task_generator_container">
-                <form method="POST" id="task_generation_settings" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"width:85%"?>" action="./index.php?site=createPreview">                    
-                    <?php if($_SESSION["exam_type"] === "big"):?>
-
-                    <?php elseif($_SESSION["exam_type"] === "small"):?>
-                        <?php 
-                            $section_name = "task_0";
-                        ?>
-                        <div class="pdf_page_section">
-                            <label class="pdf_page_section_label">Feladat kiválasztása</label>
-                            <hr class="full_hr">
-                            <?php include("./partials/taskChoice.php")?>
+            <div id="preview" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:85%":"display:none"?>">
+                <div id="editor_panel">
+                    <div id="text_editor">
+                        <div id="font_size">
+                            <label style="width:auto">Betűméret: </label>
+                            <input type="number" min="1" max="100" step="1" value="12" style="width:50%; margin: auto" id="font_size_input">
                         </div>
-                    <?php elseif($_SESSION["exam_type"] === "seminar"):?>
-
+                        <div id="font_color">
+                            <label style="width:auto">Betűszín: </label>
+                            <input type="color" value="#000000" style="width:50%; margin: auto" id="font_color_input">
+                        </div>
+                        <div id="font_family">
+                            <label style="width:auto">Betűtípus: </label>
+                            <select style="width:50%; margin: auto" id="font_family_select">
+                                <option selected>Arial</option>
+                                <option>Courier New</option>
+                                <option>Garamond</option>    
+                                <option>Georgia</option>
+                                <option>Helvetica</option>
+                                <option>Lucida Console</option>
+                                <option>Monaco</option>
+                                <option>Papyrus</option>
+                                <option>Times New Roman</option>
+                                <option>Verdana</option>
+                            </select>
+                        </div>
+                        <div id="text_decoration">
+                            <img src="./views/css/pics/underlined.png" alt="underlined_element" id="underlined">
+                            <img src="./views/css/pics/crossed.png" alt="crossed_element" id="crossed">
+                            <img src="./views/css/pics/bold.png" alt="bold" id="bold">
+                            <img src="./views/css/pics/italic.png" alt="italic" id="italic">
+                        </div>
+                    </div>
+                    <div id="alignment_editor">
+                        <img src="./views/css/pics/left_alignment.jpg" alt="left_alignment" id="left_alignment">
+                        <img src="./views/css/pics/center_alignment.jpg" alt="center_alignment" id="center_alignment">
+                        <img src="./views/css/pics/right_alignment.jpg" alt="right_alignment" id="right_alignment">
+                        <img src="./views/css/pics/justify_alignment.jpg" alt="justify_alignment" id="justify_alignment">
+                    </div>
+                    <div id="linebreak_editor">
+                        <div id="linebreak_before">
+                            <label style="width:auto">Sortörés előtte: </label>
+                            <input type="number" min="1" max="100" step="3" value="6" style="width:50%; margin: auto" id="linebreak_before_input">
+                        </div>
+                        <div id="linebreak_after">
+                            <label style="width:auto">Sortörés utána: </label>
+                            <input type="number" min="1" max="100" step="3" value="6" style="width:50%; margin: auto" id="linebreak_after_input">
+                        </div>
+                    </div>
+                </div>
+                <div id="page_container">
+                    <div id="pdf_page_title_container">
+                        <label id="pdf_page_title"><?=$_SESSION["preview"]["title_textarea"]?></label>
+                    </div>
+                    <?php if(isset($_SESSION["preview_tasks"])):?>
+                        <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
+                            <?= $main_task_counter + 1?>. feladatcsoport:
+                            <?php 
+                                $descriptions = $main_task["descriptions"]??[];
+                                $printable_solutions = $main_task["printable_solutions"]??[];
+                            ?>
+                            <?php foreach($descriptions as $description_counter => $description):?>
+                                <?=$description?>
+                            <?php endforeach?>
+                            <?php foreach($printable_solutions as $printable_solution_counter => $printable_solution):?>
+                                <?=$printable_solution?>
+                            <?php endforeach?>
+                        <?php endforeach?>
                     <?php endif?>
-                    
-                    <?php if(!isset($_SESSION["preview"]) || isset($_SESSION["preview"]) && count($_SESSION["preview"]) == 0):?>
-                        <button id="generator_button" type="submit" style="margin-left:45%">Feladatsor generálása</button>
-                    <?php endif?>
-                </form>
-                <div id="preview" style="<?=isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0?"width:48%":"display:none"?>">
-                        <!--div id="editor_panel">
-                            <div id="font_editor">
-                                <div id="font_color">
-                                </div>
-                            </div>
-                            <div id="text_editor">
-                                <div id="left_align">
-                                </div>
-                                <div id="center_align">
-                                </div>
-                                <div id="right_align">
-                                </div>
-                                <div id="justify_align">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="a4_document">
-                            <div class="a4_page">
-                            </div>
-                            <div class="a4_page">
-                            </div>
-                            <div class="a4_page">
-                            </div>
-                        </div-->
-                        <div>
-                            <?php if(isset($_SESSION["preview_tasks"])):?>
-                                <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
-                                    <?= $main_task_counter + 1?>. feladatcsoport:
-                                    <?php 
-                                        $descriptions = $main_task["descriptions"]??[];
-                                        $printable_solutions = $main_task["printable_solutions"]??[];
-                                    ?>
-                                    <?php foreach($descriptions as $description_counter => $description):?>
-                                        <?=$description?>
-                                    <?php endforeach?>
-                                    <?php foreach($printable_solutions as $printable_solution_counter => $printable_solution):?>
-                                        <?=$printable_solution?>
-                                    <?php endforeach?>
-                                <?php endforeach?>
-                            <?php endif?>
-                        </div>
                 </div>
             </div>
             <?php if(isset($_SESSION["preview"]) && count($_SESSION["preview"]) != 0):?>
                 <div class="pdf_page_button_container">
                     <button id="save_pdf_button">Előnézet mentése</button>
-                    <button id="new_task_generator_button" type="submit" form="task_generation_settings">Új feladatsor generálása</button>
                 </div>
-            <?php endif?>
+
+                <label style="margin:2% auto 0% 4%;font-weight: normal;font-size: calc(20px + 0.3vw);">Új feladatsor készítése</label>
+                <hr>
+                <?php endif?>
+            <form method="POST" id="task_generation_settings" action="./index.php?site=createPreview">                    
+                <div class="pdf_page_section">
+                    <label class="pdf_page_section_label">Feladatsor címe</label>
+                    <hr class="full_hr">
+                    <textarea class="task_generation_textarea" name="title_textarea" rows="1" placeholder="Ide írd a címet..."></textarea>
+                </div>
+            
+                <?php if($_SESSION["exam_type"] === "big"):?>
+
+                <?php elseif($_SESSION["exam_type"] === "small"):?>
+                    <?php 
+                        $section_name = "task_0";
+                    ?>
+                    <div class="pdf_page_section">
+                        <label class="pdf_page_section_label">Feladat kiválasztása</label>
+                        <hr class="full_hr">
+                        <?php include("./partials/taskChoice.php")?>
+                    </div>
+                <?php elseif($_SESSION["exam_type"] === "seminar"):?>
+
+                <?php endif?>
+                
+                <?php if(!isset($_SESSION["preview"]) || isset($_SESSION["preview"]) && count($_SESSION["preview"]) == 0):?>
+                    <button id="generator_button" type="submit" style="margin-left:45%">Feladatsor generálása</button>
+                <?php else:?>
+                    <button id="new_task_generator_button" type="submit">Új feladatsor generálása</button>
+                <?php endif?>
+            </form>
         <?php endif?>
     </main>
 </body>
 <script type="module" src="./views/js/mainContent.js"></script>
+<script type="module" src="./views/js/taskGenerator.js"></script>
 </html>

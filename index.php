@@ -75,6 +75,7 @@
     $controller_connection->get_method_connection("register", "RegistrationController", "Registration");
     $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
     $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
+    $controller_connection->get_method_connection("printPage", "TaskGenerationController", "PrintPage");
     $controller_connection->get_method_connection("studentHandling", "StudentHandlingController", "StudentHandling");
     $controller_connection->get_method_connection("studentGrades", "StudentGradesController", "StudentGrades");
     $controller_connection->get_method_connection("practice", "PracticeController", "Practice");

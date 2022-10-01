@@ -36,13 +36,6 @@ let group_selector = document.querySelector("#group_selector")
 let solution_inputs = document.querySelectorAll(".solution_input")
 let body = document.querySelector("body")
 let small_cards = document.querySelectorAll(".small_card")
-let small_exam_generation_card = document.getElementById("small_exam_generation")
-let big_exam_generation_card = document.getElementById("big_exam_generation")
-let seminar_tasks_generation_card = document.getElementById("seminar_tasks_generation")
-let topic_select = document.querySelector(".topic_select")
-let save_pdf_button = document.getElementById("save_pdf_button")
-let preview = document.getElementById("preview")
-let new_task_generator_button = document.getElementById("new_task_generator_button")
 
 // Event-handlers
 if(logout_button){
@@ -107,56 +100,6 @@ if(body){
     }
 }
 
-if(group_selector){
-    group_selector.addEventListener("change", ()=>{ChangeAttributeInURL("group", group_selector.options[group_selector.options.selectedIndex].value)})
-}
-
-if(small_exam_generation_card){
-    small_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "small")})
-}
-
-if(big_exam_generation_card){
-    big_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "big")})
-}
-
-if(seminar_tasks_generation_card){
-    seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "seminar")})
-}
-
-if(topic_select){
-    topic_select.addEventListener("change", ()=>{
-        let selected_index = topic_select.options.selectedIndex
-        
-        let subtopic_box= document.querySelector(".subtopic_box")
-        let subtopic_children= subtopic_box.children;
-        for(let subtopic_counter = 0; subtopic_counter < subtopic_children.length; subtopic_counter++) {
-            if(subtopic_counter === selected_index){
-                subtopic_children[subtopic_counter].style["display"] = "inline"
-                subtopic_children[subtopic_counter].disabled = ""
-                if(subtopic_children[subtopic_counter].tagName.toLocaleLowerCase() === "input"){
-                    subtopic_children[subtopic_counter].readOnly = true
-                }
-            }else{
-                subtopic_children[subtopic_counter].style["display"] = "none"
-                subtopic_children[subtopic_counter].disabled = "disabled"
-            }
-        }
-    })
-}
-
-if(save_pdf_button){
-    save_pdf_button.addEventListener("click", (event)=>{
-        event.preventDefault()
-
-        let new_window = window.open()
-        let preview_content = document.getElementById("preview").innerHTML
-        self.focus()
-        new_window.document.open()
-        new_window.document.write('<html><body>' +  preview_content + '</body></html>')
-        new_window.document.close()
-        new_window.print();
-        new_window.close();
-    })
-}
-
 //let timer = setInterval(function(){window.location = window.location},1000);
+
+export {ChangeAttributeInURL}

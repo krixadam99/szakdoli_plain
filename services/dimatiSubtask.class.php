@@ -92,7 +92,7 @@
         private function CreateSetSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $this->dimat_helper_functions->SetMinimumNumber(-15);
             $this->dimat_helper_functions->SetMaximumNumber(15);
             
@@ -172,7 +172,7 @@
         private function CreateRelationBasicsSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $this->dimat_helper_functions->SetMinimumNumber(1);
             $this->dimat_helper_functions->SetMaximumNumber(20);
             
@@ -284,7 +284,7 @@
         private function CreateRelationCompositionSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             $task_data = array("relation_pairs" => [], "set_triplets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
@@ -324,7 +324,7 @@
             $characteristic_array = ["reflexív", "irreflexív", "szimmetrikus", "antisszimmetrikus", "asszimmetrikus", "tranzitivitív", "dichotóm", "trichotóm", "ekvivalencia reláció"];
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             $task_data = array("relations" => [], "base_sets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
@@ -383,7 +383,7 @@
         private function CreateRelationCreationSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             $task_data = array("sets" => [], "characteristics" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
@@ -440,7 +440,7 @@
         private function CreateIsFunctionSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             $task_data = array("pairs_of_sets" => [], "relations" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
@@ -484,7 +484,7 @@
             $characteristic_array = ["szürjektív", "injektív", "bijektív"];
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             
             $task_data = array("pairs_of_sets" => [], "functions" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
@@ -541,7 +541,7 @@
         private function CreateComplexBasicCharacteristicsSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
@@ -628,7 +628,7 @@
         private function CreateComplexOperationsAlgebraicSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
             
@@ -699,7 +699,7 @@
         private function CreateComplexTrigonometricFormSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
@@ -744,7 +744,7 @@
         private function CreateComplexOperationsTrigonometricSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             $this->dimat_helper_functions->SetMinimumNumber(-100);
             $this->dimat_helper_functions->SetMaximumNumber(100 + $number_of_subtasks);
@@ -789,7 +789,7 @@
         private function CreateComplexPowerTrigonometricSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             $this->dimat_helper_functions->SetMinimumNumber(-10);
             $this->dimat_helper_functions->SetMaximumNumber(10 + $number_of_subtasks);
@@ -837,7 +837,7 @@
         private function CreateComplexRootTrigonometricSubtask($number_of_subtasks, $full_task = false){
             $solutions = [];
             $descriptions = [];
-            $printable_solutions = ["<b>Megoldás:</b>"];
+            $printable_solutions = ["<div class=\"paragraph\"><b>Megoldás:</b></div>"];
 
             $this->dimat_helper_functions->SetMinimumNumber(-10);
             $this->dimat_helper_functions->SetMaximumNumber(10 + $number_of_subtasks);

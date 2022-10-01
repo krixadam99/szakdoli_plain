@@ -466,28 +466,32 @@
 
             if(mt_rand(0,1)==1){
                 $is_reflexive = true;
-                //never assymetric, never irreflexive
+                $is_irreflexive = false;
+                $is_assymetric = false;
 
                 if(mt_rand(0,1)==1){
                     $is_symmetric = true;
                     if(mt_rand(0,1)==1){
-                        $is_antisymmetric = true;
+                        $is_antisymmetric = true; //(1,1), (2,2)
                         $is_transitive = true;
                     }else{
-                        if(mt_rand(0,1)==1){
-                            $is_transitive = true; //(1,1), (1,2), (2,1)
-                        }
+                        $is_antisymmetric = false; //(1,1), (1,2), (2,1)
                     }
                 }else{
                     $is_symmetric = false;
                     if(mt_rand(0,1)==1){
-                        $is_antisymmetric = true;
+                        $is_antisymmetric = true; //(1,1), (1,2), (2,2)
                         if(mt_rand(0,1)==1){
                             $is_transitive = true; //(1,1), (1,2), (2,2)
+                        }else{
+                            $is_transitive = false; //(1,1), (1,2), (2,2), (3,1), (3,3)
                         }
                     }else{
+                        $is_antisymmetric = false;
                         if(mt_rand(0,1)==1){
                             $is_transitive = true; //(1,1), (1,2), (2,1), (2,2), (2,3), (1,3), (3,3)
+                        }else{
+                            $is_transitive = false; //(1,1), (1,2), (2,1), (2,2), (1,3), (3,3)
                         }
                     }
                 }
@@ -497,7 +501,15 @@
                     $is_irreflexive = true;
                     if(mt_rand(0,1)==1){
                         $is_symmetric = true;
-                        //never antisymmetric, never assymetric, never  transitive
+                        if(mt_rand(0,1)==1){
+                            $is_antisymmetric = true;
+                            $is_assymetric = true;
+                            $is_transitive = true; // üres
+                        }else{
+                            $is_transitive = false; //(1,2), (2,1)
+                            $is_antisymmetric = false;
+                            $is_assymetric = false;
+                        }
                     }else{
                         $is_symmetric = false;
                         if(mt_rand(0,1)==1){
@@ -507,29 +519,40 @@
                                 $is_transitive = true; //(1,2)
                             }
                         }else{
-                            //never assymetric
+                            $is_assymetric = false;
                         }
                     }
                 }else{
-                    //never assymetric
+                    $is_irreflexive = false;
+                    $is_assymetric = false;
                     if(mt_rand(0,1)==1){
                         $is_symmetric = true;
                         if(mt_rand(0,1)==1){
                             $is_antisymmetric = true;
                             $is_transitive = true; //(1,1) (base=1,2,3)
                         }else{
+                            $is_antisymmetric = false;
                             if(mt_rand(0,1)==1){
                                 $is_transitive = true; //(1,1), (1,2), (2,1), (2,2) (base=1,2,3)
+                            }else{
+                                $is_transitive = false; //
                             }
                         }
                     }else{
                         $is_symmetric = false;
                         if(mt_rand(0,1)==1){
                             $is_antisymmetric = true;
-                            $is_transitive = true; //(1,1), (1,2) (base=1,2,3)
+                            if(mt_rand(0,1)==1){
+                                $is_transitive = true; //(1,1), (1,2) (base=1,2,3)
+                            }else{
+                                $is_transitive = false; //
+                            }
                         }else{
+                            $is_antisymmetric = false;
                             if(mt_rand(0,1)==1){
                                 $is_transitive = true; //(1,2), (2,1), (1,1), (2,2), (1,3), (2,3) (base=1,2,3)
+                            }else{
+                                $is_transitive = false; //
                             }
                         }
                     }
@@ -836,7 +859,7 @@
                     $return_values = array("size" => [], "arguments"=> []);
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     if($power != 0){
-                        $return_values["size"] =  $first_trigonometric_form[0]/$power;
+                        $return_values["size"] =  pow($first_trigonometric_form[0],1/$power);
                         for($k=0; $k<abs($power); $k++){
                             array_push($return_values["arguments"], ($first_trigonometric_form[1]+2*$k*pi())/$power);
                         }
