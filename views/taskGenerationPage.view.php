@@ -185,7 +185,14 @@
                         <?php include("./partials/taskChoice.php")?>
                     </div>
                 <?php elseif($_SESSION["exam_type"] === "seminar"):?>
-
+                    <?php 
+                        $section_name = "task_0";
+                    ?>
+                    <div class="pdf_page_section">
+                        <label class="pdf_page_section_label">Feladat kiválasztása</label>
+                        <hr class="full_hr">
+                        <?php include("./partials/taskMultipleChoice.php")?>
+                    </div>
                 <?php endif?>
                 
                 <?php if(!isset($_SESSION["preview"]) || isset($_SESSION["preview"]) && count($_SESSION["preview"]) == 0):?>

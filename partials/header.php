@@ -1,10 +1,16 @@
 <header>
     <div id="header_line">
         <div id="notifications_button">
-            <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape">
+            <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
+            <span class="text_of_tooltip">
+                Visszanavigálás az értesítések oldalára
+            </span>
         </div>
         <div id="messages_button">
-            <img src="./views/css/pics/messages.png" alt="messages_shape">
+            <img src="./views/css/pics/messages.png" alt="messages_shape" id="messages_shape">
+            <span class="text_of_tooltip">
+                Navigálás az üzenetek oldalára
+            </span>
         </div>
         <button id="sign_out_button">Kilépés</button>
     </div>

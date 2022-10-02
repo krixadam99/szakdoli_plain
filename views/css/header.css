@@ -31,7 +31,7 @@ button {
 #notifications_button, #messages_button {
     width: 1%;
     border-radius: 50px;
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(247, 239, 229);
     border: 1px solid black;
     margin: 1% 1% 1% 1%;
     padding: 1px 3px;
@@ -59,6 +59,28 @@ button {
 
 #sign_out_button:hover, #notifications_button:hover, #messages_button:hover{
     box-shadow: 1px 0px 3px 1px #969595;
+}
+
+.text_of_tooltip {
+    width: auto;
+    border-radius: 3px;
+    padding: 4px;
+    text-align: justify;
+    top: 40px;
+    margin-left: -20px;
+    
+    position: absolute;
+    visibility: hidden;
+    z-index: 120;
+
+
+    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(217, 213, 213, 0.771);
+}
+
+#notifications_button:hover .text_of_tooltip,
+#messages_button:hover .text_of_tooltip {
+    visibility: visible;
 }
 
 /*Navigation rows*/
