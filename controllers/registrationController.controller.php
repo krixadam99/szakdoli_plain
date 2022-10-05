@@ -69,14 +69,14 @@
             $neptun_code = $this->user_handler->GetNeptunCode();
             if(trim($neptun_code)!="" && trim($neptun_code)!="Neptun kód"){
                 if(strlen($neptun_code)==6){
-                    if(!$this->user_handler->IsUserNameUsed($neptun_code)){
-                        if(!preg_match("/^([a-zöüóőúéáűíA-ZÖÜÓŐÚÉÁŰÍ0-9]{6})*$/", $neptun_code)){//Illegal characters in username
-                            $this->SetIncorrectParameter("wrong_1_invalid_characters");
-                        }else{
+                    if(preg_match("/^([a-zöüóőúéáűíA-ZÖÜÓŐÚÉÁŰÍ0-9]{6})*$/", $neptun_code)){//Illegal characters in username
+                        if($this->user_handler->IsUserNameUsed($neptun_code)){
+                            $this->SetIncorrectParameter("wrong_1_user_set");
+                        }else{ //Neptun code is already in use
                             $this->SetCorrectParameter("neptun_code", $neptun_code);
                         }
-                    }else{//Neptun code is already in use
-                        $this->SetIncorrectParameter("wrong_1_user_set");
+                    }else{
+                        $this->SetIncorrectParameter("wrong_1_invalid_characters");
                     }
                 }else{
                     $this->SetIncorrectParameter("wrong_1_length");
@@ -111,9 +111,6 @@
                 }elseif($subject_name == "Diszkrét matematika II."){
                     $this->user_handler->SetSubjectName("ii");
                     $this->SetCorrectParameter("subject_name", "1");
-                }elseif($subject_name == "Diszkrét matematika modellek és alkalmazásaik"){
-                    $this->user_handler->SetSubjectName("dimmoa");
-                    $this->SetCorrectParameter("subject_name", "2");
                 }else{//Malicious user input value
                     $this->SetIncorrectParameter("wrong_3_no_such_subject");           
                 }

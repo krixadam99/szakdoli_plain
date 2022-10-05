@@ -33,12 +33,12 @@ button {
     border-radius: 50px;
     background-color: rgb(247, 239, 229);
     border: 1px solid black;
-    margin: 1% 1% 1% 1%;
+    margin: 1% 0% 1% 1%;
     padding: 1px 3px;
 }
 
 #messages_button {
-    margin: 1% auto 1% 0%;
+    margin: 1% auto 1% 1%;
 }
 
 #notifications_button img, #messages_button img {

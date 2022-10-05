@@ -1,11 +1,13 @@
 <header>
     <div id="header_line">
-        <div id="notifications_button">
-            <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
-            <span class="text_of_tooltip">
-                Visszanavigálás az értesítések oldalára
-            </span>
-        </div>
+        <?php if(!$is_administrator):?>
+            <div id="notifications_button">
+                <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
+                <span class="text_of_tooltip">
+                    Visszanavigálás az értesítések oldalára
+                </span>
+            </div>
+        <?php endif?>
         <div id="messages_button">
             <img src="./views/css/pics/messages.png" alt="messages_shape" id="messages_shape">
             <span class="text_of_tooltip">
@@ -76,6 +78,15 @@
                     <a class="menu_cell" href=<?="./index.php?site=grades"?>>Saját eredményeim</a>
                 </nav>
             <?php endif?>
+        </div>
+    <?php else:?>
+        <div id="header_line">
+            <nav id="user_handling" class="nav_with_submenu <?=$actual_page=="user_handling"?"actual_page":"not_actual_page"?>">
+                <a class="menu_cell" href=<?="./index.php?site=notifications&action=handle_users"?>>Felhasználók kezelése</a>    
+            </nav>
+            <nav id="demonstrator_handling" class="nav_with_submenu <?=$actual_page=="demonstrator_handling"?"actual_page":"not_actual_page"?>">
+                <a class="menu_cell" href=<?="./index.php?site=notifications&action=handle_demonstrators"?>>Demonstrátorok kezelése</a>     
+            </nav>
         </div>
     <?php endif?>
 </header>

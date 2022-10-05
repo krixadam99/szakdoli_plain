@@ -34,6 +34,12 @@
         }else{
             unset($_SESSION["exam_type"]);
         }
+
+        if(isset($_GET["action"])){
+            $_SESSION["action"] = $_GET["action"];
+        }else{
+            unset($_SESSION["action"]);
+        }
     }
 
     //Auto-loading classes 
