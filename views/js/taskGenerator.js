@@ -28,7 +28,7 @@ function Editing(elements, new_value = "", style_key){
     for(let element of elements){
         switch(style_key){
             case "text-align":{
-                ModifyElementStyle(element.closest("div.paragraph"), {"text-align": new_value})
+                ModifyElementStyle(element.closest("div"), {"text-align": new_value})
             };break
             case "size":{
                 let new_size = `calc(${new_value}px + 0.3vw)`
@@ -69,10 +69,10 @@ function Editing(elements, new_value = "", style_key){
                 }
             };break
             case "margin-bottom":{
-                ModifyElementStyle(element.closest("div.paragraph"), {"margin-bottom": new_value})
+                ModifyElementStyle(element.closest("div"), {"margin-bottom": new_value})
             };break
             case "margin-top":{
-                ModifyElementStyle(element.closest("div.paragraph"), {"margin-top": new_value})
+                ModifyElementStyle(element.closest("div"), {"margin-top": new_value})
             };break
             default:break;
         }
@@ -127,8 +127,8 @@ function AddEventsToParagraphLabel(label_element){
     })
 
     label_element.addEventListener("dblclick", ()=>{
-        edited_label_parent = label_element.closest("div.paragraph")
-        ChangeElementToAnother(label_element, "div.paragraph", "input")
+        edited_label_parent = label_element.closest("div")
+        ChangeElementToAnother(label_element, "div", "input")
     })
 }
 
@@ -334,6 +334,7 @@ if(save_pdf_button){
             }
         }
 
+
         let preview_content = document.getElementById("page_container").cloneNode(true)
         let new_window = window.open("./index.php?site=printPage")
         self.focus()
@@ -348,7 +349,7 @@ window.addEventListener("click", (event)=>{
     if(edited_label_parent){
         let input = edited_label_parent.querySelector("input")
         if(input && event.target !== input){
-            let label = ChangeElementToAnother(edited_label_parent.querySelector("input"), "div.paragraph", "label")
+            let label = ChangeElementToAnother(edited_label_parent.querySelector("input"), "div", "label")
             AddEventsToParagraphLabel(label)
         }
     }

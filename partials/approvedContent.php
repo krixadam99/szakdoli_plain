@@ -12,8 +12,6 @@
                     Diszkrét matematika I.
                 <?php elseif($approved_student_group["subject_name"]=="ii"):?>
                     Diszkrét matematika II.
-                <?php else:?>
-                    Diszkrét matematikai modellek alkalmazásai
                 <?php endif?>
                 tárgy <?=$approved_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elfogadásra került!
             </label>

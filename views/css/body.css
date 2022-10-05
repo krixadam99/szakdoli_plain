@@ -15,14 +15,15 @@
 
 #notification_box label{
     color:rgb(84, 84, 84);
+    font-size: calc(12px + 0.3vw);
 }
 
 /*Pending table styles for administrator*/
 
 #pending_form table, #student_handling_form table {
     border-collapse: collapse;
-    width: 96%;
-    margin: 2% 2% auto 2%;
+    width: 92%;
+    margin: 2% 4% auto 4%;
 }
 
 th, td {
@@ -59,7 +60,7 @@ h1 {
     font-weight: normal;
     margin-top: 2%;
     margin-left: 4%;
-    font-size: calc(25px + 0.3vw);
+    font-size: calc(22px + 0.3vw);
 }
 
 hr {
@@ -83,8 +84,8 @@ hr {
     transition: 0.4s;
     border-radius: 5px;
     margin: 2% auto;
-    padding-top: 7%;
-    padding-bottom: 10%;
+    padding-top: 10%;
+    padding-bottom: 11%;
 
     text-align: center;
     cursor: pointer;
@@ -168,22 +169,10 @@ hr {
 
 /*Group selector for student handling, student grades etc.*/
 
-.group_selector {
-    display: flex;
-    width: 96%;
-    margin: 2% 2% auto 2%;
-    font-size: 25px
-}
-
-.group_selector > select {
+select#group_selector {
     width: 20%;
     border-radius: 50px;
-    margin: 0% auto 0% 1%;
-}
-
-.group_selector > label {
-    width: auto;
-    margin: 0% 1% 0% 0%;
+    margin: 0% auto 0% 4%;
 }
 
 /*Practice page content*/
@@ -582,4 +571,27 @@ ul {
 .paragraph{
     margin-top: 1%;
     margin-bottom: 1%;
+}
+
+@media only screen and (max-width: 600px) {
+    .card_row {
+        display: flex;
+        flex-direction: column;
+        width: 96%;
+        margin: 2% 2%;
+    }
+
+    .big_card, .small_card {
+        width: 50%;
+        border: 1px solid black;
+        box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+        transition: 0.4s;
+        border-radius: 5px;
+        margin: 2% auto;
+        padding-top: 25%;
+        padding-bottom: 30%;
+    
+        text-align: center;
+        cursor: pointer;
+    }
 }

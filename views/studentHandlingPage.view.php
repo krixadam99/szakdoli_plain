@@ -38,16 +38,15 @@
 <body>
     <?php include("./partials/header.php")?>
     <main>
-        <div class="group_selector">
-            <label>Válasszon csoportot</label>
-            <select id="group_selector">
-                <?php foreach($approved_teacher_groups as $key => $approved_teacher_group):?>
-                    <?php if($approved_teacher_group["subject_name"] == $_SESSION["subject"]):?>
-                        <option <?=isset($_SESSION["group"]) && $_SESSION["group"] === $approved_teacher_group["subject_group"]?"selected":""?>><?=$approved_teacher_group["subject_group"]?></option>
-                    <?php endif?>
-                <?php endforeach?>
-            </select>
-        </div>
+        <h1><?=""?> csoport kiválasztása</h1>
+        <hr>
+        <select id="group_selector">
+            <?php foreach($approved_teacher_groups as $key => $approved_teacher_group):?>
+                <?php if($approved_teacher_group["subject_name"] == $_SESSION["subject"]):?>
+                    <option <?=isset($_SESSION["group"]) && $_SESSION["group"] === $approved_teacher_group["subject_group"]?"selected":""?>><?=$approved_teacher_group["subject_group"]?></option>
+                <?php endif?>
+            <?php endforeach?>
+        </select>
         <?php include("./partials/studentTable.php")?>
     </main>
 </body>

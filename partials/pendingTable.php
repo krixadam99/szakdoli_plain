@@ -13,7 +13,8 @@
                 <td><?=$pending_user_information["subject_group"]?></td>
                 <td>
                     <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_name"]."_".$pending_user_information["subject_group"]?>>
-                        <option selected>ELFOGADÁS</option>
+                        <option selected>-</option>
+                        <option>ELFOGADÁS</option>
                         <option>ELUTASÍTÁS</option>
                     </select>
                 </td>

@@ -45,14 +45,15 @@
             <hr>
             <?php include("./partials/pendingContent.php")?>
             <?php include("./partials/approvedContent.php")?>
+            <!-- Ide még kéne denied content is -->
             <?php if(count($pending_teacher_groups) == 0 && count($pending_student_groups) == 0):?>
                 <div id="notification_box">
                     <label>Nincsen elbírálás allatt álló tárgya!</label>
                 </div>
             <?php endif?>
         <?php else:?>
-            <?php if(isset($_SESSION["action"]) && $_SESSION["action"] === "handle demonstrators"):?>
-                <h1>Elbírálás alatt álló tanárok</h1>
+            <?php if(isset($_SESSION["action"]) && $_SESSION["action"] === "handle_demonstrators"):?>
+                <h1>Demonstrátorok kezelése</h1>
                 <hr>
                 <?php if(count($pending_users) != 0):?>
                     <?php include("./partials/pendingTable.php")?>
@@ -62,13 +63,13 @@
                     </div>
                 <?php endif?>
             <?php else:?>
-                <h1>Elbírálás alatt álló felhasználók</h1>
+                <h1>Felhasználók kezelése</h1>
                 <hr>
                 <?php if(count($pending_users) != 0):?>
                     <?php include("./partials/pendingTable.php")?>
                 <?php else:?>
                     <div id="notification_box">
-                        <label>Nincsen elbírálás allatt álló felhasználó!</label>
+                        <label>Nincsen elbírálás allatt álló felhasználók!</label>
                     </div>
                 <?php endif?>
             <?php endif?>

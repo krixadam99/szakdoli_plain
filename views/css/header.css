@@ -28,8 +28,9 @@ button {
     z-index: 100;
 }
 
-#notifications_button, #messages_button {
-    width: 1%;
+#notifications_button, 
+#messages_button {
+    width: calc(10px + 0.5vw);;
     border-radius: 50px;
     background-color: rgb(247, 239, 229);
     border: 1px solid black;
@@ -48,11 +49,12 @@ button {
 
 #sign_out_button {
     height: 98%;
-    width: 8%;
+    width: calc(100px + 0.3vw);;
     margin: auto 1%;
     border-radius: 50px;
     border: 1px solid rgb(234, 175, 98);
     text-align: center;
+    font-size: calc(10px + 0.3vw);;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: white;
 }

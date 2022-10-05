@@ -65,7 +65,7 @@
                 </div>
                 <div class="big_card" id="small_exam_generation">
                     <label class="title">
-                        Kiszárthelyi feladatsor összeállítása
+                        Kis zárthelyi feladatsor összeállítása
                     </label>
                 </div>
                 <div class="big_card" id="seminar_tasks_generation">
