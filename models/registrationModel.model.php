@@ -13,9 +13,9 @@
 
             $pending_status = 1;
             if($user_status == "Demonstrátor"){
-                $user_status = "teacher";
+                $user_status = 1;
             }else{
-                $user_status = "student";
+                $user_status = 0;
                 if($subject_name != "i" && $subject_name != "ii"){
                     $subject_name = "dimmoa";
                     $pending_status = 0;
@@ -26,7 +26,7 @@
                 $subject_group = 0;
             }
 
-            $query = "INSERT INTO user_status VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
+            $query = "INSERT INTO user_subject VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
             $this->database->UpdateDatabase($query);
         }
     }

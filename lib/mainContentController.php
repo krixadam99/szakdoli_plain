@@ -248,7 +248,7 @@
 
                     if(!$this->is_administrator){
                         foreach($this->user_data as $key => $user_record){
-                            if($user_record["user_status"] == "teacher"){
+                            if($user_record["is_teacher"] == 1){
                                 if($user_record["pending_status"] == "0"){
                                     array_push($this->approved_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                     if(!in_array($user_record["subject_name"],$this->approved_teacher_subjects)){

@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE user_subject (
     neptun_code varchar(6) NOT NULL,
-    user_status varchar(255) NOT NULL,
+    is_teacher int(11) NOT NULL DEFAULT 0,
     subject_group int(11) NOT NULL,
     subject_name varchar(255) NOT NULL,
     pending_status int(11) NOT NULL,
@@ -93,12 +93,12 @@ INSERT INTO users VALUES("ABCABC", "abcabc@example.hu", "$2y$10$fR6hVQ88X1R1uUZJ
 INSERT INTO users VALUES("BBBBBB", "bbbbbb@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("CBACBA", "cbacba@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 
-INSERT INTO user_subject VALUES("AAAAAA", "teacher", 1, "i", 0);
-INSERT INTO user_subject VALUES("AAAAAA", "teacher", 2, "ii", 0);
-INSERT INTO user_subject VALUES("AAAAAA", "teacher", 3, "ii", 0);
-INSERT INTO user_subject VALUES("ABCABC", "student", 2, "ii", 0);
-INSERT INTO user_subject VALUES("BBBBBB", "student", 1, "i", 0);
-INSERT INTO user_subject VALUES("CBACBA", "student", 3, "ii", 0);
+INSERT INTO user_subject VALUES("AAAAAA", 1, 1, "i", 0);
+INSERT INTO user_subject VALUES("AAAAAA", 1, 2, "ii", 0);
+INSERT INTO user_subject VALUES("AAAAAA", 1, 3, "ii", 0);
+INSERT INTO user_subject VALUES("ABCABC", 0, 2, "ii", 0);
+INSERT INTO user_subject VALUES("BBBBBB", 0, 1, "i", 0);
+INSERT INTO user_subject VALUES("CBACBA", 0, 3, "ii", 0);
 
 INSERT INTO practice_task_points(neptun_code, subject_name, practice_task_1, practice_task_2) VALUES("ABCABC", "ii", 2, 0.5);
 INSERT INTO practice_task_points(neptun_code, subject_name, practice_task_1) VALUES("BBBBBB", "i", 5);

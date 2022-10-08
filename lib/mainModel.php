@@ -36,7 +36,13 @@
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
-                $user_status = $record["user_status"];
+                
+                if($record["is_teacher"] === "demonstrátor"){
+                    $user_status = 1;
+                }else{
+                    $user_status = 0;
+                }
+                
                 $subject_group = $record["subject_group"];
                 $subject_name = $record["subject_name"];
                 $pending_status = $record["pending_status"];
@@ -57,12 +63,12 @@
         }
 
         public function GetStudents($subject_name, $subject_group){
-            $query = "SELECT * FROM user_subject WHERE neptun_code != \"admin\" AND user_status = \"student\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\"";
+            $query = "SELECT * FROM user_subject WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
         public function GetPendingTeachers(){
-            $query = "SELECT neptun_code, subject_group, subject_name FROM user_subject WHERE neptun_code != \"admin\" AND user_status = \"teacher\" AND pending_status = \"1\"";
+            $query = "SELECT neptun_code, subject_group, subject_name FROM user_subject WHERE neptun_code != \"admin\" AND is_teacher = 1 AND pending_status = \"1\"";
             return $this->database->LoadDataFromDatabase($query);
         }
     }
