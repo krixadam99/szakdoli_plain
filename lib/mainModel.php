@@ -21,7 +21,7 @@
             if($neptun_code == "ADMIN"){
                 $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
             }else{
-                $query = "SELECT * FROM users, status_pending WHERE users.neptun_code = status_pending.neptun_code AND users.neptun_code = \"".$neptun_code."\"";
+                $query = "SELECT * FROM users, user_subject WHERE users.neptun_code = user_subject.neptun_code AND users.neptun_code = \"".$neptun_code."\"";
             }
             return $this->database->LoadDataFromDatabase($query);
         }
@@ -40,13 +40,13 @@
                 $subject_group = $record["subject_group"];
                 $subject_name = $record["subject_name"];
                 $pending_status = $record["pending_status"];
-                $query = $query."UPDATE status_pending SET pending_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND user_status = \"$user_status\"; "; 
+                $query = $query."UPDATE user_subject SET pending_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND user_status = \"$user_status\"; "; 
             
                 if($pending_status == "0"){
                     if($subject_name == "i"){
-                        $query = $query."INSERT INTO dimat_i(neptun_code, group_number) VALUES(\"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
+                        $query = $query."INSERT INTO results(neptun_code, subject_name, group_number) VALUES(\"i\", \"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
                     }else if($subject_name == "ii"){
-                        $query = $query."INSERT INTO dimat_ii(neptun_code, group_number) VALUES(\"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
+                        $query = $query."INSERT INTO results(neptun_code, subject_name, group_number) VALUES(\"ii\", \"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
                     }
                     $query = $query."INSERT INTO practice_task_points(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\"; ";
                 }
@@ -57,12 +57,12 @@
         }
 
         public function GetStudents($subject_name, $subject_group){
-            $query = "SELECT * FROM status_pending WHERE neptun_code != \"admin\" AND user_status = \"student\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\"";
+            $query = "SELECT * FROM user_subject WHERE neptun_code != \"admin\" AND user_status = \"student\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
         public function GetPendingTeachers(){
-            $query = "SELECT neptun_code, subject_group, subject_name FROM status_pending WHERE neptun_code != \"admin\" AND user_status = \"teacher\" AND pending_status = \"1\"";
+            $query = "SELECT neptun_code, subject_group, subject_name FROM user_subject WHERE neptun_code != \"admin\" AND user_status = \"teacher\" AND pending_status = \"1\"";
             return $this->database->LoadDataFromDatabase($query);
         }
     }

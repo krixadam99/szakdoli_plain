@@ -264,7 +264,7 @@
                                 if($user_record["pending_status"] == "0"){
                                     $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
                                     foreach($practice_results as $key => $value){
-                                        if(is_int(strpos($key, "practice"))){
+                                        if(is_int(strpos($key, "practice_task"))){
                                             $this->practice_results[$key] = $value;
                                         }
                                     }

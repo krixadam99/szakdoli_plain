@@ -124,8 +124,8 @@ hr {
 
 .small_card .description {
     cursor: pointer;
-    font-size: calc(10px + 0.3vw);
-    margin: auto 5% auto 5%;
+    font-size: calc(12px + 0.3vw);
+    margin: auto 3% auto 3%;
     width: 90%;
 }
 

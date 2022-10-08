@@ -26,7 +26,7 @@
                 $subject_group = 0;
             }
 
-            $query = "INSERT INTO status_pending VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
+            $query = "INSERT INTO user_status VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
             $this->database->UpdateDatabase($query);
         }
     }

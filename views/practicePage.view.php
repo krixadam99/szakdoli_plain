@@ -124,11 +124,11 @@
                             <label class="title">Feladatok</label>
                             <div class="level_container">
                                 <label class="level_counter">
-                                    <?= ProgressCalculator(floatval($practice_results["practice_" . ($_SESSION["topic"] + 1)]))[0]?>
+                                    <?= ProgressCalculator(floatval($practice_results["practice_task_" . ($_SESSION["topic"] + 1)]))[0]?>
                                 </label>
                                 <div class="level_bar">
                                     <div class="progress_line" style=
-                                    <?="width:" . ProgressCalculator(floatval($practice_results["practice_" . ($_SESSION["topic"] + 1)]))[1] . "%"?>>
+                                    <?="width:" . ProgressCalculator(floatval($practice_results["practice_task_" . ($_SESSION["topic"] + 1)]))[1] . "%"?>>
                                     </div>
                                 </div>
                             </div>
