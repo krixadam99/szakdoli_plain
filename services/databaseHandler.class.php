@@ -1,20 +1,21 @@
-<?php
+<?php    
     /**
      * This is a class which is responsible for making the actual data fetching and updating the database.
     */
     class DatabaseHandler { 
-        private $database;
+        // These values should be replaced when someone wants to run the program locally, and create a database 
+        private $server_name = "localhost";
+        private $database_user_name = "kadam99";
+        private $database_user_password = "H6-1aOs(71-a";
+        private $database_name = "szakdoli";
         
         /**
          * 
          * The contructor of the DataBaseHandler class.
          * 
-         * @param string $database The name of the database from which the class will fetch daga, or in what the class wull update data. 
-         * 
          * @return void
          */
-        public function __construct($database){
-            $this->database = $database;
+        public function __construct(){
         }
         
         /**
@@ -29,7 +30,7 @@
          * @return array The data stored in an array.
         */
         public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) {
-            $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);
+            $connection = mysqli_connect($this->server_name, $this->database_user_name, $this->database_user_password,  $this->database_name);
             //$connection = mysql_connect_caesar();
             if(!$connection){
                 exit("Connection wasn't successful: " . mysqli_connect_error());

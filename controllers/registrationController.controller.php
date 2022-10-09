@@ -15,8 +15,8 @@
             }
 
             $registration_model = new RegistrationModel("szakdoli");
-            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM status_pending WHERE subject_name = \"i\" AND user_status = \"teacher\" AND pending_status  = \"0\"", MYSQLI_NUM);
-            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM status_pending WHERE subject_name = \"ii\" AND user_status = \"teacher\" AND pending_status  = \"0\"", MYSQLI_NUM);
+            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_subject WHERE subject_name = \"i\" AND is_teacher = 1 AND pending_status  = \"0\"", MYSQLI_NUM);
+            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_subject WHERE subject_name = \"ii\" AND is_teacher = 1 AND pending_status  = \"0\"", MYSQLI_NUM);
             
             include(ROOT_DIRECTORY . "/views/registrationForm.view.php");
         }

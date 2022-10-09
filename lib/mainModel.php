@@ -3,8 +3,8 @@
     class MainModel {        
         protected $database;
         
-        public function __construct($database){
-            $this->database = new DatabaseHandler($database);
+        public function __construct(){
+            $this->database = new DatabaseHandler();
         }
 
         public function GetDataFromDatabase($query, $data_type = MYSQLI_ASSOC){

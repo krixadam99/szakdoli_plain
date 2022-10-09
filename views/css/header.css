@@ -13,7 +13,7 @@ button {
 #header_line {
     height: 20%;
     width: 100%;
-    background-color:rgba(253, 233, 207, 1);
+    background-color:rgb(253, 233, 207);
     margin: 0% 0% auto 0%;
     display: flex;
     z-index: 100;
@@ -22,7 +22,7 @@ button {
 #header_line:nth-child(2) {
     height: 20%;
     width: 100%;
-    background-color:rgba(245, 211, 170, 0.8);
+    background-color:#f5d3aacc;
     margin: 0% 0% auto 0%;
     display: flex;
     z-index: 100;

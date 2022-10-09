@@ -11,19 +11,6 @@
     $approved_student_groups = $this->GetApprovedStudentGroups();
 
     $actual_page = "notifications";
-    if($is_administrator){
-        if(isset($_SESSION["action"])){
-            if($_SESSION["action"] === "handle_users"){
-                $actual_page = "user_handling";
-            }else if($_SESSION["action"] === "handle_demonstrators"){
-                $actual_page = "demonstrator_handling";
-            }else{
-                header("Location: ./index.php?site=notifications");
-            }
-        }else{
-            $actual_page = "user_handling";
-        }
-    }
 ?>
 
 
@@ -52,26 +39,14 @@
                 </div>
             <?php endif?>
         <?php else:?>
-            <?php if(isset($_SESSION["action"]) && $_SESSION["action"] === "handle_demonstrators"):?>
-                <h1>Demonstrátorok kezelése</h1>
-                <hr>
-                <?php if(count($pending_users) != 0):?>
-                    <?php include("./partials/pendingTable.php")?>
-                <?php else:?>
-                    <div id="notification_box">
-                        <label>Nincsen elbírálás allatt álló tanár!</label>
-                    </div>
-                <?php endif?>
+            <h1>Demonstrátorok kezelése</h1>
+            <hr>
+            <?php if(count($pending_users) != 0):?>
+                <?php include("./partials/pendingTable.php")?>
             <?php else:?>
-                <h1>Felhasználók kezelése</h1>
-                <hr>
-                <?php if(count($pending_users) != 0):?>
-                    <?php include("./partials/pendingTable.php")?>
-                <?php else:?>
-                    <div id="notification_box">
-                        <label>Nincsen elbírálás allatt álló felhasználók!</label>
-                    </div>
-                <?php endif?>
+                <div id="notification_box">
+                    <label>Nincsen elbírálás allatt álló tanár!</label>
+                </div>
             <?php endif?>
         <?php endif?>
     </main>

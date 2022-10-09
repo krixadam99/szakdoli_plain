@@ -115,14 +115,5 @@
                 </nav>
             <?php endif?>
         </div>
-    <?php else:?>
-        <div id="header_line">
-            <nav id="user_handling" class="nav_with_submenu <?=$actual_page=="user_handling"?"actual_page":"not_actual_page"?>">
-                <a class="menu_cell" href=<?="./index.php?site=notifications&action=handle_users"?>>Felhasználók kezelése</a>    
-            </nav>
-            <nav id="demonstrator_handling" class="nav_with_submenu <?=$actual_page=="demonstrator_handling"?"actual_page":"not_actual_page"?>">
-                <a class="menu_cell" href=<?="./index.php?site=notifications&action=handle_demonstrators"?>>Demonstrátorok kezelése</a>     
-            </nav>
-        </div>
     <?php endif?>
 </header>
