@@ -65,7 +65,7 @@
          * @return bool A boolean value that determines whether updating the database was sucessful, or not.
         */
         public function UpdateDatabase($query, $multi = false) {
-            $connection = mysqli_connect('localhost', "kadam99", "H6-1aOs(71-a",  $this->database);
+            $connection = mysqli_connect($this->server_name, $this->database_user_name, $this->database_user_password,  $this->database_name);
             if(!$connection){
                 exit("Connection wasn't successful: " . mysqli_connect_error());
             }

@@ -7,9 +7,6 @@
      * Data request will be performed by the methods which were inherited from the MainModel.
     */
     class NotificationModel extends MainModel{
-        public function __construct($database = ""){
-            parent::__construct($database);
-        }
     }
 
 ?>

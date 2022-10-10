@@ -8,11 +8,6 @@
      * The practice score update will be performed by the UpdatePracticeScore method.
     */
     class PracticeModel extends MainModel {
-        
-        public function __construct($database = "szakdoli"){
-            parent::__construct($database);
-        }
-
         public function UpdatePracticeScore($neptun_code, $practice_number, $previous_point, $update_point){
             $neptun_code = strtoupper($neptun_code);
             $new_point = $previous_point + $update_point;

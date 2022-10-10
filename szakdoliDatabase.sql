@@ -1,3 +1,10 @@
+CREATE TABLE neptun_validation (
+    neptun_code varchar(6) NOT NULL,
+    validation_code varchar(255) NOT NULL,
+    
+    UNIQUE (neptun_code)
+);
+
 CREATE TABLE users (
     neptun_code varchar(6) NOT NULL,
     email_address varchar(255) NOT NULL,
@@ -8,7 +15,7 @@ CREATE TABLE users (
     PRIMARY KEY(neptun_code)
 );
 
-CREATE TABLE user_subject (
+CREATE TABLE user_groups (
     neptun_code varchar(6) NOT NULL,
     is_teacher int(11) NOT NULL DEFAULT 0,
     subject_group int(11) NOT NULL,
@@ -35,7 +42,7 @@ CREATE TABLE practice_task_points (
     practice_task_10 float NOT NULL DEFAULT 0,
     
     UNIQUE (neptun_code, subject_name),
-    FOREIGN KEY( neptun_code , subject_name ) REFERENCES user_subject( neptun_code, subject_name )
+    FOREIGN KEY( neptun_code , subject_name ) REFERENCES user_groups( neptun_code, subject_name )
 );
 
 CREATE TABLE results (
@@ -60,10 +67,22 @@ CREATE TABLE results (
     small_test_10 int(11) NOT NULL DEFAULT 0,
     
     UNIQUE (neptun_code, subject_group),
-    FOREIGN KEY( neptun_code, subject_name, subject_group ) REFERENCES user_subject( neptun_code, subject_name, subject_group )
+    FOREIGN KEY( neptun_code, subject_name, subject_group ) REFERENCES user_groups( neptun_code, subject_name, subject_group )
 );
 
 /*
+
+CREATE TABLE messages (
+    neptun_code varchar(6) NOT NULL,
+    message_id int(11) NOT NULL,
+    message varchar(4048) NOT NULL DEFAULT "",
+    is_submitter int(11) NOT NULL DEFAULT 0,
+    is_seen int(11) NOT NULL DEFAULT 0,
+    is_removed int(11) NOT NULL DEFAULT 0,
+    thread_count int(11) NOT NULL DEFAULT 0
+
+    FOREIGN KEY( neptun_code) REFERENCES users( neptun_code )
+);
 
 CREATE TABLE customized_task (
     neptun_code varchar(6) NOT NULL,
@@ -93,12 +112,12 @@ INSERT INTO users VALUES("ABCABC", "abcabc@example.hu", "$2y$10$fR6hVQ88X1R1uUZJ
 INSERT INTO users VALUES("BBBBBB", "bbbbbb@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("CBACBA", "cbacba@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 
-INSERT INTO user_subject VALUES("AAAAAA", 1, 1, "i", 0);
-INSERT INTO user_subject VALUES("AAAAAA", 1, 2, "ii", 0);
-INSERT INTO user_subject VALUES("AAAAAA", 1, 3, "ii", 0);
-INSERT INTO user_subject VALUES("ABCABC", 0, 2, "ii", 0);
-INSERT INTO user_subject VALUES("BBBBBB", 0, 1, "i", 0);
-INSERT INTO user_subject VALUES("CBACBA", 0, 3, "ii", 0);
+INSERT INTO user_groups VALUES("AAAAAA", 1, 1, "i", 0);
+INSERT INTO user_groups VALUES("AAAAAA", 1, 2, "ii", 0);
+INSERT INTO user_groups VALUES("AAAAAA", 1, 3, "ii", 0);
+INSERT INTO user_groups VALUES("ABCABC", 0, 2, "ii", 0);
+INSERT INTO user_groups VALUES("BBBBBB", 0, 1, "i", 0);
+INSERT INTO user_groups VALUES("CBACBA", 0, 3, "ii", 0);
 
 INSERT INTO practice_task_points(neptun_code, subject_name, practice_task_1, practice_task_2) VALUES("ABCABC", "ii", 2, 0.5);
 INSERT INTO practice_task_points(neptun_code, subject_name, practice_task_1) VALUES("BBBBBB", "i", 5);

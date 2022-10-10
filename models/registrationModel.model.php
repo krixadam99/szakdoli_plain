@@ -1,6 +1,9 @@
 <?php
 
     class RegistrationModel extends MainModel{
+        /**
+         * 
+         */
         public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
             $is_admin = 0;

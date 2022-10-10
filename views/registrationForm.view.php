@@ -22,11 +22,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./views/css/register.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/login_registration.css" rel="stylesheet" type="text/css">
     <title>Regisztráció</title>
 </head>
 <body>
-    <form id="login_form" action="./index.php?site=validateRegistration" method="POST">
+    <form id="registration_form" action="./index.php?site=validateRegistration" method="POST">
         <div id="label_div">
             <label id="title_label">ADJON MEG NEPTUN KÓDOT!</label>
             <br>

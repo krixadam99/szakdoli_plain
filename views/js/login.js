@@ -1,20 +1,33 @@
 let back_button = document.querySelector("#back_button")
+let user_input = document.querySelector("#user_input")
+let password_input = document.querySelector("#user_password")
+let show_password_image = document.querySelector("#show_password_image")
+
+let clicked_inputs = []
+
 back_button.addEventListener("click", ()=>{
     window.location = "./"
 })
 
-let user_input = document.querySelector("#user_input")
-user_input.addEventListener("click", ()=>{
-    user_input.value= ""
-})
+if(user_input){
+    user_input.addEventListener("click", ()=>{
+        if(!clicked_inputs.includes(user_input)){
+            clicked_inputs.push(user_input)
+            user_input.value= ""
+        }
+    })
+}
 
-let password_input = document.querySelector("#user_password")
-password_input.addEventListener("click", ()=>{
-    password_input.value= ""
-})
+if(password_input){
+    password_input.addEventListener("click", ()=>{
+        if(!clicked_inputs.includes(password_input)){
+            clicked_inputs.push(password_input)
+            password_input.value= ""
+        }
+    })    
+}
 
 let opened = true
-let show_password_image = document.querySelector("#show_password_image")
 if(show_password_image){
     show_password_image.addEventListener("click", (event)=>{
         event.preventDefault()

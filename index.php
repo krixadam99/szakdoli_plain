@@ -78,6 +78,7 @@
     //GET methods connection
     $controller_connection->get_method_connection("index", "IndexController", "Index");
     $controller_connection->get_method_connection("login", "LoginController", "Login");
+    $controller_connection->get_method_connection("forgottenPassword", "LoginController", "forgottenPassword");
     $controller_connection->get_method_connection("register", "RegistrationController", "Registration");
     $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
     $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
@@ -90,6 +91,7 @@
     
     //POST methods connection
     $controller_connection->post_method_connection("validateLogin", "LoginController", "ValidateLogin");
+    $controller_connection->post_method_connection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
     $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");
     $controller_connection->post_method_connection("finalizePending", "NotificationsController", "FinalizePending");
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");

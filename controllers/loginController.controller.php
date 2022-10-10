@@ -13,11 +13,34 @@
          * 
          * Once a client is directed to this page, the session variables will be all cleared.
          * 
+         * @param bool $with_success_bar This parameter decides whether the login page should contain a success bar for password changing, or not. The default is false.
+         * @param string $email_address The email address where the new password was sent.
+         * 
          * @return void
         */
-        public function Login(){
+        public function Login($with_success_bar = false, $email_address = ""){
             session_unset();
             session_destroy();
+
+            $forgotten_password_page = false;
+
+            include(ROOT_DIRECTORY . "/views/loginForm.view.php");
+        }
+
+        /**
+         *
+         * This method shows the forgotten password page.
+         * 
+         * Once a client is directed to this page, the session variables will be all cleared.
+         * 
+         * @return void
+        */
+        public function ForgottenPassword(){
+            session_unset();
+            session_destroy();
+
+            $forgotten_password_page = true;
+
             include(ROOT_DIRECTORY . "/views/loginForm.view.php");
         }
 
@@ -55,17 +78,73 @@
 
         /**
          *
+         * This method sends the user a new password if they have forgotten the previous.
+         * 
+         * Post variable shouldn't be renamed, or else the client will be redirected to the page.
+         * If there is no error, that is, the user provided an existing and valid neptun code, then they will receive a new password via email (to their given email address) and will be redirected to the login page.
+         * 
+         * @return void
+        */
+        public function ValidateForgottenPassword(){
+            if(isset($_POST['neptun_code'])){ // Handling malicious user's activities, like overwriting the name of the input
+                // Simulating a user with the UserHandler class, this user will have a neptun code, a password and the database
+                $this->user_handler = new UserHandler("szakdoli", $_POST['neptun_code']);
+                
+                // Validating the user
+                $this->ValidateUser(true);
+
+                // If there is no error, then the user gets redirected to the login page
+                if(count($this->incorrect_parameters) === 0){
+                    // The user will be sent a new password via email to their given email address
+                    $new_password = $this->GenerateNewPassword();
+                    $neptun_code = $_POST['neptun_code'];
+
+                    // Updating the password 
+                    $login_model = new LoginModel();
+                    $login_model->UpdatePassword($neptun_code, $new_password);
+                    
+                    $actual_time = date('D, d M Y H:i:s');
+                    $email_address = $login_model->GetEmailAddressOfUser(($neptun_code))["email_address"];
+                    $title = "Új jelszó a dimaasz alkalmazásban";
+                    $message = "
+                    <h1>Új jelszó igénylése $actual_time időpontban a $neptun_code-hoz tartozó felhasználónak</h1>
+                    <label>A rendszerben a $neptun_code-hoz tartozó felhasználó jelszava megváltozott az $actual_time időpontban. Az új jelszó: <b>$new_password</b>.</label>
+                    <label>Kérjük az új jelszóval való belépést követően változtassa meg a jelszavát a \"Kilépés\" feliratú gomb mellett található kis ikonra kattintva!</label>
+                    ";
+                    $header = "
+                    From:  \r\n
+                    Cc: \r\n
+                    Content-type: text/html\r\n
+                    ";
+                    
+                    // Sending email to the user's address
+                    mail($email_address, $title, $message);
+
+                    // Redirecting the user to the login page
+                    $this->Login(true, $email_address);
+                }else{
+                    $this->ForgottenPassword();
+                }
+            }else{
+                $this->ForgottenPassword();
+            }
+        }
+
+        /**
+         *
          * This method validates the user's form.
          * 
          * This method is not defined in the FormValidator class, only the signature is given there.
          * Here a valid form should satisfy the conditions related to neptun codes and passwords.
          * If the neptun code is not valid (not given, or not in the database), then there is no sense in validating the password.
          * 
+         * @param bool $only_neptun_code This parameter decides whether the user validation should only include neptun code validation, or if it should validate the password too. The default is false.
+         * 
          * @return void
         */
-        public function ValidateUser(){
+        public function ValidateUser($only_neptun_code = false){
             $this->NeptunCodeValidator();
-            if(count($this->GetIncorrectParameters()) == 0){ //Check the password input only if the neptun code was valid
+            if(count($this->GetIncorrectParameters()) === 0 && !$only_neptun_code){ //Check the password input only if the neptun code was valid
                 $this->PasswordValidator();
             }
         }
@@ -111,6 +190,45 @@
             }else{//No password was given
                 array_push($this->incorrect_parameters, "wrong_2_no_password");
             }
+        }
+
+        /**
+         * 
+         */
+        private function GenerateNewPassword() {
+            $small_letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+            $numbers = [0,1,2,3,4,5,6,7,8,9];
+            $special_characters = [",", "-", ".", "?", "!"];
+
+            $random_small_letter = $small_letters[mt_rand(0,count($small_letters)-1)];
+            $random_capital_letter = strtoupper($small_letters[mt_rand(0,count($small_letters)-1)]);
+            $random_number = $numbers[mt_rand(0,count($numbers)-1)];
+            $random_special_character = $special_characters[mt_rand(0,count($special_characters)-1)];
+
+            $new_password = $random_capital_letter . $random_number . $random_small_letter . $random_special_character;
+            $new_length = mt_rand(4,8);
+            for($counter = 0; $counter < $new_length; $counter++){
+                $type = mt_rand(0,3);
+                $new_character = "";
+                switch($type){
+                    case 0:{
+                        $new_character = $small_letters[mt_rand(0,count($small_letters)-1)];
+                    };break;
+                    case 1:{
+                        $new_character = strtoupper($small_letters[mt_rand(0,count($small_letters)-1)]);   
+                    };break;
+                    case 2:{
+                        $new_character = $numbers[mt_rand(0,count($numbers)-1)];
+                    };break;
+                    case 3:{
+                        $new_character = $special_characters[mt_rand(0,count($special_characters)-1)];
+                    };break;
+                    default;break;
+                }
+                $new_password .= $new_character;
+            }
+
+            return $new_password;
         }
     }
 
