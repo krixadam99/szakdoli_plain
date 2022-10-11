@@ -80,6 +80,7 @@
     
     $controller_connection->get_method_connection("demonstratorHandling", "AdministratorController", "DemonstratorHandling");
     $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
+    $controller_connection->get_method_connection("groupAddition", "GroupAdditionController", "GroupAddition");
     $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
     $controller_connection->get_method_connection("printPage", "TaskGenerationController", "PrintPage");
     $controller_connection->get_method_connection("studentHandling", "StudentHandlingController", "StudentHandling");

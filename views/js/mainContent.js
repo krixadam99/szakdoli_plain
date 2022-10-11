@@ -53,28 +53,54 @@ if(notifications_button){
 
 if(nav_buttons){
     let width = 100/nav_button_number
-    for(let nav_button of nav_buttons){
-        if(nav_button.id != "empty_nav"){
-            nav_button.style["width"] = `${width}%`
+    if(nav_button_number === 1){
+        let nav_button = nav_buttons[0]
+        
+        nav_button.style["width"] = `40%`
+        nav_button.style["margin"] = `auto`
 
-            nav_button.addEventListener("mouseenter",()=>{
-                let submenu = nav_button.querySelector(".submenu")
-                if(submenu){
-                    submenu.style["visibility"] = "visible"
-                    submenu.style["width"] = `${width}%`;
-                }
-            })
+        nav_button.addEventListener("mouseenter",()=>{
+            let submenu = nav_button.querySelector(".submenu")
+            if(submenu){
+                submenu.style["visibility"] = "visible"
+                submenu.style["width"] = `40%`;
+            }
+        })
 
-            nav_button.addEventListener("mouseleave",()=>{
-                let submenu = nav_button.querySelector(".submenu")
-                if(submenu){
-                    submenu.style["visibility"] = "hidden"
-                }
-            })
+        nav_button.addEventListener("mouseleave",()=>{
+            let submenu = nav_button.querySelector(".submenu")
+            if(submenu){
+                submenu.style["visibility"] = "hidden"
+            }
+        })
 
-            nav_button.addEventListener("click",()=>{
-                nav_button.querySelector("a").click()
-            })
+        nav_button.addEventListener("click",()=>{
+            nav_button.querySelector("a").click()
+        })
+    }else{
+        for(let nav_button of nav_buttons){
+            if(!Array.from(nav_button.classList).includes("empty_nav")){
+                nav_button.style["width"] = `${width}%`
+    
+                nav_button.addEventListener("mouseenter",()=>{
+                    let submenu = nav_button.querySelector(".submenu")
+                    if(submenu){
+                        submenu.style["visibility"] = "visible"
+                        submenu.style["width"] = `${width}%`;
+                    }
+                })
+    
+                nav_button.addEventListener("mouseleave",()=>{
+                    let submenu = nav_button.querySelector(".submenu")
+                    if(submenu){
+                        submenu.style["visibility"] = "hidden"
+                    }
+                })
+    
+                nav_button.addEventListener("click",()=>{
+                    nav_button.querySelector("a").click()
+                })
+            }
         }
     }
 }

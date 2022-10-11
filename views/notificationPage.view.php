@@ -9,6 +9,7 @@
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
     $approved_student_groups = $this->GetApprovedStudentGroups();
+    $approved_student_subject = $this->GetApprovedStudentSubject();
 
     $actual_page = "notifications";
 ?>

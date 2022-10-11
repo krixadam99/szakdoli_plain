@@ -119,12 +119,12 @@ nav {
     cursor: pointer;
 }
 
-#empty_nav{
+.empty_nav{
     background-color:rgba(245, 222, 194, 0);
     border-left: 2px solid black;
     border-radius: 0px;
-    margin: auto;
-    width: auto;
+    margin: auto auto;
+    width: 1%;
     cursor: default;
 }
 
@@ -140,8 +140,8 @@ nav {
 
 .submenu_row {
     width: 100%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    padding-bottom: 3%;
     cursor: pointer;
 }
 

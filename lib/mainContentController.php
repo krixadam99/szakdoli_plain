@@ -341,11 +341,49 @@
          * 
          * @return void
          */
-        protected function RedirectToIfWrongParam($session_parameter_name, $acceptable_values, $where_to){
+        protected function RedirectToIfWrongParam($session_parameter_name,  $acceptable_values, $where_to){
             if(isset($_SESSION[$session_parameter_name]) && !in_array($_SESSION[$session_parameter_name], $acceptable_values)){
                 header("Location: ./index.php?site=$where_to");
                 exit();
             }
+        }
+
+        /**
+         * 
+         */
+        static function GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects){
+            $show_group_addition_menu = true;
+            $can_apply_to_group = true;
+            $can_add_group = true;
+        
+            $pending_student_subject_names = [];
+            $pending_st_groups = [];
+            foreach($pending_student_groups as $group_counter => $group_id_pair){
+                if(!in_array($group_id_pair["subject_name"], $pending_student_subject_names)){
+                    array_push($pending_student_subject_names,$group_id_pair["subject_name"]);
+                    array_push($pending_st_groups,$group_id_pair["subject_group"]);
+                }
+            }
+
+            if(    in_array("ii", $approved_teacher_subjects) 
+                || "ii" === $approved_student_subject
+                || in_array("ii", $pending_student_subject_names)){
+                $can_apply_to_group = false;
+            }
+
+            if("i" === $approved_student_subject || in_array("i", $pending_student_subject_names)){
+                $show_group_addition_menu = false;
+            }
+
+            $i_pos = array_search("i", $pending_student_subject_names);
+            $ii_pos = array_search("i", $pending_student_subject_names);
+            if(    is_numeric($i_pos) && $pending_st_groups[$i_pos] === "0" 
+                || is_numeric($ii_pos) && $pending_st_groups[$ii_pos] === "0"){
+                $show_group_addition_menu = true;
+                $can_apply_to_group = true;
+            }
+
+            return [$show_group_addition_menu, $can_apply_to_group, $can_add_group];
         }
     }
 

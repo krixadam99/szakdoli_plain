@@ -104,7 +104,7 @@
             
             <?php if(count($approved_student_groups) != 0):?> <!-- this user is assigned to at least one group -->
                 <?php if(count($approved_teacher_groups) != 0):?>
-                    <nav id="empty_nav"></nav>
+                    <nav class="empty_nav"></nav>
                 <?php endif?>
                 <nav id="practice" class="nav_without_submenu <?=$actual_page=="practice"?"actual_page":"not_actual_page"?>">
                     <a class="menu_cell" href=<?="./index.php?site=practice"?>>Gyakorlás</a>
@@ -114,6 +114,46 @@
                     <a class="menu_cell" href=<?="./index.php?site=grades"?>>Saját eredményeim</a>
                 </nav>
             <?php endif?>
+
+            <!-- Group addition -->
+            <!--
+                - i - student is pending -> if group is not 0, then don't show the group addition, else show group addition with only appying to group submenu row
+                - ii - student is pending -> Show group addition with only group adding submenu row
+                - i - student is approved -> cannot be teacher, cannot be student (don't show group addition)
+                - ii - student is approved -> can be i teacher, cannot be student (show group addition with only group adding submenu row)
+                - i - student is denied -> 
+                - ii - student is denied -> 
+
+                - i - teacher is pending, ii - teacher is pending, i - teacher is approved -> Show group addition menu
+                - ii - teacher is approved ->  Show group addition menu with only group adding submenu row
+                - i - teacher is deined
+                - ii - teacher is denied
+
+            -->
+            <?php
+                $group_addition_conditions = MainContentController::GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects);
+            
+                $show_group_addition_menu = $group_addition_conditions[0];
+                $can_apply_to_group = $group_addition_conditions[1];
+                $can_add_group = $group_addition_conditions[2];
+            ?>
+            <?php if($show_group_addition_menu):?>
+                <?php if(count($approved_teacher_groups) != 0 || count($approved_student_groups) != 0):?>
+                    <nav class="empty_nav"></nav>
+                <?php endif?>
+                <nav id="group_addition" class="nav_with_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>">
+                    Csoport hozzáadása
+                    <div class="submenu">
+                        <?php if($can_apply_to_group):?>
+                            <a class="submenu_row" href=<?="./index.php?site=groupAddition&action=addAsStudent"?>>Csoporthoz való csatlakozás hallgatóként</a>
+                        <?php endif?>
+                        <?php if($can_add_group):?>
+                            <a class="submenu_row" href=<?="./index.php?site=groupAddition&action=addAsDemonstrator"?>>Csoporthoz való csatlakozás demonstrátorként</a>
+                        <?php endif?>                 
+                    </div>
+                </nav>
+            <?php endif?>
+
         </div>
     <?php endif?>
 </header>
