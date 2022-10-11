@@ -1,19 +1,6 @@
 <?php
-    // Information about the current client
-    $is_administrator = $this->GetIsAdministrator();
-    $neptun_code = $this->GetNeptunCode();
-    $user_data = $this->GetUserData();
-    $pending_teacher_groups = $this->GetPendingTeacherGroups();
-    $pending_student_groups = $this->GetPendingStudentGroups();
-    $approved_teacher_groups = $this->GetApprovedTeacherGroups();
+    // Approved teacher subjects
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
-    $approved_student_groups = $this->GetApprovedStudentGroups();
-
-    // All of the students of this teacher
-    $all_students = $this->GetStudents();
-
-    // All of the pending teachers
-    $pending_teachers = $this->GetPendingTeachers();
 
     // Redirect to the notifications page, if the teacher requested a task generator page for which they do not have permission to use
     $this->RedirectToIfWrongParam("subject", $approved_teacher_subjects, "notifications");

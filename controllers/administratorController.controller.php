@@ -59,11 +59,11 @@
                     $neptun = $parts[0]??"neptun";
                     $id = $parts[1]??"id";
                     if($value === "-"){
-                        $decision = "1";
+                        $decision = "PENDING";
                     }elseif($value === "ELFOGADÁS"){
-                        $decision = "0";
+                        $decision = "APPROVED";
                     }else{
-                        $decision = "-1";
+                        $decision = "DENIED";
                     }
                     
                     $decision_array[$neptun][$id] = $decision;
@@ -81,7 +81,7 @@
                         if(isset($decision_array[$neptun][$id])){
                             $decision = $decision_array[$neptun][$id];
                         }   
-                        array_push($query_array, array("neptun_code" => $neptun, "user_status" => "teacher", "subject_group" => $pending_status["subject_group"], "subject_name" => $pending_status["subject_name"], "pending_status" => $decision));
+                        array_push($query_array, array("neptun_code" => $neptun, "user_status" => "teacher", "subject_group" => $pending_status["subject_group"], "subject_name" => $pending_status["subject_name"], "application_request_status" => $decision));
                     }
                 }
             

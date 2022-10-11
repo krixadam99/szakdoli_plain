@@ -13,11 +13,13 @@
         private $all_pending_teacher;
         private $pending_students;
         private $pending_teacher_groups;
+        private $pending_student_groups;
         private $approved_teacher_groups;
         private $approved_teacher_subjects;
-        private $pending_student_groups;
         private $approved_student_groups;
         private $approved_student_subject;
+        private $withdrawn_student_groups;
+        private $denied_student_groups;
         private $practice_results;
 
         protected $dimat_i_topics;
@@ -45,11 +47,13 @@
             $this->all_pending_teacher = []; // All of the pending teachers
             $this->pending_students = []; // All of the pending students that belong to the user
             $this->pending_teacher_groups = []; // The group numbers for which the user's teacher status is pending
+            $this->pending_student_groups = []; // The group numbers and subject pairs for which the user's student status is pending
             $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
             $this->approved_teacher_subjects = []; // The subject ids for which the user's teacher status is approved
-            $this->pending_student_groups = []; // The group numbers for which the user's student status is pending
-            $this->approved_student_groups = []; // The group numbers for which the user's student status is approved
+            $this->approved_student_groups = []; // The group numbers and subject pairs for which the user's student status is approved
             $this->approved_student_subject = ""; // The subject ids for which the user's student status is approved
+            $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
+            $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
             $this->practice_results = []; // The results of the user for each practice task
 
             $this->dimat_i_topics = [
@@ -225,6 +229,22 @@
 
         /**
          * 
+         * This method returns the subject names and groups (pairs) where the user's student request is withdrawn.
+         * 
+         * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it is withdrawn.
+        */
+        public function GetWithdrawnStudentGroups(){ return $this->withdrawn_student_groups; }
+
+        /**
+         * 
+         * This method returns the subject names and groups (pairs) where the user's student request is denied.
+         * 
+         * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it is denied.
+        */
+        public function GetDeniedStudentGroups(){ return $this->denied_student_groups; }
+
+        /**
+         * 
          * This method returns the practice results for the logged in user.
          * 
          * @return array Returns an associative array containing the practice results of the user who is a student and whose student status is approved.
@@ -251,7 +271,7 @@
                     if(!$this->is_administrator){
                         foreach($this->user_data as $key => $user_record){ // Iterating through the array containing the fetched rows
                             if($user_record["is_teacher"] == 1){ // The user's teacher rows
-                                if($user_record["pending_status"] == "0"){ // The user's approved teacher rows
+                                if($user_record["application_request_status"] == "APPROVED"){ // The user's approved teacher rows
                                     array_push($this->approved_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                     if(!in_array($user_record["subject_name"],$this->approved_teacher_subjects)){
                                         array_push($this->approved_teacher_subjects, $user_record["subject_name"]);
@@ -260,11 +280,11 @@
                                     // The students for the given subject id - subject group pair
                                     $pending_students_per_subject_group = $model->GetStudents($user_record["subject_name"], $user_record["subject_group"]);
                                     array_push($this->pending_students, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"], "users" => array_values($pending_students_per_subject_group)));
-                                }else if($user_record["pending_status"] == "1"){ // The user's pending teacher rows
+                                }else if($user_record["application_request_status"] == "PENDING"){ // The user's pending teacher rows
                                     array_push($this->pending_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }else{ // The user's student rows
-                                if($user_record["pending_status"] == "0"){  // The user's approved student rows
+                                if($user_record["application_request_status"] == "APPROVED"){  // The user's approved student rows
                                     $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
                                     foreach($practice_results as $key => $value){
                                         if(is_int(strpos($key, "practice_task"))){
@@ -274,8 +294,12 @@
 
                                     array_push($this->approved_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                     $this->approved_student_subject = $user_record["subject_name"];
-                                }else if($user_record["pending_status"] == "1"){  // The user's pending student rows
+                                }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
                                     array_push($this->pending_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                }else if($user_record["application_request_status"] == "WITHDRAWN"){
+                                    array_push($this->withdrawn_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                }else if($user_record["application_request_status"] == "DENIED"){
+                                    array_push($this->denied_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }
                         }

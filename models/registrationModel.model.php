@@ -28,7 +28,7 @@
             $query = "INSERT INTO users VALUES(\"".$neptun_code."\", \"".$user_email."\", \"".password_hash($user_password,PASSWORD_BCRYPT)."\", \"$is_admin\")";
             $this->database->UpdateDatabase($query);
 
-            $pending_status = 1;
+            $pending_status = "PENDING";
             if($user_status === "Demonstrátor"){
                 $user_status = 1;
             }else{
@@ -40,6 +40,7 @@
             }
 
             $query = "INSERT INTO user_groups VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
+            
             $this->database->UpdateDatabase($query);
         }
     }

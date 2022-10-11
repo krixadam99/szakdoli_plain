@@ -28,6 +28,7 @@ function ChangeAttributeInURL(parameter, new_value){
 // Variables
 let logout_button = document.querySelector("#sign_out_button")
 let notifications_button =  document.getElementById("notifications_button")
+let group_addition_button =  document.getElementById("group_addition_button")
 let nav_buttons = document.querySelectorAll("nav")
 let nav_button_number = nav_buttons.length
 let submenu_navigation_links = document.querySelectorAll("a.submenu_row")
@@ -51,19 +52,26 @@ if(notifications_button){
     })
 }
 
+if(group_addition_button){
+    group_addition_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=groupAddition"
+    })
+}
+
+
 if(nav_buttons){
     let width = 100/nav_button_number
     if(nav_button_number === 1){
         let nav_button = nav_buttons[0]
         
-        nav_button.style["width"] = `40%`
-        nav_button.style["margin"] = `auto`
+        nav_button.style["width"] = `30%`
+        nav_button.style["margin"] = `auto 0% auto 70%`
 
         nav_button.addEventListener("mouseenter",()=>{
             let submenu = nav_button.querySelector(".submenu")
             if(submenu){
                 submenu.style["visibility"] = "visible"
-                submenu.style["width"] = `40%`;
+                submenu.style["width"] = `30%`;
             }
         })
 

@@ -33,7 +33,7 @@
         <?php 
             $task_counter = 1 . "_" . $prime_factorization_index;
             $solution_label = $number . ' prímfelbontása:';
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>
@@ -47,7 +47,7 @@
         <?php
             $task_counter = 2 . "_" . $divisor_count_index; 
             $solution_label = $number . ' osztóinak száma:';
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>

@@ -1,12 +1,7 @@
 <?php
-    
-    $neptun_code = $this->GetNeptunCode();
-    $is_administrator = $this->GetIsAdministrator();
-    $user_data = $this->GetUserData();
     $all_students = $this->GetStudents();
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
-    $approved_student_groups = $this->GetApprovedStudentGroups();
+    
     $approved_teacher_groups_per_subject = [];
     if(!isset($_SESSION["subject"]) && !isset($_SESSION["group"])){
         header("Location: ./index.php");

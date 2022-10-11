@@ -92,7 +92,7 @@
                 if(count($_POST) != 0){
                     $this->SetMembers();
                     $practice_number = intval($_SESSION["topic"]) + 1;
-                    $previous_point = floatval($this->GetPracticeResults()["practice_" . $practice_number]??0);
+                    $previous_point = floatval($this->GetPracticeResults()["practice_task_" . $practice_number]??0);
 
                     if($this->GetApprovedStudentSubject() === "i"){
                         $task_evaluator = new DimatiTaskEvaluator($_POST);

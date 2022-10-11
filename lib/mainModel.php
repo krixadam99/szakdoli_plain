@@ -71,7 +71,9 @@
          */
         public function GetPracticeResults($neptun_code){
             $neptun_code = strtoupper($neptun_code);
-            $query = "SELECT * FROM practice_task_points WHERE neptun_code = \"$neptun_code\"";
+            $query = "SELECT * FROM user_groups, practice_task_points WHERE ";
+            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_name = practice_task_points.subject_name AND user_groups.subject_group = practice_task_points.subject_group ";
+            $query .= "AND practice_task_points.neptun_code = \"$neptun_code\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -88,23 +90,24 @@
                 $neptun_code = $record["neptun_code"];
                 
                 if($record["user_status"] === "teacher"){
-                    $user_status = 1;
+                    $is_teacher = 1;
                 }else{
-                    $user_status = 0;
+                    $is_teacher = 0;
                 }
                 
                 $subject_group = $record["subject_group"];
                 $subject_name = $record["subject_name"];
-                $pending_status = $record["pending_status"];
-                $query = $query."UPDATE user_groups SET pending_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"$user_status\"; "; 
+                $pending_status = $record["application_request_status"];
+                
+                if($pending_status === "APPROVED" && $is_teacher === 0){
+                    $query = $query."UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0; "; 
+                }
 
-                if($pending_status === "0" && $user_status !== 1){
-                    if($subject_name == "i"){
-                        $query = $query."INSERT INTO results(neptun_code, subject_name, group_number) VALUES(\"i\", \"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
-                    }else if($subject_name == "ii"){
-                        $query = $query."INSERT INTO results(neptun_code, subject_name, group_number) VALUES(\"ii\", \"$neptun_code\", $subject_group) ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  group_number = $subject_group; ";
-                    }
-                    $query = $query."INSERT INTO practice_task_points(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\"; ";
+                $query = $query."UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"$is_teacher\"; "; 
+
+                if($pending_status === "APPROVED" && $is_teacher !== 1){
+                    $query = $query."INSERT INTO results(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
+                    $query = $query."INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
                 }
             }
             $query = $query."COMMIT;";
@@ -131,7 +134,7 @@
          * @return array Returns an array containing all of the pending teachers.
          */
         public function GetPendingTeachers(){
-            $query = "SELECT neptun_code, subject_group, subject_name FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 1 AND pending_status = \"1\"";
+            $query = "SELECT neptun_code, subject_group, subject_name FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 1 AND application_request_status = \"PENDING\"";
             return $this->database->LoadDataFromDatabase($query);
         }
     }

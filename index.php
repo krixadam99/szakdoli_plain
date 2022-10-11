@@ -32,10 +32,10 @@
             unset($_SESSION["exam_type"]);
         }
 
-        if(isset($_GET["action"])){
-            $_SESSION["action"] = $_GET["action"];
+        if(isset($_GET["groupAdditionAction"])){
+            $_SESSION["group_addition_action"] = $_GET["groupAdditionAction"];
         }else{
-            unset($_SESSION["action"]);
+            unset($_SESSION["group_addition_action"]);
         }
     }
 
@@ -94,6 +94,7 @@
     $controller_connection->post_method_connection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
     $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");
     $controller_connection->post_method_connection("finalizePending", "AdministratorController", "FinalizePending");
+    $controller_connection->post_method_connection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
     $controller_connection->post_method_connection("handInSolution", "PracticeController", "HandInSolution");
     $controller_connection->post_method_connection("createPreview", "TaskGenerationController", "CreatePreview");

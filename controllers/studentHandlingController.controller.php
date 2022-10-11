@@ -67,14 +67,14 @@
             
                 $decision_array = array();
                 foreach($_POST as $key => $value){
-                    $neptun = $key;
+                    $neptun = $key; // Check this!!!
                     $decision = "";
                     $id = $current_subject . "_" . $current_group;
                     if($value != "-"){
                         if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
-                            $decision = "0";
+                            $decision = "APPROVED";
                         }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
-                            $decision = "-1";
+                            $decision = "DENIED";
                         }
                         $decision_array[$neptun][$id] = $decision;
                     }
@@ -87,15 +87,14 @@
                     
                     if(isset($decision_array[$neptun])){
                         $id = $current_subject . "_" . $current_group; 
-                        $decision = "1";
+                        $decision = "APPROVED";
                         if(isset($decision_array[$neptun][$id])){
                             $decision = $decision_array[$neptun][$id];
-                            array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "subject_group" => $current_group, "subject_name" => $current_subject, "pending_status" => $decision));
+                            array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "subject_group" => $current_group, "subject_name" => $current_subject, "application_request_status" => $decision));
                         }
                     }
                 }
 
-            
                 $student_handler_model->UpdatePendingData($query_array);
                 $this->StudentHandling();
             }else{

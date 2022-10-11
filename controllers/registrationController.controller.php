@@ -14,8 +14,8 @@
          */
         public function Registration() {
             $registration_model = new RegistrationModel();
-            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"i\" AND is_teacher = 1 AND pending_status  = \"0\"", MYSQLI_NUM);
-            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"ii\" AND is_teacher = 1 AND pending_status  = \"0\"", MYSQLI_NUM);
+            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
             
             include(ROOT_DIRECTORY . "/views/registrationForm.view.php");
         }
@@ -41,18 +41,17 @@
                 }else if($_POST["user_status"] == "Diák"){
                     if($_POST["subject_name"] == "Diszkrét matematika I."){
                         if(isset($_POST["student_group_i"])){
-                            $group = $_POST["student_group_i"];
+                            $group = $_POST["student_group_i"]??0;
                         }
                     }else if($_POST["subject_name"] == "Diszkrét matematika II."){
                         if(isset($_POST["student_group_ii"])){
-                            $group = $_POST["student_group_ii"];
+                            $group = $_POST["student_group_ii"]??0;
                         }
                     }
                 }
 
                 $this->user_handler = new UserHandler($_POST['neptun_code'], $_POST['user_password'], $_POST["user_password_again"], $_POST["user_email"], $_POST["subject_name"], $_POST["user_status"], $group);
                 $this->ValidateUser();   
-                
                 
                 if(count($this->GetIncorrectParameters()) == 0){ // Everything was correct 
                     $_SESSION["neptun_code"] = $_POST['neptun_code'];

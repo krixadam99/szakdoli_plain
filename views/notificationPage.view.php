@@ -1,15 +1,8 @@
 <?php
-    
-    $is_administrator = false;
-    $neptun_code = $this->GetNeptunCode();
-    
     $pending_teacher_groups = $this->GetPendingTeacherGroups();
     $pending_student_groups = $this->GetPendingStudentGroups();
-    
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
     $approved_student_groups = $this->GetApprovedStudentGroups();
-    $approved_student_subject = $this->GetApprovedStudentSubject();
 
     $actual_page = "notifications";
 ?>

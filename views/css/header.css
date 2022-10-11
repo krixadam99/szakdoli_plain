@@ -28,8 +28,7 @@ button {
     z-index: 100;
 }
 
-#notifications_button, 
-#messages_button {
+.small_navigation_button {
     width: calc(10px + 0.5vw);;
     border-radius: 50px;
     background-color: rgb(247, 239, 229);
@@ -38,11 +37,11 @@ button {
     padding: 1px 3px;
 }
 
-#messages_button {
+#user_setting_button {
     margin: 1% auto 1% 1%;
 }
 
-#notifications_button img, #messages_button img {
+.small_navigation_button img {
     width: 100%;
     height: 70%;
 }
@@ -59,7 +58,7 @@ button {
     background-color: white;
 }
 
-#sign_out_button:hover, #notifications_button:hover, #messages_button:hover{
+.small_navigation_button:hover{
     box-shadow: 1px 0px 3px 1px #969595;
 }
 
@@ -80,8 +79,7 @@ button {
     background-color: rgba(217, 213, 213, 0.771);
 }
 
-#notifications_button:hover .text_of_tooltip,
-#messages_button:hover .text_of_tooltip {
+.small_navigation_button:hover .text_of_tooltip  {
     visibility: visible;
 }
 

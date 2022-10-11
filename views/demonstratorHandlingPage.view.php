@@ -1,6 +1,4 @@
 <?php
-    $is_administrator = $this->GetIsAdministrator();
-    $neptun_code = $this->GetNeptunCode();
     $pending_teachers = $this->GetPendingTeachers();
 ?>
 

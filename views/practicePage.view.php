@@ -1,15 +1,4 @@
 <?php
-    
-    $is_administrator = $this->GetIsAdministrator();
-    $neptun_code = $this->GetNeptunCode();
-    $user_data = $this->GetUserData();
-    $all_students = $this->GetStudents();
-    $pending_teachers = $this->GetPendingTeachers();
-    $pending_teacher_groups = $this->GetPendingTeacherGroups();
-    $pending_student_groups = $this->GetPendingStudentGroups();
-    $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
-    $approved_student_groups = $this->GetApprovedStudentGroups();
     $approved_student_subject = $this->GetApprovedStudentSubject();
     
     $subject_name = "";
@@ -139,11 +128,11 @@
                             <?php endif?>
                             <?php if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]):?>
                                 <form class="solution_form" method="POST" action="./index.php?site=handInSolution">
-                                    <?php include("./partials/taskContents/taskContent.php")?>
+                                    <?php include("./views/taskContents/taskContent.php")?>
                                     <button type="submit" class="solution_button">Beküldés</button>
                                 </form>
                             <?php else:?>
-                                <?php include("./partials/taskContents/taskContent.php")?>
+                                <?php include("./views/taskContents/taskContent.php")?>
                                 <button class="request_new_task_button" onclick="NewTaskButtonClicked(this)" id=<?=$_SESSION["topic"]?>>Új feladat kérése</button>
                             <?php endif?>
                         </div>

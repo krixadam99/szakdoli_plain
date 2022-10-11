@@ -8,26 +8,28 @@
                 <th>DÖNTÉS</th>
             </tr>
             <?php foreach($students as $index => $student):?>
-                <tr id=<?=$student["subject_group"]?>>
+                <?php if($student["application_request_status"] !== "WITHDRAWN"):?>
+                    <tr id=<?=$student["subject_group"]?>>
                     <td><?=$student["neptun_code"]?></td>
                     <td><?=$student["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
                     <td><?=$student["subject_group"]?></td>
                     <td>
                         <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
-                            <?php if($student["pending_status"] == 1):?>
+                            <?php if($student["application_request_status"] === "PENDING"):?>
                                 <option selected>-</option>
                                 <option >ELFOGADÁS</option>
                                 <option>ELUTASÍTÁS</option>
-                            <?php elseif($student["pending_status"] == 0):?>
+                            <?php elseif($student["application_request_status"] === "APPROVED"):?>
                                 <option selected>-</option>
                                 <option>TÖRLÉS</option>
-                            <?php elseif($student["pending_status"] == -1):?>
+                            <?php elseif($student["application_request_status"] === "DENIED"):?>
                                 <option selected>-</option>
                                 <option>VISSZAVÉTEL</option>
                             <?php endif?>
                         </select>
                     </td>
                 </tr>
+                <?php endif?>
             <?php endforeach?>
         </table>
         <button type="submit" id="finalize_button">VÉGLEGESÍTÉS</button>
