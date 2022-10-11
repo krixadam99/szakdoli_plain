@@ -84,7 +84,7 @@
          * 
          * @return void
          */
-        public function UpdatePendingData($query_array) : void {
+        public function UpdatePendingData($query_array) {
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
@@ -100,17 +100,17 @@
                 $pending_status = $record["application_request_status"];
                 
                 if($pending_status === "APPROVED" && $is_teacher === 0){
-                    $query = $query."UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0; "; 
+                    $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0; "; 
                 }
 
-                $query = $query."UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"$is_teacher\"; "; 
+                $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"$is_teacher\"; "; 
 
-                if($pending_status === "APPROVED" && $is_teacher !== 1){
-                    $query = $query."INSERT INTO results(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
-                    $query = $query."INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
+                if($pending_status === "APPROVED" && $is_teacher === 0){
+                    $query .= "INSERT INTO results(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
+                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
                 }
             }
-            $query = $query."COMMIT;";
+            $query .= "COMMIT;";
             
             $this->database->UpdateDatabase($query, true);
         }
