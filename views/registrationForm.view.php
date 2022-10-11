@@ -2,13 +2,13 @@
 
     $incorrect_parameters = $this->GetIncorrectParameters();
     $correct_parameters = $this->GetCorrectParameters();
-    $dimat_i_groups = [];
-    $dimat_ii_groups = [];
     
+    $dimat_i_groups = [];
     if(isset($this->dimat_i_groups)){
         $dimat_i_groups = $this->dimat_i_groups;
     }
 
+    $dimat_ii_groups = [];
     if(isset($this->dimat_ii_groups)){
         $dimat_ii_groups = $this->dimat_ii_groups;
     }
@@ -32,13 +32,13 @@
             <br>
             <label id="title_label">(6 karakter hosszú)</label>
         </div>
-        <input type="text" id="neptun_code" name="neptun_code" value="<?=$correct_parameters["neptun_code"]??"Neptun kód"?>">
+        <input type="text" id="neptun_code" name="neptun_code" value="<?=$correct_parameters["neptun_code"]??"Neptun kód"?>" placeholder="Neptun kód">
         <?php if(isset($incorrect_parameters)):?>
             <?php if(in_array('wrong_1_no_data',$incorrect_parameters)):?>
                 <label id="error_label">Adjon meg neptun kódot!</label>
             <?php elseif(in_array('wrong_1_length',$incorrect_parameters)):?>
                 <label id="error_label">A kód hossza nem megfelelő (6 karakter hosszú kell, hogy legyen)!</label>
-            <?php elseif(in_array('wrong_1_user_set',$incorrect_parameters)):?>
+            <?php elseif(in_array('wrong_1_already_in_use',$incorrect_parameters)):?>
                 <label id="error_label">A neptun kódhoz tartozik már felhasználó!</label>
             <?php elseif(in_array('wrong_1_invalid_characters',$incorrect_parameters)):?>
                 <label id="error_label">A neptun kód csak betűt és számot tartalmazhat!</label>
@@ -46,14 +46,16 @@
         <?php endif?>
 
         <div id="label_div">
-            <label id="title_label">ADJON MEG EMAIL-CÍMET!</label>
+            <label id="title_label">ADJON MEG EMAIL CÍMET!</label>
         </div>
-        <input type="text" id="user_email" name="user_email" value="<?=$correct_parameters["user_email"]??"E-mail cím"?>">
+        <input type="text" id="user_email" name="user_email" value="<?=$correct_parameters["user_email"]??"Email cím"?>" placeholder="Email cím">
         <?php if(isset($incorrect_parameters)):?>
             <?php if(in_array('wrong_2_no_email',$incorrect_parameters)):?>
-                <label id="error_label">Adjon meg email-címet!</label>
+                <label id="error_label">Adjon meg email címet!</label>
             <?php elseif(in_array('wrong_2_worng_format',$incorrect_parameters)):?>
-                <label id="error_label">Az email formátuma nem megfelelő!</label>
+                <label id="error_label">Az email cím formátuma nem megfelelő!</label>
+            <?php elseif(in_array('wrong_2_already_in_use',$incorrect_parameters)):?>
+                <label id="error_label">Az email cím már használatban van!</label>
             <?php endif?>
         <?php endif?>
 
@@ -67,7 +69,7 @@
         <?php if(isset($incorrect_parameters)):?>
             <?php if(in_array('wrong_3_no_such_subject',$incorrect_parameters)):?>
                 <label id="error_label">A kiválasztott tárgy nem létezik!</label>
-            <?php elseif(in_array('wrong_3_no_subject_data',$incorrect_parameters)):?>
+            <?php elseif(in_array('wrong_3_no_subject_name',$incorrect_parameters)):?>
                 <label id="error_label">Nincsen kiválasztott tárgy!</label>
             <?php endif?>
         <?php endif?>
@@ -118,7 +120,7 @@
             </div>
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array('wrong_5_no_such_group',$incorrect_parameters)):?>
-                    <label id="error_label">A kiválasztott csoport nem létezik!</label>
+                    <label id="error_label">A kiválasztott csoporthoz nincsen tanár rendelve!</label>
                 <?php elseif(in_array('wrong_5_no_subject_group',$incorrect_parameters)):?>
                     <label id="error_label">Nincsen kiválasztott csoport!</label>
                 <?php endif?>
@@ -132,7 +134,7 @@
             <label id="title_label">(legalább 8 karakter hosszú, tartalmazzon legalább 1 kis- és nagybetűt, számot, valamint a "," "-" "." "?" és "!" karakterek valamelyikét)</label>
         </div>
         <div class="password_row">
-            <input type="text" id="user_password" name="user_password" value="Jelszó">
+            <input type="text" id="user_password" name="user_password" value="Jelszó" placeholder="Jelszó">
             <input type="image" id="show_password_image_first" src="./views/css/pics/opened_eye.png" alt="password hidden" width="100%" height="100%">
         </div>
         <?php if(isset($incorrect_parameters)):?>
@@ -149,7 +151,7 @@
             <label id="title_label">ADJA MEG ÚJRA A JELSZÓT!</label>
         </div>
         <div class="password_row">
-            <input type="text" id="user_password_again" name="user_password_again" value="Jelszó megerősítése">
+            <input type="text" id="user_password_again" name="user_password_again" value="Jelszó megerősítése" placeholder="Jelszó megerősítése">
             <input type="image" id="show_password_image_second" src="./views/css/pics/opened_eye.png" alt="password hidden" width="100%" height="100%">
         </div>
         <?php if(isset($incorrect_parameters)):?>

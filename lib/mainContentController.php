@@ -1,14 +1,16 @@
 <?php
     /**
      * 
-     * This is a class which defines the basic data that will be used on every page (except index, login and registration pages).
+     * This is a controller class which defines the basic data that will be used on almost every page (except index, login and registration pages).
      * 
+     * The controllers throughout the project (except those that belong to the index, login, or registration pages) will inherit the protected members, and the protected and public methods.
+     * Since we need to know the neptun code, whether the user is an administrator, the students whose status is pending and approved belonging to this user, the groups and subjects for which the user's teacher and student status is pending and approved, so we will set these members here for each controller class. 
     */
     class MainContentController {
         private $is_administrator;
         private $neptun_code;
         private $user_data;
-        private $pending_teachers;
+        private $all_pending_teacher;
         private $pending_students;
         private $pending_teacher_groups;
         private $approved_teacher_groups;
@@ -19,11 +21,11 @@
         private $practice_results;
 
         protected $dimat_i_topics;
-        protected $dimat_i_subtopics;
         protected $dimat_i_topics_descriptions;
+        protected $dimat_i_subtopics;
         protected $dimat_ii_topics;
-        protected $dimat_ii_subtopics;
         protected $dimat_ii_topics_descriptions;
+        protected $dimat_ii_subtopics;
 
         /**
          * 
@@ -37,18 +39,18 @@
         protected function __construct(){
             $this->CheckURIParameters();
             
-            $this->is_administrator = false;
-            $this->neptun_code = "";
-            $this->user_data = [];
-            $this->pending_teachers = [];
-            $this->pending_students = [];
-            $this->pending_teacher_groups = [];
-            $this->approved_teacher_groups = [];
-            $this->approved_teacher_subjects = [];
-            $this->pending_student_groups = [];
-            $this->approved_student_groups = [];
-            $this->approved_student_subject = "";
-            $this->practice_results = [];
+            $this->is_administrator = false; // Whether the user is the administrator, or not
+            $this->neptun_code = ""; // Neptun code
+            $this->user_data = []; // User data
+            $this->all_pending_teacher = []; // All of the pending teachers
+            $this->pending_students = []; // All of the pending students that belong to the user
+            $this->pending_teacher_groups = []; // The group numbers for which the user's teacher status is pending
+            $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
+            $this->approved_teacher_subjects = []; // The subject ids for which the user's teacher status is approved
+            $this->pending_student_groups = []; // The group numbers for which the user's student status is pending
+            $this->approved_student_groups = []; // The group numbers for which the user's student status is approved
+            $this->approved_student_subject = ""; // The subject ids for which the user's student status is approved
+            $this->practice_results = []; // The results of the user for each practice task
 
             $this->dimat_i_topics = [
                 "Halmazok és műveletek", 
@@ -163,7 +165,7 @@
          * 
          * @return array Returns an indexed array containing the neptun code, subject name and subject group from the status_pending table for users that are teachers and whose request is pending.
         */
-        public function GetPendingTeachers(){ return $this->pending_teachers; }
+        public function GetPendingTeachers(){ return $this->all_pending_teacher; }
 
         /**
          * 
@@ -238,8 +240,8 @@
         protected function SetMembers(){
             if(isset($_SESSION["neptun_code"])){                
                 $this->neptun_code = $_SESSION["neptun_code"];
-                $model = new MainModel("szakdoli");
-                $this->user_data = $model->GetUserData($this->neptun_code);
+                $model = new MainModel();
+                $this->user_data = $model->GetUserData($this->neptun_code); // Here, the users and user_groups table will be joined, and all of the rows will be selected, where the neptun_code column contains the actual user's neptun code
                 
                 if(count($this->user_data) == 0){
                     header("Location: ./index.php");
@@ -247,21 +249,22 @@
                     $this->is_administrator = $this->user_data[0]["is_administrator"] == "1";
 
                     if(!$this->is_administrator){
-                        foreach($this->user_data as $key => $user_record){
-                            if($user_record["is_teacher"] == 1){
-                                if($user_record["pending_status"] == "0"){
+                        foreach($this->user_data as $key => $user_record){ // Iterating through the array containing the fetched rows
+                            if($user_record["is_teacher"] == 1){ // The user's teacher rows
+                                if($user_record["pending_status"] == "0"){ // The user's approved teacher rows
                                     array_push($this->approved_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                     if(!in_array($user_record["subject_name"],$this->approved_teacher_subjects)){
                                         array_push($this->approved_teacher_subjects, $user_record["subject_name"]);
                                     }
-
+                                    
+                                    // The students for the given subject id - subject group pair
                                     $pending_students_per_subject_group = $model->GetStudents($user_record["subject_name"], $user_record["subject_group"]);
                                     array_push($this->pending_students, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"], "users" => array_values($pending_students_per_subject_group)));
-                                }else if($user_record["pending_status"] == "1"){
+                                }else if($user_record["pending_status"] == "1"){ // The user's pending teacher rows
                                     array_push($this->pending_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                 }
-                            }else{
-                                if($user_record["pending_status"] == "0"){
+                            }else{ // The user's student rows
+                                if($user_record["pending_status"] == "0"){  // The user's approved student rows
                                     $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
                                     foreach($practice_results as $key => $value){
                                         if(is_int(strpos($key, "practice_task"))){
@@ -271,14 +274,14 @@
 
                                     array_push($this->approved_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                     $this->approved_student_subject = $user_record["subject_name"];
-
-                                }else if($user_record["pending_status"] == "1"){
+                                }else if($user_record["pending_status"] == "1"){  // The user's pending student rows
                                     array_push($this->pending_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }
                         }
                     }else{
-                        $this->pending_teachers = $model->GetPendingTeachers();
+                        // Administrators should only see the teachers whose status is currently pending
+                        $this->all_pending_teacher = $model->GetPendingTeachers();
                     }
                 }
             }else{

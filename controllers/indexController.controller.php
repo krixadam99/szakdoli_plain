@@ -11,7 +11,7 @@
          * 
          * @return void
         */
-        public function Index(){
+        public function Index() {
             session_unset();
             session_destroy();
             

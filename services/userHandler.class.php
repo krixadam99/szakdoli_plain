@@ -35,8 +35,8 @@
          * 
          * @return void
         */
-        public function __construct($database = "szakdoli", $neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = ""){
-            $this->model = new MainModel($database);
+        public function __construct($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = ""){
+            $this->model = new MainModel();
             $this->neptun_code = $neptun_code;
             $this->user_email = $user_email;
             $this->subject_name = $subject_name;
@@ -142,6 +142,22 @@
 
         /**
          * 
+         * This method decides if the email address given by the user is already in use, or not.
+         * 
+         * @return bool Returns whether the email address given by the user is already in use, or not.
+        */
+        public function IsEmailAddressUsed() {
+            $query = "SELECT * FROM users WHERE users.email_address =  \"".$this->user_email."\"";
+            $users = $this->model->GetDataFromDatabase($query);
+            if(count($users) != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * 
          * This method decides whether the user is an administrator, or not.
          * 
          * @return bool Returns whether the user is an administrator, or not.
@@ -160,14 +176,14 @@
 
         /**
          * 
-         * This method decides whether the user as a student applied to a valid group, or not.
+         * This method decides whether the user as a student applied to a valid group, or not. A valid group is which is assigned to an approved teacher.
          * 
          * @return bool Returns whether the user as a student applied to a valid group.
         */
-        public function IsGroupNumberCorrect() : bool {
-            $query = "SELECT DISTINCT subject_group FROM status_pending WHERE subject_name = \"".$this->subject_name."\" AND user_status = \"teacher\" AND pending_status  = \"0\"";
+        public function IsGroupNumberCorrect() {
+            $query = "SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"".$this->subject_name."\" AND is_teacher = \"1\" AND pending_status  = \"0\"";
             $groups = $this->model->GetDataFromDatabase($query);
-                
+
             $count_group = 0;
             $in_array = false;
             while($count_group < count($groups) && !$in_array){
@@ -175,7 +191,7 @@
                 ++$count_group;
             }
 
-            if($in_array || $this->subject_group == "-"){
+            if($in_array || $this->subject_group === "-"){
                 return true;
             }else{
                 return false;

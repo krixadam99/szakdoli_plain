@@ -1,8 +1,5 @@
 <?php
     session_start();
-
-    //Prohibiting access to other pages through direct url input
-    define("ACESS_TOKEN", "Acess token to pages"); 
     
     //The path of the root directory
     define('ROOT_DIRECTORY', __DIR__);   
@@ -80,6 +77,8 @@
     $controller_connection->get_method_connection("login", "LoginController", "Login");
     $controller_connection->get_method_connection("forgottenPassword", "LoginController", "forgottenPassword");
     $controller_connection->get_method_connection("register", "RegistrationController", "Registration");
+    
+    $controller_connection->get_method_connection("demonstratorHandling", "AdministratorController", "DemonstratorHandling");
     $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
     $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
     $controller_connection->get_method_connection("printPage", "TaskGenerationController", "PrintPage");
@@ -93,7 +92,7 @@
     $controller_connection->post_method_connection("validateLogin", "LoginController", "ValidateLogin");
     $controller_connection->post_method_connection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
     $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");
-    $controller_connection->post_method_connection("finalizePending", "NotificationsController", "FinalizePending");
+    $controller_connection->post_method_connection("finalizePending", "AdministratorController", "FinalizePending");
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
     $controller_connection->post_method_connection("handInSolution", "PracticeController", "HandInSolution");
     $controller_connection->post_method_connection("createPreview", "TaskGenerationController", "CreatePreview");

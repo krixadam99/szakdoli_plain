@@ -18,7 +18,7 @@
          * 
          * @return void
         */
-        public function Login($with_success_bar = false, $email_address = ""){
+        public function Login($with_success_bar = false, $email_address = "") {
             session_unset();
             session_destroy();
 
@@ -35,7 +35,7 @@
          * 
          * @return void
         */
-        public function ForgottenPassword(){
+        public function ForgottenPassword() {
             session_unset();
             session_destroy();
 
@@ -53,21 +53,26 @@
          * 
          * @return void
         */
-        public function ValidateLogin(){
+        public function ValidateLogin() {
             if(isset($_POST['neptun_code']) && isset($_POST['user_password'])){ //Handling malicious user's activities, like overwriting the name of inputs
-                //Simulating a user with the UserHandler class, this user will have a neptun code, a password and the database
-                $this->user_handler = new UserHandler("szakdoli", $_POST['neptun_code'], $_POST['user_password']);
+                // Simulating a user with the UserHandler class, this user will have a neptun code, a password and the database
+                $this->user_handler = new UserHandler($_POST['neptun_code'], $_POST['user_password']);
                 
-                //Validating the user
+                // Validating the user
                 $this->ValidateUser();
 
-                //If there is no error, then the user gets redirected to the notifications page, else to the login page
+                // If there is no error, then the user gets redirected to the notifications page, else to the login page
                 if(count($this->incorrect_parameters) === 0){
-                    //The user gets logged in with the given neptun_code
+                    // The user gets logged in with the given neptun_code
                     $_SESSION["neptun_code"] = $_POST['neptun_code'];
                     
-                    //Redirecting the user to the notifications page
-                    header("Location: ./index.php?site=notifications");
+                    if($_POST['neptun_code'] !== "admin"){
+                        // Redirecting the user to the notifications page
+                        header("Location: ./index.php?site=notifications");
+                    }else{
+                        // Redirecting the user to the demonstrator handling page
+                        header("Location: ./index.php?site=demonstratorHandling");
+                    }
                 }else{
                     $this->Login();
                 }
@@ -88,7 +93,7 @@
         public function ValidateForgottenPassword(){
             if(isset($_POST['neptun_code'])){ // Handling malicious user's activities, like overwriting the name of the input
                 // Simulating a user with the UserHandler class, this user will have a neptun code, a password and the database
-                $this->user_handler = new UserHandler("szakdoli", $_POST['neptun_code']);
+                $this->user_handler = new UserHandler($_POST['neptun_code']);
                 
                 // Validating the user
                 $this->ValidateUser(true);
@@ -103,22 +108,17 @@
                     $login_model = new LoginModel();
                     $login_model->UpdatePassword($neptun_code, $new_password);
                     
-                    $actual_time = date('D, d M Y H:i:s');
+                    $actual_time = date(' Y. M. d. (D) H:i:s');
                     $email_address = $login_model->GetEmailAddressOfUser(($neptun_code))["email_address"];
                     $title = "Új jelszó a dimaasz alkalmazásban";
                     $message = "
-                    <h1>Új jelszó igénylése $actual_time időpontban a $neptun_code-hoz tartozó felhasználónak</h1>
-                    <label>A rendszerben a $neptun_code-hoz tartozó felhasználó jelszava megváltozott az $actual_time időpontban. Az új jelszó: <b>$new_password</b>.</label>
-                    <label>Kérjük az új jelszóval való belépést követően változtassa meg a jelszavát a \"Kilépés\" feliratú gomb mellett található kis ikonra kattintva!</label>
-                    ";
-                    $header = "
-                    From:  \r\n
-                    Cc: \r\n
-                    Content-type: text/html\r\n
+                    <h1>Új jelszó igénylése $actual_time időpontban a $neptun_code netunkódhoz tartozó felhasználónak</h1>\n
+                    <label>A rendszerben a $neptun_code netunkódhoz tartozó felhasználó jelszava megváltozott az $actual_time időpontban. Az új jelszó: <b>$new_password</b>.</label>\n
+                    <label>Kérjük az új jelszóval való belépést követően változtassa meg a jelszavát a \"Kilépés\" feliratú gomb mellett található kis ikonra kattintva!</label>\n
                     ";
                     
                     // Sending email to the user's address
-                    mail($email_address, $title, $message);
+                    mail($email_address, $title, $message, "Content-Type: text/html");
 
                     // Redirecting the user to the login page
                     $this->Login(true, $email_address);
@@ -144,7 +144,7 @@
         */
         public function ValidateUser($only_neptun_code = false){
             $this->NeptunCodeValidator();
-            if(count($this->GetIncorrectParameters()) === 0 && !$only_neptun_code){ //Check the password input only if the neptun code was valid
+            if(count($this->GetIncorrectParameters()) === 0 && !$only_neptun_code){ // Check the password input only if the neptun code was valid
                 $this->PasswordValidator();
             }
         }
@@ -161,12 +161,12 @@
         */
         private function NeptunCodeValidator() {
             if(trim($this->user_handler->GetNeptunCode())!="Neptun kód" && trim($this->user_handler->GetNeptunCode())!=""){
-                if(!$this->user_handler->IsUserNameUsed()){//No such neptun code can be found in the database
+                if(!$this->user_handler->IsUserNameUsed()){ // No such neptun code can be found in the database
                     array_push($this->incorrect_parameters, "wrong_1_no_neptun_code");
-                }else{ //Everyting was correct
+                }else{ // Everyting was correct
                     $this->correct_parameters["neptun_code"] = $this->user_handler->GetNeptunCode();
                 }
-            }else{ //No neptun code was given
+            }else{ // No neptun code was given
                 array_push($this->incorrect_parameters, "wrong_1_no_data");
             }
         }
@@ -184,10 +184,10 @@
         */
         private function PasswordValidator() {
             if(trim($this->user_handler->GetUserPassword())!="Jelszó" && trim($this->user_handler->GetUserPassword()) != ""){
-                if(!$this->user_handler->IsSamePassword()){//Passwords were not the same
+                if(!$this->user_handler->IsSamePassword()){ // Passwords were not the same
                     array_push($this->incorrect_parameters, "wrong_2_not_same");
                 }
-            }else{//No password was given
+            }else{ // No password was given
                 array_push($this->incorrect_parameters, "wrong_2_no_password");
             }
         }
