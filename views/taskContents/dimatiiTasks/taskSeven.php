@@ -21,7 +21,7 @@
             }
             array_push($table_header_cells, $polynomial_names[$task_index]);
         ?>
-        <?php include("./partials/taskContents/solutionTable.php")?>
+        <?php include("./views/taskContents/solutionTable.php")?>
     </div>
 <?php endforeach?>
 
@@ -43,15 +43,15 @@
         }
         array_push($table_header_cells, $polynomial_names[2]);
     ?>
-    <?php include("./partials/taskContents/solutionTable.php")?>
+    <?php include("./views/taskContents/solutionTable.php")?>
     <?php 
         $solution_label = "A hányadospolinom (együttható, fokszám) párosokkal megadva:";
         $task_counter = "2_1";
-        include("./partials/taskContents/solutionInput.php")
+        include("./views/taskContents/solutionInput.php")
     ?>
     <?php 
         $solution_label = "A maradékpolinom (együttható, fokszám) párosokkal megadva:";
         $task_counter = "2_2";
-        include("./partials/taskContents/solutionInput.php")
+        include("./views/taskContents/solutionInput.php")
     ?>
 </div>

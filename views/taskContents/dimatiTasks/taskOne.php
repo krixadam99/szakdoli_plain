@@ -34,7 +34,7 @@
                     <?=$counter_text?>. részfeladat: <?=$operation[$operation_counter/5][0]?> <?="\u{0394}"?> <?=$operation[$operation_counter/5][1]?>
                 <?php endif?>
             </label>
-            <?php include("./partials/taskContents/solutionInput.php")?>
+            <?php include("./views/taskContents/solutionInput.php")?>
         </div>
         <?php $operation_counter++?>
     <?php endforeach?>

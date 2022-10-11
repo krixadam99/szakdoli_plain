@@ -9,22 +9,22 @@
         <?php 
             $solution_label = "<label>Re(v<span class=\"bottom\">$bottom_index</span>) = </label>";
             $task_counter = "0_" . $complex_number_counter . "_0";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label>Im(v<span class=\"bottom\">$bottom_index</span>) = </label>";
             $task_counter = "0_" . $complex_number_counter . "_1";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label>|v<span class=\"bottom\">$bottom_index</span>| = </label>";
             $task_counter = "0_" . $complex_number_counter . "_2";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php
             $solution_label = "<label style=\"text-decoration: overline;margin:0%\" >v</label><span class=\"bottom\">$bottom_index</span><label style=\"margin-right:2%\"> = </label>"; 
             $task_counter = "0_" . $complex_number_counter . "_3";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>
@@ -72,7 +72,7 @@
                     $solution_label = "<label>" . $operands[0] . "<span class=\"bottom\">$bottom_index</span> / " . $operands[1] . "<span class=\"bottom\">$bottom_index</span> = </label>";
                 ?>
             <?php endif?>
-            <?php include("./partials/taskContents/solutionInput.php")?>
+            <?php include("./views/taskContents/solutionInput.php")?>
         </div>
         <?php $task_counter++;?>
         <?php $operation_counter++?>

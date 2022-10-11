@@ -9,7 +9,7 @@
     </label>
 
     <?php $task_counter = 0;?>
-    <?php include("./partials/taskContents/solutionInput.php")?>
+    <?php include("./views/taskContents/solutionInput.php")?>
 </div>
 
 <div class="small_task_container">
@@ -31,7 +31,7 @@
         <?php 
             $solution_id_remainder = $task_counter . "_" . $counter . "_0";
             $solution_id_modulo = $task_counter . "_" . $counter . "_1";
-            include("./partials/taskContents/congruence.php")
+            include("./views/taskContents/congruence.php")
         ?>
     <?php endfor?>
 </div>
@@ -44,7 +44,7 @@
     <?php 
         $solution_id_remainder = $task_counter . "_0";
         $solution_id_modulo = $task_counter . "_1";
-        include("./partials/taskContents/congruence.php")
+        include("./views/taskContents/congruence.php")
     ?>
 </div>
 
@@ -56,6 +56,6 @@
     <?php 
         $solution_id_remainder = $task_counter . "_0";
         $solution_id_modulo = $task_counter . "_1";
-        include("./partials/taskContents/congruence.php")
+        include("./views/taskContents/congruence.php")
     ?>
 </div>

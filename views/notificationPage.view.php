@@ -39,15 +39,21 @@
             <?php endforeach?>
             <?php foreach($pending_student_groups as $index => $pending_student_groups):?>
                 <div id="notification_box">
-                    <label>
-                        A 
-                        <?php if($pending_student_groups["subject_name"]=="i"):?>
-                            Diszkrét matematika I.
-                        <?php elseif($pending_student_groups["subject_name"]=="ii"):?>
-                            Diszkrét matematika II.
-                        <?php endif?>
-                        tárgy <?=$pending_student_groups["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
-                    </label>
+                    <?php if($pending_student_groups["subject_group"] === "0"):?>
+                        <label>
+                            Jelentkezzen valamelyik tárgy csoportjába a "Csoport hozzáadás/Csoporthoz való csatlakozás" menüpont alatt! Ha nem találja a megfelelő csoportot, akkor várja meg míg a csoporthoz hozzá lesz rendelve demonstrátor!
+                        </label>
+                    <?php else:?>
+                        <label>
+                            A 
+                            <?php if($pending_student_groups["subject_name"]=="i"):?>
+                                Diszkrét matematika I.
+                            <?php elseif($pending_student_groups["subject_name"]=="ii"):?>
+                                Diszkrét matematika II.
+                            <?php endif?>
+                            tárgy <?=$pending_student_groups["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
+                        </label>
+                    <?php endif?>
                 </div>
             <?php endforeach?>
         </div>

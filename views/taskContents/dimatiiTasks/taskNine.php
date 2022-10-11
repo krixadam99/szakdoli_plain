@@ -1,6 +1,6 @@
 <?php $lagrange_points = $_SESSION["task"]["lagrange_points"]?>
 <label class="task_label">
-    1. részfeladat: Illessz polinomot a <?php PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
+    1. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
     Míg megfelelő ponthoz tartozó alappolinomt az <i>l</i><span class="bottom">pont</span>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
     A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
@@ -10,20 +10,20 @@
         <?php 
             $task_counter = "0_" . $point_counter;
             $solution_label = "<i>l</i><span class=\"bottom\">(" . $lagrange_points[$point_counter][0] . ", " . $lagrange_points[$point_counter][1] . ")</span>[x] = ";
-            include("./partials/taskContents/solutionInput.php")
+            include("./views/taskContents/solutionInput.php")
         ?>
     <?php endfor?>
     <?php 
         $task_counter = "0_" . count($lagrange_points);
         $solution_label = "<i>L</i>[x] = ";
-        include("./partials/taskContents/solutionInput.php")
+        include("./views/taskContents/solutionInput.php")
     ?>
 </div>
 
 <?php $newton_points = $_SESSION["task"]["newton_points"]?>
 <?php $task_counter = 1?>
 <label class="task_label">
-    2. részfeladat: Illessz polinomot a <?php PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval! A cellákban a számlálót és nevezőt '/' jellel elválasztva add meg! 
+    2. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval! A cellákban a számlálót és nevezőt '/' jellel elválasztva add meg! 
     Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
@@ -90,6 +90,6 @@
     <?php 
         $task_counter = "1_" . count($newton_points) - 1;
         $solution_label = "<i>N</i>[x] = ";
-        include("./partials/taskContents/solutionInput.php")
+        include("./views/taskContents/solutionInput.php")
     ?>
 </div>

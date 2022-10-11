@@ -8,7 +8,7 @@
             $solution_id_remainder = $index . "_0_0";
             $solution_id_modulo = $index . "_0_1";
         ?>
-        <?php include("./partials/taskContents/congruence.php")?>
+        <?php include("./views/taskContents/congruence.php")?>
 
         <?php 
             $first_operand = $index . "_1_0";
@@ -16,7 +16,7 @@
             $variable_name = "x";
             $with_multiplier = true;
         ?>
-        <?php include("./partials/taskContents/additionInputs.php")?>
+        <?php include("./views/taskContents/additionInputs.php")?>
 
         <?php 
             $first_operand = $index . "_2_0";
@@ -24,7 +24,7 @@
             $variable_name = "y";
             $with_multiplier = true;
         ?>
-        <?php include("./partials/taskContents/additionInputs.php")?>
+        <?php include("./views/taskContents/additionInputs.php")?>
 
     </div>
     <?php $subtask_counter++?>
@@ -46,6 +46,6 @@
             $with_multiplier = false;
 
         ?>
-        <?php include("./partials/taskContents/additionInputs.php")?>
+        <?php include("./views/taskContents/additionInputs.php")?>
     </div>
 </div>

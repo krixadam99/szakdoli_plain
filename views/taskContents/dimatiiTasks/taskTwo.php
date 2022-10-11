@@ -6,7 +6,7 @@
     <div class="small_task_container">
         <?="\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124}"?> teljes maradék rendszer megadása:
         <br>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php include("./views/taskContents/solutionInput.php")?>
     </div>
 <?php endforeach?>
 <br>
@@ -19,7 +19,7 @@
     <div class="small_task_container">
         <?="(\u{2124}" . "/"?><span class="bottom"><?= $number?></span><?="\u{2124})*"?> redukált maradék rendszer megadása:
         <br>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php include("./views/taskContents/solutionInput.php")?>
     </div>
 <?php endforeach?>
 <br>
@@ -32,7 +32,7 @@
         <?php $task_counter = 2 . "_" . $rrs_size_index;?>
         <?="|(\u{2124}" . "/"?><span class="bottom"><?=$number?></span><?="\u{2124})*|"?> redukált maradék rendszer méretének megadása:
         <br>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php include("./views/taskContents/solutionInput.php")?>
     </div>
 <?php endforeach?>
 <br>

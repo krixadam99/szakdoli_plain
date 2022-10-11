@@ -7,7 +7,7 @@
             $solution_id_remainder = $index . "_0";
             $solution_id_modulo = $index . "_1";
         ?>
-        <?php include("./partials/taskContents/congruence.php")?>
+        <?php include("./views/taskContents/congruence.php")?>
     </div>
     <br>
 <?php endforeach?>

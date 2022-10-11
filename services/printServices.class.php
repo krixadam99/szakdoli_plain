@@ -90,6 +90,20 @@
                 }
             }
         }
+
+        /**
+         * 
+         */
+        static function PrintPoints($points){
+            $return_string = "";
+            foreach($points as $point_counter => $point){
+                if($point_counter != 0){
+                    $return_string .= ", ";
+                }
+                $return_string .= "(" . $point[0] . ", " . $point[1] . ")";
+            }
+            return $return_string;
+        }
     
         /**
          * 

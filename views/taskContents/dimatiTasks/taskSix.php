@@ -10,12 +10,12 @@
         <?php 
             $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "0_" . $complex_number_pair_counter . "_0";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label>w<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "0_" . $complex_number_pair_counter . "_1";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>
@@ -32,12 +32,12 @@
         <?php 
             $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> * w<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "1_" . $complex_number_pair_counter . "_0";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span> / w<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "1_" . $complex_number_pair_counter . "_1";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>

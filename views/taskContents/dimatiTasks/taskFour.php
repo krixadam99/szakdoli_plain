@@ -19,7 +19,7 @@
         </label>
         <?php $task_counter = "0_$set_pair_counter";?>
         <?php $select_label = "Függvény?"?>
-        <?php include("./partials/taskContents/solutionSelect.php")?>
+        <?php include("./views/taskContents/solutionSelect.php")?>
     </div>
 <?php endforeach?>
 
@@ -46,7 +46,7 @@
         <?php $task_counter = "1_$set_pair_counter";?>
         <?php foreach($function_characteristics as $index => $select_label):?>
             <?php $select_label = $select_label . "?"?>
-            <?php include("./partials/taskContents/solutionSelect.php")?>
+            <?php include("./views/taskContents/solutionSelect.php")?>
             <?php $select_counter++;?>
         <?php endforeach?>
     </div>

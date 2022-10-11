@@ -23,7 +23,7 @@
         </label>
         <?php $task_counter = "0_$set_triplet_counter";?>
         <?php $solution_label = "R \u{00B7} S = "?>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php include("./views/taskContents/solutionInput.php")?>
     </div>
 <?php endforeach?>
 
@@ -48,7 +48,7 @@
         <?php $relation_characteristics = ["Reflexív", "Irreflexív", "Szimmetrikus", "Antiszimmetrikus", "Asszimmetrikus", "Tranzitív", "Dichitóm", "Trichotóm", "Ekvivalencia reláció"]?>
         <?php $select_counter = 0;?>
         <?php foreach($relation_characteristics as $index => $select_label):?>
-            <?php include("./partials/taskContents/solutionSelect.php")?>
+            <?php include("./views/taskContents/solutionSelect.php")?>
             <?php $select_counter++;?>
         <?php endforeach?>
     </div>
@@ -97,7 +97,7 @@
             $answer_label = "Néhány lehetséges megoldás:";
         ?>
         <?php $solution_label = "R = "?>
-        <?php include("./partials/taskContents/solutionInput.php")?>
+        <?php include("./views/taskContents/solutionInput.php")?>
         <?php 
             unset($answer_label);
         ?>

@@ -42,7 +42,7 @@
                     Az R reláció D halmazon felvett ősképe:
                 <?php endif?>
             </label>
-            <?php include("./partials/taskContents/solutionInput.php")?>
+            <?php include("./views/taskContents/solutionInput.php")?>
         </div>
     <?php endfor?>
 <?php endforeach?>

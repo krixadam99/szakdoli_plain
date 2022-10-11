@@ -15,12 +15,12 @@
         <?php 
             $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span><span class=\"exp\">" . $actual_power[0] . "</span> = </label>";
             $task_counter = "0_" . $complex_number_counter . "_0";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label>v<span class=\"bottom\">$bottom_index</span><span class=\"exp\">" . $actual_power[1] . "</span> = </label>";
             $task_counter = "0_" . $complex_number_counter . "_1";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>
@@ -42,12 +42,12 @@
         <?php 
             $solution_label = "<label><span class=\"exp\">" . $actual_root[0] . "</span>\u{221A}v<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "1_" . $complex_number_counter . "_0";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
         <?php 
             $solution_label = "<label><span class=\"exp\">" . $actual_root[1] . "</span>\u{221A}v<span class=\"bottom\">$bottom_index</span> = </label>";
             $task_counter = "1_" . $complex_number_counter . "_1";
-            include("./partials/taskContents/solutionInput.php");
+            include("./views/taskContents/solutionInput.php");
         ?>
     </div>
 <?php endforeach?>
