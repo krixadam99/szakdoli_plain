@@ -151,8 +151,8 @@
                 </div>
 
                 <label style="margin:2% auto 0% 4%;font-weight: normal;font-size: calc(20px + 0.3vw);">Új feladatsor készítése</label>
-                <hr>
-                <?php endif?>
+                <hr>    
+            <?php endif?>
             <form method="POST" id="task_generation_settings" action="./index.php?site=createPreview">                    
                 <div class="pdf_page_section">
                     <label class="pdf_page_section_label">Feladatsor címe</label>

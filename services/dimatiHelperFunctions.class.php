@@ -894,6 +894,42 @@
 
         /**
          * 
+         */
+        public function GetBinomialTheorem($coefficients, $exponents, $variables_are_same = true){
+            $first_number = $coefficients[0];
+            $second_number = $coefficients[1];
+            $first_exponent = $exponents[0];
+            $second_exponent = $exponents[1];
+            $third_exponent = $exponents[2];
+
+            $expanded_form = [];
+            if($variables_are_same){
+                // ($first_number*x**$first_exponent + $second_number*x**$second_exponent)**$third_exponent =
+                // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x**$first_exponent)**($third_exponent-i)) * ($second_number*x**$second_exponent)**i
+                //(i=0..$third_exponent) (($third_exponent i) * $first_number**($third_exponent-i) * $second_number**i) * x**($first_exponent*$third_exponent + i * ($second_exponent - $first_exponent))
+                for($counter = 0; $counter <= $third_exponent; $counter++){
+                    $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
+                    $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
+                    $exponent_part = $first_exponent * $third_exponent + $counter * ($second_exponent - $first_exponent);
+                    array_push($expanded_form, [$coefficient_part, $exponent_part]);
+                }
+            }else{
+                // ($first_number*x**$first_exponent + $second_number*y**$second_exponent)**$third_exponent =
+                // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x)**($first_exponent*($third_exponent-i)) * ($second_number*y)**($second_exponent*i)
+                //(i=0..$third_exponent) (($third_exponent i) * $first_number**($first_exponent*($third_exponent-i)) * $second_number**($second_exponent*i)) * x**($first_exponent*($third_exponent-i)) * y**($second_exponent*i))
+                for($counter = 0; $counter <= $third_exponent; $counter++){
+                    $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
+                    $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
+                    $exponent_part_first = $first_exponent * ($third_exponent-$counter);
+                    $exponent_part_second =  $second_exponent * $counter;
+                    array_push($expanded_form, [$coefficient_part, $exponent_part_first, $exponent_part_second]);
+                }
+            }
+            return $expanded_form;
+        }
+
+        /**
+         * 
          * This private recursive method creates a list containing possible combinations of the elements of the given list, where the number of elements per list is also given. The order of these elements per combination does not matter!
          * 
          * The list will be iterated through by embedded iterations, where the "deepest level" is the same as the required amount of elements per combination.
@@ -978,6 +1014,28 @@
             }
 
             return $random_element;
+        }
+
+        /**
+         * 
+         */
+        private function CalculateBinomialCoefficient($upper, $lower){
+            if($upper > 0 && $lower >= 0){
+                return $this->CalculateFactorial($upper)/($this->CalculateFactorial($lower)*$this->CalculateFactorial($upper-$lower));
+            }else{
+                return 0;
+            }
+        }
+
+        /**
+         * 
+         */
+        private function CalculateFactorial($number){
+            $factorial = 1;
+            for($index = 2; $index <= $number;$index++){
+                $factorial *= $index;
+            }
+            return $factorial;
         }
     };
 ?>

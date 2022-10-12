@@ -78,8 +78,7 @@
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
                 7 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],
-                8 => ["Gráfok alapvető tulajdonságai"],
-                9 => ["Gráfok megszerkeszthetősége"]
+                8 => ["Gráfok megszerkeszthetősége"]
             );
 
             $this->dimat_i_topics_descriptions = [
@@ -90,8 +89,7 @@
                 "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
                 "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
                 "Hatványozás és gyökvonás trigonometrikus alak segítségével",
-                "Polinomok kifejtése, a binomiális tétel alkalmazása",
-                "Fokszámok, komponensek száma, gráfok alapvető tulajdonságai",
+                "A binomiális tétel és polinomiális tétel alkalmazása, a Viéte- formula alkalmazása",
                 "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
             ];
 

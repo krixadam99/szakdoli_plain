@@ -70,10 +70,6 @@
                     $this->CreateTaskNine();
                 };
                 break;
-                case "9":{
-                    $this->CreateTaskTen();
-                };
-                break;
                 default:break;
             }
         }
@@ -254,7 +250,7 @@
 
         /**
          * 
-         * This method is used to create the eight set of tasks for Discrete mathematics I. related to...
+         * This method is used to create the eight set of tasks for Discrete mathematics I. related to the binomial and polynomial theorem and the application of Viete formula.
          * 
          * ...Subtasks created here...
          * 
@@ -273,18 +269,6 @@
          * @return void 
         */
         private function CreateTaskNine(){
-            
-        }
-
-        /**
-         * 
-         * This method is used to create the tenth set of tasks for Discrete mathematics I. related to...
-         * 
-         * ...Subtasks created here...
-         * 
-         * @return void 
-        */
-        private function CreateTaskTen(){
             
         }
     }

@@ -1,7 +1,13 @@
+<?php 
+    $number_of_main_topics = 10;
+    if($_SESSION["subject"] === "i"){
+        $number_of_main_topics = 9;
+    }
+?>
 <div class="pdf_page_task_choice_container">
     <label class="pdf_page_task_choice_label" style="margin: 0%">Főtéma:</label>
     <select class="topic_select" style="width:19%; margin:0% 0% 0% 1%" name="<?=$section_name?>_main_topic">
-        <?php for($topic_counter = 0; $topic_counter < 10; $topic_counter++):?>
+        <?php for($topic_counter = 0; $topic_counter < $number_of_main_topics; $topic_counter++):?>
             <?php 
                 $previous_chosen_topic = 0;
                 if(isset($_SESSION["preview"][$section_name . "_main_topic"])){
@@ -14,9 +20,9 @@
 
     <label class="pdf_page_task_choice_label" style="margin: 0% 0% 0% 5%">Altéma:</label>
     <div class="subtopic_box" style="width:19%;margin:0% 0% 0% 1%">
-        <?php for($topic_counter = 0; $topic_counter < 10; $topic_counter++):?>
+        <?php for($topic_counter = 0; $topic_counter < $number_of_main_topics; $topic_counter++):?>
             <?php if(count($sub_topics[$topic_counter]) === 1):?>
-                <input value="<?=$sub_topics[$topic_counter][0]?>" style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" class="subtopic_input" name="<?=$section_name?>_subtopic" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>
+                <input value="0" style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" class="subtopic_input" name="<?=$section_name?>_subtopic" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>
             <?php elseif(count($sub_topics[$topic_counter]) > 1):?>
                 <select class="subtopic_select" style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" name="<?=$section_name?>_subtopic" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":""?>>
                         <?php for($subtopic_counter = 0; $subtopic_counter < count($sub_topics[$topic_counter]); $subtopic_counter++):?>

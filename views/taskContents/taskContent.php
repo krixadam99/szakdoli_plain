@@ -31,8 +31,6 @@
         <?php include("./views/taskContents/dimatiTasks/taskEight.php");?>
     <?php elseif(intval($_SESSION["topic"]) == 8):?>
         <?php include("./views/taskContents/dimatiTasks/taskNine.php");?>
-    <?php elseif(intval($_SESSION["topic"]) == 9):?>
-        <?php include("./views/taskContents/dimatiTasks/taskTen.php");?>
     <?php endif?>
 <?php elseif($approved_student_subject=="ii" ):?>
     <?php if(intval($_SESSION["topic"]) == 0):?>
