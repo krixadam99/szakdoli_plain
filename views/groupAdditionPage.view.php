@@ -21,7 +21,6 @@
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
     $approved_student_groups = $this->GetApprovedStudentGroups();
     $approved_student_subject = $this->GetApprovedStudentSubject();
-
 ?>
 
 
@@ -74,7 +73,9 @@
                 </label>
             </div>
             <select id="subject_name" name="subject_name" style="margin: 1% auto 3% 0%">
-                <option id="dimat_i" <?=(isset($correct_parameters["subject_name"]) && $correct_parameters["subject_name"]=="0")?"selected":""?>>Diszkrét matematika I.</option>
+                <?php if(!in_array("i",$approved_teacher_subjects)):?>
+                    <option id="dimat_i" <?=(isset($correct_parameters["subject_name"]) && $correct_parameters["subject_name"]=="0")?"selected":""?>>Diszkrét matematika I.</option>
+                <?php endif?>
                 <?php if($approved_student_subject !== "ii"):?>
                     <option id="dimat_ii" <?=(isset($correct_parameters["subject_name"]) && $correct_parameters["subject_name"]=="1")?"selected":""?>>Diszkrét matematika II.</option>
                 <?php endif?>

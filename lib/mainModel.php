@@ -98,16 +98,35 @@
                 $subject_group = $record["subject_group"];
                 $subject_name = $record["subject_name"];
                 $pending_status = $record["application_request_status"];
+
+                if($is_teacher === 0){
+                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
+                }
                 
                 if($pending_status === "APPROVED" && $is_teacher === 0){
-                    $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0; "; 
+                    if($subject_name === "i"){
+                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
+                    }else{
+                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_name = \"ii\"; ";
+                    }
+                    
+                    $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
                 }
 
-                $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"$is_teacher\"; "; 
+                if($is_teacher === 1){
+                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"1\"; "; 
+                
+                    // Whithdraw subjects
+                    if($subject_name === "i"){
+                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\" AND subject_name = \"i\"; ";
+                    }else{
+                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
+                    }
+                }
 
                 if($pending_status === "APPROVED" && $is_teacher === 0){
-                    $query .= "INSERT INTO results(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
-                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES(\"$neptun_code\", \"$subject_name\", \"$subject_group\") ON DUPLICATE KEY UPDATE neptun_code = \"$neptun_code\",  subject_name = \"$subject_name\", subject_group = $subject_group; ";
+                    $query .= "INSERT INTO results(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
+                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
                 }
             }
             $query .= "COMMIT;";

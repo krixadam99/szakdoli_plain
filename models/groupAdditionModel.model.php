@@ -38,17 +38,15 @@
 
             $query = "BEGIN; ";
             if($is_teacher === 1){
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\"; ";
+                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
             }else{
                 $query .= "DELETE FROM user_groups WHERE neptun_code = \"$neptun_code \" AND subject_group = \"0\"; ";
-                
+
                 // WITHDREW or DELETE?
                 $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\"; ";
+                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
             }
             $query .= "COMMIT; ";
-
-            var_dump($query);
 
             $this->database->UpdateDatabase($query, true);
         }

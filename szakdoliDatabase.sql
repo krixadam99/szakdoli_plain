@@ -43,7 +43,7 @@ CREATE TABLE practice_task_points (
     practice_task_10 float NOT NULL DEFAULT 0,
     
     UNIQUE (neptun_code, subject_name),
-    FOREIGN KEY( neptun_code, subject_name, subject_group ) REFERENCES user_groups( neptun_code, subject_name, subject_group )
+    FOREIGN KEY( neptun_code, subject_name ) REFERENCES user_groups( neptun_code, subject_name )
 );
 
 CREATE TABLE results (
@@ -67,8 +67,8 @@ CREATE TABLE results (
     small_test_9 int(11) NOT NULL DEFAULT 0,
     small_test_10 int(11) NOT NULL DEFAULT 0,
     
-    UNIQUE (neptun_code, subject_group),
-    FOREIGN KEY( neptun_code, subject_name, subject_group ) REFERENCES user_groups( neptun_code, subject_name, subject_group )
+    UNIQUE (neptun_code, subject_name),
+    FOREIGN KEY( neptun_code, subject_name ) REFERENCES user_groups( neptun_code, subject_name )
 );
 
 /*
@@ -112,18 +112,27 @@ INSERT INTO users VALUES("AAAAAA", "crx.adam1999@gmail.com", "$2y$10$fR6hVQ88X1R
 INSERT INTO users VALUES("ABCABC", "abcabc@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("BBBBBB", "bbbbbb@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("CBACBA", "cbacba@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
+INSERT INTO users VALUES("ALMA12", "alma12@example.hu", "$2y$10$1QGG.K.mP1AFMZ05clvezu5Jhj9Ol5sS5bm.qQCK2BmEB/jMXfJV.", 0);
 
 INSERT INTO user_groups VALUES("AAAAAA", 1, 1, "i", "APPROVED");
 INSERT INTO user_groups VALUES("AAAAAA", 1, 2, "ii", "APPROVED");
+INSERT INTO user_groups VALUES("AAAAAA", 1, 2, "i", "APPROVED");
 INSERT INTO user_groups VALUES("AAAAAA", 1, 3, "ii", "APPROVED");
+INSERT INTO user_groups VALUES("ABCABC", 0, 1, "i", "WITHDRAWN");
 INSERT INTO user_groups VALUES("ABCABC", 0, 2, "ii", "APPROVED");
+INSERT INTO user_groups VALUES("ALMA12", 1, 1, "i", "APPROVED");
+INSERT INTO user_groups VALUES("ALMA12", 0, 2, "i", "WITHDRAWN");
 INSERT INTO user_groups VALUES("BBBBBB", 0, 1, "i", "APPROVED");
 INSERT INTO user_groups VALUES("CBACBA", 0, 3, "ii", "APPROVED");
 
 INSERT INTO practice_task_points(neptun_code, subject_name, subject_group, practice_task_1, practice_task_2) VALUES("ABCABC", "ii", 2, 2, 0.5);
+INSERT INTO practice_task_points(neptun_code, subject_name, subject_group, practice_task_1) VALUES("ABCABC", "i", 1, 0.2);
+INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES("ALMA12", "i", 1);
 INSERT INTO practice_task_points(neptun_code, subject_name, subject_group,  practice_task_1) VALUES("BBBBBB", "i", 1, 5);
 INSERT INTO practice_task_points(neptun_code, subject_name, subject_group) VALUES("CBACBA", "ii", 3);
 
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("ABCABC", "ii", 2);
+INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("ABCABC", "i", 1);
+INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("ALMA12", "i", 1);
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("BBBBBB", "i", 1);
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("CBACBA", "ii", 3);
