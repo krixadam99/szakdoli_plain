@@ -7,7 +7,7 @@
     $topic_descriptions = [];
     if($approved_student_subject == "i"){
         $subject_name = "Diszkrét matematika I. gyakorlás";
-        $topic_division = [4, 3, 1, 2];
+        $topic_division = [4, 3, 1, 1];
         $practice_topics = $this->dimat_i_topics;
         $topic_descriptions = $this->dimat_i_topics_descriptions;
     }elseif($approved_student_subject == "ii"){

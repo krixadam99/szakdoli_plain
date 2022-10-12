@@ -65,7 +65,6 @@
                 "Komplex számok trigonometrikus alakja",
                 "Komplex számok hatványozása és gyökvonás",
                 "Binomiális tétel és faktoriális",
-                "Gráfok alapvető tulajdonságai",
                 "Gráfok megszerkeszthetősége"
             ];
 
@@ -77,7 +76,7 @@
                 4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek"],
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
-                7 => ["A binomiális tétel alkalmazása, polinomok kifejtése"],
+                7 => ["A binomiális tétel alkalmazása", "Viéte formula alkalmazása"],
                 8 => ["Gráfok megszerkeszthetősége"]
             );
 
@@ -89,7 +88,7 @@
                 "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
                 "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
                 "Hatványozás és gyökvonás trigonometrikus alak segítségével",
-                "A binomiális tétel és polinomiális tétel alkalmazása, a Viéte- formula alkalmazása",
+                "A binomiális tétel és Viéte- formula alkalmazása",
                 "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
             ];
 

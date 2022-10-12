@@ -15,8 +15,7 @@
             $query = "UPDATE practice_task_points, user_groups SET practice_task_$practice_number = $new_point WHERE ";
             $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_name = practice_task_points.subject_name ";
             $query .= "AND practice_task_points.neptun_code = \"$neptun_code\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
-
-            var_dump($query);
+            
             $this->UpdataDatabase($query);
         }
     }

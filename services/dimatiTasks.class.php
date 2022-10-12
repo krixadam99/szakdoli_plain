@@ -257,7 +257,17 @@
          * @return void 
         */
         private function CreateTaskEight(){
-            
+            $binomial_theorem_subtask = $this->dimati_subtasks->CreateSubtask("7", "0", 2);
+            $viete_formula_subtask = $this->dimati_subtasks->CreateSubtask("7", "1", 2);
+
+            $task_array = array(
+                "task_description" => "Old meg a következő binomiális tétellel és viéte formulákkal kapcsolatos feladatokat!",
+                "first_subtasks" => $binomial_theorem_subtask["data"],
+                "second_subtasks" => $viete_formula_subtask["data"]
+            );
+
+            $this->task_description = $task_array;
+            $this->task_solutions = [$binomial_theorem_subtask["solutions"],$viete_formula_subtask["solutions"]];
         }
 
         /**

@@ -406,6 +406,27 @@
          * @return void
         */
         private function CheckEigthTaskSolution(){
+            $subtask_counter = 0;
+            foreach($this->real_solutions[0] as $solution_array_key => $real_solution){
+                $id = "0_" . $subtask_counter;
+                $this->EvaluateInputsWithNumbers($real_solution, $solution_array_key, $id);
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            foreach($this->real_solutions[1] as $solution_array_key => $real_solution){
+                $id = "1_" . $subtask_counter;
+
+                $relation_form = [];
+                for($coefficient_counter=0; $coefficient_counter < count($real_solution); $coefficient_counter++) { 
+                    array_push($relation_form,[$real_solution[$coefficient_counter], count($real_solution) - 1 - $coefficient_counter]);
+                }
+
+                $this->EvaluateInputsWithRelations($relation_form, $solution_array_key, $id, false);
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
         }
 
         /**

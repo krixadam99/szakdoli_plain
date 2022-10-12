@@ -64,8 +64,7 @@
                 case "7":{
                     switch($subtopic_number){
                         case "0": $subtask = $this->CreateBinomialTheoremSubtask($number_of_subtasks);break;
-                        //case "1": $subtask = $this->CreatePolynomialTheoremSubtask($number_of_subtasks);break;
-                        //case "2": $subtask = $this->CreateVieteFormulaSubtask($number_of_subtasks);break;
+                        case "1": $subtask = $this->CreateVieteFormulaSubtask($number_of_subtasks);break;
                         default:break;
                     }
                 }break;
@@ -925,7 +924,6 @@
                 $result_form = $this->dimat_helper_functions->GetBinomialTheorem([$first_number,$second_number], [$first_exponent,$second_exponent, $third_exponent]);
                 $result_pair = $result_form[mt_rand(0,count($result_form)-1)];
                 array_push($task_data["result_expressions_exponent"], $result_pair[1]);
-                array_push($solutions, $result_pair[0]);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text .= "<div class=\"editable_box\">Adott a ($first_number*x<span class=\"exp\">$first_exponent</span> $second_number*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">$third_exponent</span> kifejezés.</div>";
@@ -952,6 +950,112 @@
 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
+                $solutions = array_merge($solutions, array("solution_0_" . $subtask_counter => $result_pair[0]));
+            }
+
+            return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);
+        }
+
+        /**
+         * This private method will create ... for the second subtask of the eigth task of Discrete Mathematics I.
+         * 
+         * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * 
+         * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
+         */
+        private function CreateVieteFormulaSubtask($number_of_subtasks){
+            $solutions = [];
+            $descriptions = [];
+            $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
+
+            $lower = -10;
+            $upper = 10 + $number_of_subtasks;
+            
+            $polynomial_expressions = [];
+            $task_data = ["polynomial_expression_roots" => [], "main_coefficients" => []];
+            $dimatii_helper_functions = new DimatiiHelperFunctions();
+            for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                $polynomial_degree = mt_rand(3,5);            
+                $created_expression = $dimatii_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                $polynomial_expression = $created_expression[0];
+                $roots = $created_expression[1];
+                while(in_array($polynomial_expressions, $polynomial_expression)){
+                    $polynomial_degree = mt_rand(3,5);            
+                    $created_expression = $dimatii_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
+                    $polynomial_expression = $created_expression[0];
+                    $roots = $created_expression[1];
+                }
+                array_push($polynomial_expressions, $polynomial_expression);
+
+                $task_text = "<div class=\"editable_box\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $task_text .= "<div class=\"editable_box\">Adottak a " . PrintServices::CreatePrintablePlaces($roots) . " helyek. ";
+                $task_text .= "A Viéte formula használatával határozd meg azt a polinomot, amelynek a fenti pontok a gyökei és " . $polynomial_expression[0] . " a főegyütthatója!</div>";
+                
+                array_push($task_data["polynomial_expression_roots"], $roots);
+                array_push($task_data["main_coefficients"], $polynomial_expression[0]);
+
+                $printable_solution = "<div class=\"editable_box\"><label class=\"group_number_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                $printable_solution .= "<div class=\"editable_box\">P[x] =";
+                for($root_counter = 0; $root_counter < count($roots); $root_counter++){
+                    if($root_counter !== 0){
+                        $printable_solution .= " * ";
+                    }else{
+                        $printable_solution .= $polynomial_expression[0] . " * ";
+                    }
+                    $printable_solution .= "(x" . PrintServices::PlusMinus(-1*$roots[$root_counter]) . abs($roots[$root_counter]) . ")";
+                }
+                $printable_solution .= "</div>";
+
+                $indices = [];
+                for($index_counter = 0; $index_counter < count($roots); ++$index_counter){
+                    array_push($indices, $index_counter);
+                }
+
+                for($bottom_index_counter = 0; $bottom_index_counter <= $polynomial_degree; $bottom_index_counter++){
+                    $printable_solution .= "<div class=\"editable_box\">";
+                    $printable_solution .= "x<span class=\"bottom\">" . $polynomial_degree - $bottom_index_counter . "</span> = ";
+                    
+                    $solution_part_variable = "a";
+                    $solution_part_value = $polynomial_expression[0];
+                    $bottom_index_list = $this->dimat_helper_functions->DetermineCombinationOfList($indices, $bottom_index_counter);
+                    foreach($bottom_index_list as $bottom_index_list_counter => $index_list){
+                        if($bottom_index_list_counter !== 0){
+                            $solution_part_variable .= " + ";
+                            $solution_part_value .= "+";
+                        }else{
+                            $solution_part_variable .= "*(";
+                            $solution_part_value .= "*(";
+                        }
+                        
+                        foreach($index_list as $list_element_coutner => $element_index){
+                            if($list_element_coutner !== 0){
+                                $solution_part_variable .= "*";
+                                $solution_part_value .= "*";
+                            }
+                            $solution_part_variable .= "x<span class=\"bottom\"> $element_index</span>";
+                            
+                            $solution_part_value .= -1* $roots[$element_index];
+                        }
+
+                        if($bottom_index_list_counter === count($bottom_index_list) - 1){
+                            $solution_part_variable .= ")";
+                            $solution_part_value .= ")";
+                        }
+                    }
+                    $printable_solution .= $solution_part_variable;
+                    $printable_solution .= " = " . $solution_part_value;
+                    
+                    if($bottom_index_counter !== 0){
+                        $printable_solution .= " = " . $polynomial_expression[$bottom_index_counter];
+                    }
+                    
+                    $printable_solution .= "</div>";
+                }
+                $printable_solution .= "<div class=\"editable_box\">P[x] = " . PrintServices::CreatePrintablePolynomial($polynomial_expression) . "</div>";
+
+                array_push($descriptions, $task_text);
+                array_push($printable_solutions, $printable_solution);
+                $solutions = array_merge($solutions, array("solution_1_" . $subtask_counter => $polynomial_expression));
             }
 
             return array("data" => $task_data , "descriptions" => $descriptions, "solutions" => $solutions, "printable_solutions" => $printable_solutions);

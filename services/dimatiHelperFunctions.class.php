@@ -930,7 +930,7 @@
 
         /**
          * 
-         * This private recursive method creates a list containing possible combinations of the elements of the given list, where the number of elements per list is also given. The order of these elements per combination does not matter!
+         * This public recursive method creates a list containing possible combinations of the elements of the given list, where the number of elements per list is also given. The order of these elements per combination does not matter!
          * 
          * The list will be iterated through by embedded iterations, where the "deepest level" is the same as the required amount of elements per combination.
          * Every iteration will start from the element following the "parent" iteration's actual element and ends at the element of the index of the original (list's size - original number of elements per combination + level of iteration (embedding count)).
@@ -944,7 +944,7 @@
          * 
          * @return array An indexed array containing possible combinations of the original list's elements (required number of elements). In the final level all of the combinations are in the returned array.
         */
-        private function DetermineCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
+        public function DetermineCombinationOfList($original_list, $number_of_remained_iterations = 1, $actual_elements = [], $previous_index = 0){
             if($number_of_remained_iterations >= 1){ // At least 1 iterations remained
                 if($number_of_remained_iterations < count($original_list)){ // The number of remained iterations is not greater than, or equal to the number of elements of the original list 
                     if($number_of_remained_iterations > 1){ // At least 2 iterations remained
