@@ -36,6 +36,16 @@
 
                 //Only students can see this page, otherwise, the user will be redirected to the notifications page
                 if($this->GetApprovedStudentSubject() != ""){
+                    $model = new GradesModel();
+                    $approved_subject_group = $this->GetApprovedStudentGroup();
+                    $approved_subject_name = $this->GetApprovedStudentSubject();
+
+                    $results = $model->GetResults($_SESSION["neptun_code"])[0]??[];
+                    $practice_points = $this->GetPracticeResults();
+                    $task_expectations = $model->GetExpectationRules($approved_subject_name, $approved_subject_group); 
+                    $task_due_dates = $model->GetTaskDueDate($approved_subject_name, $approved_subject_group); 
+                    $grade_table = $model->GetGradeLevels($approved_subject_name, $approved_subject_group)[0]??[]; 
+
                     include(ROOT_DIRECTORY . "/views/gradesPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");

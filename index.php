@@ -98,7 +98,7 @@
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
     $controller_connection->post_method_connection("upgradeStudentGrades", "StudentGradesController", "UpdateResults");
     $controller_connection->post_method_connection("upgradeExpectationRules", "StudentGradesController", "UpdateExpectationRules");
-    $controller_connection->post_method_connection("upgradeGradeDueDates", "StudentGradesController", "UpdateGradeDueDates");
+    $controller_connection->post_method_connection("upgradeTaskDueDates", "StudentGradesController", "UpdateTaskDueDates");
     $controller_connection->post_method_connection("upgradeGradeLevels", "StudentGradesController", "UpdateGradeLevels");
     $controller_connection->post_method_connection("handInSolution", "PracticeController", "HandInSolution");
     $controller_connection->post_method_connection("createPreview", "TaskGenerationController", "CreatePreview");

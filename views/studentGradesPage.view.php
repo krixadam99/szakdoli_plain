@@ -29,17 +29,17 @@
     <main>
         <?php include("./partials/groupSelection.php")?>
     
-        <div id="navigation_row">
-            <div class="navigation_row_button chosen" id="update_grades_button">
+        <div id="non_header_navigation_row">
+            <div class="non_header_navigation_row_button chosen" id="update_grades_button">
                 <label>Eredmények frissítése</label>
             </div>
-            <div class="navigation_row_button" id="update_expectation_rules_button">
+            <div class="non_header_navigation_row_button" id="update_expectation_rules_button">
                 <label>Követelmények módosítása</label>
             </div>
-            <div class="navigation_row_button" id="update_task_due_dates_button">
+            <div class="non_header_navigation_row_button" id="update_task_due_dates_button">
                 <label>Feladatok időpontjainak módosítása</label>
             </div>
-            <div class="navigation_row_button" id="update_grade_points_button">
+            <div class="non_header_navigation_row_button" id="update_grade_points_button">
                 <label>Jegyek alsó ponthatárjainak módosítása</label>
             </div>
         </div>
@@ -47,7 +47,7 @@
         <?php if(count($students_grades) != 0):?>
             <form id="grades_form" class="student_grades_form" action="./index.php?site=upgradeStudentGrades" method="POST">
                 <label style="font-size: calc(15px + 0.3vw)">
-                <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport eredményeinek kezelése
+                    <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport eredményeinek kezelése
                 </label>
                 <hr>    
             
@@ -161,7 +161,7 @@
             </div>
         <?php endif?>
 
-        <!-- Követelmény tábla -->
+        <!-- Task expectation form -->
         <form id="expectation_rules_form" class="student_grades_form" action="./index.php?site=upgradeExpectationRules" method="POST" style="display:none">
             <label style="font-size: calc(15px + 0.3vw)">
             <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport követelmények módosítása
@@ -215,8 +215,8 @@
             <button type="submit" id="finalize_button">FRISSÍTÉS</button>
         </form>
 
-        <!-- Időpontok tábla -->
-        <form id="task_due_date_form" class="student_grades_form" action="./index.php?site=upgradeDueDates" method="POST" style="display:none">
+        <!-- Task due date form -->
+        <form id="task_due_date_form" class="student_grades_form" action="./index.php?site=upgradeTaskDueDates" method="POST" style="display:none">
             <label style="font-size: calc(15px + 0.3vw)">
             <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport feladatok időpontjainak módosítása
             </label>
@@ -273,7 +273,7 @@
             <button type="submit" id="finalize_button">FRISSÍTÉS</button>
         </form>
 
-        <!-- Jegyek tábla -->
+        <!-- Grade levels form -->
         <form id="grade_levels_form" class="student_grades_form" action="./index.php?site=upgradeGradeLevels" method="POST" style="display:none">
             <label style="font-size: calc(15px + 0.3vw)">
             <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport jegyek alsó ponthatárjainak módosítása
@@ -292,7 +292,7 @@
                             ELÉGSÉGES (2)
                         </td>
                         <td style="padding:0%">
-                            <input type="number" class="grade_level_input" min="0" step="1" name="<?=$id . "_pass_level_point"?>" value="<?=$grade_levels["pass_level_point"]?>">
+                            <input type="number" class="grade_level_input" min="0" step="1" name="pass_level_point" value="<?=$grade_levels["pass_level_point"]?>">
                             </input>
                         </td>  
                     </tr>
@@ -302,7 +302,7 @@
                             MEGFELELT (3)
                         </td>
                         <td style="padding:0%">
-                            <input type="number" class="grade_level_input" min="0" step="1" name="<?=$id . "_satisfactory_level_point"?>" value="<?=$grade_levels["satisfactory_level_point"]?>">
+                            <input type="number" class="grade_level_input" min="0" step="1" name="satisfactory_level_point" value="<?=$grade_levels["satisfactory_level_point"]?>">
                             </input>
                         </td> 
                     </tr> 
@@ -312,7 +312,7 @@
                             JÓ (4)
                         </td>
                         <td style="padding:0%">
-                            <input type="number" class="grade_level_input" min="0" step="1" name="<?=$id . "_good_level_point"?>" value="<?=$grade_levels["good_level_point"]?>">
+                            <input type="number" class="grade_level_input" min="0" step="1" name="good_level_point" value="<?=$grade_levels["good_level_point"]?>">
                             </input>
                         </td>  
                     </tr>
@@ -322,7 +322,7 @@
                             JELES (5)
                         </td>
                         <td style="padding:0%">
-                            <input type="number" class="grade_level_input" min="0" step="1" name="<?=$id . "_excellent_level_point"?>" value="<?=$grade_levels["excellent_level_point"]?>">
+                            <input type="number" class="grade_level_input" min="0" step="1" name="excellent_level_point" value="<?=$grade_levels["excellent_level_point"]?>">
                             </input>
                         </td>  
                     </tr>

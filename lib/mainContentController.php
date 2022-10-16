@@ -16,7 +16,7 @@
         private $pending_student_groups;
         private $approved_teacher_groups;
         private $approved_teacher_subjects;
-        private $approved_student_groups;
+        private $approved_student_group;
         private $approved_student_subject;
         private $withdrawn_student_groups;
         private $denied_student_groups;
@@ -50,7 +50,7 @@
             $this->pending_student_groups = []; // The group numbers and subject pairs for which the user's student status is pending
             $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
             $this->approved_teacher_subjects = []; // The subject ids for which the user's teacher status is approved
-            $this->approved_student_groups = []; // The group numbers and subject pairs for which the user's student status is approved
+            $this->approved_student_group = ""; // The group number for which the user's student status is approved
             $this->approved_student_subject = ""; // The subject ids for which the user's student status is approved
             $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
             $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
@@ -210,11 +210,11 @@
 
         /**
          * 
-         * This method returns the subject names and groups (pairs) where the user's student request was approved.
+         * This method returns the group where the user's student request was approved.
          * 
-         * @return array Returns an indexed array containing the subject groups and subject name (pairs) where the user's status is student and it was approved.
+         * @return string Returns the group for which the user's student status is approved.
         */
-        public function GetApprovedStudentGroups(){ return $this->approved_student_groups; }
+        public function GetApprovedStudentGroup(){ return $this->approved_student_group; }
 
         /**
          * 
@@ -289,7 +289,7 @@
                                         }
                                     }
 
-                                    array_push($this->approved_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                    $this->approved_student_group = $user_record["subject_group"];
                                     $this->approved_student_subject = $user_record["subject_name"];
                                 }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
                                     array_push($this->pending_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));

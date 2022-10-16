@@ -3,7 +3,7 @@
     $pending_student_groups = $this->GetPendingStudentGroups();
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
-    $approved_student_groups = $this->GetApprovedStudentGroups();
+    $approved_student_group = $this->GetApprovedStudentGroup();
     $approved_student_subject = $this->GetApprovedStudentSubject();
 
 ?>
@@ -148,7 +148,7 @@
                 <?php endif?>
             <?php endif?>
             
-            <?php if(count($approved_student_groups) != 0):?> <!-- this user is assigned to at least one group -->
+            <?php if($approved_student_group !== ""):?> <!-- this user is assigned to at least one group -->
                 <?php if(count($approved_teacher_groups) != 0):?>
                     <nav class="empty_nav"></nav>
                 <?php endif?>

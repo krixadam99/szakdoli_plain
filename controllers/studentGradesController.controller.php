@@ -58,8 +58,6 @@
          * @return void
         */
         public function UpdateResults(){
-            
-            
             //Neptun code, subject group and subject name must be set in the session, otherwise we cannot move forward
             if(    isset($_SESSION["neptun_code"]) 
                 && isset($_SESSION["group"]) 
@@ -226,50 +224,43 @@
                 $current_subject = $_SESSION["subject"];
                 $current_group = $_SESSION["group"];
 
-                $new_results = array();
+                $new_due_dates = array();
                 foreach($_POST as $key => $value){
-                    $neptun = substr($key,0,6);
-                    if(isset($new_results[$neptun])){
-                        $key = substr($key,7);
-                        $new_results[$neptun][$key] = $value;
-                    }else{
-                        $key = substr($key,7);
-                        $new_results[$neptun] = array($key => $value);
+                    $task = "";
+                    if(is_numeric(strpos($key,"_due_to"))){
+                        $task = explode("_due_to",$key)[0];
+                    }
+
+                    if($task !== ""){
+                        $new_due_dates[$task] = $value;
                     }
                 }
             
                 $student_grades_model = new StudentGradesModel();
-                $original_user_results = $student_grades_model->GetStudentsGrades($_SESSION["subject"], $_SESSION["group"]);
+                $original_due_dates = $student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                 $query_array = array();
-                foreach($original_user_results as $index => $original_record){
-                    if(isset($new_results[$original_record["neptun_code"]])){
-                        $results = $new_results[$original_record["neptun_code"]];
+                foreach($original_due_dates as $index => $original_due_date){
+                    $task_type = $original_due_date["task_type"];
+                    if(isset($new_due_dates[$task_type])){
+                        $due_date = $new_due_dates[$task_type];
                         
+                        $new_date = DateTime::createFromFormat("Y-m-d", $due_date);
+                        if($new_date){
+                            $due_date = $new_date->format("Y-m-d");
+                        }else{
+                            $due_date = $original_due_date["due_to"];
+                        }
+
                         array_push($query_array, array(
-                            "neptun_code" => $original_record["neptun_code"], 
                             "subject_group" => $current_group, 
-                            "subject_name" => $current_subject, 
-                            "practice_count" => $results["grade_input_practice"]??$original_record["practice_count"],
-                            "extra" => $results["grade_input_extra"]??$original_record["extra"],
-                            "middle_term_exam" => $results["grade_input_middle_term"]??$original_record["middle_term_exam"],
-                            "middle_term_exam_correction" => $results["grade_input_middle_term_corr"]??$original_record["middle_term_exam"],
-                            "final_term_exam" => $results["grade_input_final_term"]??$original_record["final_term_exam"],
-                            "final_term_exam_correction" => $results["grade_input_final_term_corr"]??$original_record["final_term_exam_correction"],
-                            "small_test_1" => $results["grade_input_small_test_1"]??$original_record["small_test_1"],
-                            "small_test_2" => $results["grade_input_small_test_2"]??$original_record["small_test_2"],
-                            "small_test_3" => $results["grade_input_small_test_3"]??$original_record["small_test_3"],
-                            "small_test_4" => $results["grade_input_small_test_4"]??$original_record["small_test_4"],
-                            "small_test_5" => $results["grade_input_small_test_5"]??$original_record["small_test_5"],
-                            "small_test_6" => $results["grade_input_small_test_6"]??$original_record["small_test_6"],
-                            "small_test_7" => $results["grade_input_small_test_7"]??$original_record["small_test_7"],
-                            "small_test_8" => $results["grade_input_small_test_8"]??$original_record["small_test_8"],
-                            "small_test_9" => $results["grade_input_small_test_9"]??$original_record["small_test_9"],
-                            "small_test_10" => $results["grade_input_small_test_10"]??$original_record["small_test_10"],
+                            "subject_name" => $current_subject,
+                            "task_type" => $task_type,
+                            "due_to" => $due_date
                         ));
                     }
                 }
 
-                $student_grades_model->UpdateResults($query_array);
+                $student_grades_model->UpdateTaskDueDates($query_array);
                 header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
             }else{
                 header("Location: ./index.php");
@@ -290,51 +281,52 @@
             ){
                 $current_subject = $_SESSION["subject"];
                 $current_group = $_SESSION["group"];
-
-                $new_results = array();
-                foreach($_POST as $key => $value){
-                    $neptun = substr($key,0,6);
-                    if(isset($new_results[$neptun])){
-                        $key = substr($key,7);
-                        $new_results[$neptun][$key] = $value;
-                    }else{
-                        $key = substr($key,7);
-                        $new_results[$neptun] = array($key => $value);
-                    }
-                }
             
                 $student_grades_model = new StudentGradesModel();
-                $original_user_results = $student_grades_model->GetStudentsGrades($_SESSION["subject"], $_SESSION["group"]);
-                $query_array = array();
-                foreach($original_user_results as $index => $original_record){
-                    if(isset($new_results[$original_record["neptun_code"]])){
-                        $results = $new_results[$original_record["neptun_code"]];
-                        
-                        array_push($query_array, array(
-                            "neptun_code" => $original_record["neptun_code"], 
-                            "subject_group" => $current_group, 
-                            "subject_name" => $current_subject, 
-                            "practice_count" => $results["grade_input_practice"]??$original_record["practice_count"],
-                            "extra" => $results["grade_input_extra"]??$original_record["extra"],
-                            "middle_term_exam" => $results["grade_input_middle_term"]??$original_record["middle_term_exam"],
-                            "middle_term_exam_correction" => $results["grade_input_middle_term_corr"]??$original_record["middle_term_exam"],
-                            "final_term_exam" => $results["grade_input_final_term"]??$original_record["final_term_exam"],
-                            "final_term_exam_correction" => $results["grade_input_final_term_corr"]??$original_record["final_term_exam_correction"],
-                            "small_test_1" => $results["grade_input_small_test_1"]??$original_record["small_test_1"],
-                            "small_test_2" => $results["grade_input_small_test_2"]??$original_record["small_test_2"],
-                            "small_test_3" => $results["grade_input_small_test_3"]??$original_record["small_test_3"],
-                            "small_test_4" => $results["grade_input_small_test_4"]??$original_record["small_test_4"],
-                            "small_test_5" => $results["grade_input_small_test_5"]??$original_record["small_test_5"],
-                            "small_test_6" => $results["grade_input_small_test_6"]??$original_record["small_test_6"],
-                            "small_test_7" => $results["grade_input_small_test_7"]??$original_record["small_test_7"],
-                            "small_test_8" => $results["grade_input_small_test_8"]??$original_record["small_test_8"],
-                            "small_test_9" => $results["grade_input_small_test_9"]??$original_record["small_test_9"],
-                            "small_test_10" => $results["grade_input_small_test_10"]??$original_record["small_test_10"],
-                        ));
+                $original_grade_points = $student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
+                
+                $pass_level_point = $_POST["pass_level_point"]??$original_grade_points["pass_level_point"];
+                $satisfactory_level_point = $_POST["satisfactory_level_point"]??$original_grade_points["satisfactory_level_point"];
+                $good_level_point = $_POST["good_level_point"]??$original_grade_points["good_level_point"];
+                $excellent_level_point = $_POST["excellent_level_point"]??$original_grade_points["excellent_level_point"];
+                
+                if(!is_numeric($excellent_level_point)){
+                    $excellent_level_point = $original_grade_points["excellent_level_point"];
+                }
+                if(!is_numeric($good_level_point)){
+                    $good_level_point = $original_grade_points["good_level_point"];
+                }
+                if(!is_numeric($satisfactory_level_point)){
+                    $satisfactory_level_point = $original_grade_points["satisfactory_level_point"];
+                }
+                if(!is_numeric($pass_level_point)){
+                    $pass_level_point = $original_grade_points["pass_level_point"];
+                }
+
+                $original_points = [$original_grade_points["pass_level_point"], $original_grade_points["satisfactory_level_point"], $original_grade_points["good_level_point"], $original_grade_points["excellent_level_point"]];
+                $points = [$pass_level_point, $satisfactory_level_point, $good_level_point, $excellent_level_point];
+                for($point_counter = 3; $point_counter > 0; $point_counter--){
+                    $lower = $points[$point_counter - 1];
+                    $upper = $points[$point_counter];
+
+                    if($lower > $upper){
+                        $points[$point_counter] = $original_points[$point_counter];
+                        $upper = $points[$point_counter];
+                        if($lower > $upper){
+                            $points[$point_counter - 1] = $original_points[$point_counter - 1];
+                        }
                     }
                 }
 
-                $student_grades_model->UpdateResults($query_array);
+                $query = "UPDATE grade_table 
+                SET pass_level_point = \"" . $points[0] . "\",
+                satisfactory_level_point = \"" . $points[1] . "\",
+                good_level_point = \"" . $points[2] . "\",
+                excellent_level_point = \"" . $points[3] . "\"
+                WHERE subject_name = \"$current_subject\"
+                AND subject_group = \"$current_group\";";
+
+                $student_grades_model->UpdataDatabase($query);
                 header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
             }else{
                 header("Location: ./index.php");

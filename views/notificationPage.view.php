@@ -2,7 +2,7 @@
     $pending_teacher_groups = $this->GetPendingTeacherGroups();
     $pending_student_groups = $this->GetPendingStudentGroups();
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_student_groups = $this->GetApprovedStudentGroups();
+    $approved_student_group = $this->GetApprovedStudentGroup();
 
     $actual_page = "notifications";
 ?>
@@ -27,12 +27,12 @@
         <!-- Requests that are currently pending -->
         <div id="notification_container">
             <?php foreach($pending_teacher_groups as $index => $pending_teacher_group):?>
-                <div id="notification_box">
+                <div class="notification_box">
                     <label>Demonstrátori kérése a <?=$pending_teacher_group["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$pending_teacher_group["subject_group"]?>. csoport esetében elbírálás alatt áll!</label>
                 </div>
             <?php endforeach?>
             <?php foreach($pending_student_groups as $index => $pending_student_groups):?>
-                <div id="notification_box">
+                <div class="notification_box">
                     <?php if($pending_student_groups["subject_group"] === "0"):?>
                         <label>
                             Jelentkezzen valamelyik tárgy csoportjába a "Csoport hozzáadás/Csoporthoz való csatlakozás" menüpont alatt! Ha nem találja a megfelelő csoportot, akkor várja meg míg a csoporthoz hozzá lesz rendelve demonstrátor!
@@ -55,30 +55,30 @@
         <!-- Requests that are approved -->
         <div id="notification_container">
             <?php foreach($approved_teacher_groups as $index => $approved_teacher_group):?>
-                <div id="notification_box">
+                <div class="notification_box">
                     <label>Demonstrátori kérése a <?=$approved_teacher_group["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$approved_teacher_group["subject_group"]?>. csoportjához elfogadásra került!</label>
                 </div>
             <?php endforeach?>
-            <?php foreach($approved_student_groups as $index => $approved_student_group):?>
-                <div id="notification_box">
+            <?php if($approved_student_group !== ""):?>
+                <div class="notification_box">
                     <label>
                         A 
-                        <?php if($approved_student_group["subject_name"]=="i"):?>
+                        <?php if($approved_student_group ==="i"):?>
                             Diszkrét matematika I.
-                        <?php elseif($approved_student_group["subject_name"]=="ii"):?>
+                        <?php elseif($approved_student_group ==="ii"):?>
                             Diszkrét matematika II.
                         <?php endif?>
-                        tárgy <?=$approved_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elfogadásra került!
+                        tárgy <?=$approved_student_group?>. csoport-hoz való csatlakozási kérése elfogadásra került!
                     </label>
                 </div>
-            <?php endforeach?>
+            <?php endif?>
         </div>
 
         <!-- Requests that were denied -->
         
         <!-- If there is no more group that is pending, then let's display that too -->
         <?php if(count($pending_teacher_groups) == 0 && count($pending_student_groups) == 0):?>
-            <div id="notification_box">
+            <div class="notification_box">
                 <label>Nincsen elbírálás allatt álló tárgya!</label>
             </div>
         <?php endif?>

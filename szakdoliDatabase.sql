@@ -87,7 +87,7 @@ CREATE TABLE expectation_rules (
     task_type varchar(255) NOT NULL,
     is_better int(11) NOT NULL DEFAULT -1,
     minimum_for_pass int(11) NOT NULL DEFAULT 0,
-    maximum_value int(11) NOT NULL DEFAULT 0,
+    maximum_value int(11) NOT NULL DEFAULT 100,
 
     UNIQUE (subject_group, subject_name, task_type)
 );
