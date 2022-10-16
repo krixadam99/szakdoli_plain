@@ -59,6 +59,32 @@
             $query .= "COMMIT;";
             $this->database->UpdateDatabase($query, true);
         }
+
+        /**
+         * This public method updates the expectation_rules table via an array containing the quires.
+         * 
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * 
+         * @return void
+         */
+        public function UpdateExpectationRules($query_array = []){
+            $query = "BEGIN; ";
+            foreach($query_array as $index => $record){
+                $subject_group = $record["subject_group"];
+                $subject_name = $record["subject_name"];
+                $task_type = $record["task_type"];
+                
+                $query .= "UPDATE expectation_rules 
+                SET is_better = \"" . $record["is_better"] . "\"
+                , minimum_for_pass = \"" . $record["minimum_for_pass"] . "\"
+                , maximum_value = \"" . $record["maximum_value"] . "\"
+                WHERE subject_group = \"$subject_group\"
+                AND subject_name = \"$subject_name\"
+                AND task_type = \"$task_type\"; ";
+            }
+            $query .= "COMMIT;";
+            $this->database->UpdateDatabase($query, true);
+        }
     }
 
 ?>
