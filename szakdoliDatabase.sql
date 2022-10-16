@@ -71,8 +71,30 @@ CREATE TABLE results (
     FOREIGN KEY( neptun_code, subject_name ) REFERENCES user_groups( neptun_code, subject_name )
 );
 
-/*
+CREATE TABLE task_details (
+    subject_group int(11) NOT NULL,
+    subject_name varchar(255) NOT NULL,
+    task_type varchar(255) NOT NULL,
+    is_better int(11) NOT NULL DEFAULT 0,
+    minimum_for_pass int(11) NOT NULL DEFAULT 0,
+    maximum_value int(11) NOT NULL DEFAULT 0,
+    due_to DATE NOT NULL DEFAULT CURRENT_DATE,
 
+    UNIQUE (subject_group, subject_name, task_type)
+);
+
+CREATE TABLE grade_table (
+    subject_group int(11) NOT NULL,
+    subject_name varchar(255) NOT NULL,
+    pass_level_point int(11) NOT NULL DEFAULT 0,
+    satisfactory_level_point int(11) NOT NULL DEFAULT 0,
+    good_level_point int(11) NOT NULL DEFAULT 0,
+    excellent_level_point int(11) NOT NULL DEFAULT 0,
+
+    UNIQUE (subject_group, subject_name)
+);
+
+/*
 CREATE TABLE messages (
     neptun_code varchar(6) NOT NULL,
     message_id int(11) NOT NULL,
@@ -95,16 +117,6 @@ CREATE TABLE customized_task (
     
     FOREIGN KEY( neptun_code) REFERENCES users( neptun_code )
 );
-
-CREATE TABLE task (
-    subject_group int(11) NOT NULL,
-    subject_name varchar(255) NOT NULL,
-    task_type varchar(255) NOT NULL,
-    is_better int(11) NOT NULL DEFAULT 0,
-    minimum_for_pass int(11) NOT NULL DEFAULT 0,
-    expires_at DATE NOT NULL,
-);
-
 */
 
 INSERT INTO users VALUES("admin", "-", "$2y$10$9nSKotQ51hqlRaNt8AMaXOgCw97rLwvobEP8KuM7OC4cS3Ae7gixu", 1);
@@ -136,3 +148,75 @@ INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("ABCABC", "
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("ALMA12", "i", 1);
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("BBBBBB", "i", 1);
 INSERT INTO results(neptun_code, subject_name, subject_group) VALUES("CBACBA", "ii", 3);
+
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "practice_count");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "extra");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "middle_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "final_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "middle_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "final_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_1");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_2");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_3");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_4");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_5");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_6");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_7");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_8");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_9");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(1, "i", "small_test_10");
+INSERT INTO grade_table(subject_group, subject_name) VALUES(1, "i");
+
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "practice_count");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "extra");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "middle_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "final_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "middle_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "final_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_1");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_2");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_3");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_4");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_5");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_6");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_7");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_8");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_9");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "ii", "small_test_10");
+INSERT INTO grade_table(subject_group, subject_name) VALUES(2, "ii");
+
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "practice_count");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "extra");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "middle_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "final_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "middle_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "final_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_1");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_2");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_3");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_4");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_5");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_6");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_7");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_8");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_9");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(2, "i", "small_test_10");
+INSERT INTO grade_table(subject_group, subject_name) VALUES(2, "i");
+
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "practice_count");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "extra");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "middle_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "final_term_exam");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "middle_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "final_term_exam_correction");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_1");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_2");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_3");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_4");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_5");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_6");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_7");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_8");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_9");
+INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(3, "ii", "small_test_10");
+INSERT INTO grade_table(subject_group, subject_name) VALUES(3, "ii");

@@ -43,6 +43,7 @@ tr:nth-child(even) {
 }
 
 #finalize_button {
+    border: 1px solid black;
     border-radius: 50px;
     width: auto;
     margin-top: 2%;
@@ -607,6 +608,67 @@ ul {
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+/* Students' grades page */
+
+#student_grades_form {
+    width: 80%;
+    margin: 3% 16% 1% 4%
+}
+
+#student_grades_form hr {
+    margin: 1% 0% 0% 0%
+}
+
+#student_grades_form table {
+    border-collapse: collapse;
+    width: 180%;
+}
+
+#student_grades_form table tr {
+    background-color: white;
+    border-top: 1px solid black;
+}
+
+#student_grades_form table tr:first-of-type {
+    border-top: 0px;
+}
+
+#student_grades_form table td,
+#student_grades_form table th  {
+    text-align: left;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+#student_grades_form table th {
+    border-left: 1px dashed black;   
+}
+
+#student_grades_form table th:first-of-type  {
+    border-left: 0px;
+}
+
+.student_grade_input {
+    width: 90%;
+    padding: 10px 5%;
+    border: 0px;
+    border-left: 1px dashed black;
+    background-color: rgb(246, 243, 243);
+}
+
+.student_grade_input:focus{
+    outline: none;
+}
+
+#student_grades_form #finalize_button {
+    width: 10%;
+    margin: 2% 45%;
+    right: 0%;
+    position: relative;
+    background-color: white;
+}
+
 
 @media only screen and (max-width: 600px) {
     .card_row {

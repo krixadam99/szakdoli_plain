@@ -96,6 +96,7 @@
     $controller_connection->post_method_connection("finalizePending", "AdministratorController", "FinalizePending");
     $controller_connection->post_method_connection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
+    $controller_connection->post_method_connection("studentGrades", "StudentGradesController", "UpdateResults");
     $controller_connection->post_method_connection("handInSolution", "PracticeController", "HandInSolution");
     $controller_connection->post_method_connection("createPreview", "TaskGenerationController", "CreatePreview");
     

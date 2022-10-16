@@ -115,12 +115,32 @@
 
                 if($is_teacher === 1){
                     $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"1\"; "; 
-                
-                    // Whithdraw subjects
-                    if($subject_name === "i"){
-                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\" AND subject_name = \"i\"; ";
-                    }else{
-                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
+
+                    // Whithdraw from subjects if approved
+                    if($pending_status === "APPROVED"){
+                        if($subject_name === "i"){
+                            $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\" AND subject_name = \"i\"; ";
+                        }else{
+                            $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
+                        }
+                        
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_count\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"extra\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_1\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_2\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_3\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_4\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_5\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_6\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_7\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_8\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_9\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_details(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_10\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO grade_table(subject_group, subject_name) VALUES(\"$subject_group\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
                     }
                 }
 
@@ -130,7 +150,7 @@
                 }
             }
             $query .= "COMMIT;";
-            
+
             $this->database->UpdateDatabase($query, true);
         }
 
