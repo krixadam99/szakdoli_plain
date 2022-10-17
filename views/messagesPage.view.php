@@ -55,36 +55,39 @@
             header("Location: ./index.php?site=messages");
         }
     }else{
-        $merged_messages = array_merge($incame_messages, $sent_messages);
-        $final_messages = [];
-        foreach($merged_messages as $message_counter => $message){
-            if($message["belongs_to"] == "0"){
-                $final_messages[$message["message_id"]] = ["thread" => "0", "message" => $message];
-            }else{
-                if(!in_array($message["belongs_to"], array_keys($final_messages))){
-                    $final_messages[$message["belongs_to"]] = ["thread" => $message["thread_count"], "message" => $message];
+        if(!isset($_SESSION["write_message"])){
+            $merged_messages = array_merge($incame_messages, $sent_messages);
+            $final_messages = [];
+    
+            foreach($merged_messages as $message_counter => $message){
+                if($message["belongs_to"] == "0"){
+                    if(!in_array($message["message_id"], array_keys($final_messages))){
+                        $final_messages[$message["message_id"]] = ["thread" => 0, "message" => $message];
+                    }
                 }else{
-                    if($message["thread_count"] > $final_messages[$message["belongs_to"]]["thread"]){
-                        $final_messages[$message["belongs_to"]] = ["thread" => $message["thread_count"], "message" => $message];
+                    if(!in_array($message["belongs_to"], array_keys($final_messages))){
+                        $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
+                    }else{
+                        if(intval($message["thread_count"]) > $final_messages[$message["belongs_to"]]["thread"]){
+                            
+                            $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
+                        }
                     }
                 }
             }
-        }
-
-        var_dump($final_messages);
-        
-        $incame_messages = [];
-        $sent_messages = [];
-        foreach($final_messages as $message_main_id => $thread_message){
-            $message = $thread_message["message"];
-            if($message["neptun_code_from"] == $_SESSION["neptun_code"]){
-                array_push($sent_messages, $message);
-            }else{
-                array_push($incame_messages, $message);
+            
+            $incame_messages = [];
+            $sent_messages = [];
+            foreach($final_messages as $message_main_id => $thread_message){
+                $message = $thread_message["message"];
+                $thread_count = $thread_message["thread"];
+                if($message["neptun_code_from"] == $_SESSION["neptun_code"]){
+                    array_push($sent_messages, ["message" => $message, "thread_count" =>$thread_count]);
+                }else{
+                    array_push($incame_messages, ["message" => $message, "thread_count" =>$thread_count]);
+                }
             }
         }
-
-        var_dump($incame_messages,$incame_messages)
     }
 
 ?>
@@ -116,26 +119,35 @@
             </div>
 
             <div class="non_header_navigation_div">
-                <?php foreach($incame_messages as $message_counter => $message):?>
-                    <?php if($message["belongs_to"] === "0"):?> <!-- First in the thread -->
-                        <div class="message_container <?=$message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$message["message_id"]?>">
-                            <div class="message_from">
-                                Feladó: <?= $message["neptun_code_from"]?>
-                            </div>
-                            <div class="message_separator"></div>
-                            <div class="message_topic">
-                                Tárgy: <?= $message["message_topic"]?>
-                            </div>
-                            <div class="message_separator"></div>
-                            <div class="message_text">
-                                Üzenet részlet: <?=$message["message_text"]?>
-                            </div>
+                <?php foreach($incame_messages as $message_counter => $message_thread_pair):?>
+                    <?php
+                        $message = $message_thread_pair["message"];
+                        $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                    ?>
+                    <div class="message_container <?=$message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$message["message_id"]?>">
+                        <div class="message_from">
+                            Feladó: <?= $message["neptun_code_from"]?>
                         </div>
-                    <?php endif?>
+                        <div class="message_separator"></div>
+                        <div class="message_topic">
+                            Tárgy: <?= $message["message_topic"]?>
+                        </div>
+                        <div class="message_separator"></div>
+                        <div class="message_text">
+                            Üzenet részlet: <?=$message["message_text"]?>
+                        </div>
+                        <div class="thread_count_bubble">
+                            <?=$actual_thread_count?>.
+                        </div>
+                    </div>
                 <?php endforeach?>
             </div>
             <div class="non_header_navigation_div" style="display:none">
-                <?php foreach($sent_messages as $message_counter => $message):?>
+                <?php foreach($sent_messages as $message_counter => $message_thread_pair):?>
+                    <?php
+                        $message = $message_thread_pair["message"];
+                        $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                    ?>
                     <div class="message_container seen clickable_message" id="<?=$message["message_id"]?>">
                         <div class="message_to">
                             Címzett: <?= $message["neptun_code_to"]?>
@@ -147,6 +159,9 @@
                         <div class="message_separator"></div>
                         <div class="message_text">
                             Üzenet részlet: <?=$message["message_text"]?>
+                        </div>
+                        <div class="thread_count_bubble">
+                            <?=$actual_thread_count?>.
                         </div>
                     </div>
                 <?php endforeach?>
