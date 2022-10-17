@@ -762,6 +762,12 @@ ul {
     background-color: white;
 }
 
+.message_and_bubble_holder{
+    width: 92%;
+    margin: 2% 4% 4% 4%;
+    display: flex;
+}
+
 .message_container,
 .expandable_message_container {
     width: 92%;
@@ -769,8 +775,17 @@ ul {
     display: flex;
     border-radius: 3px;
     border: 1px solid rgb(178, 176, 176);
-
     cursor: pointer;
+}
+
+.message_and_bubble_holder .message_container{
+    width: 97%;
+    margin: 2% 0%;
+    border-radius: 0px 3px 3px 0px;
+}
+
+.message_container {
+    border-left: 0px;
 }
 
 .message_from,
@@ -788,12 +803,46 @@ ul {
 }
 
 .message_text {
-    width: 60%;
+    width: 50%;
     margin: 2% auto;
     text-align: left;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.remove_message_bubble,
+.check_message_bubble {
+    border: 1px solid rgb(178, 176, 176);
+    margin: 2% 0%;
+    width: 3%;
+    border-radius: 3px 0px 0px 3px;
+}
+
+.remove_message_bubble input,
+.check_message_bubble input {
+    margin: 70% 10%;
+    width: 90%;
+    height: 23%;
+}
+
+.remove_selected_elements,
+.recover_selected_elements {
+    position: fixed;
+    left: 4%;
+    bottom: 4%;
+
+    width: 3%;
+    height: 6%;
+    border: 1px solid rgb(202, 202, 202);
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+.recover_selected_elements {
+    left: 8%;
 }
 
 .thread_count_bubble {

@@ -119,69 +119,104 @@
             </div>
 
             <div class="non_header_navigation_div">
-                <?php foreach($incame_messages as $message_counter => $message_thread_pair):?>
-                    <?php
-                        $message = $message_thread_pair["message"];
-                        $actual_thread_count = $message_thread_pair["thread_count"] + 1;
-                    ?>
-                    <div class="message_container <?=$message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$message["message_id"]?>">
-                        <div class="message_from">
-                            Feladó: <?= $message["neptun_code_from"]?>
+                <form id="delete_incame_messages" action="./index.php?site=deleteMessages" method="POST">
+                    <?php foreach($incame_messages as $message_counter => $message_thread_pair):?>
+                        <?php
+                            $message = $message_thread_pair["message"];
+                            $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                        ?>
+                        <div class="message_and_bubble_holder">
+                            <div class="remove_message_bubble">
+                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$message["message_id"]?>">
+                            </div>
+                            <div class="message_container <?=$message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$message["message_id"]?>">
+                                <div class="message_from">
+                                    Feladó: <?= $message["neptun_code_from"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_topic">
+                                    Tárgy: <?= $message["message_topic"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_text">
+                                    Üzenet részlet: <?=$message["message_text"]?>
+                                </div>
+                                <div class="thread_count_bubble">
+                                    <?=$actual_thread_count?>.
+                                </div>
+                            </div>
                         </div>
-                        <div class="message_separator"></div>
-                        <div class="message_topic">
-                            Tárgy: <?= $message["message_topic"]?>
-                        </div>
-                        <div class="message_separator"></div>
-                        <div class="message_text">
-                            Üzenet részlet: <?=$message["message_text"]?>
-                        </div>
-                        <div class="thread_count_bubble">
-                            <?=$actual_thread_count?>.
-                        </div>
+                    <?php endforeach?>
+                    <div class="remove_selected_elements" style="cursor:pointer; display:none">
+                        <img src="./views/css/pics/garbage.png" alt="remove selected elements" width="60%" height="80%" style="margin:10% 20%">    
+                        <input type="submit" hidden>
                     </div>
-                <?php endforeach?>
+                </form>
             </div>
             <div class="non_header_navigation_div" style="display:none">
-                <?php foreach($sent_messages as $message_counter => $message_thread_pair):?>
-                    <?php
-                        $message = $message_thread_pair["message"];
-                        $actual_thread_count = $message_thread_pair["thread_count"] + 1;
-                    ?>
-                    <div class="message_container seen clickable_message" id="<?=$message["message_id"]?>">
-                        <div class="message_to">
-                            Címzett: <?= $message["neptun_code_to"]?>
+                <form id="delete_sent_messages" action="./index.php?site=deleteMessages" method="POST">
+                    <?php foreach($sent_messages as $message_counter => $message_thread_pair):?>
+                        <?php
+                            $message = $message_thread_pair["message"];
+                            $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                        ?>
+                        <div class="message_and_bubble_holder">
+                            <div class="remove_message_bubble">
+                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$message["message_id"]?>">
+                            </div>
+                            <div class="message_container seen clickable_message" id="<?=$message["message_id"]?>">
+                                <div class="message_to">
+                                    Címzett: <?= $message["neptun_code_to"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_topic">
+                                    Tárgy: <?= $message["message_topic"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_text">
+                                    Üzenet részlet: <?=$message["message_text"]?>
+                                </div>
+                                <div class="thread_count_bubble">
+                                    <?=$actual_thread_count?>.
+                                </div>
+                            </div>
                         </div>
-                        <div class="message_separator"></div>
-                        <div class="message_topic">
-                            Tárgy: <?= $message["message_topic"]?>
-                        </div>
-                        <div class="message_separator"></div>
-                        <div class="message_text">
-                            Üzenet részlet: <?=$message["message_text"]?>
-                        </div>
-                        <div class="thread_count_bubble">
-                            <?=$actual_thread_count?>.
-                        </div>
+                    <?php endforeach?>
+                    <div class="remove_selected_elements" style="cursor:pointer; display:none">
+                        <img src="./views/css/pics/garbage.png" alt="remove selected elements" width="60%" height="80%" style="margin:10% 20%">    
+                        <input type="submit" hidden>
                     </div>
-                <?php endforeach?>
+                </form>    
             </div>
             <div class="non_header_navigation_div" style="display:none">
-                <?php foreach($romeved_messages as $message_counter => $message):?>
-                    <div class="message_container seen not_clickable_message" id="<?=$message["message_id"]?>">
-                        <div class="message_to">
-                            Címzett: <?= $message["neptun_code_to"]?>
+                <form id="recover__deleted_messages" action="./index.php?site=recoverDeletedMessages" method="POST">    
+                    <?php foreach($removed_messages as $message_counter => $message):?>
+                        <?php if($message["thread_count"] == "0"):?>
+                            <div class="message_and_bubble_holder">
+                                <div class="check_message_bubble">
+                                    <input type="checkbox" class="check_message_bubble_input" name="<?=$message["message_id"]?>">
+                                </div>
+                                <div class="message_container seen not_clickable_message" id="<?=$message["message_id"]?>">
+                                    <div class="message_to">
+                                        Címzett: <?= $message["neptun_code_to"]?>
+                                    </div>
+                                    <div class="message_separator"></div>
+                                    <div class="message_topic">
+                                        Tárgy: <?= $message["message_topic"]?>
+                                    </div>
+                                    <div class="message_separator"></div>
+                                    <div class="message_text">
+                                        Üzenet részlet: <?=$message["message_text"]?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif?>
+                        <div class="recover_selected_elements" style="cursor:pointer; display:none">
+                            <img src="./views/css/pics/garbage.png" alt="a recovery icon" width="60%" height="80%" style="margin:10% 20%">    
+                            <input type="submit" hidden>
                         </div>
-                        <div class="message_separator"></div>
-                        <div class="message_topic">
-                            Tárgy: <?= $message["message_topic"]?>
-                        </div>
-                        <div class="message_separator"></div>
-                        <div class="message_text">
-                            Üzenet részlet: <?=$message["message_text"]?>
-                        </div>
-                    </div>
-                <?php endforeach?>
+                    <?php endforeach?>
+                </form>  
             </div>
             <div id="write_message_button" style="cursor:pointer">
                 <img src="./views/css/pics/write_message.png" alt="write a message" width="60%" height="80%" style="margin:10% 20%">

@@ -48,6 +48,20 @@
         }
 
         /**
+         * This public method returns all of the messages of the user from the messages table.
+         * 
+         * @param string $neptun_code The neptun code of the user.
+         * 
+         * @return array Returns an array containing all of the messages of the user.
+         */
+        public function GetMessages($neptun_code){
+            $neptun_code = strtoupper($neptun_code);
+            $query = "SELECT * FROM messages WHERE ";
+            $query .= "messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"";
+            return $this->database->LoadDataFromDatabase($query);
+        }
+
+        /**
          * This public method returns the neptun codes of the users from the user_groups table who has some connection to the given user.
          * 
          * @param string $neptun_code The neptun code of the user.
@@ -74,6 +88,43 @@
             $teachers_array = array_values($this->database->LoadDataFromDatabase($teachers_query));
 
             return [$associated_array,$teachers_array];
+        }
+
+        /**
+         * This public method will update the messages' table is_removed_by_sender and is_removed_by_receiver columns via the given query array.
+         * 
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * @param bool $remove This parameter decides whether we should remove the message or recover it. The default is true (i.e., we should remove the message).
+         * 
+         * @return void
+        */
+        public function RemoveRecoverMessages($query_array, $remove= true){
+            $query = "BEGIN; ";
+            foreach($query_array as $index => $record){
+                $message_id = $record["message_id"];
+                if(isset($record["is_removed_by_sender"])){
+                    $query .= "UPDATE messages
+                    SET is_removed_by_sender = ";
+                    if($remove){
+                        $query .= "1 ";
+                    }else{
+                        $query .= "0 ";
+                    }
+                    $query .= "WHERE message_id=\"$message_id\"; ";
+                }else{
+                    $query .= "UPDATE messages
+                    SET is_removed_by_receiver = ";
+                    if($remove){
+                        $query .= "1 ";
+                    }else{
+                        $query .= "0 ";
+                    }
+                    $query .= "WHERE message_id=\"$message_id\"; ";
+                }
+            }
+            $query .= "COMMIT;";
+            
+            $this->database->UpdateDatabase($query, true);
         }
     }
 

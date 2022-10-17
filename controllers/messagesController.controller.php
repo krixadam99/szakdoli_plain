@@ -134,9 +134,6 @@
         /**
          *
          * This method updates the messages table by a new message. This will be a reply message to a previous message
-         * 
-         * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
-         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
          *  
          * @return void
         */
@@ -180,6 +177,105 @@
                 }else{
                     header("Location: ./index.php?site=messages");
                 }
+            }else{
+                header("Location: ./index.php");
+            }
+        }
+
+        /**
+         *
+         * This method removes the selected messages.
+         *  
+         * @return void
+        */
+        public function DeleteMessages(){
+            //Neptun code must be set in the session, otherwise we cannot move forward
+            if(isset($_SESSION["neptun_code"])){
+                $message_ids = array_keys($_POST);
+                
+                $merged_messages = $this->message_model->GetMessages($_SESSION["neptun_code"]);
+                $message_id_indexed = [];
+                foreach($merged_messages as $message_counter => $message){
+                    $message_id_indexed[$message["message_id"]] = $message;
+                }
+                
+                $possible_message_ids = array_keys($message_id_indexed);
+                $query_array = [];
+                foreach($message_ids as $id_counter => $message_id){
+                    if(    is_numeric($message_id) 
+                        && intval($message_id) >= 1 
+                        && in_array($message_id, $possible_message_ids)
+                    ){
+                        $belongs_to = $message_id_indexed[$message_id]["belongs_to"];
+                        if($belongs_to == 0){
+                            $belongs_to = $message_id;
+                        }
+
+                        foreach($merged_messages as $message_counter => $message){
+                            if($message["message_id"] == $belongs_to || $message["belongs_to"] == $belongs_to){
+                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){
+                                    array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_sender" => "1"));
+                                }else{
+                                    array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_receiver" => "1")); 
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->message_model->RemoveRecoverMessages($query_array, true);
+
+                header("Location: ./index.php?site=messages");
+            }else{
+                header("Location: ./index.php");
+            }
+        }
+
+        /**
+         *
+         * This method eihter removes the selected messages permanently, or recovers them.
+         *  
+         * @return void
+        */
+        public function RecoverDeleteddMessages(){
+            //Neptun code must be set in the session, otherwise we cannot move forward
+            if(isset($_SESSION["neptun_code"])){
+                $message_ids = array_keys($_POST);
+
+                $merged_messages =  $this->message_model->GetMessages($_SESSION["neptun_code"]);
+                $message_id_indexed = [];
+
+                foreach($merged_messages as $message_counter => $message){
+                    $message_id_indexed[$message["message_id"]] = $message;
+                }
+
+                
+                $possible_message_ids = array_keys($message_id_indexed);
+                $query_array = [];
+                foreach($message_ids as $id_counter => $message_id){
+                    if(    is_numeric($message_id) 
+                        && intval($message_id) >= 1 
+                        && in_array($message_id, $possible_message_ids)
+                    ){
+                        $belongs_to = $message_id_indexed[$message_id]["belongs_to"];
+                        if($belongs_to == 0){
+                            $belongs_to = $message_id;
+                        }
+                        foreach($merged_messages as $message_counter => $message){
+                            if($message["message_id"] == $belongs_to || $message["belongs_to"] == $belongs_to){
+                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){
+                                    array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_sender" => "0"));
+                                }else{
+                                    array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_receiver" => "0")); 
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->message_model->RemoveRecoverMessages($query_array, false);
+                
+                header("Location: ./index.php?site=messages");
             }else{
                 header("Location: ./index.php");
             }
