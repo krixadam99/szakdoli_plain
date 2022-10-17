@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="grades_div" id="progress_div">
+        <div class="grades_div non_header_navigation_div" id="progress_div">
             <label style="font-size: calc(15px + 0.3vw)">
                 Előrehaladás
             </label>
@@ -64,7 +64,7 @@
             <?php endif?>
         </div>
     
-        <div class="grades_div" style="display:none" id="results_div">
+        <div class="grades_div non_header_navigation_div" style="display:none" id="results_div">
             <label style="font-size: calc(15px + 0.3vw)">
                 Eredményeim
             </label>
@@ -149,6 +149,6 @@
         </div>
     </main>
     <script type="module" src="./views/js/mainContent.js"></script>
-    <script type="module" src="./views/js/gradesPage.js"></script>
+    <script type="module" src="./views/js/nonHeaderNavigation.js"></script>
 </body>
 </html>

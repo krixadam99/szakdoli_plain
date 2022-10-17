@@ -42,7 +42,7 @@ tr:nth-child(even) {
     background-color:rgba(227, 227, 227, 0.73);
 }
 
-#finalize_button {
+.finalize_button {
     border: 1px solid black;
     border-radius: 50px;
     width: auto;
@@ -52,7 +52,7 @@ tr:nth-child(even) {
     background-color: white;
 }
 
-#finalize_button:hover {
+.finalize_button:hover {
     border-color: rgb(153, 218, 149);
 }
 
@@ -668,7 +668,8 @@ ul {
     outline: none;
 }
 
-.student_grades_form #finalize_button {
+.student_grades_form .finalize_button,
+#new_message_form .finalize_button {
     width: 10%;
     margin: 2% 45%;
     right: 0%;
@@ -744,6 +745,136 @@ ul {
 .grades_tables_div table th:first-of-type,
 .grades_tables_div table td:first-of-type  {
     border-left: 0px;
+}
+
+/* Messages styles */
+
+#write_message_button {
+    position: fixed;
+    right: 4%;
+    bottom: 4%;
+    width: 3%;
+    height: 6%;
+    padding: 3px 3px;
+    border-radius: 3px;
+    border: 1px solid rgb(178, 176, 176);
+    opacity: 1;
+    background-color: white;
+}
+
+.message_container,
+.expandable_message_container {
+    width: 92%;
+    margin: 2% 4%;
+    display: flex;
+    border-radius: 3px;
+    border: 1px solid rgb(178, 176, 176);
+
+    cursor: pointer;
+}
+
+.message_from,
+.message_to, 
+.message_topic {
+    width: 12%;
+    margin: 2% auto;
+    text-align: center;
+}
+
+.message_separator {
+    border-left: 1px solid rgb(178, 176, 176);
+    width: 1px;
+    margin: 1% auto;
+}
+
+.message_text {
+    width: 60%;
+    margin: 2% auto;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.seen {
+    background-color: rgb(255, 255, 255);
+}
+
+.not_seen {
+    background-color: rgb(244, 242, 242);
+}
+
+.message_container_expanded {
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message_container_expanded div{
+    width: 96%;
+    margin: 1% 2%;
+}
+
+.message_container_expanded div:last-of-type{
+    margin: 2% 2%;
+    overflow-wrap: break-word;
+}
+
+#reply_button {
+    width: 92%;
+    margin: 1% 4%;
+    border: 1px solid rgb(202, 202, 202);
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+#new_message_form,
+.message_container_expanded {
+    width: 92%;
+    margin: 2% 4%;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.message_first_line,
+.message_receiver_div,
+.message_topic_div {
+    display: flex;
+}
+
+.message_receiver_div {
+    width: 40%;
+    margin: 2% auto 2% 2%;
+}
+
+.message_topic_div {
+    width: 60%;
+    margin: 2% 2% 2% auto;
+}
+
+.message__div {
+    width: 96%;
+    margin: 2% 2%;
+}
+
+.message_label {
+    width: auto;  
+}
+
+.message_topic_textarea,
+.receiver_selector {
+    width: 65%;
+    margin: auto 0% auto 1%;
+}
+
+.message_text_textarea{
+    margin: 1% 0%;
+    width: 100%;
+    resize: vertical;
+}
+
+.message_topic_textarea {
+    resize: none;
 }
 
 @media only screen and (max-width: 600px) {

@@ -37,6 +37,12 @@
         }else{
             unset($_SESSION["group_addition_action"]);
         }
+
+        if(isset($_GET["messageId"])){
+            $_SESSION["message_id"] = $_GET["messageId"];
+        }else{
+            unset($_SESSION["message_id"]);
+        }
     }
 
     //Auto-loading classes 
@@ -80,6 +86,8 @@
     
     $controller_connection->get_method_connection("demonstratorHandling", "AdministratorController", "DemonstratorHandling");
     $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
+    $controller_connection->get_method_connection("messages", "MessagesController", "Messages");
+    $controller_connection->get_method_connection("writeMessage", "MessagesController", "WriteMessage");
     $controller_connection->get_method_connection("groupAddition", "GroupAdditionController", "GroupAddition");
     $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
     $controller_connection->get_method_connection("printPage", "TaskGenerationController", "PrintPage");
@@ -94,6 +102,8 @@
     $controller_connection->post_method_connection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
     $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");
     $controller_connection->post_method_connection("finalizePending", "AdministratorController", "FinalizePending");
+    $controller_connection->post_method_connection("sendNewMessage", "MessagesController", "SendNewMessage");
+    $controller_connection->post_method_connection("replyToMessage", "MessagesController", "ReplyToMessage");
     $controller_connection->post_method_connection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
     $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
     $controller_connection->post_method_connection("upgradeStudentGrades", "StudentGradesController", "UpdateResults");

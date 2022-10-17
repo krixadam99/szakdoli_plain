@@ -112,19 +112,24 @@ CREATE TABLE task_due_to_date (
     UNIQUE (subject_group, subject_name, task_type)
 );
 
-/*
 CREATE TABLE messages (
-    neptun_code varchar(6) NOT NULL,
-    message_id int(11) NOT NULL,
-    message varchar(4048) NOT NULL DEFAULT "",
-    is_submitter int(11) NOT NULL DEFAULT 0,
-    is_seen int(11) NOT NULL DEFAULT 0,
-    is_removed int(11) NOT NULL DEFAULT 0,
-    thread_count int(11) NOT NULL DEFAULT 0
+    neptun_code_from varchar(6) NOT NULL,
+    neptun_code_to varchar(6) NOT NULL,
+    message_id int(11) NOT NULL AUTO_INCREMENT,
+    belongs_to int(11) NOT NULL DEFAULT 0,
+    message_topic varchar(255) NOT NULL DEFAULT "",
+    message_text varchar(2024) NOT NULL DEFAULT "",
+    is_seen_by_receiver int(11) NOT NULL DEFAULT 0,
+    is_removed_by_receiver int(11) NOT NULL DEFAULT 0,
+    is_removed_by_sender int(11) NOT NULL DEFAULT 0,
+    thread_count int(11) NOT NULL DEFAULT 0,
 
-    FOREIGN KEY( neptun_code) REFERENCES users( neptun_code )
+    UNIQUE ( message_id ),
+    FOREIGN KEY( neptun_code_from) REFERENCES users( neptun_code ),
+    FOREIGN KEY( neptun_code_to) REFERENCES users( neptun_code )
 );
 
+/*
 CREATE TABLE customized_task (
     neptun_code varchar(6) NOT NULL,
     subject_group int(11) NOT NULL,

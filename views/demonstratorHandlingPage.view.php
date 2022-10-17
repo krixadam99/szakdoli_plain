@@ -42,7 +42,7 @@
                         </tr>
                     <?php endforeach?>
                 </table>
-                <button type="submit" id="finalize_button">VÉGLEGESÍTÉS</button>
+                <button type="submit" class="finalize_button">VÉGLEGESÍTÉS</button>
             </form>
         <?php else:?>
             <div id="notification_box">
