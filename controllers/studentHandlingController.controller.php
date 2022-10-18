@@ -90,7 +90,7 @@
                         $decision = "APPROVED";
                         if(isset($decision_array[$neptun][$id])){
                             $decision = $decision_array[$neptun][$id];
-                            array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "subject_group" => $current_group, "subject_name" => $current_subject, "application_request_status" => $decision));
+                            array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "subject_group" => $current_group, "subject_id" => $current_subject, "application_request_status" => $decision));
                         }
                     }
                 }

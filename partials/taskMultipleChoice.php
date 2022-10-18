@@ -1,7 +1,7 @@
 <div class="pdf_page_task_choice_container">
     <label class="pdf_page_task_choice_label" style="margin: 0%;width:auto">Főtéma kiválasztása:</label>
     <select class="topic_select" style="width:19%; margin:0% auto 0% 2%" name="<?=$section_name?>_main_topic">
-        <?php for($topic_counter = 0; $topic_counter < 10; $topic_counter++):?>
+        <?php for($topic_counter = 0; $topic_counter < 9; $topic_counter++):?>
             <?php 
                 $previous_chosen_topic = 0;
                 if(isset($_SESSION["preview"][$section_name . "_main_topic"])){
@@ -14,7 +14,7 @@
 </div>
 <div class="pdf_page_task_choice_container">
     <div class="subtopic_box" style="width:100%;margin:0%">
-        <?php for($topic_counter = 0; $topic_counter < 10; $topic_counter++):?>
+        <?php for($topic_counter = 0; $topic_counter < 9; $topic_counter++):?>
             <?php 
                 $section_subtopic_counter = 0;
                 $section_name = "task_$section_subtopic_counter";

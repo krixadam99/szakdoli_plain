@@ -42,8 +42,9 @@ button {
 }
 
 .small_navigation_button img {
-    width: 100%;
-    height: 70%;
+    width: 90%;
+    height: 60%;
+    padding: 3px 0px 0px 1px;
 }
 
 #sign_out_button {

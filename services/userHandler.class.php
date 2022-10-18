@@ -14,7 +14,7 @@
     class UserHandler {
         private $neptun_code;
         private $user_email;
-        private $subject_name;
+        private $subject_id;
         private $user_status;
         private $subject_group;
         private $user_password;
@@ -29,17 +29,17 @@
          * @param string $user_password The password the user.
          * @param string $user_password_again The reassuring password of the user.
          * @param string $user_email The email address of the user.
-         * @param string $subject_name The subject name which the user applied to.
+         * @param string $subject_id The subject name which the user applied to.
          * @param string $user_status The status of the user for the applied subject.
          * @param string $subject_group The group which the user applied to in the subject.
          * 
          * @return void
         */
-        public function __construct($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = ""){
+        public function __construct($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_id = "", $user_status = "", $subject_group = ""){
             $this->model = new MainModel();
             $this->neptun_code = $neptun_code;
             $this->user_email = $user_email;
-            $this->subject_name = $subject_name;
+            $this->subject_id = $subject_id;
             $this->user_status = $user_status;
             $this->subject_group = $subject_group;
             $this->user_password = $user_password;
@@ -68,10 +68,10 @@
          * 
          * @return string The name of the subject which the user applied to.
         */
-        public function GetSubjectName() { return $this->subject_name;}
+        public function GetSubjectName() { return $this->subject_id;}
 
 
-        public function SetSubjectName($subject_name) { $this->subject_name = $subject_name;}
+        public function SetSubjectName($subject_id) { $this->subject_id = $subject_id;}
 
         /**
          * 
@@ -181,7 +181,7 @@
          * @return bool Returns whether the user as a student applied to a valid group.
         */
         public function IsGroupNumberCorrect() {
-            $query = "SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"".$this->subject_name."\" AND is_teacher = \"1\" AND application_request_status = \"APPROVED\"";
+            $query = "SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"".$this->subject_id."\" AND is_teacher = \"1\" AND application_request_status = \"APPROVED\"";
             $groups = $this->model->GetDataFromDatabase($query);
 
             $count_group = 0;

@@ -28,7 +28,7 @@
         <div id="notification_container">
             <?php foreach($pending_teacher_groups as $index => $pending_teacher_group):?>
                 <div class="notification_box">
-                    <label>Demonstrátori kérése a <?=$pending_teacher_group["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$pending_teacher_group["subject_group"]?>. csoport esetében elbírálás alatt áll!</label>
+                    <label>Demonstrátori kérése a <?=$pending_teacher_group["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$pending_teacher_group["subject_group"]?>. csoport esetében elbírálás alatt áll!</label>
                 </div>
             <?php endforeach?>
             <?php foreach($pending_student_groups as $index => $pending_student_groups):?>
@@ -40,9 +40,9 @@
                     <?php else:?>
                         <label>
                             A 
-                            <?php if($pending_student_groups["subject_name"]=="i"):?>
+                            <?php if($pending_student_groups["subject_id"]=="i"):?>
                                 Diszkrét matematika I.
-                            <?php elseif($pending_student_groups["subject_name"]=="ii"):?>
+                            <?php elseif($pending_student_groups["subject_id"]=="ii"):?>
                                 Diszkrét matematika II.
                             <?php endif?>
                             tárgy <?=$pending_student_groups["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
@@ -56,7 +56,7 @@
         <div id="notification_container">
             <?php foreach($approved_teacher_groups as $index => $approved_teacher_group):?>
                 <div class="notification_box">
-                    <label>Demonstrátori kérése a <?=$approved_teacher_group["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$approved_teacher_group["subject_group"]?>. csoportjához elfogadásra került!</label>
+                    <label>Demonstrátori kérése a <?=$approved_teacher_group["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$approved_teacher_group["subject_group"]?>. csoportjához elfogadásra került!</label>
                 </div>
             <?php endforeach?>
             <?php if($approved_student_group !== ""):?>

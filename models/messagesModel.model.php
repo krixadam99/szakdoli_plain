@@ -74,7 +74,7 @@
             $associated_query = "SELECT DISTINCT second_table.neptun_code FROM user_groups first_table,user_groups second_table ";
             $associated_query .= "WHERE first_table.neptun_code != second_table.neptun_code ";
             $associated_query .= "AND first_table.neptun_code = \"$neptun_code\" ";
-            $associated_query .= "AND first_table.subject_name = second_table.subject_name ";
+            $associated_query .= "AND first_table.subject_id = second_table.subject_id ";
             $associated_query .= "AND first_table.subject_group = second_table.subject_group ";
             $associated_query .= "AND first_table.application_request_status = \"APPROVED\" ";
             $associated_query .= "AND second_table.application_request_status = \"APPROVED\"";

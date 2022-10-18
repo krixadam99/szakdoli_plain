@@ -16,13 +16,13 @@
          * @param string $user_password This is the user' password. This will be hashed. This will be used in the users table.
          * @param string $user_password_again This is the user' repeated password. This will not be used.
          * @param string $user_email This is the user' email address. This will be used in the users table.
-         * @param string $subject_name This is the user' selected subject's name. This can be "i", or "ii". This will be used in the user_groups table.
+         * @param string $subject_id This is the user' selected subject's name. This can be "i", or "ii". This will be used in the user_groups table.
          * @param string $user_status This is the user' selected user status. This can be "Demonstrátor", or "Diák". This will be used in the user_groups table.
          * @param string $subject_group This is the user' selected subject group. This can be either a group's number which is in the selected subject and has an assigned teacher, the "-" sign, or a number between 1 and 30 (inclusively). This will be used in the user_groups table.
          * 
          * @return void
          */
-        public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_name = "", $user_status = "", $subject_group = "") {  
+        public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_id = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
             $is_admin = 0;
             $query = "INSERT INTO users VALUES(\"".$neptun_code."\", \"".$user_email."\", \"".password_hash($user_password,PASSWORD_BCRYPT)."\", \"$is_admin\")";
@@ -39,7 +39,7 @@
                 $subject_group = 0;
             }
 
-            $query = "INSERT INTO user_groups VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_name\", \"$pending_status\")";
+            $query = "INSERT INTO user_groups VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_id\", \"$pending_status\")";
             
             $this->database->UpdateDatabase($query);
         }

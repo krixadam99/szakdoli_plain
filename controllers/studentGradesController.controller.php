@@ -88,7 +88,7 @@
                         array_push($query_array, array(
                             "neptun_code" => $original_record["neptun_code"], 
                             "subject_group" => $current_group, 
-                            "subject_name" => $current_subject, 
+                            "subject_id" => $current_subject, 
                             "practice_count" => $results["grade_input_practice"]??$original_record["practice_count"],
                             "extra" => $results["grade_input_extra"]??$original_record["extra"],
                             "middle_term_exam" => $results["grade_input_middle_term"]??$original_record["middle_term_exam"],
@@ -193,7 +193,7 @@
                         
                         array_push($query_array, array(
                             "subject_group" => $current_group, 
-                            "subject_name" => $current_subject,
+                            "subject_id" => $current_subject,
                             "task_type" => $task_type,
                             "is_better" => $is_better,
                             "minimum_for_pass" => $minimum_for_pass,
@@ -253,7 +253,7 @@
 
                         array_push($query_array, array(
                             "subject_group" => $current_group, 
-                            "subject_name" => $current_subject,
+                            "subject_id" => $current_subject,
                             "task_type" => $task_type,
                             "due_to" => $due_date
                         ));
@@ -323,7 +323,7 @@
                 satisfactory_level_point = \"" . $points[1] . "\",
                 good_level_point = \"" . $points[2] . "\",
                 excellent_level_point = \"" . $points[3] . "\"
-                WHERE subject_name = \"$current_subject\"
+                WHERE subject_id = \"$current_subject\"
                 AND subject_group = \"$current_group\";";
 
                 $student_grades_model->UpdataDatabase($query);

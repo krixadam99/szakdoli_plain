@@ -1,9 +1,7 @@
 <?php 
-    $number_of_main_topics = 10;
-    if($_SESSION["subject"] === "i"){
-        $number_of_main_topics = 9;
-    }
+    $number_of_main_topics = 9;
 ?>
+
 <div class="pdf_page_task_choice_container">
     <label class="pdf_page_task_choice_label" style="margin: 0%">Főtéma:</label>
     <select class="topic_select" style="width:19%; margin:0% 0% 0% 1%" name="<?=$section_name?>_main_topic">

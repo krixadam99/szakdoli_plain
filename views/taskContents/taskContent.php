@@ -51,7 +51,5 @@
         <?php include("./views/taskContents/dimatiiTasks/taskEight.php");?>
     <?php elseif(intval($_SESSION["topic"]) == 8):?>
         <?php include("./views/taskContents/dimatiiTasks/taskNine.php");?>
-    <?php elseif(intval($_SESSION["topic"]) == 9):?>
-        <?php include("./views/taskContents/dimatiiTasks/taskTen.php");?>
     <?php endif?>
 <?php endif?>

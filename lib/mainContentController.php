@@ -101,8 +101,7 @@
                 "Kínai maradéktétel",
                 "Horner- rendezés használata", 
                 "Polinomok osztása és szorzása", 
-                "Lagrange- és Newton-féle interpolációs polinomok", 
-                "Egyenletek gyökkeresése"
+                "Lagrange- és Newton-féle interpolációs polinomok"
             ];
 
             $this->dimat_ii_subtopics = array(
@@ -114,8 +113,7 @@
                 5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
                 6 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
                 7 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
-                8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"],
-                9 => ["..."]
+                8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"]
             );
 
             $this->dimat_ii_topics_descriptions = [
@@ -127,8 +125,7 @@
                 "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
                 "Polinomok helyettesítési értékének meghatározása Horner- rendezéssel",
                 "Polinomok (maradékos) osztása és szorzása",
-                "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra",
-                "Viéte- formulák, Schönemann-Eisenstein és Gauss tétel, szimmetrikus és antiszimmetrikus egyenletek"
+                "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra"
             ];
         }
 
@@ -269,16 +266,16 @@
                         foreach($this->user_data as $key => $user_record){ // Iterating through the array containing the fetched rows
                             if($user_record["is_teacher"] == 1){ // The user's teacher rows
                                 if($user_record["application_request_status"] == "APPROVED"){ // The user's approved teacher rows
-                                    array_push($this->approved_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
-                                    if(!in_array($user_record["subject_name"],$this->approved_teacher_subjects)){
-                                        array_push($this->approved_teacher_subjects, $user_record["subject_name"]);
+                                    array_push($this->approved_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    if(!in_array($user_record["subject_id"],$this->approved_teacher_subjects)){
+                                        array_push($this->approved_teacher_subjects, $user_record["subject_id"]);
                                     }
                                     
                                     // The students for the given subject id - subject group pair
-                                    $pending_students_per_subject_group = $model->GetStudents($user_record["subject_name"], $user_record["subject_group"]);
-                                    array_push($this->pending_students, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"], "users" => array_values($pending_students_per_subject_group)));
+                                    $pending_students_per_subject_group = $model->GetStudents($user_record["subject_id"], $user_record["subject_group"]);
+                                    array_push($this->pending_students, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"], "users" => array_values($pending_students_per_subject_group)));
                                 }else if($user_record["application_request_status"] == "PENDING"){ // The user's pending teacher rows
-                                    array_push($this->pending_teacher_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->pending_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }else{ // The user's student rows
                                 if($user_record["application_request_status"] == "APPROVED"){  // The user's approved student rows
@@ -290,13 +287,13 @@
                                     }
 
                                     $this->approved_student_group = $user_record["subject_group"];
-                                    $this->approved_student_subject = $user_record["subject_name"];
+                                    $this->approved_student_subject = $user_record["subject_id"];
                                 }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
-                                    array_push($this->pending_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->pending_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
                                 }else if($user_record["application_request_status"] == "WITHDRAWN"){
-                                    array_push($this->withdrawn_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->withdrawn_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
                                 }else if($user_record["application_request_status"] == "DENIED"){
-                                    array_push($this->denied_student_groups, array("subject_name" => $user_record["subject_name"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->denied_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }
                         }
@@ -377,27 +374,27 @@
             $can_apply_to_group = true;
             $can_add_group = true;
         
-            $pending_student_subject_names = [];
+            $pending_student_subject_ids = [];
             $pending_st_groups = [];
             foreach($pending_student_groups as $group_counter => $group_id_pair){
-                if(!in_array($group_id_pair["subject_name"], $pending_student_subject_names)){
-                    array_push($pending_student_subject_names,$group_id_pair["subject_name"]);
+                if(!in_array($group_id_pair["subject_id"], $pending_student_subject_ids)){
+                    array_push($pending_student_subject_ids,$group_id_pair["subject_id"]);
                     array_push($pending_st_groups,$group_id_pair["subject_group"]);
                 }
             }
 
             if(    in_array("ii", $approved_teacher_subjects) 
                 || "ii" === $approved_student_subject
-                || in_array("ii", $pending_student_subject_names)){
+                || in_array("ii", $pending_student_subject_ids)){
                 $can_apply_to_group = false;
             }
 
-            if("i" === $approved_student_subject || in_array("i", $pending_student_subject_names)){
+            if("i" === $approved_student_subject || in_array("i", $pending_student_subject_ids)){
                 $show_group_addition_menu = false;
             }
 
-            $i_pos = array_search("i", $pending_student_subject_names);
-            $ii_pos = array_search("i", $pending_student_subject_names);
+            $i_pos = array_search("i", $pending_student_subject_ids);
+            $ii_pos = array_search("i", $pending_student_subject_ids);
             if(    is_numeric($i_pos) && $pending_st_groups[$i_pos] === "0" 
                 || is_numeric($ii_pos) && $pending_st_groups[$ii_pos] === "0"){
                 $show_group_addition_menu = true;

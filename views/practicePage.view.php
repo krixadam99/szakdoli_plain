@@ -1,17 +1,17 @@
 <?php
     $approved_student_subject = $this->GetApprovedStudentSubject();
     
-    $subject_name = "";
+    $subject_id = "";
     $column_number = 4;
     $practice_topics = [];
     $topic_descriptions = [];
     if($approved_student_subject == "i"){
-        $subject_name = "Diszkrét matematika I. gyakorlás";
+        $subject_id = "Diszkrét matematika I. gyakorlás";
         $topic_division = [4, 3, 1, 1];
         $practice_topics = $this->dimat_i_topics;
         $topic_descriptions = $this->dimat_i_topics_descriptions;
     }elseif($approved_student_subject == "ii"){
-        $subject_name = "Diszkrét matematika II. gyakorlás";
+        $subject_id = "Diszkrét matematika II. gyakorlás";
         $topic_division = [6, 4];
         $practice_topics = $this->dimat_ii_topics;
         $topic_descriptions = $this->dimat_ii_topics_descriptions;
@@ -50,7 +50,7 @@
     <?php include("./partials/header.php")?>
     <main>
         <?php if(!isset($_SESSION["topic"]) || (isset($_SESSION["topic"]) && $_SESSION["topic"] == "")):?>
-            <h1><?=$subject_name?></h1>
+            <h1><?=$subject_id?></h1>
             <hr>
             <?php $topic_counter = 0;?>
             <?php $card_counter = 0;?>

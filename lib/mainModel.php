@@ -61,7 +61,7 @@
         public function GetPracticeResults($neptun_code){
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM user_groups, practice_task_points WHERE ";
-            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_name = practice_task_points.subject_name AND user_groups.subject_group = practice_task_points.subject_group ";
+            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_id = practice_task_points.subject_id AND user_groups.subject_group = practice_task_points.subject_group ";
             $query .= "AND practice_task_points.neptun_code = \"$neptun_code\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabase($query);
         }
@@ -69,13 +69,13 @@
         /**
          * This public method returns all of the students for the given subject name - subject group pair.
          * 
-         * @param string $subject_name The subject's name.
+         * @param string $subject_id The subject's name.
          * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing the students belonging to the subject name - subject group pair.
          */
-        public function GetStudents($subject_name, $subject_group){
-            $query = "SELECT * FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\"";
+        public function GetStudents($subject_id, $subject_group){
+            $query = "SELECT * FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_id = \"$subject_id\" AND subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -85,21 +85,21 @@
          * @return array Returns an array containing all of the pending teachers.
          */
         public function GetPendingTeachers(){
-            $query = "SELECT neptun_code, subject_group, subject_name FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 1 AND application_request_status = \"PENDING\"";
+            $query = "SELECT neptun_code, subject_group, subject_id FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 1 AND application_request_status = \"PENDING\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
          * This public method returns the details of each task for the given subject name - subject group pair (that is, for the teacher's given group in the given subject).
          * 
-         * @param string $subject_name The subject's name.
+         * @param string $subject_id The subject's name.
          * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing each task's details (minimum to pass, type of task, maximum points and whether the better counts, or not, if there is a correction from this type of task) belonging to the subject name - subject group pair.
          */
-        public function GetExpectationRules($subject_name, $subject_group){
+        public function GetExpectationRules($subject_id, $subject_group){
             $query = "SELECT * FROM expectation_rules 
-            WHERE expectation_rules.subject_name = \"$subject_name\" 
+            WHERE expectation_rules.subject_id = \"$subject_id\" 
             AND expectation_rules.subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
@@ -107,14 +107,14 @@
         /**
          * This public method returns the due dates of each task for the given subject name - subject group pair (that is, for the teacher's given group in the given subject).
          * 
-         * @param string $subject_name The subject's name.
+         * @param string $subject_id The subject's name.
          * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing each task's due date belonging to the subject name - subject group pair.
          */
-        public function GetTaskDueDate($subject_name, $subject_group){
+        public function GetTaskDueDate($subject_id, $subject_group){
             $query = "SELECT * FROM task_due_to_date 
-            WHERE task_due_to_date.subject_name = \"$subject_name\" 
+            WHERE task_due_to_date.subject_id = \"$subject_id\" 
             AND task_due_to_date.subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
@@ -122,14 +122,14 @@
         /**
          * This public method returns the grade levels of each task for the given subject name - subject group pair (that is, for the teacher's given group in the given subject).
          * 
-         * @param string $subject_name The subject's name.
+         * @param string $subject_id The subject's name.
          * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing the minimum point to get a certain grade for the subject name - subject group pair.
          */
-        public function GetGradeLevels($subject_name, $subject_group){
+        public function GetGradeLevels($subject_id, $subject_group){
             $query = "SELECT * FROM grade_table 
-            WHERE grade_table.subject_name = \"$subject_name\" 
+            WHERE grade_table.subject_id = \"$subject_id\" 
             AND grade_table.subject_group = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
@@ -164,74 +164,74 @@
                 }
                 
                 $subject_group = $record["subject_group"];
-                $subject_name = $record["subject_name"];
+                $subject_id = $record["subject_id"];
                 $pending_status = $record["application_request_status"];
 
                 if($is_teacher === 0){
-                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
+                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_id = \"$subject_id\" AND subject_group = \"$subject_group\" AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
                 }
                 
                 if($pending_status === "APPROVED" && $is_teacher === 0){
-                    if($subject_name === "i"){
+                    if($subject_id === "i"){
                         $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
                     }else{
-                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_name = \"ii\"; ";
+                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_id = \"ii\"; ";
                     }
                     
                     $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
                 }
 
                 if($is_teacher === 1){
-                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_name = \"$subject_name\" AND subject_group = \"$subject_group\" AND is_teacher = \"1\"; "; 
+                    $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_id = \"$subject_id\" AND subject_group = \"$subject_group\" AND is_teacher = \"1\"; "; 
 
                     // Whithdraw from subjects if approved
                     if($pending_status === "APPROVED"){
-                        if($subject_name === "i"){
-                            $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\" AND subject_name = \"i\"; ";
+                        if($subject_id === "i"){
+                            $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\" AND subject_id = \"i\"; ";
                         }else{
                             $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
                         }
                         
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_count\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"extra\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO expectation_rules(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_tests\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_count\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"extra\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"middle_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"final_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO expectation_rules(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_tests\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
                         
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_1\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_2\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_3\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_4\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_5\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_6\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_7\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_8\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_9\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"small_test_10\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_1\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_2\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_3\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_4\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_5\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_6\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_7\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_8\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_9\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
-                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_name, task_type) VALUES(\"$subject_group\", \"$subject_name\", \"practice_task_10\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"middle_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"final_term_exam\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_1\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_2\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_3\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_4\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_5\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_6\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_7\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_8\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_9\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"small_test_10\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_1\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_2\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_3\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_4\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_5\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_6\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_7\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_8\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_9\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";"; 
+                        $query .= "INSERT INTO task_due_to_date(subject_group, subject_id, task_type) VALUES(\"$subject_group\", \"$subject_id\", \"practice_task_10\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
                         
-                        $query .= "INSERT INTO grade_table(subject_group, subject_name) VALUES(\"$subject_group\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
+                        $query .= "INSERT INTO grade_table(subject_group, subject_id) VALUES(\"$subject_group\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\";";
                     }
                 }
 
                 if($pending_status === "APPROVED" && $is_teacher === 0){
-                    $query .= "INSERT INTO results(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
-                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_name) VALUES(\"$neptun_code\", \"$subject_name\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
+                    $query .= "INSERT INTO results(neptun_code, subject_id) VALUES(\"$neptun_code\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
+                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_id) VALUES(\"$neptun_code\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
                 }
             }
             $query .= "COMMIT;";

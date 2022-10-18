@@ -38,8 +38,8 @@
                 $can_apply_to_group = $group_addition_conditions[1];
                 $can_add_group = $group_addition_conditions[2];
                 
-                $this->dimat_i_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-                $this->dimat_ii_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_name = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                $this->dimat_i_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                $this->dimat_ii_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
                 
                 include(ROOT_DIRECTORY . "/views/groupAdditionPage.view.php");
             }else{
@@ -52,7 +52,7 @@
          */
         public function ValidateGroupAddition() {
             if( 
-                    isset($_POST['subject_name'])
+                    isset($_POST['subject_id'])
                 &&  isset($_POST['user_status'])
             ){  // Do not let the post variable names to be overwritten
                 // Initial checkings
@@ -63,24 +63,24 @@
                         $group = $_POST["teacher_group"];
                     }
                 }else if($_POST['user_status']=== "Diák"){
-                    if($_POST["subject_name"] == "Diszkrét matematika I."){
+                    if($_POST["subject_id"] == "Diszkrét matematika I."){
                         if(isset($_POST["student_group_i"])){
                             $group = $_POST["student_group_i"]??0;
                         }
-                    }else if($_POST["subject_name"] == "Diszkrét matematika II."){
+                    }else if($_POST["subject_id"] == "Diszkrét matematika II."){
                         if(isset($_POST["student_group_ii"])){
                             $group = $_POST["student_group_ii"]??0;
                         }
                     }
                 }
 
-                $this->user_handler = new UserHandler("", "", "", "", $_POST["subject_name"], $_POST['user_status'], $group);
+                $this->user_handler = new UserHandler("", "", "", "", $_POST["subject_id"], $_POST['user_status'], $group);
                 $this->ValidateUser();   
                 
                 
                 if(count($this->error_parameters) === 0){ // Everything was correct 
                     if(    $_POST['user_status'] === "Demonstrátor" 
-                        && !in_array($this->GetApprovedTeacherGroups(),[$group, $_POST["subject_name"]])
+                        && !in_array($this->GetApprovedTeacherGroups(),[$group, $_POST["subject_id"]])
                         || $_POST['user_status'] === "Diák"
                     ){
                         $this->group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectName(), $_POST["user_status"], $group);
@@ -123,27 +123,27 @@
          *
          * This private method validates the user's selected subject name.
          * 
-         * If the input was "Diszkrét matematika I.", then the correct parameters will be updated with the subject_name - "0" address key-value pair.
-         * If the input was "Diszkrét matematika II.", then the correct parameters will be updated with the subject_name - "1" address key-value pair.
+         * If the input was "Diszkrét matematika I.", then the correct parameters will be updated with the subject_id - "0" address key-value pair.
+         * If the input was "Diszkrét matematika II.", then the correct parameters will be updated with the subject_id - "1" address key-value pair.
          * Else the incorrect parameters will be extended with an id that starts with the wrong_1 prefix, and continues with the specific problem (no subject name, no such subject).
          * 
          * @return void
         */
         private function SubjectNameValidator() {
-            $subject_name = $this->user_handler->GetSubjectName();
+            $subject_id = $this->user_handler->GetSubjectName();
     
-            if(isset($subject_name)){
-                if($subject_name == "Diszkrét matematika I."){ // The subject name was "Diszkrét matematika I."
+            if(isset($subject_id)){
+                if($subject_id == "Diszkrét matematika I."){ // The subject name was "Diszkrét matematika I."
                     $this->user_handler->SetSubjectName("i");
-                    $this->success_parameters["subject_name"] = "0";
-                }elseif($subject_name == "Diszkrét matematika II."){ // The subject name was "Diszkrét matematika II."
+                    $this->success_parameters["subject_id"] = "0";
+                }elseif($subject_id == "Diszkrét matematika II."){ // The subject name was "Diszkrét matematika II."
                     $this->user_handler->SetSubjectName("ii");
-                    $this->success_parameters["subject_name"] = "1";
+                    $this->success_parameters["subject_id"] = "1";
                 }else{ // The subject name was not "Diszkrét matematika I." or "Diszkrét matematika II.", but a maliciously set value
                     array_push($this->error_parameters, "wrong_2_no_such_subject");        
                 }
             }else{ // No subject name given
-                array_push($this->error_parameters, "wrong_2_no_subject_name");
+                array_push($this->error_parameters, "wrong_2_no_subject_id");
             }
         }
     
@@ -156,13 +156,13 @@
          * @return void
         */
         private function SubjectGroupValidator() {
-            $subject_name = $this->user_handler->GetSubjectName();
+            $subject_id = $this->user_handler->GetSubjectName();
             $user_status = $this->user_handler->GetUserStatus();
             $subject_group = $this->user_handler->GetSubjectGroup();
     
             if(isset($subject_group)){
                 if($user_status == "Diák"){
-                    if($subject_name == "i" || $subject_name == "ii"){
+                    if($subject_id == "i" || $subject_id == "ii"){
                         $is_correct = $this->user_handler->IsGroupNumberCorrect();
                         if($is_correct){ 
                             $this->success_parameters["subject_group"] = $subject_group;

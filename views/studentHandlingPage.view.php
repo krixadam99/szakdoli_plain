@@ -9,7 +9,7 @@
 
     $students = [];
     foreach($all_students as $index => $students_per_subjects_per_group){
-        if($students_per_subjects_per_group["subject_name"] === $_SESSION["subject"] && $students_per_subjects_per_group["subject_group"] === $_SESSION["group"]){
+        if($students_per_subjects_per_group["subject_id"] === $_SESSION["subject"] && $students_per_subjects_per_group["subject_group"] === $_SESSION["group"]){
             $students = $students_per_subjects_per_group["users"];
             break;
         }
@@ -46,7 +46,7 @@
                         <?php if($student["application_request_status"] !== "WITHDRAWN"):?>
                             <tr id=<?=$student["subject_group"]?> class="student_row">
                                 <td><?=$student["neptun_code"]?></td>
-                                <td><?=$student["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
+                                <td><?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
                                 <td><?=$student["subject_group"]?></td>
                                 <td>
                                     <select id="student_handling_select" name=<?=$student["neptun_code"]?>>

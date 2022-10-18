@@ -47,14 +47,14 @@
             ?>
             <?php if($show_group_addition_menu):?>
                 <div class="small_navigation_button" id="group_addition_button">
-                    <img src="./views/css/pics/notifications_shape.png" alt="group_addition_shape" id="group_addition_shape">
+                    <img src="./views/css/pics/apply_to_group.png" alt="group_addition_shape" id="group_addition_shape">
                     <span class="text_of_tooltip">
                         Csoporthoz való csatlakozás
                     </span>
                 </div>
             <?php endif?>
             <div class="small_navigation_button" id="user_setting_button">
-                <img src="./views/css/pics/notifications_shape.png" alt="user_setting_shape" id="user_setting_shape">
+                <img src="./views/css/pics/edit_user.png" alt="user_setting_shape" id="user_setting_shape">
                 <span class="text_of_tooltip">
                     Személyes adatok szerkesztése
                 </span>
@@ -83,12 +83,12 @@
 
                 <?php if(count($approved_teacher_subjects) === 2):?>
                     <nav id="generate_task" class="nav_with_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>">
-                        Diákok kezelése
+                        Diákok kérésének kezelése
                         <div class="submenu">                    
                             <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>                            
                                 <?php 
                                     foreach($approved_teacher_groups as $index => $approved_teacher_group){
-                                        if($approved_teacher_group["subject_name"] === $approved_teacher_subject){
+                                        if($approved_teacher_group["subject_id"] === $approved_teacher_subject){
                                             $first_group = $approved_teacher_group["subject_group"];
                                             break;
                                         }
@@ -103,7 +103,7 @@
                     <nav id="generate_task" class="nav_without_submenu <?=$actual_page=="student_handling"?"actual_page":"not_actual_page"?>">
                         <?php 
                             foreach($approved_teacher_groups as $index => $approved_teacher_group){
-                                if($approved_teacher_group["subject_name"] === $approved_teacher_subjects[0]){
+                                if($approved_teacher_group["subject_id"] === $approved_teacher_subjects[0]){
                                     $first_group = $approved_teacher_group["subject_group"];
                                     break;
                                 }
@@ -121,7 +121,7 @@
                             <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>                            
                                 <?php 
                                     foreach($approved_teacher_groups as $index => $approved_teacher_group){
-                                        if($approved_teacher_group["subject_name"] === $approved_teacher_subject){
+                                        if($approved_teacher_group["subject_id"] === $approved_teacher_subject){
                                             $first_group = $approved_teacher_group["subject_group"];
                                             break;
                                         }
@@ -136,7 +136,7 @@
                     <nav id="generate_task" class="nav_without_submenu <?=$actual_page=="student_grades"?"actual_page":"not_actual_page"?>">
                         <?php 
                             foreach($approved_teacher_groups as $index => $approved_teacher_group){
-                                if($approved_teacher_group["subject_name"] === $approved_teacher_subjects[0]){
+                                if($approved_teacher_group["subject_id"] === $approved_teacher_subjects[0]){
                                     $first_group = $approved_teacher_group["subject_group"];
                                     break;
                                 }

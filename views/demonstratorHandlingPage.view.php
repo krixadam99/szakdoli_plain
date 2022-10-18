@@ -30,10 +30,10 @@
                     <?php foreach($pending_teachers as $index => $pending_user_information):?>
                         <tr>
                             <td><?=$pending_user_information["neptun_code"]?></td>
-                            <td><?=$pending_user_information["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
+                            <td><?=$pending_user_information["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
                             <td><?=$pending_user_information["subject_group"]?></td>
                             <td>
-                                <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_name"]."_".$pending_user_information["subject_group"]?>>
+                                <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_id"]."_".$pending_user_information["subject_group"]?>>
                                     <option selected>-</option>
                                     <option>ELFOGADÁS</option>
                                     <option>ELUTASÍTÁS</option>

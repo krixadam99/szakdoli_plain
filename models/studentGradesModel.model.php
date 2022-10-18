@@ -4,17 +4,17 @@
         /**
          * This public method returns all of the students' grades for the given subject name - subject group pair (that is, for the given teacher).
          * 
-         * @param string $subject_name The subject's name.
+         * @param string $subject_id The subject's name.
          * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing the students' grades belonging to the subject name - subject group pair.
          */
-        public function GetStudentsGrades($subject_name, $subject_group){
+        public function GetStudentsGrades($subject_id, $subject_group){
             $query = "SELECT * FROM user_groups, results 
             WHERE user_groups.neptun_code =  results.neptun_code
-            AND user_groups.subject_name = results.subject_name
+            AND user_groups.subject_id = results.subject_id
             AND user_groups.subject_group = results.subject_group
-            AND user_groups.subject_name = \"$subject_name\" 
+            AND user_groups.subject_id = \"$subject_id\" 
             AND user_groups.subject_group = \"$subject_group\" 
             AND user_groups.is_teacher = \"0\"
             AND user_groups.application_request_status = \"APPROVED\"";
@@ -33,7 +33,7 @@
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
                 $subject_group = $record["subject_group"];
-                $subject_name = $record["subject_name"];
+                $subject_id = $record["subject_id"];
                 
                 $query .= "UPDATE results 
                 SET practice_count = \"" . $record["practice_count"] . "\"
@@ -54,7 +54,7 @@
                 , small_test_10 = \"" . $record["small_test_10"] . "\" 
                 WHERE neptun_code = \"$neptun_code \" 
                 AND subject_group = \"$subject_group\"
-                AND subject_name = \"$subject_name\"; ";
+                AND subject_id = \"$subject_id\"; ";
             }
             $query .= "COMMIT;";
             $this->database->UpdateDatabase($query, true);
@@ -71,7 +71,7 @@
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $subject_group = $record["subject_group"];
-                $subject_name = $record["subject_name"];
+                $subject_id = $record["subject_id"];
                 $task_type = $record["task_type"];
                 
                 $query .= "UPDATE expectation_rules 
@@ -79,7 +79,7 @@
                 , minimum_for_pass = \"" . $record["minimum_for_pass"] . "\"
                 , maximum_value = \"" . $record["maximum_value"] . "\"
                 WHERE subject_group = \"$subject_group\"
-                AND subject_name = \"$subject_name\"
+                AND subject_id = \"$subject_id\"
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";
@@ -97,13 +97,13 @@
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $subject_group = $record["subject_group"];
-                $subject_name = $record["subject_name"];
+                $subject_id = $record["subject_id"];
                 $task_type = $record["task_type"];
                 
                 $query .= "UPDATE task_due_to_date 
                 SET due_to = \"" . $record["due_to"] . "\"
                 WHERE subject_group = \"$subject_group\"
-                AND subject_name = \"$subject_name\"
+                AND subject_id = \"$subject_id\"
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";

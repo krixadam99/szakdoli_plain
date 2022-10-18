@@ -16,13 +16,13 @@
          * If a teacher applies to the same subject name - subject group and their application_request_status is APPROVED, then this should not overwrite that (previously checked).
          * 
          * @param string $neptun_code This is the neptun code of the user. This will be used in both the users and user_groups tables.
-         * @param string $subject_name This is the user' selected subject's name. This can be "i", or "ii". This will be used in the user_groups table.
+         * @param string $subject_id This is the user' selected subject's name. This can be "i", or "ii". This will be used in the user_groups table.
          * @param string $user_status This is the user' selected user status. This can be "Demonstrátor", or "Diák". This will be used in the user_groups table.
          * @param string $subject_group This is the user' selected subject group. This can be either a group's number which is in the selected subject and has an assigned teacher, or a number between 1 and 30 (inclusively). This will be used in the user_groups table.
          * 
          * @return void
          */
-        public function UpdateUserGroups($neptun_code = "", $subject_name = "", $user_status = "", $subject_group = "") {  
+        public function UpdateUserGroups($neptun_code = "", $subject_id = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
 
             $pending_status = "PENDING";
@@ -38,13 +38,13 @@
 
             $query = "BEGIN; ";
             if($is_teacher === 1){
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
+                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_id\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
             }else{
                 $query .= "DELETE FROM user_groups WHERE neptun_code = \"$neptun_code \" AND subject_group = \"0\"; ";
 
                 // WITHDREW or DELETE?
                 $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_name\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
+                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_id\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
             }
             $query .= "COMMIT; ";
 

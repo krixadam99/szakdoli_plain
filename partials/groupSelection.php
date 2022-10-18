@@ -10,7 +10,7 @@
 <hr>
 <select id="group_selector">
     <?php foreach($approved_teacher_groups as $key => $approved_teacher_group):?>
-        <?php if($approved_teacher_group["subject_name"] == $_SESSION["subject"]):?>
+        <?php if($approved_teacher_group["subject_id"] == $_SESSION["subject"]):?>
             <option <?=isset($_SESSION["group"]) && $_SESSION["group"] === $approved_teacher_group["subject_group"]?"selected":""?>><?=$approved_teacher_group["subject_group"]?></option>
         <?php endif?>
     <?php endforeach?>

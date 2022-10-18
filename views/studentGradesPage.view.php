@@ -81,7 +81,7 @@
                                         <?=$student["neptun_code"]?>
                                     </td>
                                     <td style="border-left:1px dashed black">
-                                        <?=$student["subject_name"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?>
+                                        <?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?>
                                     </td>
                                     <td style="border-left:1px dashed black">
                                         <?=$student["subject_group"]?>
@@ -289,7 +289,7 @@
             
                 <div style="overflow-x:auto; margin-top:2%">
                     <table>
-                        <?php $id = $grade_levels["subject_name"] . "_" . $grade_levels["subject_group"]?>
+                        <?php $id = $grade_levels["subject_id"] . "_" . $grade_levels["subject_group"]?>
                         <tr class="header_row">
                             <th>MINŐSÍTÉS</th>
                             <th>ALSÓ PONTHATÁR</th>
