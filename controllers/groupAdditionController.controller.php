@@ -8,17 +8,14 @@
         private $user_handler;
         private $error_parameters;
         private $success_parameters;
-        private $group_addition_model;
 
         /**
          * 
          */
         public function __construct(){
             parent::__construct();
-
             $this->error_parameters = [];
             $this->success_parameters = [];
-            $this->group_addition_model = new GroupAdditionModel();
         }
 
         /**
@@ -32,14 +29,15 @@
         public function GroupAddition() {
             //Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
+                $group_addition_model = new GroupAdditionModel();
                 $this->SetMembers();
 
                 $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
                 $can_apply_to_group = $group_addition_conditions[1];
                 $can_add_group = $group_addition_conditions[2];
                 
-                $this->dimat_i_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-                $this->dimat_ii_groups = $this->group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                $this->dimat_i_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                $this->dimat_ii_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
                 
                 include(ROOT_DIRECTORY . "/views/groupAdditionPage.view.php");
             }else{
@@ -58,6 +56,8 @@
                 // Initial checkings
 
                 $group = 0;
+
+
                 if($_POST['user_status'] === "Demonstrátor"){
                     if(isset($_POST["teacher_group"])){
                         $group = $_POST["teacher_group"];
@@ -83,7 +83,8 @@
                         && !in_array($this->GetApprovedTeacherGroups(),[$group, $_POST["subject_id"]])
                         || $_POST['user_status'] === "Diák"
                     ){
-                        $this->group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectName(), $_POST["user_status"], $group);
+                        $group_addition_model = new GroupAdditionModel();
+                        $group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectName(), $_POST["user_status"], $group);
                     }
                     
                     header("Location: ./index.php?site=notifications");
@@ -195,7 +196,7 @@
          *  
          * @return void
         */
-        public function ValidateUser(){
+        private function ValidateUser(){
             $this->UserStatusValidator();
             $this->SubjectNameValidator();
             $this->SubjectGroupValidator();

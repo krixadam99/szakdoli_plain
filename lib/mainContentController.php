@@ -6,7 +6,7 @@
      * The controllers throughout the project (except those that belong to the index, login, or registration pages) will inherit the protected members, and the protected and public methods.
      * Since we need to know the neptun code, whether the user is an administrator, the students whose status is pending and approved belonging to this user, the groups and subjects for which the user's teacher and student status is pending and approved, so we will set these members here for each controller class. 
     */
-    class MainContentController {
+    class MainContentController extends FormValidator {
         protected $is_administrator;
         
         protected $user_data;

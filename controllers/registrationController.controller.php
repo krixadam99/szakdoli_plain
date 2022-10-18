@@ -283,7 +283,7 @@
          *  
          * @return void
         */
-        public function ValidateUser(){
+        private function ValidateUser(){
             $this->NeptunCodeValidator();
             $this->EmailAddressValidator();
             $this->SubjectNameValidator();

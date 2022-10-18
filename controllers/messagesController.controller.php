@@ -20,8 +20,6 @@
         public function __construct(){
             parent::__construct();
             $this->message_model = new MessagesModel();
-            $this->errors = [];
-            $this->correct_parameters = [];
         }
         
         /**
@@ -69,7 +67,7 @@
                 $this->SetMembers();
                 
                 $_SESSION["write_message"] = true;
-                $neptun_codes = $this->GetAssocitedNeptunCodes();
+                $neptun_codes = $this->GetAssociteNeptunCodes();
                 
                 include(ROOT_DIRECTORY . "/views/messagesPage.view.php");
             }else{
@@ -89,10 +87,9 @@
         public function SendNewMessage(){
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
-                $neptun_codes = $this->GetAssocitedNeptunCodes();
-                $success_parameters = [];
+                $neptun_codes = $this->GetAssociteNeptunCodes();
 
-                $error_parameters = $this->ValidateInputs(
+                $this->ValidateInputs(
                     [
                         $_POST["message_to"]??-1 => [
                             "in_array" => $neptun_codes
@@ -108,9 +105,9 @@
                     ]
                 );
                 
-                if(count($error_parameters) !== 0){
-                    $_SESSION["error_parameters"] = $error_parameters;
-                    $_SESSION["correct_parameters"] = $success_parameters;
+                if(count($this->incorrect_parameters) !== 0){
+                    $_SESSION["incorrect_parameters"] = $this->incorrect_parameters;
+                    $_SESSION["correct_parameters"] = $this->correct_parameters;
                     header("Location: ./index.php?site=writeMessage");
                 }else{
                     $new_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, message_topic, message_text) VALUES(
@@ -143,7 +140,7 @@
                 if(isset($_SESSION["message_id"]) && $_SESSION["thread_count_new"] && $_SESSION["neptun_code_to"]){
                     $success_parameters = [];
     
-                    $error_parameters = $this->ValidateInputs(
+                    $this->ValidateInputs(
                         [
                             $_POST["message_topic"]??-2 => [
                                 "not_placeholder" => ["","Üzenet témája..."],
@@ -156,9 +153,9 @@
                         ]
                     );
                     
-                    if(count($error_parameters) !== 0){
-                        $_SESSION["error_parameters"] = $error_parameters;
-                        $_SESSION["correct_parameters"] = $success_parameters;
+                    if(count($this->incorrect_parameters) !== 0){
+                        $_SESSION["incorrect_parameters"] = $this->incorrect_parameters;
+                        $_SESSION["correct_parameters"] = $this->correct_parameters;
                         header("Location: ./index.php?site=messages&messageId=" . $_SESSION["message_id"]);
                     }else{
                         $reply_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count) VALUES(
@@ -284,7 +281,7 @@
         /**
          * 
          */
-        private function GetAssocitedNeptunCodes(){
+        private function GetAssociteNeptunCodes(){
             $all_neptun_codes_associated = $this->message_model->GetNeptunCodes($_SESSION["neptun_code"]);
             $neptun_codes = ["ADMIN"];
 
@@ -302,94 +299,6 @@
             }
 
             return $neptun_codes;
-        }
-
-        private function ValidateInputs($validation_array){
-            $errors = [];
-            
-            $input_counter = 1;
-            foreach($validation_array as $input => $validation_rules){
-                if(is_string($input)){
-                    foreach($validation_rules as $attribute => $condition){
-                        switch($attribute){
-                            case "length":{
-                                $left_side = strlen($input);
-                                $relation = $condition[0]??">";
-                                $right_side = $condition[1]??0;
-                                if(is_numeric($right_side)){
-                                    $right_side = intval($right_side);
-                                }else{
-                                    $right_side = 0;
-                                }
-                                
-                                switch($relation){
-                                    case ">":{
-                                        if($left_side <= $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_too_short");
-                                        }
-                                    };break;
-                                    case "<":{
-                                        if($left_side >= $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_too_long");
-                                        }
-                                    };break;
-                                    case ">=":{
-                                        if($left_side < $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_too_short");
-                                        }
-                                    };break;
-                                    case "<=":{
-                                        if($left_side > $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_too_long");
-                                        }
-                                    };break;
-                                    case "==":{
-                                        if($left_side != $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_not_equal");
-                                        }
-                                    };break;
-                                    case "!=":{
-                                        if($left_side == $right_side){
-                                            array_push($errors, "wrong_$input_counter" . "_equal");
-                                        }
-                                    };break;
-                                    default:break;
-                                }
-                            };break;
-                            case "not_placeholder":{
-                                $left_side = $input;
-                                $place_holder = $condition;
-
-                                if(is_string($place_holder)){
-                                    if($left_side === $place_holder){
-                                        array_push($errors, "wrong_$input_counter" . "_not_set");
-                                    }
-                                }elseif(is_array($place_holder)){
-                                    if(in_array($left_side, $place_holder)){
-                                        array_push($errors, "wrong_$input_counter" . "_not_set");
-                                    }
-                                }
-                            };break;
-                            case "in_array":{
-                                $left_side = $input;
-                                $array = $condition;
-    
-                                if(is_array($array)){
-                                    if(!in_array($left_side, $array)){
-                                        array_push($errors, "wrong_$input_counter" . "_not_in_array");
-                                    }
-                                }
-                            };break;
-                        }
-                    }
-                }else{
-                    array_push($errors, "wrong_$input_counter" . "_not_found");
-                }
-        
-                $input_counter += 1;
-            }
-
-            return $errors;
         }
     }
 

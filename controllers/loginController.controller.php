@@ -142,7 +142,7 @@
          * 
          * @return void
         */
-        public function ValidateUser($only_neptun_code = false){
+        private function ValidateUser($only_neptun_code = false){
             $this->NeptunCodeValidator();
             if(count($this->GetIncorrectParameters()) === 0 && !$only_neptun_code){ // Check the password input only if the neptun code was valid
                 $this->PasswordValidator();

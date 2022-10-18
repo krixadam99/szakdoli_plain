@@ -5,7 +5,7 @@
      * Each form can have correct and incorrect parameters.
      * Correct parameters are those, which satisfy the predetermined conditions (e.g., correct form, length, complexity, characters etc.).
      * Inocrrect parameters are those, which don't satisfy the predetermined conditions.
-     * Apart from the setter and getter methods, the class contains a user form validator abstract method, which is responsible for validating the user's form according to a set of rules. 
+     * Apart from the setter and getter methods, the class contains a prtoected ValidateInputs method which will validate the given inputs by the determined sets of rules. 
     */
     abstract class FormValidator {
         protected $incorrect_parameters = array();
@@ -46,12 +46,93 @@
         public function SetCorrectParameter($key, $value) { $this->correct_parameters[$key] = $value; }
 
         /**
-         *
-         * This abstract method is responsible for validating a user's form.
-         *  
-         * @return void
-        */
-        public abstract function ValidateUser();
+         * 
+         */
+        protected function ValidateInputs($validation_array){            
+            $input_counter = 1;
+            foreach($validation_array as $input => $validation_rules){
+                if(is_string($input)){
+                    foreach($validation_rules as $attribute => $condition){
+                        switch($attribute){
+                            case "length":{
+                                $left_side = strlen($input);
+                                $relation = $condition[0]??">";
+                                $right_side = $condition[1]??0;
+                                if(is_numeric($right_side)){
+                                    $right_side = intval($right_side);
+                                }else{
+                                    $right_side = 0;
+                                }
+                                
+                                switch($relation){
+                                    case ">":{
+                                        if($left_side <= $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_too_short");
+                                        }
+                                    };break;
+                                    case "<":{
+                                        if($left_side >= $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_too_long");
+                                        }
+                                    };break;
+                                    case ">=":{
+                                        if($left_side < $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_too_short");
+                                        }
+                                    };break;
+                                    case "<=":{
+                                        if($left_side > $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_too_long");
+                                        }
+                                    };break;
+                                    case "==":{
+                                        if($left_side != $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_not_equal");
+                                        }
+                                    };break;
+                                    case "!=":{
+                                        if($left_side == $right_side){
+                                            array_push($incorrect_parameters, "wrong_$input_counter" . "_equal");
+                                        }
+                                    };break;
+                                    default:break;
+                                }
+                            };break;
+                            case "not_placeholder":{
+                                $left_side = $input;
+                                $place_holder = $condition;
+
+                                if(is_string($place_holder)){
+                                    if($left_side === $place_holder){
+                                        array_push($incorrect_parameters, "wrong_$input_counter" . "_not_set");
+                                    }
+                                }elseif(is_array($place_holder)){
+                                    if(in_array($left_side, $place_holder)){
+                                        array_push($incorrect_parameters, "wrong_$input_counter" . "_not_set");
+                                    }
+                                }
+                            };break;
+                            case "in_array":{
+                                $left_side = $input;
+                                $array = $condition;
+    
+                                if(is_array($array)){
+                                    if(!in_array($left_side, $array)){
+                                        array_push($incorrect_parameters, "wrong_$input_counter" . "_not_in_array");
+                                    }
+                                }
+                            };break;
+                        }
+                    }
+                }else{
+                    array_push($incorrect_parameters, "wrong_$input_counter" . "_not_found");
+                }
+        
+                $input_counter += 1;
+            }
+
+            return $incorrect_parameters;
+        }
     }
 
 ?>
