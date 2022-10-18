@@ -7,6 +7,17 @@
      * Data request will be performed by the methods which were inherited from the MainModel.
     */
     class NotificationModel extends MainModel{
+        /**
+         * 
+         * The contructor of the NotificationModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
     }
 
 ?>

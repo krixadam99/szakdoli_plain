@@ -6,19 +6,31 @@
     */
     class LoginModel extends MainModel{
         /**
+         * 
+         * The contructor of the LoginModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+        
+        /**
          * This method updates the password of the user given by their neptun code.
          * 
          * @param string $neptun_code The user's neptun code in the users table. The default is "".
          * @param string $new_password The user's new password. The default is "".
          * 
-         * @return void
+         * @return bool Returns whether the update was successful, or not.
          */
         public function UpdatePassword($neptun_code = "", $new_password = "") {  
             $neptun_code = strtoupper($neptun_code); 
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT); // Hashing the new password
 
             $query = "UPDATE users SET user_password = \"$hashed_password\" WHERE neptun_code = \"$neptun_code\"";
-            $this->database->UpdateDatabase($query);
+            return $this->database->UpdateDatabase($query);
         }
 
         /**

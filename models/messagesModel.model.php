@@ -6,6 +6,18 @@
     */
     class MessagesModel extends MainModel {
         /**
+         * 
+         * The contructor of the MessagesModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+        
+        /**
          * This public method returns the removed messages of the user from the messages table.
          * 
          * @param string $neptun_code The neptun code of the user.
@@ -96,7 +108,7 @@
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * @param bool $remove This parameter decides whether we should remove the message or recover it. The default is true (i.e., we should remove the message).
          * 
-         * @return void
+         * @return bool Returns whether the removing or recovering procedure was successful, or not.
         */
         public function RemoveRecoverMessages($query_array, $remove= true){
             $query = "BEGIN; ";
@@ -124,7 +136,7 @@
             }
             $query .= "COMMIT;";
             
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
     }
 

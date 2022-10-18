@@ -1,8 +1,3 @@
-<?php
-    $pending_teachers = $this->GetPendingTeachers();
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

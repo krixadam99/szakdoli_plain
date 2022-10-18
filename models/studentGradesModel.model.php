@@ -1,6 +1,18 @@
 <?php
 
-    class StudentGradesModel extends MainModel {
+    class StudentGradesModel extends TasksModel {
+        /**
+         * 
+         * The contructor of the StudentGradesModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+
         /**
          * This public method returns all of the students' grades for the given subject name - subject group pair (that is, for the given teacher).
          * 
@@ -9,7 +21,7 @@
          * 
          * @return array Returns an array containing the students' grades belonging to the subject name - subject group pair.
          */
-        public function GetStudentsGrades($subject_id, $subject_group){
+        public function GetResults($subject_id, $subject_group){
             $query = "SELECT * FROM user_groups, results 
             WHERE user_groups.neptun_code =  results.neptun_code
             AND user_groups.subject_id = results.subject_id
@@ -22,11 +34,26 @@
         }
 
         /**
+         * This public method returns the practice task results from the practice_task_points table for students belonging to the given subject name - subject group pair (that is, for the given teacher).
+         * 
+         * @param string $subject_id The subject's name. The default is "".
+         * @param int $subject_group The group's number. The default is "".
+         * 
+         * @return array Returns an array containing the students' practice scores belonging to the subject name - subject group pair.
+         */
+        public function GetPracticeResults($subject_group = "", $subject_id = ""){
+            $query = "SELECT * FROM user_groups, practice_task_points WHERE ";
+            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_id = practice_task_points.subject_id AND user_groups.subject_group = practice_task_points.subject_group ";
+            $query .= "AND practice_task_points.subject_group = \"$subject_group\" AND practice_task_points.subject_id = \"$subject_id\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
+            return $this->database->LoadDataFromDatabase($query);
+        }
+
+        /**
          * This public method updates the results table via an array containing the quires.
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
-         * @return void
+         * @return bool Returns whether updating the results table was successful, or not.
          */
         public function UpdateResults($query_array = []){
             $query = "BEGIN; ";
@@ -57,7 +84,7 @@
                 AND subject_id = \"$subject_id\"; ";
             }
             $query .= "COMMIT;";
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
 
         /**
@@ -65,7 +92,7 @@
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
-         * @return void
+         * @return bool Returns whether updating the expextation_rules table was successful, or not.
          */
         public function UpdateExpectationRules($query_array = []){
             $query = "BEGIN; ";
@@ -83,7 +110,7 @@
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
 
         /**
@@ -91,7 +118,7 @@
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
-         * @return void
+         * @return bool Returns whether updating the task_due_to_date table was successful, or not.
          */
         public function UpdateTaskDueDates($query_array = []){
             $query = "BEGIN; ";
@@ -107,7 +134,7 @@
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
     }
 

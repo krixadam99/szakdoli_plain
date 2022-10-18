@@ -6,7 +6,7 @@
      * If someone navigates to the grades page, although they are not logged in, then this controller redirects them to the login page.
      * If someone navigates to the grades page, however they are not a student, then this controller redirects them to the notifications page.
     */
-    class GradesController extends MainContentController{
+    class GradesController extends MainContentController{        
         /**
          * 
          * The contructor of the GradesController class.
@@ -17,6 +17,7 @@
          */
         public function __construct(){
             parent::__construct();
+            
         }
         
         /**
@@ -37,11 +38,20 @@
                 //Only students can see this page, otherwise, the user will be redirected to the notifications page
                 if($this->GetApprovedStudentSubject() != ""){
                     $model = new GradesModel();
-                    $approved_subject_group = $this->GetApprovedStudentGroup();
-                    $approved_subject_id = $this->GetApprovedStudentSubject();
+                    $approved_subject_group = $this->approved_student_group;
+                    $approved_subject_id = $this->approved_student_subject;
 
                     $results = $model->GetResults($_SESSION["neptun_code"])[0]??[];
-                    $practice_points = $this->GetPracticeResults();
+                    
+                    $practice_points = [];
+                    $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
+                    foreach($practice_results as $key => $value){
+                        if(is_int(strpos($key, "practice_task"))){
+                            $practice_points[$key] = $value;
+                        }
+                    }               
+                    
+                    
                     $task_expectations = $model->GetExpectationRules($approved_subject_id, $approved_subject_group); 
                     $task_due_dates = $model->GetTaskDueDate($approved_subject_id, $approved_subject_group); 
                     $grade_table = $model->GetGradeLevels($approved_subject_id, $approved_subject_group)[0]??[]; 

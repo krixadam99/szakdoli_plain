@@ -32,9 +32,16 @@
             //Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
-                
                 //Only teachers can see this page, others will be redirected to the notifications page
-                if(count($this->GetApprovedTeacherGroups()) != 0){
+                if(count($this->approved_teacher_groups) != 0){
+                    $student_handler_model = new StudentHandlingModel();
+
+                    $all_students = [];
+                    foreach($this->approved_teacher_groups as $group_counter => $group_id_pair){
+                        $pending_students_per_subject_group = $student_handler_model->GetStudents($group_id_pair["subject_id"], $group_id_pair["subject_group"]);
+                        array_push($all_students, array("subject_id" => $group_id_pair["subject_id"], "subject_group" => $group_id_pair["subject_group"], "users" => array_values($pending_students_per_subject_group)));
+                    }
+
                     include(ROOT_DIRECTORY . "/views/studentHandlingPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -63,7 +70,7 @@
                 $current_subject = $_SESSION["subject"];
                 $current_group = $_SESSION["group"];
             
-                $student_handler_model = new StudentHandlingModel("szakdoli");
+                $student_handler_model = new StudentHandlingModel();
             
                 $decision_array = array();
                 foreach($_POST as $key => $value){
@@ -95,7 +102,7 @@
                     }
                 }
 
-                $student_handler_model->UpdatePendingData($query_array);
+                $student_handler_model->UpdatePendingStudents($query_array);
                 $this->StudentHandling();
             }else{
                 header("Location: ./index.php");

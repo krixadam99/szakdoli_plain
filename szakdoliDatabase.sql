@@ -5,8 +5,8 @@ DROP TABLE grade_table;
 DROP TABLE results;
 DROP TABLE practice_task_points;
 DROP TABLE user_groups;
-DROP TABLE users;*/
-
+DROP TABLE users;
+*/
 
 /*CREATE TABLE neptun_validation (
     neptun_code varchar(6) NOT NULL,
@@ -33,8 +33,8 @@ CREATE TABLE user_groups (
     application_request_status varchar(10) NOT NULL DEFAULT "PENDING",
     
     UNIQUE ( neptun_code, subject_group, subject_id ),
-    FOREIGN KEY( neptun_code) REFERENCES users( neptun_code ),
-    PRIMARY KEY( neptun_code, subject_id, subject_group )
+    FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
+    PRIMARY KEY( subject_id, subject_group, neptun_code )
 );
 
 CREATE TABLE practice_task_points (
@@ -52,8 +52,9 @@ CREATE TABLE practice_task_points (
     practice_task_9 float NOT NULL DEFAULT 0,
     practice_task_10 float NOT NULL DEFAULT 0,
     
-    UNIQUE (neptun_code, subject_id),
-    FOREIGN KEY( neptun_code, subject_id ) REFERENCES user_groups( neptun_code, subject_id )
+    UNIQUE ( subject_id, neptun_code ),
+    FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
+    FOREIGN KEY( subject_id ) REFERENCES user_groups( subject_id )
 );
 
 CREATE TABLE results (
@@ -77,8 +78,9 @@ CREATE TABLE results (
     small_test_9 int(11) NOT NULL DEFAULT 0,
     small_test_10 int(11) NOT NULL DEFAULT 0,
     
-    UNIQUE (neptun_code, subject_id),
-    FOREIGN KEY( neptun_code, subject_id ) REFERENCES user_groups( neptun_code, subject_id )
+    UNIQUE ( subject_id, neptun_code ),
+    FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
+    FOREIGN KEY( subject_id ) REFERENCES user_groups( subject_id )
 );
 
 CREATE TABLE expectation_rules (
@@ -89,7 +91,9 @@ CREATE TABLE expectation_rules (
     minimum_for_pass int(11) NOT NULL DEFAULT 0,
     maximum_value int(11) NOT NULL DEFAULT 100,
 
-    UNIQUE (subject_group, subject_id, task_type)
+    UNIQUE ( subject_id, subject_group, task_type),
+    FOREIGN KEY( subject_id, subject_group ) REFERENCES user_groups( subject_id, subject_group )
+
 );
 
 CREATE TABLE grade_table (
@@ -100,7 +104,9 @@ CREATE TABLE grade_table (
     good_level_point int(11) NOT NULL DEFAULT 0,
     excellent_level_point int(11) NOT NULL DEFAULT 0,
 
-    UNIQUE (subject_group, subject_id)
+    UNIQUE ( subject_id, subject_group ),
+    FOREIGN KEY( subject_id, subject_group ) REFERENCES user_groups( subject_id, subject_group )
+
 );
 
 CREATE TABLE task_due_to_date (
@@ -109,7 +115,8 @@ CREATE TABLE task_due_to_date (
     task_type varchar(255) NOT NULL,
     due_to DATE NOT NULL DEFAULT CURRENT_DATE,
 
-    UNIQUE (subject_group, subject_id, task_type)
+    UNIQUE ( subject_id, subject_group, task_type),
+    FOREIGN KEY( subject_id, subject_group ) REFERENCES user_groups( subject_id, subject_group )
 );
 
 CREATE TABLE messages (

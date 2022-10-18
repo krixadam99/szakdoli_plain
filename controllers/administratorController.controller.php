@@ -8,6 +8,8 @@
      * If the user is the administrator, then their pending teachers will be displayed on this page.
     */
     class AdministratorController extends MainContentController{
+        private $pending_teachers;
+        
         /**
          * 
          * The contructor of the AdministratorController class.
@@ -18,6 +20,7 @@
          */
         public function __construct(){
             parent::__construct();
+            $this->pending_teachers = [];
         }
         
         /**
@@ -32,6 +35,10 @@
         public function DemonstratorHandling(){
             if(isset($_SESSION["neptun_code"]) && $_SESSION["neptun_code"] === "admin"){
                 $this->SetMembers();
+
+                $administrator_model = new AdministratorModel();
+                $pending_teachers = $administrator_model->GetPendingTeachers();
+
                 include(ROOT_DIRECTORY . "/views/demonstratorHandlingPage.view.php");
             }else{
                 header("Location: ./index.php?site=login");
@@ -48,8 +55,8 @@
          * @return void
         */
         public function FinalizePending(){    
-            if(isset($_SESSION["neptun_code"]) && $_SESSION["neptun_code"] == "admin"){
-                $notification_model = new NotificationModel("szakdoli");
+            if(isset($_SESSION["neptun_code"]) && $_SESSION["neptun_code"] == "admin"){                
+                $administrator_model = new AdministratorModel();
                 
                 // Processing the user inputs
                 $decision_array = array();
@@ -70,7 +77,7 @@
                 }
                 
                 // Comparing the new pending values to the older ones
-                $original_user_information = $notification_model->GetPendingTeachers();
+                $original_user_information = $administrator_model->GetPendingTeachers();
                 $query_array = array();
                 foreach($original_user_information as $index => $pending_status){
                     $neptun = $pending_status["neptun_code"];
@@ -81,11 +88,11 @@
                         if(isset($decision_array[$neptun][$id])){
                             $decision = $decision_array[$neptun][$id];
                         }   
-                        array_push($query_array, array("neptun_code" => $neptun, "user_status" => "teacher", "subject_group" => $pending_status["subject_group"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
+                        array_push($query_array, array("neptun_code" => $neptun, "subject_group" => $pending_status["subject_group"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
                     }
                 }
             
-                $notification_model->UpdatePendingData($query_array);
+                $administrator_model->UpdatePendingTeachers($query_array);
                 header("Location: ./index.php?site=demonstratorHandling");
             }else{
                 header("Location: ./index.php?site=login");

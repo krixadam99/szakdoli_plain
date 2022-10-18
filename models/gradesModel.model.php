@@ -2,12 +2,23 @@
     /**
      * This is a model class which is responsible for requesting data for the grades page.
      * 
-     * This model extends the MainModel class.
-     * Here only the basic data should be requested from the database for the logged in user, so this model calls the MainModel's contructor.
-     * Data request will be performed by the methods which were inherited from the MainModel.
+     * This model extends the TasksModel class.
     */
-    class GradesModel extends MainModel {
+    class GradesModel extends TasksModel {
         /**
+         * 
+         * The contructor of the GradesModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+        
+        /**
+         * 
          * This public method returns the  results from the results table for the user given by their neptun code.
          * 
          * @param string $neptun_code The neptun code of the user.

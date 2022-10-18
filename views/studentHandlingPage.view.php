@@ -1,6 +1,4 @@
-<?php
-    $all_students = $this->GetStudents();
-    
+<?php    
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_groups_per_subject = [];
     if(!isset($_SESSION["subject"]) && !isset($_SESSION["group"])){

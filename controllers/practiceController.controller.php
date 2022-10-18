@@ -33,7 +33,7 @@
         public function Practice(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
-                if($this->GetApprovedStudentSubject() != ""){
+                if($this->approved_student_subject != ""){
                     $_SESSION["is_new_task"] = true;
                     
                     unset($_SESSION["answers"]);
@@ -45,9 +45,11 @@
                         && intval($_SESSION["topic"]) <= 9
                         && 0 <= intval($_SESSION["topic"])
                     ){
-                        $this->GenerateTask($this->GetApprovedStudentSubject(), $_SESSION["topic"]);
+                        $this->GenerateTask($this->approved_student_subject, $_SESSION["topic"]);
                     }
-                    
+                    $model = new PracticeModel();
+                    $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
+
                     include(ROOT_DIRECTORY . "/views/practicePage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -70,7 +72,9 @@
         public function PracticeAnswers(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
-                if($this->GetApprovedStudentSubject() != ""){
+                if($this->approved_student_subject != ""){
+                    $model = new PracticeModel();
+                    $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
                     include(ROOT_DIRECTORY . "/views/practicePage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -90,22 +94,21 @@
             if(isset($_SESSION["neptun_code"]) && $_SESSION["is_new_task"]){
                 $_SESSION["is_new_task"] = false;
                 if(count($_POST) != 0){
+                    $model = new PracticeModel();
                     $this->SetMembers();
+                    
                     $practice_number = intval($_SESSION["topic"]) + 1;
-                    $previous_point = floatval($this->GetPracticeResults()["practice_task_" . $practice_number]??0);
-
-                    if($this->GetApprovedStudentSubject() === "i"){
+                    $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
+                    $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
+                    if($this->approved_student_subject === "i"){
                         $task_evaluator = new DimatiTaskEvaluator($_POST);
-                    }else if($this->GetApprovedStudentSubject() === "ii"){
+                    }else if($this->approved_student_subject === "ii"){
                         $task_evaluator = new DimatiiTaskEvaluator($_POST);
                     }else{
                         header("Location: ./index.php?site=practiceShowAnswers");
                     }
-
                     $task_evaluator->CheckSolution($_SESSION["topic"]);
                     $update_point = round($task_evaluator->GetUpdatePoint(),2);
-                    
-                    $model = new PracticeModel();
                     $model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
 
                     header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
@@ -140,6 +143,20 @@
                 $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();
                 $_SESSION["solution_texts"] = $dimat_ii_tasks->GetSolutionTexts();
             }
+        }
+
+        /*
+        * 
+        */
+        private function GetPracticeResults($neptun_code, $model){
+            $practice_points = [];
+            $practice_results = $model->GetPracticeResults($neptun_code)[0]??[];
+            foreach($practice_results as $key => $value){
+                if(is_int(strpos($key, "practice_task"))){
+                    $practice_points[$key] = $value;
+                }
+            } 
+            return $practice_points;
         }
     }
 

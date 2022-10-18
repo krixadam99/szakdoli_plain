@@ -35,13 +35,13 @@
 
                 $model = new StudentGradesModel();
                 
-                $students_grades = $model->GetStudentsGrades($_SESSION["subject"], $_SESSION["group"]);
+                $students_grades = $model->GetResults($_SESSION["subject"], $_SESSION["group"]);
                 $expectation_rules = $model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                 $task_due_dates = $model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                 $grade_levels = $model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
 
                 //Only teachers can see this page, others will be redirected to the notifications page
-                if(count($this->GetApprovedTeacherGroups()) != 0){
+                if(count($this->approved_teacher_groups) != 0){
                     include(ROOT_DIRECTORY . "/views/studentGradesPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -79,7 +79,7 @@
                 }
             
                 $student_grades_model = new StudentGradesModel();
-                $original_user_results = $student_grades_model->GetStudentsGrades($_SESSION["subject"], $_SESSION["group"]);
+                $original_user_results = $student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
                 $query_array = array();
                 foreach($original_user_results as $index => $original_record){
                     if(isset($new_results[$original_record["neptun_code"]])){

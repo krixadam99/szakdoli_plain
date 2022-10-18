@@ -6,6 +6,18 @@
     */
     class GroupAdditionModel extends MainModel{
         /**
+         * 
+         * The contructor of the GroupAdditionModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+        
+        /**
          * This public method is responsible for upadting the user_groups table with the given data.
          * 
          * The new record will contain the neptun code, the selected user status, subject name and subject group.
@@ -20,7 +32,7 @@
          * @param string $user_status This is the user' selected user status. This can be "Demonstrátor", or "Diák". This will be used in the user_groups table.
          * @param string $subject_group This is the user' selected subject group. This can be either a group's number which is in the selected subject and has an assigned teacher, or a number between 1 and 30 (inclusively). This will be used in the user_groups table.
          * 
-         * @return void
+         * @return bool Returns whether updating the user's applied groups was successful, or not.
          */
         public function UpdateUserGroups($neptun_code = "", $subject_id = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
@@ -48,7 +60,7 @@
             }
             $query .= "COMMIT; ";
 
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
     }
 

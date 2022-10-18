@@ -7,20 +7,18 @@
      * Since we need to know the neptun code, whether the user is an administrator, the students whose status is pending and approved belonging to this user, the groups and subjects for which the user's teacher and student status is pending and approved, so we will set these members here for each controller class. 
     */
     class MainContentController {
-        private $is_administrator;
-        private $neptun_code;
-        private $user_data;
-        private $all_pending_teacher;
-        private $pending_students;
-        private $pending_teacher_groups;
-        private $pending_student_groups;
-        private $approved_teacher_groups;
-        private $approved_teacher_subjects;
-        private $approved_student_group;
-        private $approved_student_subject;
-        private $withdrawn_student_groups;
-        private $denied_student_groups;
-        private $practice_results;
+        protected $is_administrator;
+        
+        protected $user_data;
+
+        protected $pending_teacher_groups;
+        protected $pending_student_groups;
+        protected $approved_teacher_groups;
+        protected $approved_teacher_subjects;
+        protected $approved_student_group;
+        protected $approved_student_subject;
+        protected $withdrawn_student_groups;
+        protected $denied_student_groups;
 
         protected $dimat_i_topics;
         protected $dimat_i_topics_descriptions;
@@ -42,10 +40,7 @@
             $this->CheckURIParameters();
             
             $this->is_administrator = false; // Whether the user is the administrator, or not
-            $this->neptun_code = ""; // Neptun code
             $this->user_data = []; // User data
-            $this->all_pending_teacher = []; // All of the pending teachers
-            $this->pending_students = []; // All of the pending students that belong to the user
             $this->pending_teacher_groups = []; // The group numbers for which the user's teacher status is pending
             $this->pending_student_groups = []; // The group numbers and subject pairs for which the user's student status is pending
             $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
@@ -54,7 +49,6 @@
             $this->approved_student_subject = ""; // The subject ids for which the user's student status is approved
             $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
             $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
-            $this->practice_results = []; // The results of the user for each practice task
 
             $this->dimat_i_topics = [
                 "Halmazok és műveletek", 
@@ -139,14 +133,6 @@
 
         /**
          * 
-         * This method returns the logged in user's neptun code.
-         * 
-         * @return string Returns the logged in user's neptun code.
-        */
-        public function GetNeptunCode(){ return $this->neptun_code; }
-
-        /**
-         * 
          * This method returns data about the user.
          * 
          * The returned data differs on the basis that the user is an administrator, or not.
@@ -156,14 +142,6 @@
          * @return array Returns an indexed array containing the data from the users table if the user is administrator, and the data from the joined version of the users and status_pending table if the user is not an administrator.
         */
         public function GetUserData(){ return $this->user_data; }
-
-        /**
-         * 
-         * This method returns all the pending teachers.
-         * 
-         * @return array Returns an indexed array containing the neptun code, subject name and subject group from the status_pending table for users that are teachers and whose request is pending.
-        */
-        public function GetPendingTeachers(){ return $this->all_pending_teacher; }
 
         /**
          * 
@@ -239,14 +217,6 @@
 
         /**
          * 
-         * This method returns the practice results for the logged in user.
-         * 
-         * @return array Returns an associative array containing the practice results of the user who is a student and whose student status is approved.
-        */
-        public function GetPracticeResults(){ return $this->practice_results; }
-
-        /**
-         * 
          * This method sets the class's members.
          * 
          * @return void
@@ -270,22 +240,11 @@
                                     if(!in_array($user_record["subject_id"],$this->approved_teacher_subjects)){
                                         array_push($this->approved_teacher_subjects, $user_record["subject_id"]);
                                     }
-                                    
-                                    // The students for the given subject id - subject group pair
-                                    $pending_students_per_subject_group = $model->GetStudents($user_record["subject_id"], $user_record["subject_group"]);
-                                    array_push($this->pending_students, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"], "users" => array_values($pending_students_per_subject_group)));
                                 }else if($user_record["application_request_status"] == "PENDING"){ // The user's pending teacher rows
                                     array_push($this->pending_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
                                 }
                             }else{ // The user's student rows
                                 if($user_record["application_request_status"] == "APPROVED"){  // The user's approved student rows
-                                    $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
-                                    foreach($practice_results as $key => $value){
-                                        if(is_int(strpos($key, "practice_task"))){
-                                            $this->practice_results[$key] = $value;
-                                        }
-                                    }
-
                                     $this->approved_student_group = $user_record["subject_group"];
                                     $this->approved_student_subject = $user_record["subject_id"];
                                 }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
@@ -297,9 +256,6 @@
                                 }
                             }
                         }
-                    }else{
-                        // Administrators should only see the teachers whose status is currently pending
-                        $this->all_pending_teacher = $model->GetPendingTeachers();
                     }
                 }
             }else{

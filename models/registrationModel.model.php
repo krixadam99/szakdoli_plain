@@ -6,6 +6,18 @@
     */
     class RegistrationModel extends MainModel{
         /**
+         * 
+         * The contructor of the RegistrationModel class.
+         * 
+         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
+         */
+        public function __construct(){
+            parent::__construct();
+        }
+        
+        /**
          * This public method is responsible for adding the new user to the users table and to the user_groups table.
          * 
          * New users will not be administrators.
@@ -20,7 +32,7 @@
          * @param string $user_status This is the user' selected user status. This can be "Demonstrátor", or "Diák". This will be used in the user_groups table.
          * @param string $subject_group This is the user' selected subject group. This can be either a group's number which is in the selected subject and has an assigned teacher, the "-" sign, or a number between 1 and 30 (inclusively). This will be used in the user_groups table.
          * 
-         * @return void
+         * @return bool Returns whether the registration was succesful, or not.
          */
         public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_id = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
@@ -41,7 +53,7 @@
 
             $query = "INSERT INTO user_groups VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_id\", \"$pending_status\")";
             
-            $this->database->UpdateDatabase($query);
+            return $this->database->UpdateDatabase($query);
         }
     }
 
