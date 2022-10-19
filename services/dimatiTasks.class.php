@@ -3,10 +3,9 @@
      * This is a helper class which contains task generator functions related to Discrete Mathematics I..
      * 
     */
-    class DimatiTasks extends Task{        
-        private $complex_number_names;
-        private $dimat_helper_functions;
-
+    class DimatiTasks extends Task{    
+        private $dimati_subtask_generator;
+            
         /**
          * 
          * The contructor for DimatiTasks class.
@@ -20,18 +19,17 @@
          * @return void
          */
         public function __construct($topic){
-            $this->task_description = [];
+            $this->task_descriptions = [];
             $this->task_solutions= [];
             $this->definitions = "";
             $this->topic = $topic;
-
-            $this->complex_number_names = ["v", "w", "x", "y", "z"]; // The complex number names used throughout the task generation.
-            $this->dimat_helper_functions = new DimatiHelperFunctions();
-            $this->dimati_subtasks = new DimatiSubtask();
-
+            $this->dimati_subtask_generator = new DimatiSubtaskGenerator();
             mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...).
         }
 
+        /**
+         * 
+         */
         public function PracticePageTaskGeneration(){
             switch($this->topic){
                 case "0":{
@@ -83,7 +81,7 @@
          * @return void 
         */
         private function CreateTaskOne(){
-            $set_task = $this->dimati_subtasks->CreateSubtask("0", "0", 1, true);
+            $set_task = $this->dimati_subtask_generator->CreateSubtask("0", "0", 1, true);
 
             $task_array = array(
                 "task_description" => "Add meg az eredményét a következő műveleteknek! Válaszodban a karaktereket ','-vel válaszd el!",
@@ -91,7 +89,7 @@
                 "operations" => $set_task["data"][1]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = $set_task["solutions"];
         }
 
@@ -104,7 +102,7 @@
          * @return void 
         */
         private function CreateTaskTwo(){
-            $relation_task = $this->dimati_subtasks->CreateSubtask("1", "0", 1, true);
+            $relation_task = $this->dimati_subtask_generator->CreateSubtask("1", "0", 1, true);
 
             $task_array = array(
                 "task_description" => "Sorold fel az elemeket a reláció definícióinál! Az elemeket ','-vel válaszd el, a rendezett párokat (elem,elem) alakban add meg!",
@@ -112,7 +110,7 @@
                 "relations" => $relation_task["data"]["relations"]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = $relation_task["solutions"];
         }
 
@@ -125,9 +123,9 @@
          * @return void 
         */
         private function CreateTaskThree(){
-            $relation_composition = $this->dimati_subtasks->CreateSubtask("2", "0", 1, true);
-            $relation_characteristics = $this->dimati_subtasks->CreateSubtask("2", "1", 1, true);
-            $relation_creation = $this->dimati_subtasks->CreateSubtask("2", "2", 1, true);
+            $relation_composition = $this->dimati_subtask_generator->CreateSubtask("2", "0", 1, true);
+            $relation_characteristics = $this->dimati_subtask_generator->CreateSubtask("2", "1", 1, true);
+            $relation_creation = $this->dimati_subtask_generator->CreateSubtask("2", "2", 1, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő relációk kompozíciójával és tulajdonságaival kapcsolatos feladatokat!",
@@ -148,7 +146,7 @@
                 $solution_array["third_subtasks"] = array_merge($solution_array["third_subtasks"], array("solution_2_" . $solution_counter => $solution));
             }            
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = $solution_array;
         }
 
@@ -161,8 +159,8 @@
          * @return void 
         */
         private function CreateTaskFour(){
-            $is_relation_function = $this->dimati_subtasks->CreateSubtask("3", "0", 3, true);
-            $function_characteristics = $this->dimati_subtasks->CreateSubtask("3", "1", 3, true);
+            $is_relation_function = $this->dimati_subtask_generator->CreateSubtask("3", "0", 3, true);
+            $function_characteristics = $this->dimati_subtask_generator->CreateSubtask("3", "1", 3, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő függvényekkel kapcsolatos feladatokat!",
@@ -178,7 +176,7 @@
                 $solution_array["second_subtasks"] = array_merge($solution_array["second_subtasks"], array("solution_1_" . $solution_counter => $solution));
             }            
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = $solution_array;
         }
 
@@ -191,8 +189,8 @@
          * @return void 
         */
         private function CreateTaskFive(){
-            $basic_complex_number_subtask = $this->dimati_subtasks->CreateSubtask("4", "0", 1, true);
-            $complex_numbers_operations_subtask = $this->dimati_subtasks->CreateSubtask("4", "1", 1, true);
+            $basic_complex_number_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "0", 1, true);
+            $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "1", 1, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
@@ -200,7 +198,7 @@
                 "second_subtasks" => $complex_numbers_operations_subtask["data"]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = [$basic_complex_number_subtask["solutions"],$complex_numbers_operations_subtask["solutions"]];
         }
 
@@ -213,8 +211,8 @@
          * @return void 
         */
         private function CreateTaskSix(){
-            $complex_numbers_trigonometric_form_subtask = $this->dimati_subtasks->CreateSubtask("5", "0", 1, true);
-            $complex_numbers_operations_subtask = $this->dimati_subtasks->CreateSubtask("5", "1", 1, true);
+            $complex_numbers_trigonometric_form_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "0", 1, true);
+            $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "1", 1, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
@@ -222,7 +220,7 @@
                 "second_subtasks" => $complex_numbers_operations_subtask["data"]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = [$complex_numbers_trigonometric_form_subtask["solutions"],$complex_numbers_operations_subtask["solutions"]];
         }
 
@@ -235,8 +233,8 @@
          * @return void 
         */
         private function CreateTaskSeven(){
-            $complex_numbers_powers_subtask = $this->dimati_subtasks->CreateSubtask("6", "0", 1, true);
-            $complex_numbers_roots_subtask = $this->dimati_subtasks->CreateSubtask("6", "1", 1, true);
+            $complex_numbers_powers_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "0", 1, true);
+            $complex_numbers_roots_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "1", 1, true);
 
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
@@ -244,7 +242,7 @@
                 "second_subtasks" => $complex_numbers_roots_subtask["data"]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = [$complex_numbers_powers_subtask["solutions"],$complex_numbers_roots_subtask["solutions"]];
         }
 
@@ -257,8 +255,8 @@
          * @return void 
         */
         private function CreateTaskEight(){
-            $binomial_theorem_subtask = $this->dimati_subtasks->CreateSubtask("7", "0", 2);
-            $viete_formula_subtask = $this->dimati_subtasks->CreateSubtask("7", "1", 2);
+            $binomial_theorem_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "0", 2);
+            $viete_formula_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "1", 2);
 
             $task_array = array(
                 "task_description" => "Old meg a következő binomiális tétellel és viéte formulákkal kapcsolatos feladatokat!",
@@ -266,7 +264,7 @@
                 "second_subtasks" => $viete_formula_subtask["data"]
             );
 
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
             $this->task_solutions = [$binomial_theorem_subtask["solutions"],$viete_formula_subtask["solutions"]];
         }
 

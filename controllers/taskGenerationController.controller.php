@@ -116,9 +116,9 @@
             $task = array("task_descriptions" => "", "task_solutions" => "");
             
             if($_SESSION["subject"] == "i"){
-                $dimat_subtasks = new DimatiSubtask();
+                $dimat_subtasks = new DimatiSubtaskGenerator();
             }elseif($_SESSION["subject"] == "ii"){
-                $dimat_subtasks = new DimatiiSubtask();
+                $dimat_subtasks = new DimatiiSubtaskGenerator();
             }
 
             $subtask = $dimat_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);

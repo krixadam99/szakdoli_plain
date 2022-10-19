@@ -1,11 +1,11 @@
 <?php
 
-    class DimatiSubtask {
+    class DimatiSubtaskGenerator {
         private $dimat_helper_functions;
         
         /**
          * 
-         * The contructor for DimatiiSubtask class.
+         * The contructor for DimatiSubtaskGenerator class.
          * 
          * @return void
          */
@@ -694,7 +694,7 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateComplexTrigonometricFormSubtask($number_of_subtasks, $full_task = false){
+        private function CreateComplexTrigonometricFormSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -739,7 +739,7 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateComplexOperationsTrigonometricSubtask($number_of_subtasks, $full_task = false){
+        private function CreateComplexOperationsTrigonometricSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -784,7 +784,7 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateComplexPowerTrigonometricSubtask($number_of_subtasks, $full_task = false){
+        private function CreateComplexPowerTrigonometricSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -832,7 +832,7 @@
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateComplexRootTrigonometricSubtask($number_of_subtasks, $full_task = false){
+        private function CreateComplexRootTrigonometricSubtask($number_of_subtasks){
             $solutions = [];
             $descriptions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];

@@ -71,10 +71,6 @@
                     $this->CheckNinethTaskSolution();
                 };
                 break;
-                case "9":{
-                    $this->CheckTenthTaskSolution();
-                };
-                break;
                 default:break;
             }
         }
@@ -436,15 +432,6 @@
          * @return void
         */
         private function CheckNinethTaskSolution(){
-        }
-
-        /**
-         * 
-         * This private method compares the given answers with the solutions for Discrete mathematics I. subject 10th topic's tasks.
-         * 
-         * @return void
-        */
-        private function CheckTenthTaskSolution(){
         }
     }
 ?>

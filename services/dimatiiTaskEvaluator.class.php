@@ -73,10 +73,6 @@
                     $this->CheckNinethTaskSolution();
                 };
                 break;
-                case "9":{
-                    $this->CheckTenthTaskSolution();
-                };
-                break;
                 default:break;
             }
         }
@@ -392,17 +388,6 @@
             $id = "1_" . count($table_data);
             $this->EvaluateInputsWithRelations($newton_interpolation_polynomial, "solution_" . $id, $id);
             $this->solution_counter += 1;
-
-
-        }
-
-        /**
-         * 
-         * This private method compares the given answers with the solutions for Discrete mathematics II. subject's 10th topic's tasks.
-         * 
-         * @return void
-        */
-        private function CheckTenthTaskSolution(){
         }
     }
 ?>

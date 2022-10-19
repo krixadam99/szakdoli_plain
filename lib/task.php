@@ -3,9 +3,11 @@
      * This is an abstract class, which represents a task.
      * 
      * A task will contain the task description, the solutions for the subtasks and the definitions related to the tasks. 
+     * 
+     * @property $alma
     */
     abstract class Task {
-        protected $task_description;
+        protected $task_descriptions;
         protected $task_solutions;
         protected $solution_texts;
         protected $definitions;
@@ -17,7 +19,7 @@
          * 
          * @return array An associative array containing the task parameters.
         */
-        public function GetTaskDescription(){ return $this->task_description; }
+        public function GetTaskDescriptions(){ return $this->task_descriptions; }
 
         /**
          * 
@@ -31,7 +33,7 @@
          * 
          * This method returns the definitions related to the tasks.
          * 
-         * @return string A string of the topic related definitions. 
+         * @return array An arra of strings of the topic related definitions. 
         */
         public function GetDefinitions(){ return $this->definitions; }
 
@@ -39,7 +41,7 @@
          * 
          * This method returns the solution texts related to the tasks.
          * 
-         * @return string A string of the topic related solution texts. 
+         * @return array An array of strings of the topic related solution texts. 
         */
         public function GetSolutionTexts(){ return $this->solution_texts; }
 
@@ -59,7 +61,7 @@
          * 
          * @return void
         */
-        public function SetTaskDescription($task_description){ $this->task_description = $task_description; }
+        public function SetTaskDescriptions($task_descriptions){ $this->task_descriptions = $task_descriptions; }
         
         /**
          * 

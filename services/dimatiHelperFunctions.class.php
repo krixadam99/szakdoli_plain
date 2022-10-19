@@ -4,19 +4,8 @@
      * 
     */
     class DimatiHelperFunctions {
-        /**
-        * This variable contains all of the possible set names, which are uppercase English alphabet characters.
-        *
-        * @var array An array containing all of the uppercase English alphabet characters.
-        */
         private $set_names;
         private $complex_number_names;
-
-        /**
-        * This variable contains all of the possible characters, which are lowercase English alphabet characters.
-        *
-        * @var array An array containing all of the lowercase English alphabet characters.
-        */
         private $possible_abc_characters;
         private $maximum_number;
         private $minimum_number;
@@ -98,6 +87,7 @@
          * @param int $maximum_number_of_elements The maximum number of elements that will be put into the sets. The default is 5.
          * @param bool $is_associative This decides whether the sets are associative, or given by indices.
          * @param bool $is_bag If this is true, then the elements in the sets can repeat, else they can't. The default value for this parameter is false.
+         * 
          * @return array Returns an associative array containing the sets and their names.
         */
         public function CreateSets($number_of_sets, $minimum_number_of_elements = 3, $maximum_number_of_elements = 5, $is_associative = false, $is_bag = false){
@@ -144,6 +134,7 @@
          *  
          * @param array $set The set from which we want to get elements.
          * @param int $number_of_elements The number of elements that will be returned from the given set.
+         * 
          * @return array A part of the set with the requested amount of elements.
         */
         public function GetPartOfSet($set, $number_of_elements){
@@ -189,6 +180,9 @@
             }
         }
 
+        /**
+         * 
+         */
         public function CreateNewPairOfNumbers($array, $first_number, $second_number){
             $is_new_pair = !in_array([$first_number, $second_number], $array);
             $first_index = array_search($first_number, $this->complex_number_names);
@@ -216,15 +210,15 @@
          * We get the number of created elements. This method will pick an index between 0 and the number of the created elements, then it gives back if this index is a new one.
          * Additionally, this method checks, if new index can be picked or not.
          * 
-         * @param array $chosen_index An indexed array containing the previously chosen set indices.
+         * @param array $chosen_indices An indexed array containing the previously chosen set indices.
          * @param int $number_of_elements A whole number, this is the number of created elements. We wish to pick a new index from the range of 0 and this number (inclusively).
          * 
          * @return array Returns an indexed array containing a new index.
          */
-        public function PickNewElement($chosen_index, $number_of_elements){
-            if(count($chosen_index) < $number_of_elements){
+        public function PickNewElement($chosen_indices, $number_of_elements){
+            if(count($chosen_indices) < $number_of_elements){
                 $first_index = mt_rand(0, $number_of_elements-1);
-                while(in_array($first_index, $chosen_index)){
+                while(in_array($first_index, $chosen_indices)){
                     $first_index = mt_rand(0, $number_of_elements-1);
                 }
                 return $first_index;
@@ -243,6 +237,7 @@
          * @param array $first_set The set from which the pairs' first element will be chosen randomly.
          * @param array $image The image The set from which the pairs' second element will be chosen randomly.
          * @param int $number_of_elements The number of ordered pairs that will be returned.
+         * 
          * @return array A relation containing ordered pairs consisting elements of the two given sets, the form of this array is: [[element, element],[element, elemen]]
         */
         public function CreateDescartesProduct($first_set, $second_set, $number_of_elements){
@@ -283,6 +278,7 @@
          * If this pair has already been created, then a new pair will be generated, until it is not present in the returned array.
          *  
          * @param int $number_of_elements The number of complex numbers to return.
+         * 
          * @return array Array containing the given number of complex numbers of the form [real part, imaginary part].
         */
         public function CreateComplexNumbers($number_of_elements){
@@ -364,6 +360,9 @@
             return $universe;
         } 
 
+        /**
+         * 
+         */
         public function GetRelationTwoArrayForm($relation){
             $first_components = [];
             $second_components = [];
@@ -374,6 +373,9 @@
             return [$first_components, $second_components];
         }
 
+        /**
+         * 
+         */
         public function GetImageBySet($relation, $set){
             $result_image = [];
             foreach($relation as $index => $pair){
@@ -384,6 +386,9 @@
             return $result_image;
         }
 
+        /**
+         * 
+         */
         public function GetDomainBySet($relation, $set){
             $result_domain = [];
             foreach($relation as $index => $pair){
@@ -394,6 +399,9 @@
             return $result_domain;
         }
 
+        /**
+         * 
+         */
         public function GetDomainOfRelation($relation){
             $domain = [];
             foreach($relation as $index => $pair){
@@ -404,6 +412,9 @@
             return $domain;
         }
 
+        /**
+         * 
+         */
         public function GetImageOfRelation($relation){
             $image = [];
             foreach($relation as $index => $pair){
@@ -414,6 +425,9 @@
             return $image;
         }
 
+        /**
+         * 
+         */
         public function GetRestrictedRelation($relation, $narrow_to_set){
             $return_relation = [];
             foreach($relation as $index => $pair){
@@ -424,6 +438,9 @@
             return $return_relation;
         }
 
+        /**
+         * 
+         */
         public function GetInverseRelation($relation){
             $inverse_relation = [];
             foreach($relation as $index => $pair){
@@ -432,6 +449,9 @@
             return $inverse_relation;
         }
 
+        /**
+         * 
+         */
         public function CreateCompositionOfRelations($first_relation, $second_relation){
             $composition = [];
             foreach($second_relation as $index => $first_pair){
@@ -447,6 +467,9 @@
             return $composition;
         }
 
+        /**
+         * 
+         */
         public function MakeRelationFromArrays($first_array, $second_array){
             $relation = [[],[]];
             foreach($first_array as $index => $element){
@@ -456,6 +479,9 @@
             return $relation;
         }
 
+        /**
+         * 
+         */
         public function GetCharacteristics(){
             $is_reflexive = false;
             $is_irreflexive = false;
@@ -562,6 +588,9 @@
             return array("Reflexív" => $is_reflexive,"Irreflexív" => $is_irreflexive,"Szimmetrikus" => $is_symmetric,"Antiszimmetrikus" => $is_antisymmetric,"Asszimetrikus" => $is_assymetric,"Tranzitív" => $is_transitive);
         }
 
+        /**
+         * 
+         */
         public function IsReflexiveRelation($base_set, $relation){
             foreach($base_set as $base_index => $base_element){
                 if(!in_array([$base_element,$base_element], $relation)){
@@ -571,6 +600,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsIrreflexiveRelation($base_set, $relation){
             foreach($base_set as $base_index => $base_element){
                 if(in_array([$base_element,$base_element], $relation)){
@@ -580,6 +612,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsSymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -591,6 +626,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsAntiSymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -602,6 +640,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsAssymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -613,6 +654,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsTransitiveRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -626,6 +670,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsDichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -637,6 +684,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsTrichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
@@ -658,18 +708,30 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsEquivalenceRelation($base_set, $relation){
             return $this->IsReflexiveRelation($base_set, $relation) && $this->IsSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
+        /**
+         * 
+         */
         public function IsPartlyOrderedRelation($base_set, $relation){
             return $this->IsReflexiveRelation($base_set, $relation) && $this->IsAntiSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
+        /**
+         * 
+         */
         public function IsStrictlyPartlyOrderedRelation($base_set, $relation){
             return $this->IsIrreflexiveRelation($base_set, $relation) && $this->IsAntiSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
+        /**
+         * 
+         */
         public function MakeFunction($domain, $image, $number_of_pairs){
             if($number_of_pairs <= count($domain)){
                 $relation = [];
@@ -692,6 +754,9 @@
             }
         }
 
+        /**
+         * 
+         */
         public function IsFunction($relation){
             $relation_first_components = $this->GetRelationTwoArrayForm($relation)[0];
             $found_elements = [];
@@ -704,6 +769,9 @@
             return true;
         }
 
+        /**
+         * 
+         */
         public function IsSurjective($relation, $image){
             if($this->IsFunction($relation)){
                 $relation_second_components = $this->GetRelationTwoArrayForm($relation)[1];
@@ -718,6 +786,9 @@
             }
         }
 
+        /**
+         * 
+         */
         public function IsInjective($relation){
             if($this->IsFunction($relation)){
                 $relation_second_components = $this->GetRelationTwoArrayForm($relation)[1];
@@ -734,6 +805,9 @@
             }
         }
 
+        /**
+         * 
+         */
         public function IsBijective($relation, $image){
             return $this->IsSurjective($relation, $image) && $this->IsInjective($relation);
         }
@@ -809,28 +883,9 @@
             return $all_relations; 
         }
 
-        public function SolveQuadraticEquation($a, $b, $c){
-            $return_values = [];
-            $discriminator = $b**2 - 4*$a*$c;
-            $is_pure_real = true;
-            if($discriminator < 0){
-                $is_pure_real = false;
-                $discriminator -= 1;
-            }
-
-            if($is_pure_real){
-                array_push($return_values, [(-1*$b+sqrt($discriminator))/(2*$a),0]);
-                if($discriminator != 0){
-                    array_push($return_values, [(-1*$b-sqrt($discriminator))/(2*$a),0]);
-                }
-            }else{
-                array_push($return_values, [(-1*$b)/(2*$a),sqrt($discriminator)/(2*$a)]);
-                array_push($return_values, [(-1*$b)/(2*$a),(-1*sqrt($discriminator))/(2*$a)]);
-            }
-
-            return $return_values;
-        }
-
+        /**
+         * 
+         */
         public function UseMoivre($operation, $first_number, $second_number, $power=0){
             $return_values = [];
             switch($operation){
@@ -872,6 +927,9 @@
             return $return_values;
         }
 
+        /**
+         * 
+         */
         public function GetTrigonometricForm($algebraic_form = [0,0]){
             $length = sqrt($algebraic_form[0]**2 + $algebraic_form[1]**2);
             $argument = 0;
@@ -882,14 +940,6 @@
             }
 
             return [$length, $argument];
-        }
-
-        public function GetNthUnitRoot($n){
-            $root = [];
-            if($n>0 && is_int($n)){
-                array_push($root, 1, (2*mt_rand(1, $n-1)*pi())/$n);
-            }
-            return $root;
         }
 
         /**

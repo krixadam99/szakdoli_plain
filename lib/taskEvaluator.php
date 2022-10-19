@@ -100,8 +100,34 @@
         */
         public function SetSubjectId($subject_id){ $this->subject_id = $subject_id; }
 
-        public abstract function CheckSolution($topic_number);
+        /**
+         * 
+         * This method assigns a new value to the real solutions member.
+         * 
+         * @param array $real_solutions An array which will be assigned to the class's $real_solutions member.
+         * 
+         * @return void
+        */
+        public function SetRealSolutions($real_solutions){ $this->real_solutions = $real_solutions; }
 
+        /**
+         * 
+         * This method assigns a new value to the given answers member.
+         * 
+         * @param int $given_answers An array which will be assigned to the class's $topic_number member.
+         * 
+         * @return void
+        */
+        public function SetGivenAnswers($given_answers){ $this->given_answers = $given_answers; }
+
+        /**
+         * 
+         */
+        protected abstract function CheckSolution($topic_number);
+
+        /**
+         * 
+         */
         protected function SetSessionAnswer($id, $given_answer, $given_solution, $real_solution, $was_correct){
             $_SESSION["answers"]["answer_" . $id] = 
             array(
@@ -168,7 +194,7 @@
          * 
          * @param array $real_solution The real solutions for the subtask.
          * @param array $given_answer The given answers for the subtask.
-         * @param array $answer_counter If the selects are under the same subtask, then this determines the subtask's number.
+         * @param string $answer_counter If the selects are under the same subtask, then this determines the subtask's number.
          * 
          * @return bool Returns whether the given answers and real solutions are all the same, or not.
         */
@@ -348,58 +374,6 @@
         }
 
        /**
-         * This protected method compares the content of an input with the real value for that input. The given key is the required element's key in the user's given asnwers' array.
-         * 
-         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array didn't contain the given name as a key).
-         * Here, only the residues will be compared. The residues (the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
-         * 
-         * @param int $real_value_residue A whole number, the real value for the residue.
-         * @param int $real_value_modulo A positive whole number, the real value for the modulo.
-         * @param string $input_name A string, the key of the element in the user's given answers' array.
-         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
-         *  
-         * @return void
-         */
-        protected function EvaluateNumberAndCongruence($real_value_residue, $real_value_modulo, $input_name, $answer_id){
-            $given_number_raw = $this->given_answers[$input_name]??"";
-            $given_number = $this->ExtractSolutionFromInputOnlyNumbers($given_number_raw)[0]??"";
-            
-            $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo) && is_numeric($given_number);
-            if($was_correct){
-                $this->correct_answer_counter += 1;
-            }
-
-            $this->SetSessionAnswer($answer_id, $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
-        }
-
-       /**
-         * This protected method compares the content of a pair of inputs with the real values for those inputs. The given key is the first required element's key in the user's given asnwers' array.
-         * 
-         * The contents here will be extracted from the inputs (even if its value is "", i.e., the user's answer array did not contain an element with the given key).
-         * The modulos (the second element of the first argument and the given number + 1 indexed element of the user's given answers' array) will be compared.
-         * Then, the residues (the first element of the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
-         * 
-         * @param array $congruence An indexed array containing two elements, the resiude and the modulo.
-         * @param array $input_names An array containing the keys of the required inputs' values found in the user's given answers' (associative) array.
-         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
-         * 
-         * @return void
-         */
-        protected function EvaluatePairsOfCongruences($congruence, $input_names, $answer_ids){
-            $given_answer_pair_raw = [$this->given_answers[$input_names[0]]??"", $this->given_answers[$input_names[1]]??""];
-            $given_answer_pair = [$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[1])[0]??""];
-                
-            $was_correct_modulo = $given_answer_pair[1] == $congruence[1] && is_numeric($congruence[1]) && is_numeric($given_answer_pair[1]);
-            $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]) && is_numeric($given_answer_pair[0]);
-            if($was_correct_residue && $was_correct_modulo){
-                $this->correct_answer_counter += 1;
-            }
-            
-            $this->SetSessionAnswer($answer_ids[0], $given_answer_pair_raw[0], $given_answer_pair[0], $congruence[0], $was_correct_residue);
-            $this->SetSessionAnswer($answer_ids[1], $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
-        }
-
-       /**
          * This protected method compares the content of an input with the real value for that input. The given key is the first required element's key in the user's given asnwers' array.
          * 
          * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array did not contain an element with the given key), then will be converted into set form.
@@ -466,6 +440,58 @@
             }
 
             $this->SetSessionAnswer($answer_id, $given_answer_raw, $answer_text, $solution_text, $was_correct);
+        }
+
+        /**
+         * This protected method compares the content of an input with the real value for that input. The given key is the required element's key in the user's given asnwers' array.
+         * 
+         * The content here will be extracted from the input (even if its value is "", i.e., the user's answer array didn't contain the given name as a key).
+         * Here, only the residues will be compared. The residues (the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
+         * 
+         * @param int $real_value_residue A whole number, the real value for the residue.
+         * @param int $real_value_modulo A positive whole number, the real value for the modulo.
+         * @param string $input_name A string, the key of the element in the user's given answers' array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         *  
+         * @return void
+         */
+        protected function EvaluateNumberAndCongruence($real_value_residue, $real_value_modulo, $input_name, $answer_id){
+            $given_number_raw = $this->given_answers[$input_name]??"";
+            $given_number = $this->ExtractSolutionFromInputOnlyNumbers($given_number_raw)[0]??"";
+            
+            $was_correct = $this->IsCongruent(intval($given_number), $real_value_residue, $real_value_modulo) && is_numeric($given_number);
+            if($was_correct){
+                $this->correct_answer_counter += 1;
+            }
+
+            $this->SetSessionAnswer($answer_id, $given_number_raw, $given_number, $real_value_residue . " + " . $real_value_modulo .  "k (k \u{2208} \u{2124})", $was_correct);
+        }
+
+       /**
+         * This protected method compares the content of a pair of inputs with the real values for those inputs. The given key is the first required element's key in the user's given asnwers' array.
+         * 
+         * The contents here will be extracted from the inputs (even if its value is "", i.e., the user's answer array did not contain an element with the given key).
+         * The modulos (the second element of the first argument and the given number + 1 indexed element of the user's given answers' array) will be compared.
+         * Then, the residues (the first element of the first argument and the given number indexed element of the user's given answers' array) will be compared by the IsCongruent method.
+         * 
+         * @param array $congruence An indexed array containing two elements, the resiude and the modulo.
+         * @param array $input_names An array containing the keys of the required inputs' values found in the user's given answers' (associative) array.
+         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * 
+         * @return void
+         */
+        protected function EvaluatePairsOfCongruences($congruence, $input_names, $answer_ids){
+            $given_answer_pair_raw = [$this->given_answers[$input_names[0]]??"", $this->given_answers[$input_names[1]]??""];
+            $given_answer_pair = [$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[0])[0]??"",$this->ExtractSolutionFromInputOnlyNumbers($given_answer_pair_raw[1])[0]??""];
+                
+            $was_correct_modulo = $given_answer_pair[1] == $congruence[1] && is_numeric($congruence[1]) && is_numeric($given_answer_pair[1]);
+            $was_correct_residue = $this->IsCongruent(intval($given_answer_pair[0]), $congruence[0], $congruence[1]) && is_numeric($given_answer_pair[0]);
+            if($was_correct_residue && $was_correct_modulo){
+                $this->correct_answer_counter += 1;
+            }
+            
+            $this->SetSessionAnswer($answer_ids[0], $given_answer_pair_raw[0], $given_answer_pair[0], $congruence[0], $was_correct_residue);
+            $this->SetSessionAnswer($answer_ids[1], $given_answer_pair_raw[1], $given_answer_pair[1], $congruence[1], $was_correct_modulo);
         }
     }
 

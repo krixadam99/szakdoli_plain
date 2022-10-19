@@ -79,58 +79,58 @@
     $controller_connection = new ControllerConnector();
     
     //GET methods connection
-    $controller_connection->get_method_connection("index", "IndexController", "Index");
-    $controller_connection->get_method_connection("login", "LoginController", "Login");
-    $controller_connection->get_method_connection("forgottenPassword", "LoginController", "forgottenPassword");
-    $controller_connection->get_method_connection("register", "RegistrationController", "Registration");
+    $controller_connection->GetMethodConnection("index", "IndexController", "Index");
+    $controller_connection->GetMethodConnection("login", "LoginController", "Login");
+    $controller_connection->GetMethodConnection("forgottenPassword", "LoginController", "forgottenPassword");
+    $controller_connection->GetMethodConnection("register", "RegistrationController", "Registration");
     
-    $controller_connection->get_method_connection("demonstratorHandling", "AdministratorController", "DemonstratorHandling");
+    $controller_connection->GetMethodConnection("demonstratorHandling", "AdministratorController", "DemonstratorHandling");
 
-    $controller_connection->get_method_connection("notifications", "NotificationsController", "Notifications");
+    $controller_connection->GetMethodConnection("notifications", "NotificationsController", "Notifications");
 
-    $controller_connection->get_method_connection("messages", "MessagesController", "Messages");
-    $controller_connection->get_method_connection("writeMessage", "MessagesController", "WriteMessage");
+    $controller_connection->GetMethodConnection("messages", "MessagesController", "Messages");
+    $controller_connection->GetMethodConnection("writeMessage", "MessagesController", "WriteMessage");
 
-    $controller_connection->get_method_connection("groupAddition", "GroupAdditionController", "GroupAddition");
+    $controller_connection->GetMethodConnection("groupAddition", "GroupAdditionController", "GroupAddition");
 
-    $controller_connection->get_method_connection("taskGeneration", "TaskGenerationController", "TaskGeneration");
-    $controller_connection->get_method_connection("printPage", "TaskGenerationController", "PrintPage");
+    $controller_connection->GetMethodConnection("taskGeneration", "TaskGenerationController", "TaskGeneration");
+    $controller_connection->GetMethodConnection("printPage", "TaskGenerationController", "PrintPage");
 
-    $controller_connection->get_method_connection("studentHandling", "StudentHandlingController", "StudentHandling");
+    $controller_connection->GetMethodConnection("studentHandling", "StudentHandlingController", "StudentHandling");
 
-    $controller_connection->get_method_connection("studentGrades", "StudentGradesController", "StudentGrades");
+    $controller_connection->GetMethodConnection("studentGrades", "StudentGradesController", "StudentGrades");
 
-    $controller_connection->get_method_connection("practice", "PracticeController", "Practice");
-    $controller_connection->get_method_connection("practiceShowAnswers", "PracticeController", "PracticeAnswers");
+    $controller_connection->GetMethodConnection("practice", "PracticeController", "Practice");
+    $controller_connection->GetMethodConnection("practiceShowAnswers", "PracticeController", "PracticeAnswers");
 
-    $controller_connection->get_method_connection("grades", "GradesController", "Grades");
+    $controller_connection->GetMethodConnection("grades", "GradesController", "Grades");
     
     //POST methods connection
-    $controller_connection->post_method_connection("validateLogin", "LoginController", "ValidateLogin");
-    $controller_connection->post_method_connection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
-    $controller_connection->post_method_connection("validateRegistration", "RegistrationController", "ValidateRegistration");
+    $controller_connection->PostMethodConnection("validateLogin", "LoginController", "ValidateLogin");
+    $controller_connection->PostMethodConnection("validateForgottenPassword", "LoginController", "ValidateForgottenPassword");
+    $controller_connection->PostMethodConnection("validateRegistration", "RegistrationController", "ValidateRegistration");
 
-    $controller_connection->post_method_connection("finalizePending", "AdministratorController", "FinalizePending");
+    $controller_connection->PostMethodConnection("finalizePending", "AdministratorController", "FinalizePending");
 
-    $controller_connection->post_method_connection("sendNewMessage", "MessagesController", "SendNewMessage");
-    $controller_connection->post_method_connection("replyToMessage", "MessagesController", "ReplyToMessage");
-    $controller_connection->post_method_connection("deleteMessages", "MessagesController", "DeleteMessages");
-    $controller_connection->post_method_connection("recoverDeletedMessages", "MessagesController", "RecoverDeleteddMessages");
+    $controller_connection->PostMethodConnection("sendNewMessage", "MessagesController", "SendNewMessage");
+    $controller_connection->PostMethodConnection("replyToMessage", "MessagesController", "ReplyToMessage");
+    $controller_connection->PostMethodConnection("deleteMessages", "MessagesController", "DeleteMessages");
+    $controller_connection->PostMethodConnection("recoverDeletedMessages", "MessagesController", "RecoverDeleteddMessages");
 
-    $controller_connection->post_method_connection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
+    $controller_connection->PostMethodConnection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
 
-    $controller_connection->post_method_connection("studentHandling", "StudentHandlingController", "HandleStudents");
+    $controller_connection->PostMethodConnection("studentHandling", "StudentHandlingController", "HandleStudents");
 
-    $controller_connection->post_method_connection("upgradeStudentGrades", "StudentGradesController", "UpdateResults");
-    $controller_connection->post_method_connection("upgradeExpectationRules", "StudentGradesController", "UpdateExpectationRules");
-    $controller_connection->post_method_connection("upgradeTaskDueDates", "StudentGradesController", "UpdateTaskDueDates");
-    $controller_connection->post_method_connection("upgradeGradeLevels", "StudentGradesController", "UpdateGradeLevels");
+    $controller_connection->PostMethodConnection("upgradeStudentGrades", "StudentGradesController", "UpdateResults");
+    $controller_connection->PostMethodConnection("upgradeExpectationRules", "StudentGradesController", "UpdateExpectationRules");
+    $controller_connection->PostMethodConnection("upgradeTaskDueDates", "StudentGradesController", "UpdateTaskDueDates");
+    $controller_connection->PostMethodConnection("upgradeGradeLevels", "StudentGradesController", "UpdateGradeLevels");
 
-    $controller_connection->post_method_connection("handInSolution", "PracticeController", "HandInSolution");
+    $controller_connection->PostMethodConnection("handInSolution", "PracticeController", "HandInSolution");
 
-    $controller_connection->post_method_connection("createPreview", "TaskGenerationController", "CreatePreview");
+    $controller_connection->PostMethodConnection("createPreview", "TaskGenerationController", "CreatePreview");
     
     
     //Starting the connection
-    $controller_connection->start_connection();
+    $controller_connection->StartConnection();
 ?>

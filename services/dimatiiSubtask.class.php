@@ -1,11 +1,11 @@
 <?php
 
-    class DimatiiSubtask {
+    class DimatiiSubtaskGenerator {
         private $dimat_helper_functions;
         
         /**
          * 
-         * The contructor for DimatiiSubtask class.
+         * The contructor for DimatiiSubtaskGenerator class.
          * 
          * @return void
          */
@@ -224,12 +224,12 @@
          * This private method will create distinct numbers for the first subtask of the second task of Discrete Mathematics II.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
-         * @param int $upper The upper bound of the range from which the modulos will be picked randomly. The default value is 15.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateCompleteResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 15){
+        private function CreateCompleteResidueSystemSubtask($number_of_numbers){
+            $lower = 2; 
+            $upper = 15;
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -262,12 +262,12 @@
          * The subtask is about giving the residue classes by representative elements of the created reduced residue systems.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
-         * @param int $upper The upper bound of the range from which the modulos will be picked randomly. The default value is 25.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateReducedResidueSystemSubtask($number_of_numbers, $lower = 2, $upper = 25){
+        private function CreateReducedResidueSystemSubtask($number_of_numbers){
+            $lower = 2; 
+            $upper = 25;
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -300,12 +300,12 @@
          * The subtask is about giving the size of a reduced residue systems by the Euler's phi function.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the modulos will be picked randomly. The default value is 2.
-         * @param int $upper The upper bound of the range from which the modulos will be picked randomly. The default value is 15.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateEulerPhiFunctionSubtask($number_of_numbers, $lower = 1000, $upper = 5000){
+        private function CreateEulerPhiFunctionSubtask($number_of_numbers){
+            $lower = 1000;
+            $upper = 5000;
             $modulos = $this->dimat_helper_functions->CreateDistinctNumbers($number_of_numbers, $lower, $upper);
             $solutions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -346,12 +346,12 @@
          * The subtask is about giving the gcd for each pair with the Eucleidan algorithm. Additionally, the lcm for these pairs will also be determined.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the pairs will be picked randomly. The default value is 30.
-         * @param int $upper The upper bound of the range from which the pairs will be picked randomly. The default value is 200.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateEucleidanAlgorithmSubtask($number_of_numbers, $lower = 30, $upper = 200){
+        private function CreateEucleidanAlgorithmSubtask($number_of_numbers){
+            $lower = 30;
+            $upper = 200;
             $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_numbers, $lower, $upper);
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
             $descriptions = [];
@@ -401,12 +401,12 @@
          * The subtask is about giving the solution of a linear congruence.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the triplets will be picked randomly. The default value is -30.
-         * @param int $upper The upper bound of the range from which the triplets will be picked randomly. The default value is 30.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateLinearCongruenceSubtask($number_of_triplets, $lower = -30, $upper = 30){
+        private function CreateLinearCongruenceSubtask($number_of_triplets){
+            $lower = -30;
+            $upper = 30;
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
             $descriptions = [];
@@ -501,12 +501,12 @@
          * The subtask is about giving the solution of diophantine equations.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the triplets will be picked randomly. The default value is -50.
-         * @param int $upper The upper bound of the range from which the triplets will be picked randomly. The default value is 50.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateDiophantineEquationSubtask($number_of_triplets, $lower = -50, $upper = 50){
+        private function CreateDiophantineEquationSubtask($number_of_triplets){
+            $lower = -50;
+            $upper = 50;
             $triplets = $this->dimat_helper_functions->CreateSolvableLinearCongruences($number_of_triplets, true, $lower, $upper);
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
             $descriptions = [];
@@ -545,8 +545,6 @@
          * The subtask is about giving the solution for a number division, where the numbers have conditions dividorwise.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
-         * @param int $lower The lower bound of the range from which the triplets will be picked randomly. The default value is -50.
-         * @param int $upper The upper bound of the range from which the triplets will be picked randomly. The default value is 50.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -603,13 +601,13 @@
          * The subtask is about giving the solution for congruence systems.
          * 
          * @param int $number_of_congruence_systems The number of congruence systems which is a positive whole number. The default value is 1.
-         * @param int $number_of_congruences_per_system The number of congruences per system which is a positive whole number. The default value is 3.
-         * @param int $lower The lower bound of the range from which the triplets representing congruences will be picked randomly. The default value is -50.
-         * @param int $upper The upper bound of the range from which the triplets representing congruences will be picked randomly. The default value is 50.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateCRTSubtask($number_of_congruence_systems = 1, $number_of_congruences_per_system = 3, $lower = -50, $upper = 50){
+        private function CreateCRTSubtask($number_of_congruence_systems = 1){
+            $number_of_congruences_per_system = 3;
+            $lower = -50;
+            $upper = 50;
             $congruence_systems = [];
             $solutions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -642,13 +640,12 @@
          * The subtask is about giving the solution for congruence systems ....
          * 
          * @param int $number_of_congruence_systems The number of congruence systems which is a positive whole number. The default value is 1.
-         * @param int $number_of_congruences_per_system The number of congruences per system which is a positive whole number. The default value is 3.
-         * @param int $lower The lower bound of the range from which the triplets representing congruences will be picked randomly. The default value is 2.
-         * @param int $upper The upper bound of the range from which the triplets representing congruences will be picked randomly. The default value is 100.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateCRTNumberResiduesSubtask($number_of_congruence_systems = 1, $lower = 2, $upper = 100){
+        private function CreateCRTNumberResiduesSubtask($number_of_congruence_systems = 1){
+            $lower = 2;
+            $upper = 100;
             $congruence_systems = [];
             $solutions = [];
             $printable_solutions = ["<div class=\"editable_box\"><b>Megoldás:</b></div>"];
@@ -691,12 +688,12 @@
          * The subtask is about giving the Horner-scheme for polynomials with places.
          * 
          * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
-         * @param int $lower The lower bound of the range from which the places will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the places will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+        private function CreateHornerSchemeSubtask($number_of_polynomials = 1){
+            $lower = -10;
+            $upper = 10;
             $tasks = [];
             $polynomials = [];
             $places = [];
@@ -737,12 +734,12 @@
          * The subtask is determining the polynomial division (where the divisor is a first degree polynomial expression) with the help of the Horner- scheme.
          * 
          * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
-         * @param int $lower The lower bound of the range from which the places will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the places will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreatePolynomialDivisionHornerSchemeSubtask($number_of_polynomials = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialDivisionHornerSchemeSubtask($number_of_polynomials = 1){
+            $lower = -10;
+            $upper = 10;
             $tasks = [];
             $polynomials = [];
             $places = [];
@@ -807,12 +804,12 @@
          * The subtask is about determining the polynomial division (the first polynomial expressions will be divided with the second expressions).
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
-         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreatePolynomialDivisionSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialDivisionSubtask($number_of_pairs = 1){
+            $lower = -10;
+            $upper = 10;
             $tasks = [];
             $dividands = [];
             $solutions = [];
@@ -897,12 +894,12 @@
          * The subtask is about determining the polynomial multiplication.
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
-         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreatePolynomialMultiplicationSubtask($number_of_pairs = 1, $lower = -10, $upper = 10){
+        private function CreatePolynomialMultiplicationSubtask($number_of_pairs = 1){
+            $lower = -10;
+            $upper = 10;
             $tasks = [];
             $multiplicands = [];
             $solutions = [];
@@ -954,12 +951,12 @@
          * This alternative approach (this reverse method) is used, because this way the coefficients of the interpolation polynomial expressions will be inherently whole numbers (since the created polynomial expressions' coefficients are whole numbers all the time), that is, "will be nice".
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
-         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateLagrangeInterpolationSubtask($number_of_points = 3, $lower = -10, $upper = 10){
+        private function CreateLagrangeInterpolationSubtask($number_of_points = 3){
+            $lower = -10;
+            $upper = 10;
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];
@@ -1014,12 +1011,12 @@
          * It also creates a visual solution containing the table form of the solution, this will be used in the test (or seminar task) generation part.
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
-         * @param int $lower The lower bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is -10.
-         * @param int $upper The upper bound of the range from which the coefficients of the polynomials will be picked randomly. The default value is 10.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateNewtonInterpolationSubtask($number_of_points = 3, $lower = -5, $upper = 5){
+        private function CreateNewtonInterpolationSubtask($number_of_points = 3){
+            $lower = -5;
+            $upper = 5;
             $tasks = [];
             $solutions = [];
             $polynomial_expressions = [];

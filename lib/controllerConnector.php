@@ -14,7 +14,7 @@
          * 
          * @return void
         */
-        public function start_connection() {
+        public function StartConnection() {
             $current_site = $_GET["site"] ?? "index"; //The default site is the index page
             $method = $_SERVER["REQUEST_METHOD"];
 
@@ -50,7 +50,7 @@
          * 
          * @return void
         */
-        public function get_method_connection($path, $controller, $controller_method) {
+        public function GetMethodConnection($path, $controller, $controller_method) {
             $this->paths[] = [
                 "path" => $path,
                 "method" => "GET",
@@ -72,7 +72,7 @@
          * 
          * @return void
         */
-        public function post_method_connection($path, $controller, $controller_method) { 
+        public function PostMethodConnection($path, $controller, $controller_method) { 
             $this->paths[] = [
                 "path" => $path,
                 "method" => "POST",

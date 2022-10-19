@@ -46,29 +46,27 @@
          * If it is bigger, than the method returns the range from where it would have picked numbers randomly.
          * 
          * @param int $number_of_numbers The number of distinct numbers the method must return.
-         * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
-         * @param bool $is_first_positive Should we guarantee that the first number is positive, or not. The default value is false.
-         * @param bool $is_second_positive Should we guarantee that the second number is positive, or not. The default value is false.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked. The default value is 1000.
          * 
          * @return array Returns the given amount of distinct numbers.
          */
-        public function CreateDistinctNumbers($number_of_numbers, $lower = -1000, $upper = 1000){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
-            if($number_of_numbers <= max($upper, $lower) - min($upper, $lower) + 1){
+        public function CreateDistinctNumbers($number_of_numbers, $lower_bound = -1000, $upper_bound = 1000){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
+            if($number_of_numbers <= max($upper_bound, $lower_bound) - min($upper_bound, $lower_bound) + 1){
                 $return_numbers = [];
                 for($counter = 0; $counter < $number_of_numbers; $counter++){
-                    $element = mt_rand($lower, $upper);
+                    $element = mt_rand($lower_bound, $upper_bound);
     
                     while(in_array($element, $return_numbers)){
-                        $element = mt_rand($lower, $upper);
+                        $element = mt_rand($lower_bound, $upper_bound);
                     }
                     array_push($return_numbers, $element);
                 }
                 return $return_numbers;
             }else{
                 $return_numbers = [];
-                for($counter = min($upper, $lower); $counter <= max($upper, $lower); $counter++){
+                for($counter = min($upper_bound, $lower_bound); $counter <= max($upper_bound, $lower_bound); $counter++){
                     array_push($return_numbers, $counter);
                 }
                 return $return_numbers;
@@ -80,43 +78,43 @@
          * This method is responsible for creating the given amount of pairs of numbers.
          * 
          * @param int $number_of_pairs The number of pairs the method must return.
-         * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked. The default value is 1000.
          * @param bool $is_first_positive Should we guarantee that the first number is positive, or not. The default value is false.
          * @param bool $is_second_positive Should we guarantee that the second number is positive, or not. The default value is false.
          * 
          * @return array Returns the given amount of pairs of numbers.
          */
-        public function CreatePairsOfNumbers($number_of_pairs, $lower = -1000, $upper = 1000, $is_first_positive = false, $is_second_positive = false){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
-            $range = $upper - $lower + 1;
+        public function CreatePairsOfNumbers($number_of_pairs, $lower_bound = -1000, $upper_bound = 1000, $is_first_positive = false, $is_second_positive = false){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
+            $range = $upper_bound - $lower_bound + 1;
             $return_pairs = [];
             if($number_of_pairs <= $range*($range-1)){
                 for($counter = 0; $counter < $number_of_pairs; $counter++){
-                    $first_element = mt_rand(max(1,$lower), $upper);
+                    $first_element = mt_rand(max(1,$lower_bound), $upper_bound);
                     if($is_first_positive){
-                        $first_element = mt_rand(1, $upper);
+                        $first_element = mt_rand(1, $upper_bound);
                     }
-                    $second_element = mt_rand($lower, $upper);
+                    $second_element = mt_rand($lower_bound, $upper_bound);
                     if($is_second_positive){
-                        $second_element = mt_rand(max(1,$lower), $upper);
+                        $second_element = mt_rand(max(1,$lower_bound), $upper_bound);
                     }
     
                     while($first_element == $second_element || in_array([$first_element, $second_element], $return_pairs)){
-                        $first_element = mt_rand($lower, $upper);
+                        $first_element = mt_rand($lower_bound, $upper_bound);
                         if($is_first_positive){
-                            $first_element = mt_rand(max(1,$lower), $upper);
+                            $first_element = mt_rand(max(1,$lower_bound), $upper_bound);
                         }
-                        $second_element = mt_rand($lower, $upper);
+                        $second_element = mt_rand($lower_bound, $upper_bound);
                         if($is_second_positive){
-                            $second_element = mt_rand(max(1,$lower), $upper);
+                            $second_element = mt_rand(max(1,$lower_bound), $upper_bound);
                         }
                     }
                     array_push($return_pairs, [$first_element, $second_element]);
                 }
             }else{
-                for($outer_counter = $lower; $outer_counter < $upper; $outer_counter++){
-                    for($inner_counter = $lower; $inner_counter < $upper; $inner_counter++){
+                for($outer_counter = $lower_bound; $outer_counter < $upper_bound; $outer_counter++){
+                    for($inner_counter = $lower_bound; $inner_counter < $upper_bound; $inner_counter++){
                         if($outer_counter !== $inner_counter){
                             array_push($return_pairs, [$outer_counter, $inner_counter]);
                         }
@@ -152,22 +150,22 @@
          * This method is responsible for creating the given amount of triplets of numbers with the condition that non of the created numbers can be 0.
          * 
          * @param int $number_of_triplets The number of triplets the method must return.
-         * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked. The default value is 1000.
          * 
          * @return array Returns the given amount of triplets of numbers.
          */
-        public function CreateTripletsOfNumbersWithoutZero($number_of_triplets, $lower = -1000, $upper = 1000){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+        public function CreateTripletsOfNumbersWithoutZero($number_of_triplets, $lower_bound = -1000, $upper_bound = 1000){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
-                $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                 while($triplet[0] == 0 
                     || $triplet[1] == 0 
                     || $triplet[2] == 0 
                     || in_array($triplet, $return_triplets)
                     ){
-                        $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                        $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                 }
                 array_push($return_triplets, $triplet);
             }
@@ -180,16 +178,16 @@
          * 
          * @param int $number_of_triplets The number of triplets the method is required to return.
          * @param bool $without_zeros Should we guarantee that the triplets don't contain any zero, or not. The default is true.
-         * @param int $lower The lower bound for the range from which a random number will be picked for the elements of the congruences. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked for the elements of the congruences. The default value is 1000.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked for the elements of the congruences. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked for the elements of the congruences. The default value is 1000.
          * 
          * @return array Returns the given amount of triplets of numbers.
          */
-        public function CreateSolvableLinearCongruences($number_of_triplets, $without_zeros = true, $lower = -1000, $upper = 1000){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+        public function CreateSolvableLinearCongruences($number_of_triplets, $without_zeros = true, $lower_bound = -1000, $upper_bound = 1000){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
-                $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                 $b= $triplet[1];
                 $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                 $was_there_zero = false;
@@ -201,7 +199,7 @@
                     || in_array($triplet, $return_triplets)
                     || $b % $gcd !== 0
                     ){
-                        $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                        $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                         $b= $triplet[1];
                         $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         if($without_zeros){
@@ -223,16 +221,16 @@
          * the modulos in the system should be pairwise relatively prime (this also guarantees, that the system contains ).
          * 
          * @param int $number_of_triplets The number of triplets (symbolising the congruencies) the method must return.
-         * @param int $lower The lower bound for the range from which a random number will be picked for the elements of the congruences. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked for the elements of the congruences. The default value is 1000.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked for the elements of the congruences. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked for the elements of the congruences. The default value is 1000.
          * 
          * @return array Returns the given amount of triplets of numbers (one triplet is one congruence).
          */
-        public function CreateSolvableLinearCongruencesForCRT($number_of_triplets, $lower = -1000, $upper = 1000){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+        public function CreateSolvableLinearCongruencesForCRT($number_of_triplets, $lower_bound = -1000, $upper_bound = 1000){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $return_triplets = [];
             for($counter = 0; $counter < $number_of_triplets; $counter++){
-                $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                 $b= $triplet[1];
                 $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]); // The linear congruence can be solved
                 
@@ -246,7 +244,7 @@
                     || in_array($triplet, $return_triplets)
                     || $b % $gcd !== 0
                     ){
-                        $triplet = $this->CreateTripletOfNumbers($lower, $upper);
+                        $triplet = $this->CreateTripletOfNumbers($lower_bound, $upper_bound);
                         $b= $triplet[1];
                         $gcd = $this->DetermineGCDWithIteration([$triplet[0], $triplet[2]]);
                         
@@ -266,23 +264,23 @@
          * The method will create $degree number of not necessarily distinct number of roots, then uses generalized Viéte's formulas to determine the coefficients.
          * 
          * @param int $degree A positive integer which determines the degree of the created polynomial expression.
-         * @param int $lower The lower bound for the range from which a random number will be picked for a root. The default value is -10.
-         * @param int $upper The upper bound for the range from which a random number will be picked for a root. The default value is 10.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked for a root. The default value is -10.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked for a root. The default value is 10.
          * 
          * @return array Returns an array containing the coefficients of the polynomial expression. The coefficients will be in descending order based on the degrees.
          */
-        public function CreatePolynomialExpression($degree, $lower = -10, $upper = 10){
+        public function CreatePolynomialExpression($degree, $lower_bound = -10, $upper_bound = 10){
             // a*(x-x_1)*(x-x_2)*...*(x*x_$degree)
             // Main coefficient = a -> ($degree | $degree) = 1 addition
             // x^($degree-1)'s coefficient = x_1 + ->$_COOKIE ($degree | $degree-1) addition
             // x^($degree-2)'s coefficient = (x_1*...*x_degree-2) + -> ($degree | $degree-2) addition
             // ... x^1's coefficient = (x_1*...*x_degree-1) + -> ($degree | 1) addition
             // x^0's coefficient = x_1*...*x_degree -> ($degree | 0) = 1 addition
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $roots = [];
             $negated_roots = [];
             for($counter = 0; $counter < $degree; $counter++){
-                $new_root = mt_rand($lower, $upper);
+                $new_root = mt_rand($lower_bound, $upper_bound);
                 array_push($roots, $new_root);
                 array_push($negated_roots, -1*$new_root);
             }
@@ -308,13 +306,13 @@
          * @param int $number_of_places The number of places the method will return.
          * @param int $number_of_roots The number of places that will be a root.
          * @param array $roots An indexed array containing the roots of a polynomial expression.
-         * @param int $lower The lower bound for the range from which a random number will be picked for a place. The default value is -10.
-         * @param int $upper The upper bound for the range from which a random number will be picked for a place. The default value is 10.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked for a place. The default value is -10.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked for a place. The default value is 10.
          * 
          * @return array Returns an array containing the places, where the values will be calculated upon substituting the places into the polynomial expression's variables.
          */
-        public function CreatePlacesWithRoots($number_of_places, $number_of_roots, $roots, $lower = -10, $upper = 10){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+        public function CreatePlacesWithRoots($number_of_places, $number_of_roots, $roots, $lower_bound = -10, $upper_bound = 10){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $return_places = [];
             
             // Distinct roots
@@ -346,9 +344,9 @@
                     $return_places[$random_index] = $random_element_from_roots; 
                     $root_counter++;
                 }else{
-                    $random_element = mt_rand($lower, $upper);
+                    $random_element = mt_rand($lower_bound, $upper_bound);
                     while(in_array($random_element, $return_places) || in_array($random_element, $roots)){
-                        $random_element = mt_rand($lower, $upper);
+                        $random_element = mt_rand($lower_bound, $upper_bound);
                     }
                     $return_places[$random_index] = $random_element;
                 }
@@ -366,20 +364,20 @@
          * Each points are distinct, and the first coordinates are pairwise different. The points must lie on the graph given by the polynomial expression.
          * 
          * @param int $number_of_points The number of points the method returns.
-         * @param int $lower The lower bound for the range from which a random number will be picked for the first coordinate. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked for the first coordinate. The default value is 1000.
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked for the first coordinate. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked for the first coordinate. The default value is 1000.
          * @param array $polynomial_expression An indexed array of coefficients defining a polynomial expression on which the newly made points should lie.
          * 
          * @return array Returns the given amount of points.
          */
-        public function CreatePoints($number_of_points, $lower = -1000, $upper = 1000, $polynomial_expression = []){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
+        public function CreatePoints($number_of_points, $lower_bound = -1000, $upper_bound = 1000, $polynomial_expression = []){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $return_points = [];
             $first_coordinates = []; 
             for($counter = 0; $counter < $number_of_points; $counter++){
-                $first_element = mt_rand($lower, $upper);
+                $first_element = mt_rand($lower_bound, $upper_bound);
                 while(in_array($first_element, $first_coordinates)){
-                    $first_element = mt_rand($lower, $upper);
+                    $first_element = mt_rand($lower_bound, $upper_bound);
                 }
 
                 array_push($return_points, [$first_element, $this->DeterminePolynomialValue($first_element, $polynomial_expression)]);
@@ -853,11 +851,11 @@
             }
             $return_array["steps"] = array_merge($return_array["steps"], $simplified_congruences);
 
-            $merged_solution = $this->DetermineMergedSolutionForCongruencies($simplified_congruences[0], $simplified_congruences[1]);
+            $merged_solution = $this->DetermineMergedSolutionForCongruences($simplified_congruences[0], $simplified_congruences[1]);
             array_push($return_array["detailed_steps"], $merged_solution["diophantine_solution"]);
             array_push($return_array["steps"], $merged_solution["solution"]);
             for($counter = 2; $counter < count($simplified_congruences); $counter++){
-                $merged_solution = $this->DetermineMergedSolutionForCongruencies($merged_solution["solution"], $simplified_congruences[$counter]);
+                $merged_solution = $this->DetermineMergedSolutionForCongruences($merged_solution["solution"], $simplified_congruences[$counter]);
                 array_push($return_array["steps"], $merged_solution["solution"]);
                 array_push($return_array["detailed_steps"], $merged_solution["diophantine_solution"]);
             }
@@ -1139,27 +1137,6 @@
         }
 
         /**
-         * 
-         * This method is responsible for creating a triplet of numbers.
-         * 
-         * The triplets here will represent linear congruencies in the form of [coefficient of x, right side of congruence, modulo].
-         * We will only require the modulo to be non-zero, since the ax \equiv b (mod c) congruency can be rewritten as ax-b = ck, where k is an integer, we can multiply both side with -1, and get the same result, that is, ax \equiv b (mod -c).
-         * 
-         * @param int $lower The lower bound for the range from which a random number will be picked. The default value is -1000.
-         * @param int $upper The upper bound for the range from which a random number will be picked. The default value is 1000.
-         * 
-         * @return array Returns the given amount of triplets of numbers.
-         */
-        private function CreateTripletOfNumbers($lower = 0, $upper = 1000){
-            [$lower,$upper] = $this->EnsureCorrectRange($lower, $upper);
-            
-            $first_element = mt_rand($lower, $upper);
-            $second_element = mt_rand($lower, $upper);
-            $third_element = mt_rand($lower>0?$lower:1, $upper);
-            return [$first_element, $second_element, $third_element];
-        }
-
-        /**
          * This private mehtod checks whether the given number is a prime, or not.
          * 
          * @param int $number An integer which will be checked for being a prime.
@@ -1178,10 +1155,31 @@
 
         /**
          * 
+         * This method is responsible for creating a triplet of numbers.
+         * 
+         * The triplets here will represent linear congruencies in the form of [coefficient of x, right side of congruence, modulo].
+         * We will only require the modulo to be non-zero, since the ax \equiv b (mod c) congruency can be rewritten as ax-b = ck, where k is an integer, we can multiply both side with -1, and get the same result, that is, ax \equiv b (mod -c).
+         * 
+         * @param int $lower_bound The lower bound for the range from which a random number will be picked. The default value is -1000.
+         * @param int $upper_bound The upper bound for the range from which a random number will be picked. The default value is 1000.
+         * 
+         * @return array Returns the given amount of triplets of numbers.
          */
-        private function EnsureCorrectRange($lower, $upper){
-            $min = min($lower,$upper);
-            $max = max($lower,$upper);
+        private function CreateTripletOfNumbers($lower_bound = 0, $upper_bound = 1000){
+            [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
+            
+            $first_element = mt_rand($lower_bound, $upper_bound);
+            $second_element = mt_rand($lower_bound, $upper_bound);
+            $third_element = mt_rand($lower_bound>0?$lower_bound:1, $upper_bound);
+            return [$first_element, $second_element, $third_element];
+        }
+
+        /**
+         * 
+         */
+        private function EnsureCorrectRange($lower_bound, $upper_bound){
+            $min = min($lower_bound,$upper_bound);
+            $max = max($lower_bound,$upper_bound);
             return [$min, $max];
         }
 
@@ -1251,7 +1249,7 @@
          * 
          * @return array Returns a merged linear congruence for the given linear congruences and the required steps.
          */
-        private function DetermineMergedSolutionForCongruencies($first_congruence, $second_congruence){
+        private function DetermineMergedSolutionForCongruences($first_congruence, $second_congruence){
             [$a_1, $c_1, $m_1] = $first_congruence;
             [$a_2, $c_2, $m_2] = $second_congruence;
             
@@ -1353,7 +1351,7 @@
         /**
          * This private mehtod determines the value for a given input by a polynomial expression.
          * 
-         * @param mixed $input A number for which the method will determine the value.
+         * @param int|float $input A number for which the method will determine the value.
          * @param array $polynomial_expression An indexed array containing the polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
          * 
          * @return mixed Returns the value by the polynomial expression at the given input.

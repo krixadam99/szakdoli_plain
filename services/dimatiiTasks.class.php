@@ -4,7 +4,7 @@
      * 
     */
     class DimatiiTasks extends Task {        
-        private $dimatii_subtasks;
+        private $dimatii_subtasks_generator;
 
         /**
          * 
@@ -18,12 +18,12 @@
          * @return void
          */
         public function __construct($topic){
-            $this->task_description = [];
+            $this->task_descriptions = [];
             $this->task_solutions = [];
             $this->definitions = "";
             $this->solution_texts = [];
             $this->topic = $topic;
-            $this->dimatii_subtasks = new DimatiiSubtask();
+            $this->dimatii_subtasks_generator = new DimatiiSubtaskGenerator();
             mt_srand(time()); // Seeding the random number generator with the current time.
         }
 
@@ -65,10 +65,6 @@
                     $this->CreateTaskNine();
                 };
                 break;
-                case "9":{
-                    $this->CreateTaskTen();
-                };
-                break;
                 default:break;
             }
         }
@@ -91,10 +87,10 @@
             // 2 numbers for prime factorization subtask (1 number/ subtask);
             // 2 numbers for divisor counting subtask (1 number/ subtask);
             // 2 pairs for congruency subtask (1 pair/ subtask).
-            $divide_pairs = $this->dimatii_subtasks->CreateSubtask("0", "0", 2);
-            $prime_factorization_numbers = $this->dimatii_subtasks->CreateSubtask("0", "1", 2);
-            $positive_divisor_count_numbers = $this->dimatii_subtasks->CreateSubtask("0", "2", 2);
-            $congruency_pairs = $this->dimatii_subtasks->CreateSubtask("0", "3", 2);
+            $divide_pairs = $this->dimatii_subtasks_generator->CreateSubtask("0", "0", 2);
+            $prime_factorization_numbers = $this->dimatii_subtasks_generator->CreateSubtask("0", "1", 2);
+            $positive_divisor_count_numbers = $this->dimatii_subtasks_generator->CreateSubtask("0", "2", 2);
+            $congruency_pairs = $this->dimatii_subtasks_generator->CreateSubtask("0", "3", 2);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -104,7 +100,7 @@
                 "positive_divisor_count_numbers" => $positive_divisor_count_numbers["data"],
                 "congruency_pairs" => $congruency_pairs["data"]
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -138,9 +134,9 @@
             // 2 numbers for complete residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system subtask (1 number/ subtask);
             // 2 numbers for reduced residue system size subtask (1 number/ subtask);
-            $crs_numbers = $this->dimatii_subtasks->CreateSubtask("1", "0", 1);
-            $rrs_numbers = $this->dimatii_subtasks->CreateSubtask("1", "1", 1);
-            $rrs_size_numbers = $this->dimatii_subtasks->CreateSubtask("1", "2", 2);
+            $crs_numbers = $this->dimatii_subtasks_generator->CreateSubtask("1", "0", 1);
+            $rrs_numbers = $this->dimatii_subtasks_generator->CreateSubtask("1", "1", 1);
+            $rrs_size_numbers = $this->dimatii_subtasks_generator->CreateSubtask("1", "2", 2);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -149,7 +145,7 @@
                 "rrs_numbers" => $rrs_numbers["data"],
                 "rrs_size_numbers" => $rrs_size_numbers["data"]
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -173,7 +169,7 @@
         private function CreateTaskThree(){
             // Task creation part:
             // 3 pairs of numbers for gcd (1 pair of numbers/ subtask);
-            $gcd_pairs = $this->dimatii_subtasks->CreateSubtask("2", "0", 3);
+            $gcd_pairs = $this->dimatii_subtasks_generator->CreateSubtask("2", "0", 3);
             
             // 1 pair of numbers for extended eucleidan algorithm (1 pair of numbers/ subtask)
 
@@ -188,7 +184,7 @@
                 "gcd_pairs" => $gcd_pairs["data"],
                 "step_counts" => $step_counts
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -212,7 +208,7 @@
         private function CreateTaskFour(){
             // Task creation part:
             // 3 distinct triplets of numbers for linear congruences (1 triplet of numbers/ subtask).
-            $linear_congrences = $this->dimatii_subtasks->CreateSubtask("3","0",3);
+            $linear_congrences = $this->dimatii_subtasks_generator->CreateSubtask("3","0",3);
 
             // 2 pairs of numbers for Euler-Fermat theorem (1 pair of numbers/ subtask).
 
@@ -223,7 +219,7 @@
                 "task_description" => "Old meg a következő lineáris kongruenciákkal kapcsolatos feladatokat!",
                 "linear_congrences" => $linear_congrences["data"],
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -247,8 +243,8 @@
             // Task creation part:
             // 1 triplet of numbers of whole numbers at least 2 for artitioning a number into smaller numbers (1 triplet of numbers/ subtask).
             // 2 triplet of numbers of whole numbers between -50 and 50 representing congruences, that are solvable (1 triplet of numbers/ subtask).
-            $diophantine_equations = $this->dimatii_subtasks->CreateSubtask("4", "0", 2); // ax \equiv b (mod c)
-            $third_subtask = $this->dimatii_subtasks->CreateSubtask("4", "1", 1);
+            $diophantine_equations = $this->dimatii_subtasks_generator->CreateSubtask("4", "0", 2); // ax \equiv b (mod c)
+            $third_subtask = $this->dimatii_subtasks_generator->CreateSubtask("4", "1", 1);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -256,7 +252,7 @@
                 "diophantine_equations" => $diophantine_equations["data"],
                 "partition_number" => $third_subtask["data"][0]
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             array_push($diophantine_equations["solutions"], $third_subtask["solutions"][0]);
             //Solutions part:
@@ -280,8 +276,8 @@
             // Task creation part:
             // 1 triplet of whole numbers that are at least 2 representing congruences for getting numbers that satisfy 2 simultaneous congruences (1 triplet of numbers/ subtask).
             // 1 triplet of whole numbers that are between -50 and 50 representing congruences for getting numbers that satisfy 4 simultaneous congruences (1 triplet of numbers/ subtask).
-            $first_congruence_system_triplets = $this->dimatii_subtasks->CreateSubtask("5", "1", 1);
-            $second_congruence_system_triplets = $this->dimatii_subtasks->CreateSubtask("5", "0", 1);
+            $first_congruence_system_triplets = $this->dimatii_subtasks_generator->CreateSubtask("5", "1", 1);
+            $second_congruence_system_triplets = $this->dimatii_subtasks_generator->CreateSubtask("5", "0", 1);
 
             // Adding the data to the task array.
             $task_array = array(
@@ -290,7 +286,7 @@
                 "first_congruence_system_triplets" => $first_congruence_system_triplets["data"][0],
                 "second_congruence_system_triplets" => $second_congruence_system_triplets["data"][0]
             );
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -313,11 +309,11 @@
         private function CreateTaskSeven(){
             // Creating 2 polynomials with degree of 2 and 4.
             // Picking 2 and 4 wole numbers from the range of -10 and 10, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
-            $horner_schemes_first = $this->dimatii_subtasks->CreateSubtask("6", "0", 2);
+            $horner_schemes_first = $this->dimatii_subtasks_generator->CreateSubtask("6", "0", 2);
            
             // Creating 1 polynomial.
             // Creating 1 input between -10 and 10.
-            $horner_schemes_second = $this->dimatii_subtasks->CreateSubtask("6", "1", 1);
+            $horner_schemes_second = $this->dimatii_subtasks_generator->CreateSubtask("6", "1", 1);
 
             // Task array declaration.
             $task_array = array(
@@ -327,7 +323,7 @@
             );
 
             // Adding data to the task array.
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -349,8 +345,8 @@
          * @return void
          */
         private function CreateTaskEight(){
-            $polynomial_division_subtask = $this->dimatii_subtasks->CreateSubtask("7", "0", 1);
-            $polynomial_multiplication_subtask = $this->dimatii_subtasks->CreateSubtask("7", "1", 1);
+            $polynomial_division_subtask = $this->dimatii_subtasks_generator->CreateSubtask("7", "0", 1);
+            $polynomial_multiplication_subtask = $this->dimatii_subtasks_generator->CreateSubtask("7", "1", 1);
             
             $task_array = array(
                 "task_description" => "Old meg a következő polinomok osztásával és szorzásával kapcsolatos feladatokat!",
@@ -359,7 +355,7 @@
             );
 
             // Adding data to the task array.
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -379,8 +375,8 @@
          * @return void
          */
         private function CreateTaskNine(){
-            $lagrange_interpolation = $this->dimatii_subtasks->CreateSubtask("8", "0", 1);
-            $newton_interpolation = $this->dimatii_subtasks->CreateSubtask("8", "1", 1);
+            $lagrange_interpolation = $this->dimatii_subtasks_generator->CreateSubtask("8", "0", 1);
+            $newton_interpolation = $this->dimatii_subtasks_generator->CreateSubtask("8", "1", 1);
             
             $task_array = array(
                 "task_description" => "Old meg a következő Lagrange- és Newton- féle interpolációkkal kapcsolatos feladatokat!",
@@ -389,7 +385,7 @@
             );
                        
             // Adding data to the task array.s
-            $this->task_description = $task_array;
+            $this->task_descriptions = $task_array;
 
             //Solutions part:
             $solution_array = [
@@ -398,18 +394,6 @@
             ];
 
             $this->task_solutions = $solution_array;
-        }
-
-        /**
-         * 
-         * This function is responsible for creating the tenth set of tasks of Discrete Mathematics II. related to equations.
-         * 
-         * ...Subtasks created here...
-         * 
-         * @return void
-         */
-        private function CreateTaskTen(){
-
         }
     }
 ?>

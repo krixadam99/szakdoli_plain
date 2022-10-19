@@ -123,7 +123,7 @@
          * 
          * @param string $set_name The name of the set.
          * @param array $set_elements An array containing the elements of a set.
-         * @param boolean $with_name This parameter determines whether the returned string should also contain the name of the set, on not. The default value is true.
+         * @param bool $with_name This parameter determines whether the returned string should also contain the name of the set, on not. The default value is true.
          * 
          * @return string Returns the printable form of the set.
          */

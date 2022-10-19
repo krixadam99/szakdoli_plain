@@ -132,13 +132,13 @@
             if($subject == "i"){
                 $dimat_i_tasks = new DimatiTasks($topic_number);
                 $dimat_i_tasks->PracticePageTaskGeneration();
-                $_SESSION["task"] = $dimat_i_tasks->GetTaskDescription();
+                $_SESSION["task"] = $dimat_i_tasks->GetTaskDescriptions();
                 $_SESSION["solution"] = $dimat_i_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_i_tasks->GetDefinitions();
             }else if($subject == "ii"){
                 $dimat_ii_tasks = new DimatiiTasks($topic_number);
                 $dimat_ii_tasks->PracticePageTaskGeneration();
-                $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescription();
+                $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescriptions();
                 $_SESSION["solution"] = $dimat_ii_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();
                 $_SESSION["solution_texts"] = $dimat_ii_tasks->GetSolutionTexts();

@@ -19,6 +19,7 @@
         private $subject_group;
         private $user_password;
         private $user_password_again;
+        private $database_handler;
 
         /**
          * 
@@ -36,7 +37,7 @@
          * @return void
         */
         public function __construct($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_id = "", $user_status = "", $subject_group = ""){
-            $this->model = new MainModel();
+            $this->database_handler = new DatabaseHandler();
             $this->neptun_code = $neptun_code;
             $this->user_email = $user_email;
             $this->subject_id = $subject_id;
@@ -68,10 +69,7 @@
          * 
          * @return string The name of the subject which the user applied to.
         */
-        public function GetSubjectName() { return $this->subject_id;}
-
-
-        public function SetSubjectName($subject_id) { $this->subject_id = $subject_id;}
+        public function GetSubjectId() { return $this->subject_id;}
 
         /**
          * 
@@ -107,6 +105,11 @@
 
         /**
          * 
+         */
+        public function SetSubjectId($subject_id) { $this->subject_id = $subject_id;}
+
+        /**
+         * 
          * This method decides if the password belonging to the given neptun code and the given password are the same.
          * 
          * @return bool Returns if the password belonging to the given neptun code and the given password are the same.
@@ -114,7 +117,7 @@
         public function IsSamePassword() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
-            $users = $this->model->GetDataFromDatabase($query);
+            $users = $this->database_handler->LoadDataFromDatabase($query);
 
             if(count($users) != 0){ //There is at least one record in the database which has the $neptun_code as a value in the neptun_code column
                 return password_verify($this->user_password, $users[0]["user_password"]); //Checking if the hashed password stored under the user's given name is the same as the given password
@@ -132,7 +135,7 @@
         public function IsUserNameUsed() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code =  \"".$neptun_code."\"";
-            $users = $this->model->GetDataFromDatabase($query);
+            $users = $this->database_handler->LoadDataFromDatabase($query);
             if(count($users) != 0){
                 return true;
             }else{
@@ -148,7 +151,7 @@
         */
         public function IsEmailAddressUsed() {
             $query = "SELECT * FROM users WHERE users.email_address =  \"".$this->user_email."\"";
-            $users = $this->model->GetDataFromDatabase($query);
+            $users = $this->database_handler->LoadDataFromDatabase($query);
             if(count($users) != 0){
                 return true;
             }else{
@@ -165,7 +168,7 @@
         public function IsAdministrator() {
             $neptun_code = strtoupper($this->neptun_code);
             $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
-            $users = $this->model->GetDataFromDatabase($query);
+            $users = $this->database_handler->LoadDataFromDatabase($query);
             
             if(count($users) != 0){
                 return $users["is_administrator"];
@@ -182,7 +185,7 @@
         */
         public function IsGroupNumberCorrect() {
             $query = "SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"".$this->subject_id."\" AND is_teacher = \"1\" AND application_request_status = \"APPROVED\"";
-            $groups = $this->model->GetDataFromDatabase($query);
+            $groups = $this->database_handler->LoadDataFromDatabase($query);
 
             $count_group = 0;
             $in_array = false;
