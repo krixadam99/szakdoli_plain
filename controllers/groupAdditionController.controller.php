@@ -84,7 +84,7 @@
                         || $_POST['user_status'] === "Diák"
                     ){
                         $group_addition_model = new GroupAdditionModel();
-                        $group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectName(), $_POST["user_status"], $group);
+                        $group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectId(), $_POST["user_status"], $group);
                     }
                     
                     header("Location: ./index.php?site=notifications");

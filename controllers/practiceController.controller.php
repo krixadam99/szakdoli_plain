@@ -7,6 +7,8 @@
      * If someone navigates to the practice page, however they are not a student, then this controller redirects them to the notifications page.
     */
     class PracticeController extends MainContentController{
+        private $task_evaluator;
+        
         /**
          * 
          * The contructor of the PracticeController class.
@@ -17,6 +19,8 @@
          */
         public function __construct(){
             parent::__construct();
+
+
         }
         
         /**

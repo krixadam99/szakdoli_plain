@@ -57,7 +57,7 @@
                     $_SESSION["neptun_code"] = $_POST['neptun_code'];
                     
                     $registration_model = new RegistrationModel();
-                    $registration_model->Register($_POST['neptun_code'], $_POST['user_password'],  $_POST["user_password_again"], $_POST["user_email"], $this->user_handler->GetSubjectName(), $_POST["user_status"], $group);
+                    $registration_model->Register($_POST['neptun_code'], $_POST['user_password'],  $_POST["user_password_again"], $_POST["user_email"], $this->user_handler->GetSubjectId(), $_POST["user_status"], $group);
                     
                     header("Location: ./index.php?site=notifications");
                 }else{ // There were errors 
