@@ -33,7 +33,7 @@
             <?php endforeach?>
             <?php foreach($pending_student_groups as $index => $pending_student_groups):?>
                 <div class="notification_box">
-                    <?php if($pending_student_groups["subject_group"] === "0"):?>
+                    <?php if($pending_student_groups["subject_group"] === "1"):?>
                         <label>
                             Jelentkezzen valamelyik tárgy csoportjába a "Csoport hozzáadás/Csoporthoz való csatlakozás" menüpont alatt! Ha nem találja a megfelelő csoportot, akkor várja meg míg a csoporthoz hozzá lesz rendelve demonstrátor!
                         </label>

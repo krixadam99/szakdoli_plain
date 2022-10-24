@@ -22,14 +22,12 @@
          * @return array Returns an array containing the students' grades belonging to the subject name - subject group pair.
          */
         public function GetResults($subject_id, $subject_group){
-            $query = "SELECT * FROM user_groups, results 
-            WHERE user_groups.neptun_code =  results.neptun_code
-            AND user_groups.subject_id = results.subject_id
-            AND user_groups.subject_group = results.subject_group
-            AND user_groups.subject_id = \"$subject_id\" 
-            AND user_groups.subject_group = \"$subject_group\" 
-            AND user_groups.is_teacher = \"0\"
-            AND user_groups.application_request_status = \"APPROVED\"";
+            $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) JOIN results USING(neptun_code, subject_group_id) 
+            WHERE subject_id = \"$subject_id\" 
+            AND group_number = \"$subject_group\" 
+            AND is_teacher = \"0\"
+            AND application_request_status = \"APPROVED\"";
+
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -42,9 +40,8 @@
          * @return array Returns an array containing the students' practice scores belonging to the subject name - subject group pair.
          */
         public function GetPracticeResults($subject_group = "", $subject_id = ""){
-            $query = "SELECT * FROM user_groups, practice_task_points WHERE ";
-            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_id = practice_task_points.subject_id AND user_groups.subject_group = practice_task_points.subject_group ";
-            $query .= "AND practice_task_points.subject_group = \"$subject_group\" AND practice_task_points.subject_id = \"$subject_id\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
+            $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
+            $query .= "subject_group.group_number = \"$subject_group\" AND subject_group.subject_id = \"$subject_id\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -59,7 +56,7 @@
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
-                $subject_group = $record["subject_group"];
+                $subject_group = $record["group_number"];
                 $subject_id = $record["subject_id"];
                 
                 $query .= "UPDATE results 
@@ -80,8 +77,7 @@
                 , small_test_9 = \"" . $record["small_test_9"] . "\"
                 , small_test_10 = \"" . $record["small_test_10"] . "\" 
                 WHERE neptun_code = \"$neptun_code \" 
-                AND subject_group = \"$subject_group\"
-                AND subject_id = \"$subject_id\"; ";
+                AND results.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
             }
             $query .= "COMMIT;";
             return $this->database->UpdateDatabase($query, true);
@@ -97,7 +93,7 @@
         public function UpdateExpectationRules($query_array = []){
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
-                $subject_group = $record["subject_group"];
+                $subject_group = $record["group_number"];
                 $subject_id = $record["subject_id"];
                 $task_type = $record["task_type"];
                 
@@ -105,9 +101,8 @@
                 SET is_better = \"" . $record["is_better"] . "\"
                 , minimum_for_pass = \"" . $record["minimum_for_pass"] . "\"
                 , maximum_value = \"" . $record["maximum_value"] . "\"
-                WHERE subject_group = \"$subject_group\"
-                AND subject_id = \"$subject_id\"
-                AND task_type = \"$task_type\"; ";
+                WHERE task_type = \"$task_type\"
+                AND expectation_rules.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
             }
             $query .= "COMMIT;";
             return $this->database->UpdateDatabase($query, true);
@@ -123,14 +118,13 @@
         public function UpdateTaskDueDates($query_array = []){
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
-                $subject_group = $record["subject_group"];
+                $subject_group = $record["group_number"];
                 $subject_id = $record["subject_id"];
                 $task_type = $record["task_type"];
                 
                 $query .= "UPDATE task_due_to_date 
                 SET due_to = \"" . $record["due_to"] . "\"
-                WHERE subject_group = \"$subject_group\"
-                AND subject_id = \"$subject_id\"
+                WHERE task_due_to_date.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";

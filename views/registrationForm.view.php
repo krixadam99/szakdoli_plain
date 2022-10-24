@@ -52,7 +52,7 @@
         <?php if(isset($incorrect_parameters)):?>
             <?php if(in_array('wrong_2_no_email',$incorrect_parameters)):?>
                 <label id="error_label">Adjon meg email címet!</label>
-            <?php elseif(in_array('wrong_2_worng_format',$incorrect_parameters)):?>
+            <?php elseif(in_array('wrong_2_wrong_format',$incorrect_parameters)):?>
                 <label id="error_label">Az email cím formátuma nem megfelelő!</label>
             <?php elseif(in_array('wrong_2_already_in_use',$incorrect_parameters)):?>
                 <label id="error_label">Az email cím már használatban van!</label>

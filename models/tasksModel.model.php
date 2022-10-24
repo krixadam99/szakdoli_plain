@@ -29,8 +29,7 @@
          */
         public function GetExpectationRules($subject_id, $subject_group){
             $query = "SELECT * FROM expectation_rules 
-            WHERE expectation_rules.subject_id = \"$subject_id\" 
-            AND expectation_rules.subject_group = \"$subject_group\"";
+            WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -44,8 +43,7 @@
          */
         public function GetTaskDueDate($subject_id, $subject_group){
             $query = "SELECT * FROM task_due_to_date 
-            WHERE task_due_to_date.subject_id = \"$subject_id\" 
-            AND task_due_to_date.subject_group = \"$subject_group\"";
+            WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -58,9 +56,8 @@
          * @return array Returns an array containing the minimum point to get a certain grade for the subject name - subject group pair.
          */
         public function GetGradeLevels($subject_id, $subject_group){
-            $query = "SELECT * FROM grade_table 
-            WHERE grade_table.subject_id = \"$subject_id\" 
-            AND grade_table.subject_group = \"$subject_group\"";
+            $query = "SELECT * FROM grade_table JOIN subject_group USING(subject_group_id)
+            WHERE group_number = \"$subject_group\" AND subject_id= \"$subject_id\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -73,9 +70,8 @@
          */
         public function GetPracticeResults($neptun_code){
             $neptun_code = strtoupper($neptun_code);
-            $query = "SELECT * FROM user_groups, practice_task_points WHERE ";
-            $query .= "user_groups.neptun_code = practice_task_points.neptun_code AND user_groups.subject_id = practice_task_points.subject_id AND user_groups.subject_group = practice_task_points.subject_group ";
-            $query .= "AND practice_task_points.neptun_code = \"$neptun_code\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
+            $query = "SELECT * FROM user_status JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
+            $query .= "practice_task_points.neptun_code = \"$neptun_code\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabase($query);
         }
     }

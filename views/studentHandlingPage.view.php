@@ -42,10 +42,10 @@
                     </tr>
                     <?php foreach($students as $index => $student):?>
                         <?php if($student["application_request_status"] !== "WITHDRAWN"):?>
-                            <tr id=<?=$student["subject_group"]?> class="student_row">
+                            <tr id=<?=$student["group_number"]?> class="student_row">
                                 <td><?=$student["neptun_code"]?></td>
                                 <td><?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
-                                <td><?=$student["subject_group"]?></td>
+                                <td><?=$student["group_number"]?></td>
                                 <td>
                                     <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
                                         <?php if($student["application_request_status"] === "PENDING"):?>

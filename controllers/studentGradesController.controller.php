@@ -87,7 +87,7 @@
                         
                         array_push($query_array, array(
                             "neptun_code" => $original_record["neptun_code"], 
-                            "subject_group" => $current_group, 
+                            "group_number" => $current_group, 
                             "subject_id" => $current_subject, 
                             "practice_count" => $results["grade_input_practice"]??$original_record["practice_count"],
                             "extra" => $results["grade_input_extra"]??$original_record["extra"],
@@ -192,7 +192,7 @@
                         }
                         
                         array_push($query_array, array(
-                            "subject_group" => $current_group, 
+                            "group_number" => $current_group, 
                             "subject_id" => $current_subject,
                             "task_type" => $task_type,
                             "is_better" => $is_better,
@@ -252,7 +252,7 @@
                         }
 
                         array_push($query_array, array(
-                            "subject_group" => $current_group, 
+                            "group_number" => $current_group, 
                             "subject_id" => $current_subject,
                             "task_type" => $task_type,
                             "due_to" => $due_date
@@ -323,8 +323,8 @@
                 satisfactory_level_point = \"" . $points[1] . "\",
                 good_level_point = \"" . $points[2] . "\",
                 excellent_level_point = \"" . $points[3] . "\"
-                WHERE subject_id = \"$current_subject\"
-                AND subject_group = \"$current_group\";";
+                WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$current_subject\"
+                AND group_number = \"$current_group\");";
 
                 $student_grades_model->UpdataDatabase($query);
                 header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);

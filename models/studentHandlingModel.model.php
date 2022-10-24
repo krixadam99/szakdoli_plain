@@ -22,7 +22,7 @@
          * @return array Returns an array containing the students belonging to the subject name - subject group pair.
          */
         public function GetStudents($subject_id, $subject_group){
-            $query = "SELECT * FROM user_groups WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_id = \"$subject_id\" AND subject_group = \"$subject_group\"";
+            $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_id = \"$subject_id\" AND group_number = \"$subject_group\"";
             return $this->database->LoadDataFromDatabase($query);
         }
 
@@ -38,23 +38,28 @@
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
                 
-                $subject_group = $record["subject_group"];
+                $subject_group = $record["group_number"];
                 $subject_id = $record["subject_id"];
                 $pending_status = $record["application_request_status"];
                 
-                $query .= "UPDATE user_groups SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" AND subject_id = \"$subject_id\" AND subject_group = \"$subject_group\" AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
+                $query .= "UPDATE user_status SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" 
+                AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\") 
+                AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
                 
                 
                 if($pending_status === "APPROVED"){
                     if($subject_id === "i"){
-                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
+                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
                     }else{
-                        $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_id = \"ii\"; ";
+                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_group_id = user_status.subject_group_id); ";
                     }
-                    $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
+                    $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
                 
-                    $query .= "INSERT INTO results(neptun_code, subject_id) VALUES(\"$neptun_code\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
-                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_id) VALUES(\"$neptun_code\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_group = \"$subject_group\"; ";
+                    $query .= "INSERT INTO results(neptun_code, subject_group_id) VALUES(\"$neptun_code\", (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) 
+                    ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
+
+                    $query .= "INSERT INTO practice_task_points(neptun_code, subject_group_id) VALUES(\"$neptun_code\", (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) 
+                    ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
                 }
             }
             $query .= "COMMIT;";

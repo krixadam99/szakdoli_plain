@@ -236,23 +236,23 @@
                         foreach($this->user_data as $key => $user_record){ // Iterating through the array containing the fetched rows
                             if($user_record["is_teacher"] == 1){ // The user's teacher rows
                                 if($user_record["application_request_status"] == "APPROVED"){ // The user's approved teacher rows
-                                    array_push($this->approved_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->approved_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                     if(!in_array($user_record["subject_id"],$this->approved_teacher_subjects)){
                                         array_push($this->approved_teacher_subjects, $user_record["subject_id"]);
                                     }
                                 }else if($user_record["application_request_status"] == "PENDING"){ // The user's pending teacher rows
-                                    array_push($this->pending_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->pending_teacher_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                 }
                             }else{ // The user's student rows
                                 if($user_record["application_request_status"] == "APPROVED"){  // The user's approved student rows
-                                    $this->approved_student_group = $user_record["subject_group"];
+                                    $this->approved_student_group = $user_record["group_number"];
                                     $this->approved_student_subject = $user_record["subject_id"];
                                 }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
-                                    array_push($this->pending_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->pending_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                 }else if($user_record["application_request_status"] == "WITHDRAWN"){
-                                    array_push($this->withdrawn_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->withdrawn_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                 }else if($user_record["application_request_status"] == "DENIED"){
-                                    array_push($this->denied_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["subject_group"]));
+                                    array_push($this->denied_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                 }
                             }
                         }

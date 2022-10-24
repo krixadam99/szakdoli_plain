@@ -26,9 +26,9 @@
                         <tr>
                             <td><?=$pending_user_information["neptun_code"]?></td>
                             <td><?=$pending_user_information["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
-                            <td><?=$pending_user_information["subject_group"]?></td>
+                            <td><?=$pending_user_information["group_number"]?></td>
                             <td>
-                                <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_id"]."_".$pending_user_information["subject_group"]?>>
+                                <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_id"]."_".$pending_user_information["group_number"]?>>
                                     <option selected>-</option>
                                     <option>ELFOGADÁS</option>
                                     <option>ELUTASÍTÁS</option>

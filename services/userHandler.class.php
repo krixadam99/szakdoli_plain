@@ -184,7 +184,7 @@
          * @return bool Returns whether the user as a student applied to a valid group.
         */
         public function IsGroupNumberCorrect() {
-            $query = "SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"".$this->subject_id."\" AND is_teacher = \"1\" AND application_request_status = \"APPROVED\"";
+            $query = "SELECT DISTINCT group_number FROM user_status JOIN subject_group USING(subject_group_id) WHERE subject_id = \"".$this->subject_id."\" AND application_request_status = \"APPROVED\" AND is_teacher=\"1\"";
             $groups = $this->database_handler->LoadDataFromDatabase($query);
 
             $count_group = 0;

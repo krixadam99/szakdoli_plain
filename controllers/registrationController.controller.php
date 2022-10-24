@@ -14,8 +14,9 @@
          */
         public function Registration() {
             $registration_model = new RegistrationModel();
-            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"i\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT subject_group FROM user_groups WHERE subject_id = \"ii\" AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+            
+            $this->dimat_i_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+            $this->dimat_ii_groups = $registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 1 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
             
             include(ROOT_DIRECTORY . "/views/registrationForm.view.php");
         }
@@ -141,14 +142,14 @@
          * @return void
         */
         private function SubjectNameValidator() {
-            $subject_id = $this->user_handler->GetSubjectName();
+            $subject_id = $this->user_handler->GetSubjectId();
     
             if(isset($subject_id)){
                 if($subject_id == "Diszkrét matematika I."){ // The subject name was "Diszkrét matematika I."
-                    $this->user_handler->SetSubjectName("i");
+                    $this->user_handler->SetSubjectId("i");
                     $this->correct_parameters["subject_id"] = "0";
                 }elseif($subject_id == "Diszkrét matematika II."){ // The subject name was "Diszkrét matematika II."
-                    $this->user_handler->SetSubjectName("ii");
+                    $this->user_handler->SetSubjectId("ii");
                     $this->correct_parameters["subject_id"] = "1";
                 }else{ // The subject name was not "Diszkrét matematika I." or "Diszkrét matematika II.", but a maliciously set value
                     array_push($this->incorrect_parameters, "wrong_3_no_such_subject");        
@@ -191,7 +192,7 @@
          * @return void
         */
         private function SubjectGroupValidator() {
-            $subject_id = $this->user_handler->GetSubjectName();
+            $subject_id = $this->user_handler->GetSubjectId();
             $user_status = $this->user_handler->GetUserStatus();
             $subject_group = $this->user_handler->GetSubjectGroup();
     

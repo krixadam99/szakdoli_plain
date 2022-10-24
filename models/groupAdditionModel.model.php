@@ -18,7 +18,7 @@
         }
         
         /**
-         * This public method is responsible for upadting the user_groups table with the given data.
+         * This public method is responsible for updating the user_groups table with the given data.
          * 
          * The new record will contain the neptun code, the selected user status, subject name and subject group.
          * If a student previously chose the "-" sign while applying to a subject name - subject group pair, then that row should be deleted from the table.
@@ -50,13 +50,14 @@
 
             $query = "BEGIN; ";
             if($is_teacher === 1){
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_id\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
+                $query .= "INSERT INTO subject_group(subject_id, subject_group) VALUES(\"$subject_group\", \"$subject_id\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\" AND group_number = \"$subject_group\";";
+                $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
             }else{
-                $query .= "DELETE FROM user_groups WHERE neptun_code = \"$neptun_code \" AND subject_group = \"0\"; ";
+                $query .= "DELETE FROM user_status WHERE neptun_code = \"$neptun_code \" AND subject_group_id = 1; ";
 
-                // WITHDREW or DELETE?
-                $query .= "UPDATE user_groups SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
-                $query .= "INSERT INTO user_groups VALUES(\"$neptun_code\", \"$is_teacher\", \"$subject_group\", \"$subject_id\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
+                // WITHDRAWN or DELETED?
+                $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
+                $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
             }
             $query .= "COMMIT; ";
 

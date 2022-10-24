@@ -27,9 +27,8 @@
          */
         public function GetResults($neptun_code){
             $neptun_code = strtoupper($neptun_code);
-            $query = "SELECT * FROM user_groups, results WHERE ";
-            $query .= "user_groups.neptun_code = results.neptun_code AND user_groups.subject_id = results.subject_id AND user_groups.subject_group = results.subject_group ";
-            $query .= "AND results.neptun_code = \"$neptun_code\" AND user_groups.application_request_status = \"APPROVED\" AND user_groups.is_teacher = \"0\"";
+            $query = "SELECT * FROM user_status JOIN results USING(neptun_code, subject_group_id) WHERE ";
+            $query .= "results.neptun_code = \"$neptun_code\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabase($query);
         }
     }

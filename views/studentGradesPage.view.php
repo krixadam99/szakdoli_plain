@@ -76,7 +76,7 @@
                                 <th>10. KIS ZH</th>
                             </tr>
                             <?php foreach($students_grades as $index => $student):?>
-                                <tr id=<?=$student["subject_group"]?> class="student_row">
+                                <tr id=<?=$student["group_number"]?> class="student_row">
                                     <td style="position: sticky;left: 0;background: rgba(255, 255, 255, 0.751);z-index: 1;backdrop-filter: blur(3px)">
                                         <?=$student["neptun_code"]?>
                                     </td>
@@ -84,7 +84,7 @@
                                         <?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?>
                                     </td>
                                     <td style="border-left:1px dashed black">
-                                        <?=$student["subject_group"]?>
+                                        <?=$student["group_number"]?>
                                     </td>
                                     <td style="padding:0%">
                                         <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_grade_input_practice" value="<?=$student["practice_count"]?>">
@@ -289,7 +289,7 @@
             
                 <div style="overflow-x:auto; margin-top:2%">
                     <table>
-                        <?php $id = $grade_levels["subject_id"] . "_" . $grade_levels["subject_group"]?>
+                        <?php $id = $grade_levels["subject_id"] . "_" . $grade_levels["group_number"]?>
                         <tr class="header_row">
                             <th>MINŐSÍTÉS</th>
                             <th>ALSÓ PONTHATÁR</th>

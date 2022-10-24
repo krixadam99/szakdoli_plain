@@ -51,7 +51,11 @@
                 $subject_group = 0;
             }
 
-            $query = "INSERT INTO user_groups VALUES(\"".$neptun_code."\", \"$user_status\", \"$subject_group\", \"$subject_id\", \"$pending_status\")";
+            $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
+            $this->database->UpdateDatabase($query);
+
+            $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
+            , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
             
             return $this->database->UpdateDatabase($query);
         }

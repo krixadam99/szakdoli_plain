@@ -83,17 +83,18 @@
                     $neptun = $pending_status["neptun_code"];
                     
                     if(isset($decision_array[$neptun])){
-                        $id = $pending_status["subject_id"] . "_" . $pending_status["subject_group"]; 
+                        $id = $pending_status["subject_id"] . "_" . $pending_status["group_number"]; 
                         $decision = "1";   
                         if(isset($decision_array[$neptun][$id])){
                             $decision = $decision_array[$neptun][$id];
                         }   
-                        array_push($query_array, array("neptun_code" => $neptun, "subject_group" => $pending_status["subject_group"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
+                        array_push($query_array, array("neptun_code" => $neptun, "group_number" => $pending_status["group_number"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
                     }
                 }
             
                 $administrator_model->UpdatePendingTeachers($query_array);
-                header("Location: ./index.php?site=demonstratorHandling");
+
+                //header("Location: ./index.php?site=demonstratorHandling");
             }else{
                 header("Location: ./index.php?site=login");
             }
