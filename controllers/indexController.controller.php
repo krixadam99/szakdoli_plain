@@ -15,6 +15,9 @@
             session_unset();
             session_destroy();
             
+            //$d = new DimatiHelperFunctions();
+            //var_dump($d->GetAllPossibleRelations([1,2]));
+
             include(ROOT_DIRECTORY . "/views/indexPage.view.php");
         }
     }

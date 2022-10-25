@@ -46,11 +46,14 @@
                     unset($_SESSION["task"]);
                     
                     if(isset($_SESSION["topic"]) 
-                        && intval($_SESSION["topic"]) <= 9
+                        && intval($_SESSION["topic"]) <= 8
                         && 0 <= intval($_SESSION["topic"])
                     ){
                         $this->GenerateTask($this->approved_student_subject, $_SESSION["topic"]);
+                    }else{
+                        header("Location: ./index.php?site=notifications");
                     }
+                    
                     $model = new PracticeModel();
                     $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
 
@@ -95,29 +98,33 @@
          * @return void
         */
         public function HandInSolution(){
-            if(isset($_SESSION["neptun_code"]) && $_SESSION["is_new_task"]){
-                $_SESSION["is_new_task"] = false;
-                if(count($_POST) != 0){
-                    $model = new PracticeModel();
-                    $this->SetMembers();
-                    
-                    $practice_number = intval($_SESSION["topic"]) + 1;
-                    $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
-                    $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
-                    if($this->approved_student_subject === "i"){
-                        $task_evaluator = new DimatiTaskEvaluator($_POST);
-                    }else if($this->approved_student_subject === "ii"){
-                        $task_evaluator = new DimatiiTaskEvaluator($_POST);
+            if(isset($_SESSION["neptun_code"])){
+                if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]){
+                    $_SESSION["is_new_task"] = false;
+                    if(count($_POST) != 0){
+                        $model = new PracticeModel();
+                        $this->SetMembers();
+                        
+                        $practice_number = intval($_SESSION["topic"]) + 1;
+                        $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"], $model);
+                        $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
+                        if($this->approved_student_subject === "i"){
+                            $task_evaluator = new DimatiTaskEvaluator($_POST);
+                        }else if($this->approved_student_subject === "ii"){
+                            $task_evaluator = new DimatiiTaskEvaluator($_POST);
+                        }else{
+                            header("Location: ./index.php?site=practiceShowAnswers");
+                        }
+                        $task_evaluator->CheckSolution($_SESSION["topic"]);
+                        $update_point = round($task_evaluator->GetUpdatePoint(),2);
+                        $model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
+    
+                        header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
                     }else{
                         header("Location: ./index.php?site=practiceShowAnswers");
                     }
-                    $task_evaluator->CheckSolution($_SESSION["topic"]);
-                    $update_point = round($task_evaluator->GetUpdatePoint(),2);
-                    $model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
-
-                    header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
                 }else{
-                    header("Location: ./index.php?site=practiceShowAnswers");
+                    header("Location: ./index.php?site=notifications");
                 }
             }else{
                 header("Location: ./index.php");

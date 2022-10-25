@@ -46,53 +46,57 @@
         }
 
         /**
-         * 
+         * !!!
          */
         public function ValidateGroupAddition() {
-            if( 
-                    isset($_POST['subject_id'])
-                &&  isset($_POST['user_status'])
-            ){  // Do not let the post variable names to be overwritten
-                // Initial checkings
+            if(isset($_SESSION["neptun_code"])){
+                if( 
+                        isset($_POST['subject_id'])
+                    &&  isset($_POST['user_status'])
+                ){  // Do not let the post variable names to be overwritten
+                    // Initial checkings
 
-                $group = 0;
+                    $group = 0;
 
 
-                if($_POST['user_status'] === "Demonstrátor"){
-                    if(isset($_POST["teacher_group"])){
-                        $group = $_POST["teacher_group"];
-                    }
-                }else if($_POST['user_status']=== "Diák"){
-                    if($_POST["subject_id"] == "Diszkrét matematika I."){
-                        if(isset($_POST["student_group_i"])){
-                            $group = $_POST["student_group_i"]??0;
+                    if($_POST['user_status'] === "Demonstrátor"){
+                        if(isset($_POST["teacher_group"])){
+                            $group = $_POST["teacher_group"];
                         }
-                    }else if($_POST["subject_id"] == "Diszkrét matematika II."){
-                        if(isset($_POST["student_group_ii"])){
-                            $group = $_POST["student_group_ii"]??0;
+                    }else if($_POST['user_status']=== "Diák"){
+                        if($_POST["subject_id"] == "Diszkrét matematika I."){
+                            if(isset($_POST["student_group_i"])){
+                                $group = $_POST["student_group_i"]??0;
+                            }
+                        }else if($_POST["subject_id"] == "Diszkrét matematika II."){
+                            if(isset($_POST["student_group_ii"])){
+                                $group = $_POST["student_group_ii"]??0;
+                            }
                         }
                     }
-                }
 
-                $this->user_handler = new UserHandler("", "", "", "", $_POST["subject_id"], $_POST['user_status'], $group);
-                $this->ValidateUser();   
-                
-                
-                if(count($this->error_parameters) === 0){ // Everything was correct 
-                    if(    $_POST['user_status'] === "Demonstrátor" 
-                        && !in_array($this->GetApprovedTeacherGroups(),[$group, $_POST["subject_id"]])
-                        || $_POST['user_status'] === "Diák"
-                    ){
-                        $group_addition_model = new GroupAdditionModel();
-                        $group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectId(), $_POST["user_status"], $group);
-                    }
+                    $this->user_handler = new UserHandler("", "", "", "", $_POST["subject_id"], $_POST['user_status'], $group);
+                    $this->ValidateUser();   
                     
-                    header("Location: ./index.php?site=notifications");
-                }else{ // There were errors 
+                    
+                    if(count($this->error_parameters) === 0){ // Everything was correct 
+                        if(    $_POST['user_status'] === "Demonstrátor" 
+                            && !in_array($this->GetApprovedTeacherGroups(),[$group, $_POST["subject_id"]])
+                            || $_POST['user_status'] === "Diák"
+                        ){
+                            $group_addition_model = new GroupAdditionModel();
+                            $group_addition_model->UpdateUserGroups($_SESSION['neptun_code'], $this->user_handler->GetSubjectId(), $_POST["user_status"], $group);
+                        }
+                        
+                        header("Location: ./index.php?site=notifications");
+                    }else{ // There were errors 
+                        $this->GroupAddition();
+                    }                
+                }else{ // There was at least one post variable which name was overwritten
                     $this->GroupAddition();
-                }                
-            }else{ // There was at least one post variable which name was overwritten
-                $this->GroupAddition();
+                }
+            }else{
+                header("Location: ./index.php?site=login");
             }
         }
 

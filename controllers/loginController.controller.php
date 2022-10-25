@@ -64,7 +64,7 @@
                 // If there is no error, then the user gets redirected to the notifications page, else to the login page
                 if(count($this->incorrect_parameters) === 0){
                     // The user gets logged in with the given neptun_code
-                    $_SESSION["neptun_code"] = $_POST['neptun_code'];
+                    $_SESSION["neptun_code"] = strtolower($_POST['neptun_code']);
                     
                     if($_POST['neptun_code'] !== "admin"){
                         // Redirecting the user to the notifications page

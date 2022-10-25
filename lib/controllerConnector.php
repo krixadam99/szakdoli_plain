@@ -31,8 +31,8 @@
 
             if(isset($_SESSION["neptun_code"])){ //If the user is logged in and they wanted to access a non-existent end point, then they will be redirected to the notifications page
                 header("Location: ./index.php?site=notifications");
-            }else{ //If the user is not logged in and they wanted to access a non-existent end point, then they will be redirected to the index page
-                header("Location: ./index.php");
+            }else{ //If the user is not logged in and they wanted to access a non-existent end point, then they will be redirected to the login page
+                header("Location: ./index.php?site=login");
             }
             return;
         }

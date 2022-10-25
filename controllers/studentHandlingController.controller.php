@@ -55,7 +55,7 @@
          *
          * This method is responsible for handling students' requests.
          * 
-         * Only teachers can handle students (TODO).
+         * Only teachers can handle students.
          * Pending students can be either deined, accepted or ignored.
          * Denied students can be accepted and accepted students can be denied.
          * Accepted students has "0" as their pending request.
@@ -66,44 +66,53 @@
         */
         public function HandleStudents(){
             //Neptun code, subject group and subject name must be set in the session, otherwise we cannot move forward
-            if(isset($_SESSION["neptun_code"]) && isset($_SESSION["group"]) && isset($_SESSION["subject"])){
-                $current_subject = $_SESSION["subject"];
-                $current_group = $_SESSION["group"];
-            
-                $student_handler_model = new StudentHandlingModel();
-            
-                $decision_array = array();
-                foreach($_POST as $key => $value){
-                    $neptun = $key; // Check this!!!
-                    $decision = "";
-                    $id = $current_subject . "_" . $current_group;
-                    if($value != "-"){
-                        if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
-                            $decision = "APPROVED";
-                        }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
-                            $decision = "DENIED";
-                        }
-                        $decision_array[$neptun][$id] = $decision;
-                    }
-                }
-                
-                $original_user_information = $student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
-                $query_array = array();
-                foreach($original_user_information as $index => $original_record){
-                    $neptun = $original_record["neptun_code"];
+            if(isset($_SESSION["neptun_code"])){
+                $this->SetMembers();
+                if(
+                        isset($_SESSION["group"]) && isset($_SESSION["subject"])
+                    &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
+                ){
                     
-                    if(isset($decision_array[$neptun])){
-                        $id = $current_subject . "_" . $current_group; 
-                        $decision = "APPROVED";
-                        if(isset($decision_array[$neptun][$id])){
-                            $decision = $decision_array[$neptun][$id];
-                            array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "group_number" => $current_group, "subject_id" => $current_subject, "application_request_status" => $decision));
+                    $current_subject = $_SESSION["subject"];
+                    $current_group = $_SESSION["group"];
+                
+                    $student_handler_model = new StudentHandlingModel();
+                
+                    $decision_array = array();
+                    foreach($_POST as $key => $value){
+                        $neptun = $key; // Check this!!!
+                        $decision = "";
+                        $id = $current_subject . "_" . $current_group;
+                        if($value != "-"){
+                            if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
+                                $decision = "APPROVED";
+                            }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
+                                $decision = "DENIED";
+                            }
+                            $decision_array[$neptun][$id] = $decision;
                         }
                     }
+                    
+                    $original_user_information = $student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
+                    $query_array = array();
+                    foreach($original_user_information as $index => $original_record){
+                        $neptun = $original_record["neptun_code"];
+                        
+                        if(isset($decision_array[$neptun])){
+                            $id = $current_subject . "_" . $current_group; 
+                            $decision = "APPROVED";
+                            if(isset($decision_array[$neptun][$id])){
+                                $decision = $decision_array[$neptun][$id];
+                                array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "group_number" => $current_group, "subject_id" => $current_subject, "application_request_status" => $decision));
+                            }
+                        }
+                    }
+    
+                    $student_handler_model->UpdatePendingStudents($query_array);
+                    $this->StudentHandling();
+                }else{
+                    header("Location: ./index.php?site=notifications");
                 }
-
-                $student_handler_model->UpdatePendingStudents($query_array);
-                $this->StudentHandling();
             }else{
                 header("Location: ./index.php");
             }

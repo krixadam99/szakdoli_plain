@@ -32,14 +32,15 @@
         public function TaskGeneration(){
             //Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
-                // Setting the preview to default, if not set
-                if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
-                    $_SESSION["preview"] = [];
-                }
                 $this->SetMembers();
 
                 //Only teachers can see this page,others will be redirected to the notifications page
                 if(count($this->approved_teacher_groups) != 0){
+                    // Setting the preview to default, if not set
+                    if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
+                        $_SESSION["preview"] = [];
+                    }
+                    
                     include(ROOT_DIRECTORY . "/views/taskGenerationPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -76,26 +77,35 @@
          */
         public function CreatePreview(){
             if(isset($_SESSION["neptun_code"])){
-                $_SESSION["preview"] = $_POST;
-                $_SESSION["preview_tasks"] = [];
-
-                $task_counter = 0;
-                foreach($_POST as $key => $value){
-                    if(is_string($key) &&  is_numeric(strpos($key, "_main_topic"))){
-                        $main_task_index = $value;
-                        if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"]) && isset($_POST[explode("_main_topic",$key)[0] . "_task_quantity"])){
-                            $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
-                            $subtask_count = $_POST[explode("_main_topic",$key)[0] . "_task_quantity"];
-                            if(is_numeric($subtask_count)){
-                                array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, $subtask_count));
+                $this->SetMembers();
+                if(
+                        isset($_SESSION["group"])
+                    &&  isset($_SESSION["exam_type"])
+                    &&  in_array($_SESSION["subject"], $this->approved_teacher_subjects)
+                ){
+                    $_SESSION["preview"] = $_POST;
+                    $_SESSION["preview_tasks"] = [];
+    
+                    $task_counter = 0;
+                    foreach($_POST as $key => $value){
+                        if(is_string($key) &&  is_numeric(strpos($key, "_main_topic"))){
+                            $main_task_index = $value;
+                            if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"]) && isset($_POST[explode("_main_topic",$key)[0] . "_task_quantity"])){
+                                $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
+                                $subtask_count = $_POST[explode("_main_topic",$key)[0] . "_task_quantity"];
+                                if(is_numeric($subtask_count)){
+                                    array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, $subtask_count));
+                                }
                             }
                         }
                     }
+    
+                    $subject = $_SESSION["subject"];
+                    $exam_type = $_SESSION["exam_type"];
+                    header("Location: ./index.php?site=taskGeneration&" . "subject=$subject&" . "exam_type=$exam_type");
+                }else{
+                    header("Location: ./index.php?site=notifications");
                 }
-
-                $subject = $_SESSION["subject"]??"";
-                $exam_type = $_SESSION["exam_type"]??"";
-                header("Location: ./index.php?site=taskGeneration&" . "subject=$subject&" . "exam_type=$exam_type");
             }else{
                 header("Location: ./index.php?site=login");
             }
