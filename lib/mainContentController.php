@@ -58,7 +58,7 @@
                 "Komplex számok alapvető tulajdonságai",
                 "Komplex számok trigonometrikus alakja",
                 "Komplex számok hatványozása és gyökvonás",
-                "Binomiális tétel és faktoriális",
+                "Binomiális tétel és Viéte formulák",
                 "Gráfok megszerkeszthetősége"
             ];
 
@@ -71,7 +71,7 @@
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
                 7 => ["A binomiális tétel alkalmazása", "Viéte formula alkalmazása"],
-                8 => ["Gráfok megszerkeszthetősége"]
+                8 => ["Egyszerű gráf megszerkeszthetősége", "páros gráf megszerkeszthetősége", "fagráf megszerkeszthetősége", "irányított gráf megszerkeszthetősége"]
             );
 
             $this->dimat_i_topics_descriptions = [
@@ -282,7 +282,7 @@
             // The topic must be a numeric value, and it must be between 0 and 9 (inclusively).
             if(isset($_SESSION["topic"]) && $_SESSION["topic"] != ""){
                 if(is_numeric($_SESSION["topic"])){
-                    if(intval($_SESSION["topic"]) > 9 || intval($_SESSION["topic"]) < 0){
+                    if(intval($_SESSION["topic"]) > 8 || intval($_SESSION["topic"]) < 0){
                         header("Location: ./index.php?site=notifications");
                         exit();
                     }

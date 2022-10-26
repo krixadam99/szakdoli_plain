@@ -31,8 +31,8 @@
         */
         public function Notifications(){
             if(isset($_SESSION["neptun_code"])){
-                if($_SESSION["neptun_code"] !== "admin"){
-                    $this->SetMembers();
+                $this->SetMembers();
+                if(!$this->is_administrator){
                     include(ROOT_DIRECTORY . "/views/notificationPage.view.php");
                 }else{
                     header("Location: ./index.php?site=demonstratorHandling");

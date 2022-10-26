@@ -66,7 +66,7 @@
                     // The user gets logged in with the given neptun_code
                     $_SESSION["neptun_code"] = strtolower($_POST['neptun_code']);
                     
-                    if($_POST['neptun_code'] !== "admin"){
+                    if($this->user_handler->IsAdministrator()){
                         // Redirecting the user to the notifications page
                         header("Location: ./index.php?site=notifications");
                     }else{

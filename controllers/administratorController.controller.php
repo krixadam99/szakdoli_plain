@@ -34,9 +34,8 @@
         */
         public function DemonstratorHandling(){
             if(isset($_SESSION["neptun_code"])){
-                if( $_SESSION["neptun_code"] === "admin"){
-                    $this->SetMembers();
-
+                $this->SetMembers();
+                if($this->is_administrator){
                     $administrator_model = new AdministratorModel();
                     $pending_teachers = $administrator_model->GetPendingTeachers();
 

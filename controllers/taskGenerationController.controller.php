@@ -54,18 +54,11 @@
          * 
          */
         public function PrintPage(){
-            include(ROOT_DIRECTORY . "/views/printPage.view.php");
-            /*
-            //Users, who are not logged in won't see this page, they will be redirected to the login page
-            if(isset($_SESSION["neptun_code"])){
-                if(count($this->GetApprovedTeacherGroups()) != 0){
-                    include(ROOT_DIRECTORY . "/views/printPage.view.php");
-                }else{
-                    header("Location: ./index.php?site=notifications");
-                }
+            if(isset($_SESSION["preview"])){ //TODO
+                include(ROOT_DIRECTORY . "/views/printPage.view.php");
             }else{
-                header("Location: ./index.php?site=login");
-            }*/
+                header("Location: ./index.php?site=notifications");
+            }
         }
 
         /**
@@ -127,7 +120,7 @@
             
             if($_SESSION["subject"] == "i"){
                 $dimat_subtasks = new DimatiSubtaskGenerator();
-            }elseif($_SESSION["subject"] == "ii"){
+            }else{
                 $dimat_subtasks = new DimatiiSubtaskGenerator();
             }
 

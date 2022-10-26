@@ -31,15 +31,18 @@
             if(isset($_SESSION["neptun_code"])){
                 $group_addition_model = new GroupAdditionModel();
                 $this->SetMembers();
-
-                $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
-                $can_apply_to_group = $group_addition_conditions[1];
-                $can_add_group = $group_addition_conditions[2];
-                
-                $this->dimat_i_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-                $this->dimat_ii_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 1 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-                
-                include(ROOT_DIRECTORY . "/views/groupAdditionPage.view.php");
+                if(!$this->is_administrator){
+                    $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
+                    $can_apply_to_group = $group_addition_conditions[1];
+                    $can_add_group = $group_addition_conditions[2];
+                    
+                    $this->dimat_i_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                    $this->dimat_ii_groups = $group_addition_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 1 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                    
+                    include(ROOT_DIRECTORY . "/views/groupAdditionPage.view.php");
+                }else{
+                    header("Location: ./index.php?site=demonstratorHandling");
+                }
             }else{
                 header("Location: ./index.php?site=login");
             }
