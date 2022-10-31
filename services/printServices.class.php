@@ -119,6 +119,43 @@
         }
 
         /**
+         * 
+         */
+        static function CreatePrintableGraph($degrees, $type = "simple"){
+            $return_string = "[";
+            
+            if($type === "simple" || $type === "tree"){
+                foreach($degrees as $degree_counter => $degree){
+                    $prefix = $degree_counter !== 0?', ':'';
+                    $return_string = $return_string . $prefix . $degree;
+                }
+            }else if($type === "paired"){
+                $first_class = $degrees[0];
+                $second_class = $degrees[1];
+                
+                foreach($first_class as $degree_counter => $degree){
+                    $prefix = $degree_counter !== 0?', ':'';
+                    $return_string = $return_string . $prefix . $degree;
+                }
+                $return_string .= "] és [";
+                foreach($second_class as $degree_counter => $degree){
+                    $prefix = $degree_counter !== 0?', ':'';
+                    $return_string = $return_string . $prefix . $degree;
+                }
+            }else if($type === "directed"){
+                $first_class = $degrees[0];
+                $second_class = $degrees[1];
+                
+                foreach($first_class as $degree_counter => $degree){
+                    $prefix = $degree_counter !== 0?', ':'';
+                    $return_string = $return_string . $prefix . "(" . $degree . ", " . $second_class[$degree_counter] . ")";
+                }
+            }
+
+            return $return_string . "]";
+        }
+
+        /**
          * This method creates the string format of the given set.
          * 
          * @param string $set_name The name of the set.

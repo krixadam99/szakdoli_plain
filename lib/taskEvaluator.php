@@ -200,7 +200,7 @@
         */
         protected function CheckIfSelectsEqual($real_solutions, $given_answers, $answer_counter){
             $all_correct = true;
-            foreach($real_solutions as $index => $solution){
+            foreach($real_solutions as $index => $solution){                
                 if(isset($given_answers[$index])){
                     $answer = false;
                     switch($given_answers[$index]){
@@ -238,8 +238,10 @@
         */
         protected function ParseSelectSolutions($prefix, $select_start, $select_end){
             $answer = [];
+            $subtask_counter = 0;
             for($counter = $select_start; $counter <= $select_end; $counter++){
-                array_push($answer, $this->solutions[$prefix . "_" . $counter]??"");
+                array_push($answer, $this->given_answers[$prefix . "_" . $subtask_counter]??"");
+                $subtask_counter++;
             }
             return $answer;
         }

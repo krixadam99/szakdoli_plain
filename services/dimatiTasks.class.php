@@ -277,7 +277,21 @@
          * @return void 
         */
         private function CreateTaskNine(){
-            
+            $simple_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "0", 2);
+            $paired_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "1", 2);
+            $tree_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "2", 2);
+            $directed_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "3", 2);
+
+            $task_array = array(
+                "task_description" => "Old meg a következő bgráfok megszerkeszthetőségével kapcsolatos feladatokat!",
+                "first_subtasks" => $simple_graph_subtask["data"],
+                "second_subtasks" => $tree_graph_subtask["data"],
+                "third_subtasks" => $paired_graph_subtask["data"],
+                "fourth_subtasks" => $directed_graph_subtask["data"]
+            );
+
+            $this->task_descriptions = $task_array;
+            $this->task_solutions = [$simple_graph_subtask["solutions"], $tree_graph_subtask["solutions"], $paired_graph_subtask["solutions"], $directed_graph_subtask["solutions"]];
         }
     }
 

@@ -19,8 +19,9 @@
          * @return void
          */
         public function __construct(){
-            $this->maximum_number = 10;
             $this->minimum_number = 1;
+            $this->maximum_number = 10;
+
             $this->set_names = [
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
                 "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" 
@@ -137,20 +138,24 @@
          * 
          * @return array A part of the set with the requested amount of elements.
         */
-        public function GetPartOfSet($set, $number_of_elements){
-            if($number_of_elements < count($set)){
-                $return_set = [];
-                for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
-                    $random_element = $set[mt_rand(0,count($set)-1)];
-                    
-                    while(in_array($random_element, $return_set)){
+        public function GetPartOfSet($set, $number_of_elements){ 
+            if(is_int($number_of_elements) && $number_of_elements >= 0){
+                if($number_of_elements < count($set)){
+                    $return_set = [];
+                    for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
                         $random_element = $set[mt_rand(0,count($set)-1)];
+                        
+                        while(in_array($random_element, $return_set)){
+                            $random_element = $set[mt_rand(0,count($set)-1)];
+                        }
+                        array_push($return_set, $random_element);
                     }
-                    array_push($return_set, $random_element);
+                    return $return_set;
+                }else{
+                    return $set;
                 }
-                return $return_set;
             }else{
-                return $set;
+                return [];
             }
         }
 
@@ -285,26 +290,167 @@
             $range_length =  $this->maximum_number - $this->minimum_number + 1;
             $complex_numbers = [];
 
-            if($number_of_elements <= $range_length * $range_length){ // Avoiding for-ever while loop
-                for($counter = 0; $counter < $number_of_elements; $counter++){
-                    $real_part = mt_rand($this->minimum_number, $this->maximum_number);
-                    $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
-                    $complex_number = [$real_part, $imaginary_part];
-                    while(in_array($complex_number, $complex_numbers)){
+            if(is_int($number_of_elements) && $number_of_elements > 0){
+                if($number_of_elements < $range_length * $range_length){ // Avoiding forever while loop
+                    for($counter = 0; $counter < $number_of_elements; $counter++){
                         $real_part = mt_rand($this->minimum_number, $this->maximum_number);
                         $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
                         $complex_number = [$real_part, $imaginary_part];
+                        while(in_array($complex_number, $complex_numbers)){
+                            $real_part = mt_rand($this->minimum_number, $this->maximum_number);
+                            $imaginary_part = mt_rand($this->minimum_number, $this->maximum_number);
+                            $complex_number = [$real_part, $imaginary_part];
+                        }
+                        array_push($complex_numbers, $complex_number);
                     }
-                    array_push($complex_numbers, $complex_number);
-                }
-            }else{
-                for($real_part_counter = $this->minimum_number; $real_part_counter <= $this->maximum_number; $real_part_counter++){
-                    for($complex_part_counter = $this->minimum_number; $complex_part_counter <= $this->maximum_number; $complex_part_counter++){
-                        array_push($complex_numbers, [$real_part_counter,$complex_part_counter]);
+                }else{
+                    for($real_part_counter = $this->minimum_number; $real_part_counter <= $this->maximum_number; $real_part_counter++){
+                        for($complex_part_counter = $this->minimum_number; $complex_part_counter <= $this->maximum_number; $complex_part_counter++){
+                            array_push($complex_numbers, [$real_part_counter,$complex_part_counter]);
+                        }
                     }
                 }
             }
             return $complex_numbers;
+        }
+
+        /**
+         * 
+         */
+        public function CreateGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8, $type = "simple"){
+            $can_be_created = mt_rand(0,100);
+
+            switch($type){
+                case "simple":{
+                    $graph = $this->CreateGraphWithOneSequence($number_of_verteces, $minimum_degree, $maximum_degree);
+                }break;
+                case "tree":{
+                    $graph = $this->CreateGraphWithOneSequence($number_of_verteces, $minimum_degree, $maximum_degree);
+                }break;
+                case "paired":{
+                    $graph = $this->CreatePairedGraph($number_of_verteces, mt_rand(max(0,$number_of_verteces-2),$number_of_verteces+2), $minimum_degree, $maximum_degree);
+                }break;
+                case "directed":{
+                    $graph = $this->CreateDirectedGraph($number_of_verteces, $minimum_degree, $maximum_degree);
+                }break;
+            }
+
+
+            if($can_be_created < 40){
+                switch($type){
+                    case "simple":{
+                        while(!$this->DetermineIfSimpleGraphCanBeCreated($graph)){
+                            $graph = $this->CreateGraphWithOneSequence($number_of_verteces, $minimum_degree, $maximum_degree);
+                        }
+                    }break;
+                    case "tree":{
+                        while(!$this->DetermineIfTreeGraphCanBeCreated($graph)){
+                            $graph = $this->CreateGraphWithOneSequence($number_of_verteces, $minimum_degree, $maximum_degree);
+                        }
+                    }break;
+                    case "paired":{
+                        while(!$this->DetermineIfPairedGraphCanBeCreated($graph)){
+                            $graph = $this->CreatePairedGraph($number_of_verteces, mt_rand(max(0,$number_of_verteces-2),$number_of_verteces+2), $minimum_degree, $maximum_degree);
+                        }
+                    }break;
+                    case "directed":{
+                        while(!$this->DetermineIfDirectedGraphCanBeCreated($graph)){
+                            $graph = $this->CreateDirectedGraph($number_of_verteces, $minimum_degree, $maximum_degree);
+                        }
+                    }break;
+                }
+                $is_creatable = true;
+            }else{
+                switch($type){
+                    case "simple":{
+                        $is_creatable = $this->DetermineIfSimpleGraphCanBeCreated($graph);
+                    }break;
+                    case "tree":{
+                        $is_creatable = $this->DetermineIfTreeGraphCanBeCreated($graph);
+                    }break;
+                    case "paired":{
+                        $is_creatable = $this->DetermineIfPairedGraphCanBeCreated($graph);
+                    }break;
+                    case "directed":{
+                        $is_creatable = $this->DetermineIfDirectedGraphCanBeCreated($graph);
+                    }break;
+                }
+            }
+
+            return [$graph, $is_creatable];
+        }
+
+        /**
+         * 
+         */
+        private function CreateGraphWithOneSequence($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8,$type = "simple"){
+            $verteces = [];
+
+            switch($type){
+                case "simple": case "tree":{
+                    for($vertex_counter = 0; $vertex_counter < $number_of_verteces; $vertex_counter++){
+                        array_push($verteces, mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces - 1)));
+                    }
+                };break;
+                default:break;
+            }
+
+            return $verteces;
+        }
+
+        public function CreatePairedGraph($number_of_verteces_first = 6, $number_of_verteces_second = 6, $minimum_degree = 0, $maximum_degree = 8){
+            $verteces = [];
+
+            $first_class = [];
+                    
+            $sum_of_degree = 0;
+            for($vertex_counter = 0; $vertex_counter < $number_of_verteces_first; $vertex_counter++){
+                $new_degree = mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces_first - 1));
+                array_push($first_class, $new_degree);
+                $sum_of_degree += $new_degree;
+            }
+
+            $partitioned_array = $this->PartitionNumber($sum_of_degree, $number_of_verteces_second, $minimum_degree, min($maximum_degree, $number_of_verteces_second - 1));
+            if($partitioned_array !== []){
+                $second_class = $partitioned_array;
+            }else{
+                $second_class = $first_class;
+            }
+            
+            $verteces = [$first_class, $second_class];
+
+            return $verteces;
+        }
+
+        private function CreateDirectedGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8){
+            $verteces = [];
+
+            $first_class = [];
+            
+            $sum_of_degree = 0;
+            for($vertex_counter = 0; $vertex_counter < $number_of_verteces; $vertex_counter++){
+                $new_degree = mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces - 1));
+                array_push($first_class, $new_degree);
+                $sum_of_degree = $new_degree;
+            }
+            
+            $second_class = [];
+            $chosen_indices_in_second_part = [];
+            for($substract_index = 0; $substract_index < floor($number_of_verteces / 2); $substract_index++){
+                $minus_part = mt_rand(0,$first_class[$substract_index]);
+                array_push($second_class, $first_class[$substract_index] - $minus_part);
+                
+                $choosen_index = mt_rand(ceil($number_of_verteces / 2), $number_of_verteces - 1);
+                while(in_array($choosen_index, $chosen_indices_in_second_part)){
+                    $choosen_index = mt_rand(ceil($number_of_verteces / 2), $number_of_verteces - 1);
+                }
+                array_push($chosen_indices_in_second_part, $choosen_index);
+                array_push($second_class, $first_class[$choosen_index] + $minus_part);
+            }
+            
+            $verteces = [$first_class, $second_class];
+
+            return $verteces;
         }
 
         /**
@@ -367,8 +513,10 @@
             $first_components = [];
             $second_components = [];
             foreach($relation as $index => $pair){
-                array_push($first_components,$pair[0]);
-                array_push($second_components,$pair[1]);
+                if(count($pair) === 2){
+                    array_push($first_components,$pair[0]);
+                    array_push($second_components,$pair[1]);
+                }
             }
             return [$first_components, $second_components];
         }
@@ -379,8 +527,10 @@
         public function GetImageBySet($relation, $set){
             $result_image = [];
             foreach($relation as $index => $pair){
-                if(in_array($pair[0], $set) && !in_array($pair[1],$result_image)){
-                    array_push($result_image, $pair[1]);
+                if(count($pair) === 2){
+                    if(in_array($pair[0], $set) && !in_array($pair[1],$result_image)){
+                        array_push($result_image, $pair[1]);
+                    }
                 }
             }
             return $result_image;
@@ -392,8 +542,10 @@
         public function GetDomainBySet($relation, $set){
             $result_domain = [];
             foreach($relation as $index => $pair){
-                if(in_array($pair[1], $set) && !in_array($pair[0],$result_domain)){
-                    array_push($result_domain, $pair[0]);
+                if(count($pair) === 2){
+                    if(in_array($pair[1], $set) && !in_array($pair[0],$result_domain)){
+                        array_push($result_domain, $pair[0]);
+                    }
                 }
             }
             return $result_domain;
@@ -473,8 +625,12 @@
         public function MakeRelationFromArrays($first_array, $second_array){
             $relation = [[],[]];
             foreach($first_array as $index => $element){
-                array_push($relation[0], $element);
-                array_push($relation[1], $second_array[$index]);
+                if(isset($second_array[$index])){
+                    array_push($relation[0], $element);
+                    array_push($relation[1], $second_array[$index]);
+                }else{
+                    break;
+                }
             }
             return $relation;
         }
@@ -676,7 +832,9 @@
         public function IsDichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
-                    if(!in_array([$first_element,$second_element], $relation) && !in_array([$second_element,$first_element], $relation)){
+                    if( !in_array([$first_element,$second_element], $relation) && !in_array([$second_element,$first_element], $relation)
+                        || in_array([$first_element,$second_element], $relation) && in_array([$second_element,$first_element], $relation) && $first_element !== $second_element
+                    ){
                         return false;
                     }
                 }
@@ -691,14 +849,15 @@
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
                     $counter = 0;
-                    if(in_array([$first_element,$second_element], $relation)){
-                        $counter++;
-                    }
-                    if(in_array([$second_element,$first_element], $relation)){
-                        $counter++;
-                    }
                     if($first_element == $second_element){
                         $counter++;
+                    }else{
+                        if(in_array([$first_element,$second_element], $relation)){
+                            $counter++;
+                        }
+                        if(in_array([$second_element,$first_element], $relation)){
+                            $counter++;
+                        }
                     }
                     if($counter != 1){
                         return false;
@@ -818,23 +977,26 @@
         public function GetAllPossibleRelations($base_set){
             $all_relations = [[]];
 
-            // Determine all possible combinations of the base set of size 2
-            // These are combinations, that is, elements, where the order doesn't matter
-            // But firstly, We need all pairs, that's why we need the inverses of the elements, also the reflexive elements
-            $all_pairs = $this->DetermineCombinationOfList($base_set, 2);
+            if($base_set !== []){
+                // Determine all possible combinations of the base set of size 2
+                // These are combinations, that is, elements, where the order doesn't matter
+                // But firstly, We need all pairs, that's why we need the inverses of the elements, also the reflexive elements
+                $all_pairs = $this->DetermineCombinationOfList($base_set, 2);
 
-            // [1,2,3,4] -> [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]] + [[2,1],[3,1],[4,1],[3,2],[4,2],[4,3]] + [[1,1], [2,2], [3,3], [4,4]]
-            foreach($all_pairs as $element_counter => $pair){
-                array_push($all_pairs, [$pair[1],$pair[0]]);
-            }
-            foreach($base_set as $element_counter => $element){
-                array_push($all_pairs, [$element,$element]);
-            }
-            array_push($all_relations, $all_pairs);
+                // [1,2,3,4] -> [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]] + [[2,1],[3,1],[4,1],[3,2],[4,2],[4,3]] + [[1,1], [2,2], [3,3], [4,4]]
+                foreach($all_pairs as $element_counter => $pair){
+                    array_push($all_pairs, [$pair[1],$pair[0]]);
+                }
+                foreach($base_set as $element_counter => $element){
+                    array_push($all_pairs, [$element,$element]);
+                }
 
-            for($relation_size_counter = 1; $relation_size_counter < count($all_pairs); $relation_size_counter++){
-                $all_relation_with_size = $this->DetermineCombinationOfList($all_pairs, $relation_size_counter); // Here literal combinations will be picked, so the order doesn't matter
-                $all_relations = array_merge($all_relations, $all_relation_with_size);
+                array_push($all_relations, $all_pairs);
+
+                for($relation_size_counter = 1; $relation_size_counter < count($all_pairs); $relation_size_counter++){
+                    $all_relation_with_size = $this->DetermineCombinationOfList($all_pairs, $relation_size_counter); // Here literal combinations will be picked, so the order doesn't matter
+                    $all_relations = array_merge($all_relations, $all_relation_with_size);
+                }
             }
 
             return $all_relations;
@@ -939,7 +1101,7 @@
                 $argument = pi()/2;
             }
 
-            return [$length, $argument];
+            return [$length, round($argument,2)];
         }
 
         /**
@@ -953,29 +1115,33 @@
             $third_exponent = $exponents[2];
 
             $expanded_form = [];
-            if($variables_are_same){
-                // ($first_number*x**$first_exponent + $second_number*x**$second_exponent)**$third_exponent =
-                // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x**$first_exponent)**($third_exponent-i)) * ($second_number*x**$second_exponent)**i
-                //(i=0..$third_exponent) (($third_exponent i) * $first_number**($third_exponent-i) * $second_number**i) * x**($first_exponent*$third_exponent + i * ($second_exponent - $first_exponent))
-                for($counter = 0; $counter <= $third_exponent; $counter++){
-                    $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
-                    $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
-                    $exponent_part = $first_exponent * $third_exponent + $counter * ($second_exponent - $first_exponent);
-                    array_push($expanded_form, [$coefficient_part, $exponent_part]);
+            if($third_exponent >= 0){
+                if($variables_are_same){
+                    // ($first_number*x**$first_exponent + $second_number*x**$second_exponent)**$third_exponent =
+                    // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x**$first_exponent)**($third_exponent-i)) * ($second_number*x**$second_exponent)**i
+                    //(i=0..$third_exponent) (($third_exponent i) * $first_number**($third_exponent-i) * $second_number**i) * x**($first_exponent*$third_exponent + i * ($second_exponent - $first_exponent))
+                    for($counter = 0; $counter <= $third_exponent; $counter++){
+                        $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
+                        $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
+                        $exponent_part = $first_exponent * $third_exponent + $counter * ($second_exponent - $first_exponent);
+                        array_push($expanded_form, [$coefficient_part, $exponent_part]);
+                    }
+                }else{
+                    // ($first_number*x**$first_exponent + $second_number*y**$second_exponent)**$third_exponent =
+                    // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x)**($first_exponent*($third_exponent-i)) * ($second_number*y)**($second_exponent*i)
+                    //(i=0..$third_exponent) (($third_exponent i) * $first_number**($first_exponent*($third_exponent-i)) * $second_number**($second_exponent*i)) * x**($first_exponent*($third_exponent-i)) * y**($second_exponent*i))
+                    for($counter = 0; $counter <= $third_exponent; $counter++){
+                        $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
+                        $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
+                        $exponent_part_first = $first_exponent * ($third_exponent-$counter);
+                        $exponent_part_second =  $second_exponent * $counter;
+                        array_push($expanded_form, [$coefficient_part, $exponent_part_first, $exponent_part_second]);
+                    }
                 }
+                return $expanded_form;
             }else{
-                // ($first_number*x**$first_exponent + $second_number*y**$second_exponent)**$third_exponent =
-                // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x)**($first_exponent*($third_exponent-i)) * ($second_number*y)**($second_exponent*i)
-                //(i=0..$third_exponent) (($third_exponent i) * $first_number**($first_exponent*($third_exponent-i)) * $second_number**($second_exponent*i)) * x**($first_exponent*($third_exponent-i)) * y**($second_exponent*i))
-                for($counter = 0; $counter <= $third_exponent; $counter++){
-                    $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
-                    $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
-                    $exponent_part_first = $first_exponent * ($third_exponent-$counter);
-                    $exponent_part_second =  $second_exponent * $counter;
-                    array_push($expanded_form, [$coefficient_part, $exponent_part_first, $exponent_part_second]);
-                }
+                return [];
             }
-            return $expanded_form;
         }
 
         /**
@@ -1021,6 +1187,149 @@
             }
             
             return [];
+        }
+
+        /**
+         * 
+         */
+        public function DetermineIfSimpleGraphCanBeCreated($graph){
+            rsort($graph);
+
+            $sum_of_degrees = 0;
+            foreach($graph as $degree){
+                $sum_of_degrees += $degree;
+            }
+
+            if($sum_of_degrees % 2 === 0){
+                $number_of_verteces = count($graph);
+                for($outer_index = 0; $outer_index < $number_of_verteces; ++$outer_index){
+                    $left_sum = 0;
+                    for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
+                        $left_sum += $graph[$inner_index];
+                    }
+
+                    $right_sum = 0;
+                    for($inner_index = $outer_index; $inner_index < $number_of_verteces; ++$inner_index){
+                        $right_sum += min($graph[$inner_index], $outer_index);
+                    }
+
+                    if($left_sum - $outer_index*($outer_index - 1)> $right_sum){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * 
+         */
+        public function DetermineIfTreeGraphCanBeCreated($graph){
+            rsort($graph);
+
+            $sum_of_degrees = 0;
+            foreach($graph as $degree){
+                $sum_of_degrees += $degree;
+            }
+
+            $number_of_verteces = count($graph);
+            if($sum_of_degrees === 2*($number_of_verteces - 1) && $graph[0] <= $number_of_verteces - 1 && $graph[$number_of_verteces - 1] > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * 
+         */
+        public function DetermineIfPairedGraphCanBeCreated($graph){
+            $first_class = $graph[0];
+            $second_class = $graph[1];
+            rsort($first_class);
+            rsort($second_class);
+            $number_of_verteces_of_first_class = count($first_class);
+            $number_of_verteces_of_second_class = count($second_class);
+            
+            $first_sum = 0;
+            for($element_counter = 0; $element_counter < $number_of_verteces_of_first_class; $element_counter++){
+                $first_sum += $first_class[$element_counter];
+            }
+            $second_sum = 0;
+            for($element_counter = 0; $element_counter < $number_of_verteces_of_second_class; $element_counter++){
+                $second_sum += $second_class[$element_counter];
+            }
+
+            if(     $first_sum === $second_sum 
+                &&  $first_class[$number_of_verteces_of_first_class - 1] > 0
+                &&  $second_class[$number_of_verteces_of_second_class - 1] > 0
+            ){
+                for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
+                    $left_sum = 0;
+                    for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
+                        $left_sum += $first_class[$inner_index];
+                    }
+
+                    $right_sum = 0;
+                    for($inner_index = 0; $inner_index < $number_of_verteces_of_second_class; ++$inner_index){
+                        $right_sum += min($second_class[$inner_index], $outer_index);
+                    }
+
+                    if($left_sum > $right_sum){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * 
+         */
+        public function DetermineIfDirectedGraphCanBeCreated($graph){
+            $first_class = $graph[0];
+            $second_class = $graph[1];
+            rsort($first_class);
+            rsort($second_class);
+            $number_of_verteces_of_first_class = count($first_class);
+            $number_of_verteces_of_second_class = count($second_class);
+            
+            $first_sum = 0;
+            for($element_counter = 0; $element_counter < $number_of_verteces_of_first_class; $element_counter++){
+                $first_sum += $first_class[$element_counter];
+            }
+            $second_sum = 0;
+            for($element_counter = 0; $element_counter < $number_of_verteces_of_second_class; $element_counter++){
+                $second_sum += $second_class[$element_counter];
+            }
+
+            if($first_sum === $second_sum){
+                for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
+                    $left_sum = 0;
+                    for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
+                        $left_sum += $first_class[$inner_index];
+                    }
+
+                    $right_sum = 0;
+                    for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
+                        $right_sum += min($second_class[$inner_index], $outer_index - 1);
+                    }
+                    for($inner_index = $outer_index + 1; $inner_index < $number_of_verteces_of_second_class; ++$inner_index){
+                        $right_sum += min($second_class[$inner_index], $outer_index);
+                    }
+
+                    if($left_sum > $right_sum){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                return false;
+            }
         }
 
         /**
@@ -1081,11 +1390,68 @@
          * 
          */
         private function CalculateFactorial($number){
-            $factorial = 1;
-            for($index = 2; $index <= $number;$index++){
-                $factorial *= $index;
+            if(is_int($number) && $number >= 0){
+                $factorial = 1;
+                for($index = 2; $index <= $number;$index++){
+                    $factorial *= $index;
+                }
+                return $factorial;
+            }else{
+                return 0;
             }
-            return $factorial;
+        }
+
+        /**
+         * 
+         */
+        private function PartitionNumber($number, $number_of_parts, $min, $max){
+            if($max * $number_of_parts >= $number && $min * $number_of_parts <= $number){
+                $return_array = $this->CreatePartitions($number_of_parts, $min, $max, $number);
+                
+                return $return_array[mt_rand(0,count($return_array)-1)];
+            }else{
+                return [];
+            }
+        }
+
+        /**
+         * 
+         */
+        private function CreatePartitions($number_of_iterations, $min, $max, $number, $previous_elements = []){
+            if($number_of_iterations > 0){
+                $return_list = [];
+                for($counter = $min; $counter <= $max; $counter++){
+                    $tmp_array = $previous_elements;
+                    array_push($tmp_array, $counter);
+                    $new_element = $this->CreatePartitions($number_of_iterations - 1, $counter, $max, $number, $tmp_array);
+
+                    if($new_element !== []){
+                        if($return_list === []){
+                            if($number_of_iterations - 1 > 0){
+                                $return_list = $new_element;
+                            }else{
+                                $return_list = [$new_element];
+                            }
+                            
+                        }else{
+                            $return_list = array_merge($return_list, $new_element);
+                        }
+                    }
+                }
+
+                return $return_list;
+            }else{
+                $sum_of_elemenets = 0;
+                for($counter = 0; $counter < count($previous_elements); $counter++){
+                    $sum_of_elemenets += $previous_elements[$counter];
+                }
+                
+                if($sum_of_elemenets === $number){
+                    return $previous_elements;
+                }else{
+                    return [];
+                }
+            }
         }
     };
 ?>

@@ -25,9 +25,9 @@
             $neptun_code = strtoupper($neptun_code);
             $new_point = $previous_point + $update_point;
 
-            $query = "UPDATE user_status JOIN subject_group USING(subject_group_id) JOIN practice_task_points USING(neptun_code) SET practice_task_$practice_number = $new_point WHERE ";
-            $query .= "AND practice_task_points.neptun_code = \"$neptun_code\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
-            
+            $query = "UPDATE practice_task_points SET practice_task_$practice_number = $new_point WHERE ";
+            $query .= "subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")";
+
             return $this->UpdataDatabase($query);
         }
     }

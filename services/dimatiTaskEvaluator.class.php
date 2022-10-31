@@ -18,7 +18,7 @@
         public function __construct($given_answers){
             $this->subject_id = "i";
             $this->solution_counter = 0;
-            $this->count_correct = 0;
+            $this->correct_answer_counter = 0;
             $this->real_solutions = $_SESSION["solution"];
             $this->given_answers = $given_answers;
         }
@@ -162,7 +162,7 @@
                 $second_answers = $this->ParseSelectSolutions("solution_$id", 0,8);
 
                 if($this->CheckIfSelectsEqual($real_solution, $second_answers, $id)){
-                    $this->count_correct += 1;
+                    $this->correct_answer_counter += 1;
                 }
 
                 $this->solution_counter++;
@@ -227,7 +227,7 @@
     
                 $is_correct = false;
                 if(!in_array(false, array_values($correct_array))){
-                    $this->count_correct += 1;
+                    $this->correct_answer_counter += 1;
                     $is_correct = true;
                 }
                 $this->SetSessionAnswer($id, $given_answer_raw, PrintServices::CreatePrintableRelation("",$given_answer,false), $possible_relations, $is_correct);
@@ -255,7 +255,7 @@
                 $first_answer = $this->ParseSelectSolutions("solution_$id", 0, 0);
                 
                 if($this->CheckIfSelectsEqual($real_solution, $first_answer, $id)){
-                    $this->count_correct += 1;
+                    $this->correct_answer_counter += 1;
                 }
                 
                 $this->solution_counter++;
@@ -268,7 +268,7 @@
                 $id = $task_counter . "_" . $subtask_counter;
                 $second_answers = $this->ParseSelectSolutions("solution_$id", 0,2);
                 if($this->CheckIfSelectsEqual($real_solutions, $second_answers, $id)){
-                    $this->count_correct += 1;
+                    $this->correct_answer_counter += 1;
                 }
                 
                 $this->solution_counter++;
@@ -432,6 +432,62 @@
          * @return void
         */
         private function CheckNinethTaskSolution(){
+            $subtask_counter = 0;
+            $task_counter = 0;
+
+            foreach($this->real_solutions[0] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $first_answers = $this->ParseSelectSolutions("solution_$id", 0 + $subtask_counter, 0 + $subtask_counter);
+
+                if($this->CheckIfSelectsEqual([$real_solution], $first_answers, $id)){
+                    $this->correct_answer_counter += 1;
+                }
+
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 1;
+            foreach($this->real_solutions[1] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $first_answers = $this->ParseSelectSolutions("solution_$id", 2 + $subtask_counter,2 + $subtask_counter);
+
+                if($this->CheckIfSelectsEqual([$real_solution], $first_answers, $id)){
+                    $this->correct_answer_counter += 1;
+                }
+
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 2;
+            foreach($this->real_solutions[2] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $first_answers = $this->ParseSelectSolutions("solution_$id", 4 + $subtask_counter,4 + $subtask_counter);
+
+                if($this->CheckIfSelectsEqual([$real_solution], $first_answers, $id)){
+                    $this->correct_answer_counter += 1;
+                }
+
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
+
+            $subtask_counter = 0;
+            $task_counter = 3;
+            foreach($this->real_solutions[3] as $solution_array_key => $real_solution){
+                $id = $task_counter . "_" . $subtask_counter;
+                $first_answers = $this->ParseSelectSolutions("solution_$id", 6 + $subtask_counter,6 + $subtask_counter);
+
+                if($this->CheckIfSelectsEqual([$real_solution], $first_answers, $id)){
+                    $this->correct_answer_counter += 1;
+                }
+
+                $this->solution_counter++;
+                $subtask_counter++;
+            }
         }
     }
 ?>

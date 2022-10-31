@@ -99,10 +99,10 @@
             ];
 
             $this->dimat_ii_subtopics = array(
-                0 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése", "..."],
+                0 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése"],
                 1 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
-                2 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus", "Kibővített Eukleidészi algoritmus"],
-                3 => ["Lineáris kongruenciák megoldása", "Euler-Fermat és kis Fermat-tétel"],
+                2 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus"],
+                3 => ["Lineáris kongruenciák megoldása"],
                 4 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
                 5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
                 6 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
@@ -113,8 +113,8 @@
             $this->dimat_ii_topics_descriptions = [
                 "Maradékos osztások, pozitív szám prímfelbontása, pozitív osztók számának meghatározása, kongruens szám keresése", 
                 "Teljes maradékrendszer megadása reprezentatív elemekkel, redukált maradékrendszer megadása reprezentatív elemekkel, Euler-féle fí függvény",
-                "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus, a kibővített Eukleidészi algoritmus",
-                "Lineáris kongruenciák megoldása, az Euler-Fermat és kis Fermat-tétel",
+                "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
+                "Lineáris kongruenciák megoldása",
                 "Lineáris diofantikus egyenletek megoldása",
                 "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
                 "Polinomok helyettesítési értékének meghatározása Horner- rendezéssel",
