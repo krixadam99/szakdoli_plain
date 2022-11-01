@@ -12,7 +12,7 @@
         $topic_descriptions = $this->dimat_i_topics_descriptions;
     }elseif($approved_student_subject == "ii"){
         $subject_id = "Diszkrét matematika II. gyakorlás";
-        $topic_division = [6, 4];
+        $topic_division = [6, 3];
         $practice_topics = $this->dimat_ii_topics;
         $topic_descriptions = $this->dimat_ii_topics_descriptions;
     }
@@ -58,7 +58,27 @@
                 <div class="card_row">
                     <?php for($column_index = 0; $column_index < $column_number; ++$column_index):?>
                         <?php if($card_counter < count($practice_topics)):?>
-                            <div class="small_card" onclick="SmallCardClicked(this)" id=<?="small_card_" . $card_counter?>>
+                            <?php
+                                $main_topic = "";
+                                if($approved_student_subject == "i"){
+                                    if($card_counter < 4){
+                                        $main_topic = "sets";
+                                    }else if($card_counter < 7 && $card_counter >= 4){
+                                        $main_topic = "complex_numbers";
+                                    }else if($card_counter === 7){
+                                        $main_topic = "binomial_theorem";
+                                    }else{
+                                        $main_topic = "graphs";
+                                    }
+                                }else{
+                                    if($card_counter < 6){
+                                        $main_topic = "number_theory";
+                                    }else{
+                                        $main_topic = "polynomials";
+                                    }
+                                }
+                            ?>
+                            <div class="small_card <?=$main_topic?> light" main-topic="<?=$main_topic?>" onclick="SmallCardClicked(this)" id=<?="small_card_" . $card_counter?>>
                                 <label class="title"><?=$practice_topics[$card_counter]?></label>
                                 <label class="description"><?=$topic_descriptions[$card_counter]?></label>
                                 <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>

@@ -173,13 +173,72 @@ hr {
     margin-bottom: 0%;
 }
 
+.small_card {
+    background-position: relative;
+    background-attachment:fixed;
+    background-size:calc(350px + 0.6vw) calc(600px + 0.6vw);;
+    background-repeat: repeat;
+    animation: moving_symbols 200s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.small_card.sets.light {
+    background-image: url("./pics/set_shapes_light.png");
+}
+
+.small_card.complex_numbers.light {
+    background-image: url("./pics/complex_numbers_light.png");
+}
+
+.small_card.binomial_theorem.light {
+    background-image: url("./pics/binomial_theorem_light.png");
+}
+
+.small_card.graphs.light {
+    background-image: url("./pics/graphs_light.png");
+}
+
+.small_card.number_theory.light {
+    background-image: url("./pics/number_theory_light.png");
+}
+
+.small_card.polynomials.light {
+    background-image: url("./pics/polynomials_light.png");
+}
+
+.small_card.sets.dark {
+    background-image: url("./pics/set_shapes_dark.png");
+}
+
+.small_card.complex_numbers.dark {
+    background-image: url("./pics/complex_numbers_dark.png");
+}
+
+.small_card.binomial_theorem.dark {
+    background-image: url("./pics/binomial_theorem_dark.png");
+}
+
+.small_card.graphs.dark {
+    background-image: url("./pics/graphs_dark.png");
+}
+
+.small_card.number_theory.dark {
+    background-image: url("./pics/number_theory_dark.png");
+}
+
+.small_card.polynomials.dark {
+    background-image: url("./pics/polynomials_dark.png");
+}
+
+
 /*Level bar on cards*/
 
 .level_container .level_bar{
     width: 30%;
     margin: 0% 5% 0% 0%;
     height: 100%;
-    background-color: inherit;
+    background-color: white;
     border-radius: 5px;
     border: 1px solid black;
 }
@@ -953,5 +1012,17 @@ ul {
     
         text-align: center;
         cursor: pointer;
+    }
+}
+
+@keyframes moving_symbols {
+    0% {
+        background-position: left bottom;
+    }
+    50% {
+        background-position: right top;
+    }
+    100% {
+        background-position: left bottom;
     }
 }

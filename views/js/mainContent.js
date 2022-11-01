@@ -131,15 +131,41 @@ if(solution_inputs){
 if(body){
     for(let small_card of small_cards){
         small_card.addEventListener("mouseenter", ()=>{
-            body.style["background-color"] = "#C1C2C7"
-            body.style.transition = "1s"
-            small_card.style["background-color"] = "white"
+            body.style["background-color"] = "#96979a"
+            body.style.transition = "0.5s"
+           
+            small_cards.forEach((element)=>{
+                if(element != small_card){
+                    element.classList.remove("light")
+                    element.classList.add("dark")
+                    
+                    element.querySelector(".level_bar").style["background-color"] =  "#96979a"
+                    element.querySelectorAll("label").forEach((element)=>{element.style["color"] =  "#787979"})
+
+                }
+            })
+
+            let main_topic = small_card.getAttribute("main-topic")
+            let background_color = "white"
+            
+            small_card.style["background-color"] = background_color
         })
 
         small_card.addEventListener("mouseleave", ()=>{
             body.style["background-color"] = "white"
             body.style.transition = "0.5s"
+
             small_card.style["background-color"] = "inherit"
+            
+            small_cards.forEach((element)=>{
+                if(element != small_card){
+                    element.classList.remove("dark")
+                    element.classList.add("light")
+
+                    element.querySelector(".level_bar").style["background-color"] =  "white"
+                    element.querySelectorAll("label").forEach((element)=>{element.style["color"] =  "black"})
+                }
+            })
         })
     }
 }
