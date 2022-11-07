@@ -276,29 +276,48 @@ select#group_selector {
     display: flex;
     width: 92%;
     margin: 2% 4% 2% 4%;
-    border-radius: 2px;
-    border: 1px solid black;
-    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
 }
 
 .definitions_container {
     width: 38%;
-    margin: 2% 0% 2% 1%;
-    border-right: 1px solid black;
+    margin: 2% auto auto 0%;
     display: flex;
     flex-direction: column;
+
+    border: 1px solid rgba(94, 85, 73, 0.5);
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    border-radius: 2px;
 }
 
-.definitions_container label {
-    width: auto;
-    margin: 2% auto 3% 5%;
+.definitions {
+    margin: 2% 4% 10% 4%;
+}
+
+.defined {
+    margin-top: 5%;
+}
+
+.defined label {
+    font-weight: bold;
+}
+
+.definition {
+    margin-top: 2%;
+    text-align: justify;
+}
+.definition_label::selection {
+    background-color: bisque;
 }
 
 .task_container {
     width: 60%;
-    margin: 2% 1% 2% 0%;
+    margin: 2% 0% 0% auto;
     display: flex;
     flex-direction: column;
+
+    border: 1px solid rgba(94, 85, 73, 0.5);
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    border-radius: 2px;
 }
 
 .task {
@@ -334,6 +353,11 @@ select#group_selector {
 .title_and_progress .title {
     width: 20%;
     margin: 0% 25% 0% 5%; 
+}
+
+.definitions_container .title {
+    width: auto;
+    margin: 2% 25% 0% 4%; 
 }
 
 .solution_container, .multiple_solution_input_container, .single_solution_input_container {

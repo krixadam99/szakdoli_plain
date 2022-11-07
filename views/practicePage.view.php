@@ -124,8 +124,14 @@
             <?php if($approved_student_subject=="i" || $approved_student_subject=="ii"):?>
                 <div class="practice_container">
                     <div class="definitions_container">
-                        <label class="title">Definíciók</label>
-                        <label class="definitions"><?=isset($_SESSION["definitions"])?$_SESSION["definitions"]:""?></label>
+                        <label class="title">Témával kapcsolatos ismeretek</label>
+                        <div class="definitions">
+                            <?php if(isset($_SESSION["definitions"])):?>
+                                <?php foreach($_SESSION["definitions"] as $element_counter => $definition_element):?>
+                                    <?= $definition_element ?>
+                                <?php endforeach?>
+                            <?php endif?>
+                        </div>
                     </div>
                     <div class= "task_container">
                         <div class="title_and_progress">
