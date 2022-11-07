@@ -140,7 +140,7 @@ if(body){
                     element.classList.add("dark")
                     
                     element.querySelector(".level_bar").style["background-color"] =  "#96979a"
-                    element.querySelectorAll("label").forEach((element)=>{element.style["color"] =  "#787979"})
+                    element.querySelectorAll("label").forEach((element)=>{element.style["color"] =  "rgba(78, 75, 75, 0.7)"})
 
                 }
             })

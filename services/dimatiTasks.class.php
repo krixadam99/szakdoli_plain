@@ -186,7 +186,7 @@
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Reláció:
+                        Relációk:
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -226,17 +226,18 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor R<span class=\"exp\">-1</span> = { (b,a) | (a,b) \u{2208} R } \u{2286} B \u{2A2F} A. Ezt nevezzük az <b>R reláció inverzének</b>. Informálisan: az R reláció rendezett párjainak elemeit megfordítjuk.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor R<span class=\"exp\">-1</span> = { (b,a) \u{2208} B \u{2A2F} A | (a,b) \u{2208} R } \u{2286} B \u{2A2F} A. Ezt nevezzük az <b>R reláció inverzének</b>. Informálisan: az R reláció rendezett párjainak elemeit megfordítjuk. 
+                        Megjegyzendő tehát, hogy Dom<span class=\"bottom\">f<span class=\"exp\">-1</span></span> = Ran<span class=\"bottom\">f</span> és Ran<span class=\"bottom\">f<span class=\"exp\">-1</span></span> = Dom<span class=\"bottom\">f</span>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az I halmaz. Ekkor R(I) = { b | a  \u{2208} I \u{2227} (a,b) \u{2208} R } \u{2286} Ran<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció I halmazon felvett képének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon második elemeit, ahol az első elem benne van az I halmazban.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az I halmaz. Ekkor R(I) = { b \u{2208} B | a  \u{2208} I \u{2227} (a,b) \u{2208} R } \u{2286} Ran<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció I halmazon felvett képének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon második elemeit, ahol az első elem benne van az I halmazban.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az D halmaz. Ekkor R<span class=\"exp\">-1</span>(D) = { a | b  \u{2208} D \u{2227} (a,b) \u{2208} R } \u{2286} Dom<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció D halmazon felvett ősképének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon első elemeit, ahol a második elem benne van a D halmazban.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az D halmaz. Ekkor R<span class=\"exp\">-1</span>(D) = { a \u{2208} A | b  \u{2208} D \u{2227} (a,b) \u{2208} R } \u{2286} Dom<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció D halmazon felvett ősképének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon első elemeit, ahol a második elem benne van a D halmazban.
                     </label>
                 </div>"
             ];
@@ -297,42 +298,57 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt reflexívnek nevezzük, ha (\u{2200} a \u{2208} A): (a,a) \u{2208} R.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>reflexívnek</b> nevezzük, ha (\u{2200} a \u{2208} A): (a,a) \u{2208} R.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt irreflexívnek nevezzük, ha (\u{2200} a \u{2208} A): (a,a) \u{2209} R.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>irreflexívnek</b> nevezzük, ha (\u{2200} a \u{2208} A): (a,a) \u{2209} R.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt szimmetrikusnak nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2192} (b,a) \u{2208} R.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>szimmetrikusnak</b> nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2192} (b,a) \u{2208} R.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt antiszimmetrikusnak nevezzük, ha (\u{2200} a,b \u{2208} A): ((a,b) \u{2208} R \u{2227} (b,a) \u{2208} R) \u{2194} (a = b).
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>antiszimmetrikusnak</b> nevezzük, ha (\u{2200} a,b \u{2208} A): ((a,b) \u{2208} R \u{2227} (b,a) \u{2208} R) \u{2194} (a = b).
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt asszimmetrikusnak nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2227} (b,a) \u{2209} R.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>asszimmetrikusnak</b> nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2227} (b,a) \u{2209} R.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt tranzitívnak nevezzük, ha (\u{2200} a,b,c \u{2208} A): ((a,b) \u{2208} R \u{2227} (b,c) \u{2208} R) \u{2192} (a,c) \u{2208} R.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>tranzitívnak</b> nevezzük, ha (\u{2200} a,b,c \u{2208} A): ((a,b) \u{2208} R \u{2227} (b,c) \u{2208} R) \u{2192} (a,c) \u{2208} R.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt dichotómnak nevezzük, ha (\u{2200} a,b \u{2208} A)(a \u{2260} b): (a,b) \u{2208} R \u{2228} (b,a) \u{2208} R közül legalább az egyik teljesül.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>dichotómnak</b> nevezzük, ha (\u{2200} a,b \u{2208} A)(a \u{2260} b): (a,b) \u{2208} R \u{2228} (b,a) \u{2208} R közül legalább az egyik teljesül.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt trihotómnak nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2228} (b,a) \u{2208} R \u{2228} a = b közül pontosan egy teljesül.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>trihotómnak</b> nevezzük, ha (\u{2200} a,b \u{2208} A): (a,b) \u{2208} R \u{2228} (b,a) \u{2208} R \u{2228} a = b közül pontosan egy teljesül.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>ekvivalencia relációnak</b> nevezzük, ha reflexív, szimmetrikus és tranzitív.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>részben rendezési relációnak</b> nevezzük, ha reflexív, antiszimmetrikus és tranzitív. Ha emellett még irreflexív is, akkor <b>szigorú részben rendezési reláció</b> az R.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>rendezési relációnak</b> nevezzük, ha részben rendezés és dichotóm. Ha emellett még irreflexív is, akkor <b>szigorú rendezési reláció</b> az R.
                     </label>
                 </div>"
             ];
@@ -342,7 +358,7 @@
          * 
          * This method is used to create the fourth set of tasks for Discrete mathematics I. related to definitions about functions.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (3-3 subtasks per type). These are: function definition and function basic characteristics (surjectivity, injectivity and bijectivity). 
          * 
          * @return void 
         */
@@ -350,12 +366,15 @@
             $is_relation_function = $this->dimati_subtask_generator->CreateSubtask("3", "0", 3, true);
             $function_characteristics = $this->dimati_subtask_generator->CreateSubtask("3", "1", 3, true);
 
+            // Task data
             $task_array = array(
                 "task_description" => "Old meg a következő függvényekkel kapcsolatos feladatokat!",
                 "first_subtasks" => $is_relation_function["data"],
                 "second_subtasks" => $function_characteristics["data"],
             );
+            $this->task_descriptions = $task_array;
 
+            // Task solutions
             $solution_array = array("first_subtasks" => [], "second_subtasks" => []);
             foreach($is_relation_function["solutions"] as $solution_counter => $solution){
                 $solution_array["first_subtasks"] = array_merge($solution_array["first_subtasks"], array("solution_0_" . $solution_counter=> $solution));
@@ -363,16 +382,66 @@
             foreach($function_characteristics["solutions"] as $solution_counter => $solution){
                 $solution_array["second_subtasks"] = array_merge($solution_array["second_subtasks"], array("solution_1_" . $solution_counter => $solution));
             }            
-
-            $this->task_descriptions = $task_array;
             $this->task_solutions = $solution_array;
+
+            // The definitions related to functions and function characteristics
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Függvény:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott az f \u{2286} D \u{2A2F} R reláció. Azt mondjuk, hogy az f reláció függvény, ha bármely két rendezett pár első eleme különböző (azaz egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen az első eleme alapján). 
+                        Formálisan: (x,y) \u{2208} f \u{2227} (x,z) \u{2208} f \u{2194} y = z. A rendezett párok első elemei a helyek, a második elemek pedig az értékek.
+                        Ha f függvény és (a,b) \u{2208} f, akkor az <i>a f b</i> helyett az <i>f(a) = b</i> jelölést használjuk. Ekkor azt mondjuk, hogy az f függvény a b értéket veszi fel az a helyen.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Ha az f \u{2286} D \u{2A2F} R reláció függvény, akkor ezt így jelöljük: f \u{2208} D \u{2192} R. Ha Dom<span class=\"bottom\">f</span> = D, akkor a f : D \u{2192} R jelölést használjuk. Ekkor a D az alaphalmaz, az R a képhalmaz.
+                        Az f függvény képe: graph(f) = { {{x}, {x,f(x)}} | x \u{2208} D } = {(x, f(x)) | x \u{2208} D}. Egyváltozós (skalár) függvény (azaz bináris reláció) esetén, a helyek az abszcisszán, az értékek pedig az ordinátán helyezkednek el. A nulvektor pedig az origó.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Az f és g függvények azonosak, ha értelmezési tartományuk (azaz Dom<span class=\"bottom\">f</span> és Dom<span class=\"bottom\">g</span>) azonosak, valamint bármely értelmezési tartomány béli helyen a függvények azonos értéket vesznek fel.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A függvényeknél a relációk korábbi definíciói (értelmezési tartomány, értékkészlet, inverz, megszorítás halmazra, halmazon felvett őskép és kép), valamint relációk kompozícója azonos az ott látottakkal (ez abból következik, hogy a függvények speciális relációk). Valójában minimálisan módosulnak a definíciók az <i>a f b</i> és <i>f(a) = b</i> jelölésváltás miatt.
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Függvények alapvető tulajdonságai:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Az f \u{2208} D \u{2192} R függvény szürjektív, ha Ran<span class=\"bottom\">f</span> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Az f \u{2208} D \u{2192} R függvény injektív (vagy invertálható), ha az inverz relációja függvény, azaz az inverze egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen a második eleme alapján. Formálisan: (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): f(x) = f(y) \u{2194} x = y. Másképpen (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): x \u{2260} y \u{2192} f(x) \u{2260} f(y). Ha f és g injektív függvények, akkor kompozíciójuk is injektív függvény.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Az f \u{2208} D \u{2192} R függvény bijektív, ha az f szürjektív és injektív. A korábbiakból következik, hogy ha f és g bijektív függvények, akkor kompozíciójuk is bijektív függvény.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This method is used to create the fifth set of tasks for Discrete mathematics I. related to basic operations between complex numbers given by their algebraic form.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (1-1 subtasks per type). These are: complex number basic characteristics and operations between complex numbers. 
          * 
          * @return void 
         */
@@ -380,14 +449,40 @@
             $basic_complex_number_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "0", 1, true);
             $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "1", 1, true);
 
+            // Task data
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $basic_complex_number_subtask["data"],
                 "second_subtasks" => $complex_numbers_operations_subtask["data"]
             );
-
             $this->task_descriptions = $task_array;
+
+            // Task solutions
             $this->task_solutions = [$basic_complex_number_subtask["solutions"],$complex_numbers_operations_subtask["solutions"]];
+
+            // The definitions related to complex number basic characteristics and operations between them
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex számok:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex számok közötti műveletek:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        
+                    </label>
+                </div>"
+            ];
         }
 
         /**

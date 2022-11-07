@@ -302,7 +302,7 @@ select#group_selector {
 }
 
 .definition {
-    margin-top: 2%;
+    margin: 2% auto;
     text-align: justify;
 }
 .definition_label::selection {
