@@ -344,7 +344,11 @@ select#group_selector {
 
 .definition_list {
     list-style: circle outside;
-    color:rgb(134, 132, 132);
+    color:rgb(134, 132, 132);   
+}
+
+.definition_list li {
+    margin: 3% auto;
 }
 
 .definition_list label {

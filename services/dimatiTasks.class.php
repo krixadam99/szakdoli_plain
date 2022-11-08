@@ -85,7 +85,7 @@
         private function CreateTaskOne(){
             $set_task = $this->dimati_subtask_generator->CreateSubtask("0", "0", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Add meg az eredményét a következő műveleteknek! Válaszodban a karaktereket ','-vel válaszd el!",
                 "set_of_sets" => $set_task["data"][0], 
@@ -96,7 +96,7 @@
             // Task solutions
             $this->task_solutions = $set_task["solutions"];
 
-            // The definitions related to sets
+            // The definitions related to sets:
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
@@ -171,7 +171,7 @@
         private function CreateTaskTwo(){
             $relation_task = $this->dimati_subtask_generator->CreateSubtask("1", "0", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Sorold fel az elemeket a reláció definícióinál! Az elemeket ','-vel válaszd el, a rendezett párokat (elem,elem) alakban add meg!",
                 "sets" => $relation_task["data"]["sets"],
@@ -256,7 +256,7 @@
             $relation_characteristics = $this->dimati_subtask_generator->CreateSubtask("2", "1", 1, true);
             $relation_creation = $this->dimati_subtask_generator->CreateSubtask("2", "2", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő relációk kompozíciójával és tulajdonságaival kapcsolatos feladatokat!",
                 "set_triplets" => $relation_composition["data"]["set_triplets"],
@@ -338,7 +338,9 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>ekvivalencia relációnak</b> nevezzük, ha reflexív, szimmetrikus és tranzitív.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>ekvivalencia relációnak</b> nevezzük, ha reflexív, szimmetrikus és tranzitív. 
+                        Legyen a ~ reláció ekvivalencia reláció, ekkor meghatározhatunk az alaphalmazán egy osztályozást. Ez egy olyan szuperhalmaz, amelyben a halmazok diszjunktak, nem üresek és uniójuk kiadja az alaphalmazt.
+                        Egy osztály: [x] = { y | y ~ x } = {y | (y,x) \u{2208} ~}.
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -366,7 +368,7 @@
             $is_relation_function = $this->dimati_subtask_generator->CreateSubtask("3", "0", 3, true);
             $function_characteristics = $this->dimati_subtask_generator->CreateSubtask("3", "1", 3, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő függvényekkel kapcsolatos feladatokat!",
                 "first_subtasks" => $is_relation_function["data"],
@@ -449,7 +451,7 @@
             $basic_complex_number_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "0", 1, true);
             $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("4", "1", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $basic_complex_number_subtask["data"],
@@ -531,7 +533,7 @@
             $complex_numbers_trigonometric_form_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "0", 1, true);
             $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "1", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok trigonometrikus alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $complex_numbers_trigonometric_form_subtask["data"],
@@ -602,7 +604,7 @@
             $complex_numbers_powers_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "0", 1, true);
             $complex_numbers_roots_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "1", 1, true);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $complex_numbers_powers_subtask["data"],
@@ -672,7 +674,7 @@
             $binomial_theorem_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "0", 2);
             $viete_formula_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "1", 2);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő binomiális tétellel és viéte formulákkal kapcsolatos feladatokat!",
                 "first_subtasks" => $binomial_theorem_subtask["data"],
@@ -744,7 +746,7 @@
             $tree_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "2", 2);
             $directed_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "3", 2);
 
-            // Task data
+            // Adding the data to the task array.
             $task_array = array(
                 "task_description" => "Old meg a következő bgráfok megszerkeszthetőségével kapcsolatos feladatokat!",
                 "first_subtasks" => $simple_graph_subtask["data"],
