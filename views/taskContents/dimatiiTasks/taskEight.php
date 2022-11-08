@@ -21,15 +21,12 @@
     ?>
 </div>
 
-<!-- Hányszoros gyöke a (szám1) a (polinom1)-nek? -->
-<!-- Határozzuk meg az a és b paraméterek értékét, hogy a (polinom1) polinomnak a (szám1) (szám2)-szeres gyöke legyen! -->
-
 <?php $polynomials = $_SESSION["task"]["multiply_polynomials"]?>
-<?php $task_counter = 3?>
+<?php $task_counter = 1?>
 <?php $mulitplicand_polynomial = $polynomials[0]?>
 <?php $multiplier_polynomial = $polynomials[1]?>
 <label class="task_label">
-    <?=4?>. részfeladat: Add meg a 
+    <?=2?>. részfeladat: Add meg a 
     <b>(<?php PrintServices::PrintPolynomialExpression($mulitplicand_polynomial[0],$mulitplicand_polynomial[1])?>) * (<?php PrintServices::PrintPolynomialExpression($multiplier_polynomial[0],$multiplier_polynomial[1])?>)</b>
     polinomszorzás eredményét <?="\u{2124}"?><span class="bottom"><b><?=$polynomials[2]?></b></span>
     felett! Az eredménypolinom együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
@@ -41,5 +38,3 @@
         include("./views/taskContents/solutionInput.php")
     ?>
 </div>
-
-<?php var_dump($_SESSION["solution"])?>

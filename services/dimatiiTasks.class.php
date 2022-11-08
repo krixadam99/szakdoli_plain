@@ -211,7 +211,7 @@
          * 
          * This function is responsible for creating the second set of tasks of Discrete Mathematics II. related to residue systems.
          * 
-         * 3 types of subtask will be generated here (1-1-2 subtasks). These are: residue classes with a representative element for a complete residue system modulo n, residue classes with a representative element for a reduced residue system modulo n, size of a reduced residue system modulo n (where n is considerably big).
+         * 3 types of subtask will be generated here (1, 1 and 2 subtasks respectively). These are: residue classes with a representative element for a complete residue system modulo n, residue classes with a representative element for a reduced residue system modulo n, size of a reduced residue system modulo n (where n is considerably big).
          * 
          * @return void
          */
@@ -516,16 +516,12 @@
          * 
          * This function is responsible for creating the fifth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
-         * Subtasks related to linear diophantine equations:
-         * Creating 1 triplet containing whole numbers that are at least 2, for partitioning a number into smaller numbers.
-         * Creating 2 distinct triplets of numbers for diophantine equations. These triplets represent congruences, that are solvable.
+         * 2 types of subtask will be generated here (2 and 1 subtasks respectively). These are: diophantine equations and number division into two numbers with plus condition.
          * 
          * @return void
          */
         private function CreateTaskFive(){
             // Task creation part:
-            // 1 triplet of numbers of whole numbers at least 2 for artitioning a number into smaller numbers (1 triplet of numbers/ subtask).
-            // 2 triplet of numbers of whole numbers between -50 and 50 representing congruences, that are solvable (1 triplet of numbers/ subtask).
             $diophantine_equations = $this->dimatii_subtasks_generator->CreateSubtask("4", "0", 2); // ax \equiv b (mod c)
             $third_subtask = $this->dimatii_subtasks_generator->CreateSubtask("4", "1", 1);
 
@@ -536,29 +532,60 @@
                 "partition_number" => $third_subtask["data"][0]
             );
             $this->task_descriptions = $task_array;
-
             array_push($diophantine_equations["solutions"], $third_subtask["solutions"][0]);
+            
             //Solutions part:
             $solution_array = [
                 "diophantine_equations" => $diophantine_equations["solutions"],
             ];
             $this->task_solutions = $solution_array;
+
+            // The definitions related to linear congruences
+            $this->definitions = [
+            "<div class=\"defined\">
+                <label class=\"definition_label\">
+                    Diofantikus egyenlet megoldása
+                </label>
+            </div>
+            <div class=\"definition\">
+                <label class=\"definition_label\">
+                    Adottak az a, b, c \u{2208} \u{2124} számok. Az a * x + b * y = c egyenletet lineáris diofantikus egyenletnek nevezzük. A feladat az, hogy megkeressük ennek az összes megoldását.
+                    Ez az egyenlet pontosan akkor oldható meg, ha (a,b) | c.
+                </label>
+            </div>
+            <div class=\"definition\">
+                <label class=\"definition_label\">
+                    (a, b, c \u{2208} \u{2124}): a * x + b * y = c I. lehetséges megoldása:<br>
+                    1. lépés: ellenőrizzük, hogy (a,b) | c;<br>
+                    2. lépés: átalakítás: a * x - c = b * y \u{2194} b | a * x - c \u{2194} a * x \u{2261} c (mod b);<br>
+                    3. lépés: az a * x \u{2261} c (mod b) lineáris kongruencia megoldása;<br>
+                    4. lépés: y = (c - a * x) / b egyenletben az x behelyettesítése.
+                </label>
+            </div>
+            <div class=\"definition\">
+                <label class=\"definition_label\">
+                    (a, b, c \u{2208} \u{2124}): a * x + b * y = c II. lehetséges megoldása:<br>
+                    1. lépés: ellenőrizzük, hogy (a,b) | c;<br>
+                    2. lépés: meghatározni egy x<span class=\"bottom\">0</span> és y<span class=\"bottom\">0</span> alapmegoldást;<br>
+                    2.1. lépés: kibővíttt Eukleidészi- algoritmussal határozzuk meg a megoldását a gcd(a,b) = a * x<span class=\"bottom\">a</span> + b * y<span class=\"bottom\">b</span> (x<span class=\"bottom\">a</span>, y<span class=\"bottom\">b</span> \u{2208} \u{2124});<br>
+                    2.2. lépés: szorozzuk be mind a két oldalt (c/gcd(a,b))-val, így c = a * x<span class=\"bottom\">a</span> * (c/gcd(a,b)) + b * y<span class=\"bottom\">b</span> * (c/gcd(a,b)) (x<span class=\"bottom\">a</span>, y<span class=\"bottom\">b</span> \u{2208} \u{2124});<br>
+                    2.3. lépés: az alap megoldások így: x<span class=\"bottom\">0</span> = x<span class=\"bottom\">a</span> * (c/gcd(a,b)) és y<span class=\"bottom\">0</span> = y<span class=\"bottom\">b</span> * (c/gcd(a,b));<br>
+                    3. lépés: behelyettesítés az x = x<span class=\"bottom\">0</span> + k * (b/gcd(a,b)) és y = y<span class=\"bottom\">0</span> - k * (a/gcd(a,b)) egyenletekbe, ahol a k egy tetszőleges egész szám, ami közös a két egyenletben.
+                </label>
+            </div>"
+        ];
         }
 
         /**
          * 
          * This function is responsible for creating the sixth set of tasks of Discrete Mathematics II. related to chinese remainder theorem.
          * 
-         * Subtasks related to chinese remainder theorem:
-         * Creating 1 triplet containing whole numbers that are at least 2, for getting numbers that satisfy 2 simultaneous congruences.
-         * Creating 1 triplet containing whole numbers that are between -50 and 50, for getting numbers that satisfy 4 simultaneous congruences.
+         * 2 types of subtask will be generated here (1-1 subtask). These are: CRT and searching for a number satisfying 2 congruences simultaneously.
          * 
          * @return void
          */
         private function CreateTaskSix(){
             // Task creation part:
-            // 1 triplet of whole numbers that are at least 2 representing congruences for getting numbers that satisfy 2 simultaneous congruences (1 triplet of numbers/ subtask).
-            // 1 triplet of whole numbers that are between -50 and 50 representing congruences for getting numbers that satisfy 4 simultaneous congruences (1 triplet of numbers/ subtask).
             $first_congruence_system_triplets = $this->dimatii_subtasks_generator->CreateSubtask("5", "1", 1);
             $second_congruence_system_triplets = $this->dimatii_subtasks_generator->CreateSubtask("5", "0", 1);
 
@@ -577,25 +604,98 @@
                 "second_crt_solution" => $second_congruence_system_triplets["solutions"][0],
             ];
             $this->task_solutions = $solution_array;
+
+            // The definitions related to Chinese remainder theorem (CRT)
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Kínai maradéktétel
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen n, m \u{2264} 2 egészek úgy, hogy gcd(n,m) = 1. Ekkor az f: \u{2124}/<span class=\"bottom\">n*m</span>\u{2124} \u{2192} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{00D7} \u{2124}/<span class=\"bottom\">m</span>\u{2124}, 
+                        f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span>,<span style=\"text-decoration: overline\">a</span>) egy bijektív függvény.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Egyértelműség:<br>
+                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) \u{2260} (<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">2</span>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban \u{2194} n * m | a - b \u{2194} n * m * k + b = a (k \u{2208} \u{2124}). 
+                        Ezt behelyettesítve az (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>)-ba: <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és 
+                        <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}. Mind a két esetben kiesik az n * m * k tag, így valójában <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és
+                        <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}, azaz (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) = (<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">2</span>).
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Injektivitás:
+                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> \u{2260} <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124} \u{2194} m | a - b \u{2194} m * k = a - b (k \u{2208} \u{2124}) és
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{2194} n | a - b \u{2194} n * l = a - b (l \u{2208} \u{2124}).
+                        Valamint a Bézout- azonosság szerint: gcd(n,m) = 1 = n * x + m * y (x, y \u{2208} \u{2124}), mind a két oldalt (a-b)-vel szorozzuk, (a - b) = (a - b) * n * x + (a - b) * m * y = m * k * n * x + n * l * m * y, a jobb oldal osztható (n * m)-mel, így pedig az egyenlőségjel miatt az a - b is.
+                        m * n | a - b \u{2194} <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}, azaz <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Szürjektivitás:
+                        Kell keresnünk minden (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{00D7} \u{2124}/<span class=\"bottom\">m</span>\u{2124} párhoz egy megfelelő <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124} maradékosztályt.
+                        A Bézout- azonosság szerint: gcd(n,m) = 1 = n * x + m * y (x, y \u{2208} \u{2124}), vagyis n * x \u{2261} 1 (mod m) és m * y \u{2261} 1 (mod n).
+                        Vegyük az n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span> számot. Nézzük meg ennek mi a függvény általi képe: f(<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>) = (<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>,<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>), ahol
+                        <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}.
+                        A fentieket persze átírhatjuk: <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">0 + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">1 * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}, hasonlóan
+                        <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + 0</span> = <span style=\"text-decoration: overline\">1 * a<span class=\"bottom\">2</span></span> = <span style=\"text-decoration: overline\">a<span class=\"bottom\">2</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}. Tehát a n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span> megfelelő szám.
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Kongruenciarendszer megoldása
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen az n \u{2264} 2:<br>
+                        (a<span class=\"bottom\">1</span>, b<span class=\"bottom\">1</span> \u{2208} \u{2124} és m<span class=\"bottom\">1</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">1</span> * x \u{2261} b<span class=\"bottom\">1</span> (mod m<span class=\"bottom\">1</span>)<br>
+                        (a<span class=\"bottom\">2</span>, b<span class=\"bottom\">2</span> \u{2208} \u{2124} és m<span class=\"bottom\">2</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">2</span> * x \u{2261} b<span class=\"bottom\">2</span> (mod m<span class=\"bottom\">2</span>)<br>
+                        ...<br>
+                        (a<span class=\"bottom\">n</span>, b<span class=\"bottom\">n</span> \u{2208} \u{2124} és m<span class=\"bottom\">n</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">n</span> * x \u{2261} b<span class=\"bottom\">n</span> (mod m<span class=\"bottom\">n</span>)<br>
+                        Keressük azokat a számokat, amely egyszerre teljesíti ezt a kongruenciarendszert.
+                        A kongruenciarendszer megoldhatóságának első feltétele az, hogy a modulusok páronként relatív prímek. Ha van 2 amelynél a modulus nem relatív prím, akkor azt kell megnézni, hogy azonosak-e ezek a kongruenciák, amennyiben nem, akkor a rendszert nem lehet megoldani, különben valamelyik kongruenciát ki lehet venni.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">    
+                        Megoldás algoritmusa:<br>
+                        1. lépés: ellenőrizzük, hogy a modulusok páronként relatív prímek. Ha van 2 amelynél a modulus nem relatív prím, akkor azt kell megnézni, hogy azonosak-e ezek a kongruenciák, amennyiben nem, akkor a rendszert nem lehet megoldani, különben valamelyik kongruenciát ki lehet venni;<br>
+                        2. lépés: oldjuk meg a kongruenciákat, itt ellenőrizzük, hogy a kongruenciák megoldhatók-e;<br>
+                        3. lépés: i := 1;<br>
+                        4. lépés: amíg 1-nél több kongruencia van (i < n):<br>
+                        4.1. lépés: az első két kongruenciát vonjuk össze eggyé.<br>
+                        4.1.1. lépés: kibővített eukleidészi algoritmussal keressük meg az i == 1 esetén az m<span class=\"bottom\">1</span> * x + m<span class=\"bottom\">2</span> * y = 1, az i > 1 esetén pedig az m<span class=\"bottom\">1,i</span> * x + m<span class=\"bottom\">i+1</span> * y = 1 egyenlet egy-egy alapmegoldását az x-re és y-ra;<br>
+                        4.1.2. lépés: i == 1 esetén: b<span class=\"bottom\">1,2</span> = m<span class=\"bottom\">1</span> * x * b<span class=\"bottom\">2</span> + m<span class=\"bottom\">2</span> * y * b<span class=\"bottom\">1</span>, az i > 1 esetén pedig b<span class=\"bottom\">1,i+1</span> = m<span class=\"bottom\">1,i</span> * x * b<span class=\"bottom\">i+1</span> + m<span class=\"bottom\">i+1</span> * y * b<span class=\"bottom\">1,i</span>;<br>
+                        4.1.3. lépés: i == 1 esetén: m<span class=\"bottom\">1,2</span> = m<span class=\"bottom\">1</span> * m<span class=\"bottom\">2</span>, az i > 1 esetén pedig m<span class=\"bottom\">1,i+1</span> = m<span class=\"bottom\">1,i</span> * m<span class=\"bottom\">i+1</span>;<br>
+                        4.1.4. lépés: az összevont kongruencia: x \u{2261} b<span class=\"bottom\">1,i+1</span> (mod m<span class=\"bottom\">1,i+1</span>);<br>
+                        4.2. lépés: az összevont kongruenciára cseréljük ki az első két kongruenciát;<br>
+                        4.3. lépés: i := i + 1; <br>
+                        5. lépés: a visszamart kongruencia a megoldás.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to horner table.
          * 
-         * Subtasks related to horner's scheme:
-         * Creating 2 polynomial expressions and picking whole numbers from the range -20 and 20, where the first is of degree 2, and the second is of degree 4. The number of inputs for polynomial expression is the same as its degree.
-         * Creating 1 polynomial expression of degree 5 and picking a whole number from the range -20 and 20. 
+         * 2 types of subtask will be generated here (2 and 1 subtasks respectively). These are: Horner-schemes and polynomial dvision with Horner- scheme.
          *
          * @return void
          */
         private function CreateTaskSeven(){
             // Creating 2 polynomials with degree of 2 and 4.
-            // Picking 2 and 4 wole numbers from the range of -10 and 10, where for the first case 0, for the second case 2 needs to be actual roots of the first and second polynomial expressions respectively.
             $horner_schemes_first = $this->dimatii_subtasks_generator->CreateSubtask("6", "0", 2);
-           
-            // Creating 1 polynomial.
-            // Creating 1 input between -10 and 10.
             $horner_schemes_second = $this->dimatii_subtasks_generator->CreateSubtask("6", "1", 1);
 
             // Task array declaration.
@@ -615,15 +715,53 @@
                 "third_horner_scheme" => [$horner_schemes_second["data"][0][2], $horner_schemes_second["solutions"][0]],
             ];
             $this->task_solutions = $solution_array;
+
+            // The definitions related to polynomial expressions and Horner- schemes
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Polinomok
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A P[x] = a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> (x \u{2208} \u{2124}) kifejezést az egészek felett értelmezett polinomnak nevezzük.
+                        Tulajdonképpen a polinomot felírhatjuk olyan végtelen hosszú számsorozatként, ahol véges számú nem-nulla tag van. Amennyiben az x helyére beírunk egy értelmezés tartomány béli elemet, akkor a polinomot a helyen kiértékelve megkapjuk a helyettesítési értéket.
+                        A polinom legmagasabb fokú tagja melletti számot a polinom főegyütthatójának, a nullad rendű tag együtthatóját pedig konstans tagnak nevezzük. Amennyiben egy értelmezési tartomány béli helyen a polinomnak a helyettesítési értéke 0, akkor azt a polinom gyökének nevezzük.
+                        Az algebra alaptétele szerint egy n-ed rendű komplex számtest felett értelmezett polinomnak a multiplicitásokat beleszámítva pontosan n darab gyöke van.
+                     </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Horner- rendezés
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A P[x] = a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> polinomot más alakban is fel tudjuk írni.
+                        Horner- rendzés: P[x] = ((...(a<span class=\"bottom\">n</span> * x + a<span class=\"bottom\">n-1</span>)...) * x + a<span class=\"bottom\">1</span>) * x + a<span class=\"bottom\">0</span>.
+                        Ebből rekurzívan megkapjuk a helyettesítési értéket:<br>
+                        c<span class=\"bottom\">n</span> = a<span class=\"bottom\">n</span>;<br>
+                        c<span class=\"bottom\">n-1</span> = c<span class=\"bottom\">n</span> * x + a<span class=\"bottom\">n-1</span>;<br>
+                        c<span class=\"bottom\">n-2</span> = c<span class=\"bottom\">n-1</span> * x + a<span class=\"bottom\">n-2</span>;<br>
+                        ...<br>
+                        c<span class=\"bottom\">1</span> = c<span class=\"bottom\">2</span> * x + a<span class=\"bottom\">1</span>;<br>
+                        c<span class=\"bottom\">0</span> = c<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> = P[x].
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Az x<span class=\"bottom\">0</span> behelyettesítése során tulajdonképpen megkapjuk a P[x] / (x - x<span class=\"bottom\">0</span>) hányadospolinomot és maradékpolinomot. A helyettesítési érték lesz a maradék, a hányadospolinomot pedig a c<span class=\"bottom\">n</span> * x<span class=\"exp\">n-1</span> + c<span class=\"bottom\">n-1</span> * x<span class=\"exp\">n-2</span> + ... + c<span class=\"bottom\">1</span> határozza meg.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division and multiplication.
          * 
-         * Subtasks related to polinomial division and multiplication:
-         * Creating 2 polynomial expressions for polynomial division. The first one's degree is between 3 and 5.
-         * Creating 2 polynomial expression for polynomial multiplication. The second one's degree is between 1 and 3.
+         * 2 types of subtask will be generated here (1 and 1 subtask respectively). These are: polynomial division and multiplication.
          * 
          * @return void
          */
@@ -645,15 +783,35 @@
                 "polynomial_division" => $polynomial_division_subtask["solutions"][0],
                 "polynomial_multiplication" => $polynomial_multiplication_subtask["solutions"][0]
             ];
-
             $this->task_solutions = $solution_array;
+
+            // The definitions related to polynomial division and multiplication
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Polinomok osztása és szorzása
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adottak a P[x] és R[x] polinomok. Ekkor attól függően, hogy mi a polinomok értelmezési tartománya eltérő lehet a hányadospolinom és maradékpolinom foka. 
+                        A valós számtest felett például deg(P[x]/R[x]) = deg(P[x]) - deg(Q[x]). De a \u{2124}/<span class=\"bottom\">n</span>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) - deg(Q[x]) \u{2265} deg(P[x]/R[x]).
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adottak a P[x] és R[x] polinomok. Itt attól függően, hogy mi a polinomok értelmezési tartománya eltérő lehet a szorzatpolinom foka. 
+                        A valós számtest felett például deg(P[x] * R[x]) = deg(P[x]) + deg(Q[x]). De a \u{2124}/<span class=\"bottom\">n</span>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) + deg(Q[x]) \u{2265} deg(P[x] * R[x]).
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to interpolations.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (1 and 1 subtask respectively). These are: Lagrange and Newton interpolation.
          * 
          * @return void
          */
@@ -667,7 +825,7 @@
                 "newton_points" => $newton_interpolation["data"][0],
             );
                        
-            // Adding data to the task array.s
+            // Adding data to the task arrays
             $this->task_descriptions = $task_array;
 
             //Solutions part:
@@ -675,8 +833,36 @@
                 "Lagrange_interpolation" => $lagrange_interpolation["solutions"][0],
                 "Newton_interpolation" => $newton_interpolation["solutions"][0]
             ];
-
             $this->task_solutions = $solution_array;
+
+            
+            // The definitions related to Lagrange and Newton interpolation
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Lagrange- interpoláció
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adottak a (x<span class=\"bottom\">1</span>, y<span class=\"bottom\">1</span>), (x<span class=\"bottom\">2</span>, y<span class=\"bottom\">2</span>), ..., (x<span class=\"bottom\">n + 1</span>, y<span class=\"bottom\">n + 1</span>) pontok. Ekkor szeretnénk meghatározni azt az n-ed fokú görbét, amelyre illeszkednek a pontok.
+                        Az első módszer a Lagrange- interpoláció lesz. Bevezetjük a Lagrange- alappolinomokat. Az i.-ik (i \u{2208} {1,..,n}) alappolinom olyan, hogy az i.-ik pontnál 1-et, a többi helyen pedig 0-t vesz fel. Sorra megszorozzuk az alappolinomokat a helyhez tartozó értékkel. Végül összeadjuk őket.<br>
+                        (i \u{2208} {1,..,n}): l<span class=\"bottom\">(x<span class=\"bottom\">i</span>,y<span class=\"bottom\">i</span>)</span>[x] := l<span class=\"bottom\">i</span>[x] = (\u{220F}<span class=\"exp\">n</span><span class=\"bottom\">j=1, j \u{2260} i</span>(x - x<span class=\"bottom\">j</span>))/(\u{220F}<span class=\"exp\">n</span><span class=\"bottom\">j=1, j \u{2260} i</span>(x<span class=\"bottom\">i</span> - x<span class=\"bottom\">j</span>)). Valóban l<span class=\"bottom\">i</span>[x<span class=\"bottom\">i</span>] = 1 és (i \u{2260} j): l<span class=\"bottom\">i</span>[x<span class=\"bottom\">j</span>] = 0 a számláló miatt.
+                        Az interpolációs polinom pedig: L[x] := \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=1</span>(y<span class=\"bottom\">i</span> * l<span class=\"bottom\">i</span>[x]). Ebbe a polinomba az x<span class=\"bottom\">i</span>-t helyettesítve egyedül az i.-ik tag nem lesz nulla (ugyanis (i \u{2260} j): l<span class=\"bottom\">j</span>[x<span class=\"bottom\">i</span>] = 0), az ottani alappolinom értéke pedig 1 (l<span class=\"bottom\">i</span>[x<span class=\"bottom\">i</span>] = 1), amelyet y<span class=\"bottom\">i</span>-vel megszorozva a helyettesítési érték valóban y<span class=\"bottom\">i</span> lesz.
+                        Így ezen a polinomon valóban rajta vannak az említett pontok. 
+                    </label>
+                </div>
+                ",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Newton- interpoláció
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>"
+            ];
         }
     }
 ?>

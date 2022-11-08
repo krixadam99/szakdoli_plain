@@ -310,7 +310,8 @@ select#group_selector {
 .definition {
     margin: 2% 4% 5% 4%;
     text-align: justify;
-    display: none
+    display: none;
+    line-height: 2;
 }
 
 .show_button {
@@ -494,6 +495,7 @@ ul {
     top: 5px;
     left: -1px;
     font-size:smaller;
+    text-decoration: none
 }
 
 .solution_table, .stair_table, .residue_system_table {
