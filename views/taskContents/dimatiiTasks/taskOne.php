@@ -69,8 +69,3 @@
     </div>
 <?php endforeach?>
 <br>
-
-<label class="task_label">
-    5. részfeladat: Hány olyan osztója van (szám1)-nek, ami nem osztható (egyik osztója)-val?
-</label>
-<!-- 1 számpár ide -->

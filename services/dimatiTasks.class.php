@@ -694,7 +694,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<span class=\"exp\">k</span><span class=\"bottom\">i=1</span>i.
+                        Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<span class=\"exp\">k</span><span class=\"bottom\">i=1</span>i (ha k > 0) és 1, ha k = 0.
                         Adottak az n, m \u{220B} \u{2124} egészek, ahol n \u{2265} m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az \u{276C} n alatt m \u{276D} jelölést használjuk az oldalon. 
                         Tulajdonságok: \u{276C} n alatt m \u{276D} = \u{276C} n alatt (m-n) \u{276D}; \u{276C} (n-1) alatt m \u{276D} + \u{276C} (n-1) alatt (m-1) \u{276D} = \u{276C} n alatt m \u{276D}.
                     </label>
@@ -721,7 +721,9 @@
                     <label class=\"definition_label\">
                         Adott egy n-ed fokú polinom az a<span class=\"bottom\">n</span> * (x - x<span class=\"bottom\">1</span>) * (x - x<span class=\"bottom\">2</span>) * ... * (x - x<span class=\"bottom\">n</span>) szorzatalakban.
                         Ekkor megszeretnénk kapni a polinom a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> összegalakját, azaz az a<span class=\"bottom\">i</span>-ket (i \u{2208} {0,1,...,n}). 
-                        Az a<span class=\"bottom\">i</span> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Így pedig az i.-ik (i \u{2208} {0,1,...,n}) együttható képlete:
+                        Az a<span class=\"bottom\">i</span> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Ez persze azt jelenti, hogy n - i darab konstans tagot választunk és ebből \u{276C} n alatt i \u{276D} van.
+                        Azaz egy olyan \u{276C} n alatt i \u{276D} tagú összeget kapunk az i.-ik együttható meghatározásánál, melyben minden tag n - i darab gyököt tartalmazó szorzat (összes lehetséges n - i elemszámú kombinációját kivesszük az n darab gyöknek, majd az egyes kombinációkban lévő elemeket szorozzuk össze).
+                        Eszerint az i.-ik (i \u{2208} {0,1,...,n}) együttható képlete:
                         <b>a<span class=\"bottom\">i</span> = a<span class=\"bottom\">n</span> * (-1)<span class=\"exp\">(n-i)</span> * \u{2211}<span class=\"bottom\">1 \u{2264} j<span class=\"bottom\">1</span> < j<span class=\"bottom\">2</span> < ... < j<span class=\"bottom\">(n - i)</span> \u{2264} n</span>x<span class=\"bottom\">j<span class=\"bottom\">1</span></span>* ... *x<span class=\"bottom\">j<span class=\"bottom\">(n-i)</span></span></b>.
                     </label>
                 </div>"

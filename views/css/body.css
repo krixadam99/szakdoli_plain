@@ -342,6 +342,15 @@ select#group_selector {
     background-color: bisque;
 }
 
+.definition_list {
+    list-style: circle outside;
+    color:rgb(134, 132, 132);
+}
+
+.definition_list label {
+    color: black;
+}
+
 .task_container {
     width: 60%;
     margin: 2% 0% auto auto;
@@ -1048,7 +1057,7 @@ ul {
     resize: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 576px) {
     .card_row {
         display: flex;
         flex-direction: column;
@@ -1068,6 +1077,23 @@ ul {
     
         text-align: center;
         cursor: pointer;
+    }
+
+    .practice_container {
+        flex-direction: column;
+    }
+
+    .definitions_container, .task_container {
+        width: 100%;
+    }
+
+    .definition_holder,
+    .definition_holder.title_holder {
+        margin: 0%;
+    }
+
+    .definition_holder:last-of-type{
+        margin-bottom: 10%;
     }
 }
 
