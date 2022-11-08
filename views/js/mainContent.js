@@ -35,6 +35,7 @@ let nav_button_number = nav_buttons.length
 let solution_inputs = document.querySelectorAll(".solution_input")
 let body = document.querySelector("body")
 let small_cards = document.querySelectorAll(".small_card")
+let show_buttons = document.querySelectorAll(".show_button")
 
 // Event-handlers
 if(logout_button){
@@ -167,6 +168,39 @@ if(body){
                 }
             })
         })
+    }
+}
+
+if(show_buttons){
+    let is_shown = []
+    let counter = 0
+    for(let show_button of show_buttons){
+        is_shown[counter] = false
+        show_button.addEventListener("click", ()=>{          
+            let definition_holder = show_button.closest(".definition_holder")  
+            let definitions = definition_holder.querySelectorAll(".definition")
+            if(is_shown[counter]){
+                definitions.forEach((element)=>{element.style["display"] = "none"})
+                is_shown[counter] = false
+    
+                let bottom_triangle = show_button.querySelector(".bottom_triangle")
+                show_button.removeChild(bottom_triangle)
+                
+                let top_triangle = document.createElement("div")
+                top_triangle.classList.add("top_triangle")
+                show_button.appendChild(top_triangle)
+            }else{
+                definitions.forEach((element)=>{element.style["display"] = "block"})
+                is_shown[counter] = true
+                let top_triangle = show_button.querySelector(".top_triangle")
+                show_button.removeChild(top_triangle)
+                
+                let bottom_triangle = document.createElement("div")
+                bottom_triangle.classList.add("bottom_triangle")
+                show_button.appendChild(bottom_triangle)
+            }
+        })
+        counter++
     }
 }
 

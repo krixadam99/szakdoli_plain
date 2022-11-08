@@ -100,7 +100,7 @@
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Halmaz:
+                        Halmazok
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -128,7 +128,7 @@
                 </div>",
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Halmazok közötti műveletek:
+                        Halmazok közötti műveletek
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -186,7 +186,7 @@
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Relációk:
+                        Relációk
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -206,7 +206,7 @@
                 </div>",
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Bináris relációk alapvető definíciói:
+                        Bináris relációk alapvető definíciói
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -283,7 +283,7 @@
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Relációk kompozíciója:
+                        Relációk kompozíciója
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -293,7 +293,7 @@
                 </div>",
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Homogén relációk tulajdonságai:
+                        Homogén relációk tulajdonságai
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -388,7 +388,7 @@
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Függvény:
+                        Függvények
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -416,22 +416,22 @@
                 </div>",
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Függvények alapvető tulajdonságai:
+                        Függvények alapvető tulajdonságai
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f \u{2208} D \u{2192} R függvény szürjektív, ha Ran<span class=\"bottom\">f</span> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
+                        Az f \u{2208} D \u{2192} R függvény <b>szürjektív</b>, ha Ran<span class=\"bottom\">f</span> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f \u{2208} D \u{2192} R függvény injektív (vagy invertálható), ha az inverz relációja függvény, azaz az inverze egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen a második eleme alapján. Formálisan: (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): f(x) = f(y) \u{2194} x = y. Másképpen (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): x \u{2260} y \u{2192} f(x) \u{2260} f(y). Ha f és g injektív függvények, akkor kompozíciójuk is injektív függvény.
+                        Az f \u{2208} D \u{2192} R függvény <b>injektív</b> (vagy <b>invertálható</b>), ha az inverz relációja függvény, azaz az inverze egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen a második eleme alapján. Formálisan: (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): f(x) = f(y) \u{2194} x = y. Másképpen (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): x \u{2260} y \u{2192} f(x) \u{2260} f(y). Ha f és g injektív függvények, akkor kompozíciójuk is injektív függvény.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f \u{2208} D \u{2192} R függvény bijektív, ha az f szürjektív és injektív. A korábbiakból következik, hogy ha f és g bijektív függvények, akkor kompozíciójuk is bijektív függvény.
+                        Az f \u{2208} D \u{2192} R függvény <b>bijektív</b>, ha az f szürjektív és injektív. A korábbiakból következik, hogy ha f és g bijektív függvények, akkor kompozíciójuk is bijektív függvény.
                     </label>
                 </div>"
             ];
@@ -460,26 +460,60 @@
             // Task solutions
             $this->task_solutions = [$basic_complex_number_subtask["solutions"],$complex_numbers_operations_subtask["solutions"]];
 
-            // The definitions related to complex number basic characteristics and operations between them
+            // The definitions related to complex numbers' basic characteristics and operations between them
             $this->definitions = [
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Komplex számok:
+                        Komplex számok
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        
+                        Pongyolán fogalmazva, minden számhalmaz esetén egy újabbat akkor vezettünk be, amikor valamilyen művelet korlátozva lett a számhalmazon (nem zárt már a számhalmazon).
+                        A természetes számok körében az összeadás és szorzás zárt, de a kivonás kivezetett az egészek körébe (inverz hiánya a nem nulla természetes számoknál az összeadásra nézve). Az egészek zártak a hozzáadásra nézve, viszont az osztás nem mindig eredményezett egész számot (inverz hiánya nem nulla egészeknél a szorzásra nézve).
+                        Így jutottunk el a racionális számokhoz, ahol pedig már az alapműveletek elvégezhetők voltak, viszont a hatványozásnál csak a egész kitevőt lehetett venni. Így pedig a nem egész kitevős hatványozás során jutunk el a valós számokhoz, melyek a racionális és irracionális számok uniója.
+                        Fontos megjegyezni, hogy még mindig voltak korlátozások. Például páros gyököt csakis nemnegatív szám esetén vehettünk (ugyanis bármely szám páros kitevős hatványa nemnegatív, míg páratlan kitevős szám lehet negatív is).
+                        Ahhoz, hogy a gyökvonást korlátozás nélkül elvégezhessük, be lett vezetve az imaginárius egység, az i, melynek négyzete a -1. A komplex számok halmaza tehát olyan számhalmaz, amely a valós és imaginárius számok halmazának uniója.
+                        A bővítés során folyamatosan figyelni kellett arra, hogy a korábbi műveleti tulajdonságok megmaradjanak. A komplex számok közötti műveletek is így lettek definiálva. A szorzás és összeadás műveleteie így továbbra is teljesülnek a test axiómák (ZANIK - ábel csoport (az adott művelet zárt, asszociatív, van neutrális eleme, van inverz elem valamennyi elemnek, kommutatív), valamint a 2 művelet esetén van 2 oldali disztributivitás).
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A fentiek szerint valamennyi valós szám felírható egy valós és egy imaginárius szám összegeként. Így a \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}), ahol Re(w) = a, a w szám valós, az Im(w) = b pedig a képzetes része. A valós számok esetén a képzetes rész 0.
+                        <br>
+                        A \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) komplex szám konjugáltja alatt a <span style=\"text-decoration : overline\">w</span> = a - b*i komplex számot értjük.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) komplex szám hossza alatt a \u{221A}(w*<span style=\"text-decoration : overline\">w</span>) = \u{221A}(a<span class=\"exp\">2</span> + b<span class=\"exp\">2</span>) valós számot értjük, ezt a |w|-vel jelöljük. Tulajdonságok: |a| = 0, pontosan akkor, ha az a = 0; (\u{2200} a, b \u{2208} \u{2102}):|a*b| = |a|*|b|; (\u{2200} a, b \u{2208} \u{2102}): |a|/|b| = |a/b|, végül a háromszög- egyenlőtlenség: (\u{2200} a, b \u{2208} \u{2102}): |a + b| \u{2264} |a| + |b|.
                     </label>
                 </div>",
                 "<div class=\"defined\">
                     <label class=\"definition_label\">
-                        Komplex számok közötti műveletek:
+                        Komplex számok közötti műveletek
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        
+                        A komplex számok közötti műveleteket úgy kellett definiálni, hogy azok a valós számok esetén (tehát, amikor a képzetes rész 0) megtartsák a tulajdonságaikat.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) és \u{2102} \u{220B} z = c + d * i (c, d \u{2208} \u{211D}). Ekkor a <b>w \u{00B1} z = (a \u{00B1} c) + i * (b \u{00B1} d)</b>.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) és \u{2102} \u{220B} z = c + d * i (c, d \u{2208} \u{211D}). Ekkor a <b>w * z = (a * c - b * d) + i * (a * d + b * c)</b>.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    Adott \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) és \u{2102} \u{220B} z = c + d * i (c, d \u{2208} \u{211D}). Ekkor a <b>w / z</b> 
+                    = (w * <span style=\"text-decoration : overline\">z</span>) / |z|<span class=\"exp\">2</span>
+                    = <b>((a * c + b * d) + i * (b * c - a * d)) / (c<span class=\"exp\">2</span> + d<span class=\"exp\">2</span>)</b>.
                     </label>
                 </div>"
             ];
@@ -489,7 +523,7 @@
          * 
          * This method is used to create the sixth set of tasks for Discrete mathematics I. related to operations between complex numbers given by their trigonometric form.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (1-1 subtasks per type). These are: trigonometric forms, and multiplication and division with these forms.
          * 
          * @return void 
         */
@@ -497,21 +531,70 @@
             $complex_numbers_trigonometric_form_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "0", 1, true);
             $complex_numbers_operations_subtask = $this->dimati_subtask_generator->CreateSubtask("5", "1", 1, true);
 
+            // Task data
             $task_array = array(
-                "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő komplex számok trigonometrikus alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $complex_numbers_trigonometric_form_subtask["data"],
                 "second_subtasks" => $complex_numbers_operations_subtask["data"]
             );
-
             $this->task_descriptions = $task_array;
+
+            // Task solutions
             $this->task_solutions = [$complex_numbers_trigonometric_form_subtask["solutions"],$complex_numbers_operations_subtask["solutions"]];
+
+            // The definitions related to complex numbers' trigonometric forms, and multiplication and division with these forms
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex számok trigonometrikus alakja
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Gauss- számsík: ha a derékszögű koordináta-rendszerben az x- tengelyen a valós számokat, az y- tengelyen pedig a képzetes egység számsorosait ábrázoljuk, akkor minden egyes pontnak a koordináta- rendszerben megfeleltethető egy komplex szám. Így a komplex számok valójában olyan síkvektorok, amelyek egyben helyvektorok is.
+                        A komplex számokat ezután már jelölhetjük a két koordinátájukkal is. Például: \u{2102} \u{220B} w = a + b * i = (a, b) (a, b \u{2208} \u{211D}). Ez a komplex szám geometrikus alakja.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A műveletek, valamint néhány tulajdonság geometriai értelemben sokkal szemléletesebb ebben az ábrázolásban: egy komplex szám hossza az őt reprezentáló vektor hossza (valós számok esetén továbbra is a 0-tól (origótól) vett távolság); 
+                        a konjugált a vektor x tengelyre vett tükörképe; 
+                        2 komplex szám szorzata (és a hatványozás is) forgatva való nyújtást jelent; 
+                        2 vektor összeadása, az eltolással azonos;
+                        komplex szám konjugálttal való szorzása esetén először vesszük a vektor merőleges vetületét az x- tengelyre, majd ezt nyújtjuk a vektor hosszával.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        A komplex szám argumentuma az x- tengellyel bezárt szöge. Ha tehát \u{2102} \u{220B} w = a + b * i = (a, b) (a, b \u{2208} \u{211D}), akkor a bezárt szög = <b>arctan(b/a) = arcsin(b/|w|) = arccos(a/|w|)</b>. A w argumentumát az <b>arg(w)</b>-vel jelöljük. Ezt pedig az egyszerűség kedvéért a \u{03C6} görög betűvel fogom jelölni.
+                        Természetesen a korábbi összefüggésekből egyszerű átrendezések után adódik, hogy a = cos(\u{03C6}) * |w| és b = sin(\u{03C6}) * |w|, így <b>w = a + b * i = |w| * (cos(\u{03C6}) + i * sin(\u{03C6}))</b>.
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Műveletek trigonometrikus alakkal
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<span class=\"bottom\">1</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">2</span>)).
+                        Ekkor <b>w * z = |w| * |z| * (cos(\u{03C6}<span class=\"bottom\">1</span> + \u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span> + \u{03C6}<span class=\"bottom\">2</span>))</b>.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<span class=\"bottom\">1</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">2</span>)).
+                        Ekkor <b>w / z = (|w| / |z|) * (cos(\u{03C6}<span class=\"bottom\">1</span> - \u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span> - \u{03C6}<span class=\"bottom\">2</span>))</b>.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This method is used to create the seventh set of tasks for Discrete mathematics I. related to the powers of complex numbers.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (1-1 subtasks per type). These are: raising complex numbers to powers and taking their roots by their trignometric forms.
          * 
          * @return void 
         */
@@ -519,21 +602,69 @@
             $complex_numbers_powers_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "0", 1, true);
             $complex_numbers_roots_subtask = $this->dimati_subtask_generator->CreateSubtask("6", "1", 1, true);
 
+            // Task data
             $task_array = array(
                 "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
                 "first_subtasks" => $complex_numbers_powers_subtask["data"],
                 "second_subtasks" => $complex_numbers_roots_subtask["data"]
             );
-
             $this->task_descriptions = $task_array;
+            
+            // Task solutions
             $this->task_solutions = [$complex_numbers_powers_subtask["solutions"],$complex_numbers_roots_subtask["solutions"]];
+
+            // The definitions related to complex numbers' trigonometric forms, and multiplication and division with these forms
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex számok hatványozása trigonometrikus alak segítségével
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
+                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): w<span class=\"exp\">m</span> = |w|<span class=\"exp\">m</span> * (cos(m * \u{03C6}) + i * sin(m * \u{03C6}))</b>.
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex számok gyökvonása trigonometrikus alak segítségével
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
+                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): <span class=\"exp\">m</span>\u{221A}w = <span class=\"exp\">m</span>\u{221A}|w| (cos((\u{03C6} + 2 * k * \u{03C0}) / m) + i * sin((\u{03C6} + 2 * k * \u{03C0}) / m))</b> (k = 0,1,..,m-1).
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Komplex szám rendje és egységgyökök
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
+                        Ekkor a komplex szám rendjének azt a legkisebb pozitív egészet nevezzük, amelyre a számot emelve önmagát kapjuk. Ha nincsen ilyen szám, akkor végtelen a rend.
+                        Mivel egy komplex szám hatványozás geometriai értelemben a forgatva nyújtás, így ahhoz, hogy a rend véges legyen, szükséges az, hogy a komplex szám hossza 1 legyen.
+                        Ha \u{03C6} = (p / q) * 2 * \u{03C0} (ahol (p, q) = 1), akkor a w rendje q.
+                        Tehát 1 hosszú komplexek esetén a hatványok periodikusan ismétlődnek, a periódus hosszát pedig a rend határozza meg.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Azt mondjuk, hogy a w komplex szám az n.-ik egységyök, ha w<span class=\"exp\">n</span> = 1. Előzőek szerint ekkor: \u{03C6} = (p / n) * 2 * \u{03C0} alakú (ahol (p, n) = 1). 
+                        Ha nincsen olyan osztója n-nek, amelyre a w-t emelve 1-et kapnánk, de a w n.-ik egységgyök, akkor a w-t n.-ik primitív egységgyöknek nevezzük.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This method is used to create the eight set of tasks for Discrete mathematics I. related to the binomial and polynomial theorem and the application of Viete formula.
          * 
-         * ...Subtasks created here...
+         * 2 types of subtask will be generated here (2-2 subtasks per type). These are: binomial theorem and the usage of viéte formula.
          * 
          * @return void 
         */
@@ -541,6 +672,7 @@
             $binomial_theorem_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "0", 2);
             $viete_formula_subtask = $this->dimati_subtask_generator->CreateSubtask("7", "1", 2);
 
+            // Task data
             $task_array = array(
                 "task_description" => "Old meg a következő binomiális tétellel és viéte formulákkal kapcsolatos feladatokat!",
                 "first_subtasks" => $binomial_theorem_subtask["data"],
@@ -548,14 +680,59 @@
             );
 
             $this->task_descriptions = $task_array;
+
+            // Task solutions
             $this->task_solutions = [$binomial_theorem_subtask["solutions"],$viete_formula_subtask["solutions"]];
+
+            
+            // The definitions related to complex numbers' trigonometric forms, and multiplication and division with these forms
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Binomiális tétel
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<span class=\"exp\">k</span><span class=\"bottom\">i=1</span>i.
+                        Adottak az n, m \u{220B} \u{2124} egészek, ahol n \u{2265} m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az \u{276C} n alatt m \u{276D} jelölést használjuk az oldalon. 
+                        Tulajdonságok: \u{276C} n alatt m \u{276D} = \u{276C} n alatt (m-n) \u{276D}; \u{276C} (n-1) alatt m \u{276D} + \u{276C} (n-1) alatt (m-1) \u{276D} = \u{276C} n alatt m \u{276D}.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        <b>Binomiális tétel: (a + b)<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D}a<span class=\"exp\">i</span>b<span class=\"exp\">n-i</span></b>, 
+                        ugyanis az i.-ik (i \u{2208} {0,1,...,n}) lépés során, i darab zárójel esetén választunk a-t és n-i esetén b-t. Ismétlés nélküli kombináció esetén pedig n darab zárójelből i darabot \u{276C} n alatt i \u{276D} féle képpen lehet kiválasztani.
+                        Tulajdonságok: (1+1)<span class=\"exp\">n</span> = 2<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D} = \u{276C} n alatt 0 \u{276D} + ... + \u{276C} n alatt n \u{276D}, azaz egy halmaz részhalmazainak száma 2<span class=\"exp\">halmaz elemszáma</span> (0 elemű, 1 elemű, ..., n elemű részhalmazok száma);
+                        0<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D}1<span class=\"exp\">i</span>(-1)<span class=\"exp\">n-i</span> = \u{276C} n alatt 0 \u{276D} - \u{276C} n alatt 1 \u{276D} + ... \u{00B1} \u{276C} n alatt n \u{276D}, azaz egy halmaz páros és páratlan elemszámú részhalmazainak száma azonos.
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Polinomiális tétel: (a<span class=\"bottom\">1</span> + ... + a<span class=\"bottom\">k</span>)<span class=\"exp\">n</span> = \u{220F}<span class=\"bottom\">i<span class=\"bottom\">1</span>+...+i<span class=\"bottom\">k</span> = n</span>(x<span class=\"bottom\">1</span><span class=\"exp\">i<span class=\"bottom\">1</span></span>*...*x<span class=\"bottom\">k</span><span class=\"exp\">i<span class=\"bottom\">k</span></span>) * n!/(i<span class=\"bottom\">1</span>!*...*i<span class=\"bottom\">k</span>!).
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Általánosított Viéte- formula
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Adott egy n-ed fokú polinom az a<span class=\"bottom\">n</span> * (x - x<span class=\"bottom\">1</span>) * (x - x<span class=\"bottom\">2</span>) * ... * (x - x<span class=\"bottom\">n</span>) szorzatalakban.
+                        Ekkor megszeretnénk kapni a polinom a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> összegalakját, azaz az a<span class=\"bottom\">i</span>-ket (i \u{2208} {0,1,...,n}). 
+                        Az a<span class=\"bottom\">i</span> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Így pedig az i.-ik (i \u{2208} {0,1,...,n}) együttható képlete:
+                        <b>a<span class=\"bottom\">i</span> = a<span class=\"bottom\">n</span> * (-1)<span class=\"exp\">(n-i)</span> * \u{2211}<span class=\"bottom\">1 \u{2264} j<span class=\"bottom\">1</span> < j<span class=\"bottom\">2</span> < ... < j<span class=\"bottom\">(n - i)</span> \u{2264} n</span>x<span class=\"bottom\">j<span class=\"bottom\">1</span></span>* ... *x<span class=\"bottom\">j<span class=\"bottom\">(n-i)</span></span></b>.
+                    </label>
+                </div>"
+            ];
         }
 
         /**
          * 
          * This method is used to create the ninth set of tasks for Discrete mathematics I. related to...
          * 
-         * ...Subtasks created here...
+         * 4 types of subtask will be generated here (2 subtasks per type). These are: can we create the simple, paired, tree and directed graphs given by their degrees.
          * 
          * @return void 
         */
@@ -565,6 +742,7 @@
             $tree_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "2", 2);
             $directed_graph_subtask = $this->dimati_subtask_generator->CreateSubtask("8", "3", 2);
 
+            // Task data
             $task_array = array(
                 "task_description" => "Old meg a következő bgráfok megszerkeszthetőségével kapcsolatos feladatokat!",
                 "first_subtasks" => $simple_graph_subtask["data"],
@@ -572,9 +750,64 @@
                 "third_subtasks" => $paired_graph_subtask["data"],
                 "fourth_subtasks" => $directed_graph_subtask["data"]
             );
-
             $this->task_descriptions = $task_array;
+
+            // Task solutions
             $this->task_solutions = [$simple_graph_subtask["solutions"], $tree_graph_subtask["solutions"], $paired_graph_subtask["solutions"], $directed_graph_subtask["solutions"]];
+        
+            // The definitions related to graphs, and necessary and sufficients conditions for creating simple, paired, tree and directed graphs. 
+            $this->definitions = [
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Gráfok
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                        Gráfok megszerkeszthetősége:
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Egyszerű gráf megszerkeszthetősége:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Páros gráf megszerkeszthetősége:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Fagráf megszerkeszthetősége:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>",
+                "<div class=\"defined\">
+                    <label class=\"definition_label\">
+                        Irányított gráf megszerkeszthetősége:
+                    </label>
+                </div>
+                <div class=\"definition\">
+                    <label class=\"definition_label\">
+                    </label>
+                </div>"
+            ];
         }
     }
 

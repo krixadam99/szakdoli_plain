@@ -283,18 +283,24 @@ select#group_selector {
     margin: 2% auto auto 0%;
     display: flex;
     flex-direction: column;
-
-    border: 1px solid rgba(94, 85, 73, 0.5);
-    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
-    border-radius: 2px;
 }
 
-.definitions {
-    margin: 2% 4% 10% 4%;
+.definition_holder {
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    border-radius: 2px;
+    margin: 0% 4% 1% 0%;
+}
+
+.definition_holder.title_holder {
+    margin: 0% 4% 1% 0%;
+    padding: 5% 0%;
+    box-shadow: 0 5px 5px 0 rgba(94, 85, 73, 0.5);
 }
 
 .defined {
-    margin-top: 5%;
+    margin: 5% auto auto 4%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 .defined label {
@@ -302,20 +308,46 @@ select#group_selector {
 }
 
 .definition {
-    margin: 2% auto;
+    margin: 2% 4% 5% 4%;
     text-align: justify;
+    display: none
 }
+
+.show_button {
+    margin: auto 46.25% -4% 46.25%;
+    width: 7.5%;
+    border-radius: 50px;
+    padding: 2%;
+    background-color: white;
+    border: 1px solid rgba(94, 85, 73, 0.5);
+}
+
+.show_button:hover{
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+}
+
+.bottom_triangle {
+    border-bottom: 15px solid rgba(94, 85, 73, 0.5); 
+    border-left: 8px solid white; 
+    border-right: 8px solid white; 
+}
+
+.top_triangle {
+    border-top: 15px solid rgba(94, 85, 73, 0.5); 
+    border-left: 8px solid white; 
+    border-right: 8px solid white; 
+}
+
 .definition_label::selection {
     background-color: bisque;
 }
 
 .task_container {
     width: 60%;
-    margin: 2% 0% 0% auto;
+    margin: 2% 0% auto auto;
     display: flex;
     flex-direction: column;
 
-    border: 1px solid rgba(94, 85, 73, 0.5);
     box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
     border-radius: 2px;
 }
@@ -446,8 +478,8 @@ ul {
 
 .bottom{
     position: relative;
-    top: 6px;
-    left: -2px;
+    top: 5px;
+    left: -1px;
     font-size:smaller;
 }
 
