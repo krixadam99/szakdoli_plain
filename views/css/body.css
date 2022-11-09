@@ -573,6 +573,14 @@ ul {
     width: 85%;
 }
 
+.big_exam_button {
+    width:2%; 
+    margin:0% 0% 0% auto;
+    border-radius: 50px;
+    background-color: rgb(255, 254, 254);
+    border: 1px solid rgb(207, 206, 206);
+}
+
 #preview {
     margin: 2% 9% auto auto;
     border: 1px solid rgb(156, 156, 156);

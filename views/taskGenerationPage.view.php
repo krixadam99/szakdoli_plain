@@ -161,24 +161,31 @@
                 </div>
             
                 <?php if($_SESSION["exam_type"] === "big"):?>
-
+                    <div class="pdf_page_section" style="margin-bottom:2%">
+                        <label class="pdf_page_section_label">Feladatok kiválasztása</label>
+                        <hr class="full_hr">
+                    </div>
+                    <?php include("./views/taskGeneration/chosenTasks.php")?>
+                    <div class="pdf_page_task_choice_container" style="margin-top:2%">
+                        <?php include("./partials/mainTopicSelect.php")?>
+                        <?php include("./partials/subtopicSelect.php")?>
+                        <button id="add_new_task" class="big_exam_button">+</button>
+                    </div>
+                    <div class="pdf_page_section" style="margin-top:5%">
+                        <label style="width: 12%; margin: auto 2% auto 0%">Generálandó mennyiség (egységesen):</label>
+                        <input type="number" min="1" max="20" step="1" placeholder="4" style="width:9%; margin:0% auto 0% 1%" name="task_quantity" value="<?=isset($_SESSION["preview"]["task_quantity"])?$_SESSION["preview"]["task_quantity"]:"4"?>">
+                    </div>
                 <?php elseif($_SESSION["exam_type"] === "small"):?>
-                    <?php 
-                        $section_name = "task_0";
-                    ?>
                     <div class="pdf_page_section">
                         <label class="pdf_page_section_label">Feladat kiválasztása</label>
                         <hr class="full_hr">
-                        <?php include("./partials/taskChoice.php")?>
+                        <?php include("./views/taskGeneration/taskChoice.php")?>
                     </div>
                 <?php elseif($_SESSION["exam_type"] === "seminar"):?>
-                    <?php 
-                        $section_name = "task_0";
-                    ?>
                     <div class="pdf_page_section">
                         <label class="pdf_page_section_label">Feladat kiválasztása</label>
                         <hr class="full_hr">
-                        <?php include("./partials/taskMultipleChoice.php")?>
+                        <?php include("./views/taskGeneration/taskMultipleChoice.php")?>
                     </div>
                 <?php endif?>
                 

@@ -79,15 +79,51 @@
                     $_SESSION["preview"] = $_POST;
                     $_SESSION["preview_tasks"] = [];
     
-                    $task_counter = 0;
-                    foreach($_POST as $key => $value){
-                        if(is_string($key) &&  is_numeric(strpos($key, "_main_topic"))){
-                            $main_task_index = $value;
-                            if(isset($_POST[explode("_main_topic",$key)[0] . "_subtopic"]) && isset($_POST[explode("_main_topic",$key)[0] . "_task_quantity"])){
-                                $subtask_index = $_POST[explode("_main_topic",$key)[0] . "_subtopic"];
-                                $subtask_count = $_POST[explode("_main_topic",$key)[0] . "_task_quantity"];
-                                if(is_numeric($subtask_count)){
-                                    array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_task_index, $subtask_index, $subtask_count));
+                    if($_SESSION["exam_type"] === "small"){
+                        $main_topic = $_POST["main_topic"]??"";
+                        if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
+                            $subtopic_index = $_POST["main_topic_$main_topic" . "_subtopic"]??"";
+                            if($subtopic_index === "" && isset( $_POST["main_topic_$main_topic" . "_subtopic_0"])){
+                                $subtopic_index = "0";
+                            }
+                            $subtask_count = $_POST["task_quantity"]??"";
+
+                            if(is_numeric($subtask_count) && is_numeric($subtopic_index)){
+                                array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
+                            }   
+                        }
+                    }else if($_SESSION["exam_type"] === "seminar"){
+                        $main_topic = $_POST["main_topic"]??"";
+                        if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
+                            foreach($_POST as $key => $value){
+                                if(is_string($key) && is_numeric(strpos($key, "main_topic_$main_topic" . "_subtopic_")) && !is_numeric(strpos($key, "_task_quantity"))){
+                                    $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$key)[1];
+                                    if($subtopic_index === "" && isset( $_POST["main_topic_$main_topic" . "_subtopic_0"])){
+                                        $subtopic_index = "0";
+                                    }
+                                    $subtask_count = $_POST["main_topic_$main_topic" . "_subtopic_" . $subtopic_index . "_task_quantity"]??"";
+
+                                    if(is_numeric($subtask_count) && is_numeric($subtopic_index)){
+                                        array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
+                                    }
+                                }
+                            }
+                        }                        
+                    }else if($_SESSION["exam_type"] === "big"){
+                        $subtask_count = $_POST["task_quantity"]??4;
+
+                        foreach($_POST as $key => $value){
+                            if(is_string($key) && is_numeric(strpos($key, "main_topic_"))){
+                                $main_topic = explode("main_topic_", $key)[1]??"";
+                                foreach($_POST as $key => $value){
+                                    if(is_string($key) && is_numeric(strpos($key, "main_topic_$main_topic" . "_subtopic_"))){
+                                        $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$key)[1];
+                                        var_dump($main_topic, $subtopic_index);
+                                        
+                                        if(is_numeric($subtopic_index)){
+                                            array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
+                                        }
+                                    }
                                 }
                             }
                         }

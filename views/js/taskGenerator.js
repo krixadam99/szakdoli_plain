@@ -144,6 +144,9 @@ let page_container = document.getElementById("page_container")
 let chosen_labels_for_edition = []
 let edited_label_parent = NaN
 
+let add_new_task_button = document.getElementById("add_new_task")
+let remove_task_buttons = document.querySelectorAll(".remove_task_buttons")
+
 let font_size_input = document.getElementById("font_size_input")
 let font_color_input = document.getElementById("font_color_input")
 let font_family_select = document.getElementById("font_family_select")
@@ -229,6 +232,36 @@ if(page_container){
                 }
             }
         }
+    })
+}
+
+if(add_new_task_button){
+    add_new_task_button.addEventListener("click", (event)=>{
+        event.preventDefault()
+
+        let parent_element = add_new_task_button.parentNode
+        let topic_select = parent_element.querySelector(".topic_select")
+        let subtopic_select = parent_element.querySelector(".subtopic_select")
+        let selected_main_topic = topic_select.options.selectedIndex
+        let selected_subtopic = subtopic_select.options.selectedIndex
+        let chosen_div = document.getElementById("big_exam_task_" + selected_main_topic + "_" + selected_subtopic)
+
+        if(chosen_div != null){
+            chosen_div.style["display"] = ""
+            chosen_div.querySelectorAll("input").forEach((element)=>{element.disabled = ""})
+        }
+    })
+}
+
+if(remove_task_buttons){
+    remove_task_buttons.forEach((remove_task_button)=>{
+        remove_task_button.addEventListener("click", (event)=>{
+            event.preventDefault()
+    
+            let parent_element = remove_task_button.parentNode
+            parent_element.style["display"] = "none"
+            parent_element.querySelectorAll("input").forEach((element)=>{element.disabled = "disabled"})
+        })
     })
 }
 
