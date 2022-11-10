@@ -31,7 +31,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
@@ -123,25 +123,43 @@
                             <input type="number" min="1" max="100" step="3" value="6" style="width:50%; margin: auto" id="linebreak_after_input">
                         </div>
                     </div>
+                    <button id="lt_button">lt</button>
                 </div>
                 <div id="page_container">
                     <div id="pdf_page_title_container">
                         <label id="pdf_page_title"><?=$_SESSION["preview"]["title_textarea"]?></label>
                     </div>
                     <?php if(isset($_SESSION["preview_tasks"])):?>
-                        <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
-                            <?= $main_task_counter + 1?>. feladatcsoport:
-                            <?php 
-                                $descriptions = $main_task["descriptions"]??[];
-                                $printable_solutions = $main_task["printable_solutions"]??[];
-                            ?>
-                            <?php foreach($descriptions as $description_counter => $description):?>
-                                <?=$description?>
+                        <?php if($_SESSION["exam_type"] !== "big"):?>
+                            <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
+                                <?= $main_task_counter + 1?>. feladatcsoport:
+                                <?php 
+                                    $descriptions = $main_task["descriptions"]??[];
+                                    $printable_solutions = $main_task["printable_solutions"]??[];
+                                ?>
+                                <?php foreach($descriptions as $description_counter => $description):?>
+                                    <?=$description?>
+                                <?php endforeach?>
+                                <?php foreach($printable_solutions as $printable_solution_counter => $printable_solution):?>
+                                    <?=$printable_solution?>
+                                <?php endforeach?>
                             <?php endforeach?>
-                            <?php foreach($printable_solutions as $printable_solution_counter => $printable_solution):?>
-                                <?=$printable_solution?>
-                            <?php endforeach?>
-                        <?php endforeach?>
+                        <?php else:?>
+                            <?php for($exam_counter = 0; $exam_counter < $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
+                                <?= $exam_counter + 1?>. feladatsor:
+                                <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
+                                    <?= $_SESSION["preview_tasks"][$task_counter]["descriptions"][$exam_counter] ?>
+                                <?php endfor?>
+                            <?php endfor?>
+
+                            
+                            <?php for($exam_counter = 1; $exam_counter <= $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
+                                <?= $exam_counter?>. feladatsor:
+                                <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
+                                    <?= $_SESSION["preview_tasks"][$task_counter]["printable_solutions"][$exam_counter] ?>
+                                <?php endfor?>
+                            <?php endfor?>
+                        <?php endif?>
                     <?php endif?>
                 </div>
             </div>
@@ -196,6 +214,7 @@
                 <?php endif?>
             </form>
         <?php endif?>
+        <label>&lt</label>
     </main>
 </body>
 <script type="module" src="./views/js/mainContent.js"></script>

@@ -89,7 +89,7 @@ function AddButtonClickEffect(button, timeout = 200){
 
 function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
     let original_text = ""
-    if(element.tagName === "INPUT"){
+    if(element.tagName === "TEXTAREA"){
         original_text = element.value
     }else{
         original_text = element.innerText
@@ -98,11 +98,13 @@ function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
     let parent_element = element.closest(parent_selecter)
 
     let new_element = document.createElement(new_element_tag_name)
-    if(new_element_tag_name === "input"){
+    if(new_element_tag_name === "textarea"){        
         new_element.value = original_text
         new_element.style["border-radius"] = "3px"
+        new_element.cols = "100"
+        new_element.rows = "5"
     }else{
-        new_element.innerText = original_text
+        new_element.innerHTML = original_text
     }
     parent_element.removeChild(element)
     if(next_element){
@@ -128,7 +130,11 @@ function AddEventsToParagraphLabel(label_element){
 
     label_element.addEventListener("dblclick", ()=>{
         edited_label_parent = label_element.closest("div")
-        ChangeElementToAnother(label_element, "div", "input")
+        editind_box = ChangeElementToAnother(label_element, "div", "textarea")
+
+        editind_box.addEventListener("click", (event)=>{
+            cursor_actual_pos = event.target.selectionEnd
+        })
     })
 }
 
@@ -165,6 +171,9 @@ let linebreak_before_input = document.getElementById("linebreak_before_input")
 let linebreak_after_input = document.getElementById("linebreak_after_input")
 
 let all_highlighted = false
+
+let editind_box = NaN
+let cursor_actual_pos = 0
 
 // Event-handlers
 if(small_exam_generation_card){
@@ -380,10 +389,17 @@ if(save_pdf_button){
 
 window.addEventListener("click", (event)=>{
     if(edited_label_parent){
-        let input = edited_label_parent.querySelector("input")
-        if(input && event.target !== input){
-            let label = ChangeElementToAnother(edited_label_parent.querySelector("input"), "div", "label")
+        let textarea = edited_label_parent.querySelector("textarea")
+        if(textarea && event.target !== textarea && event.target !== document.getElementById("lt_button")){
+            let label = ChangeElementToAnother(edited_label_parent.querySelector("textarea"), "div", "label")
             AddEventsToParagraphLabel(label)
         }
     }
 })
+
+if(document.getElementById("lt_button")){
+    document.getElementById("lt_button").addEventListener("click", ()=>{
+        let textarea = edited_label_parent.querySelector("textarea")
+        textarea.value = textarea.value.substring(0,cursor_actual_pos) + "<span style=\"content: \"\\2282\";\">&lt</span>" + textarea.value.substring(cursor_actual_pos) 
+    })
+}

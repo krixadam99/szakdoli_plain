@@ -15,10 +15,10 @@
                         <div style="display:flex; margin: 1% 0%">
                             <label class="pdf_page_task_choice_label" style="width: 12%; margin: auto 2% auto 0%">Altéma kiválasztása:</label>
                             
-                            <input type="checkbox" name="main_topic_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>" style="width: auto" value="<?=$sub_topics[$topic_counter][$subtopic_counter]?>" 
+                            <input type="checkbox" name="main_topic_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>" id="checkbox_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>" style="width: auto" value="<?=$sub_topics[$topic_counter][$subtopic_counter]?>" 
                             <?=isset($_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_$subtopic_counter"]) && $topic_counter == $_SESSION["preview"]["main_topic"]??""?"checked":""?>>
                             
-                            <label style="width: auto;margin: auto auto auto 1%"><?=$sub_topics[$topic_counter][$subtopic_counter]?></label>
+                            <label style="width: auto;margin: auto auto auto 1%" for="checkbox_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>"><?=$sub_topics[$topic_counter][$subtopic_counter]?></label>
                             <label class="pdf_page_task_choice_label" style="width: 20%; margin: 0% 0% 0% auto">Hány feladat legyen generálva:</label>
                             
                             <input type="number" min="1" max="20" step="1" placeholder="4" style="width:9%; margin:0% 0% 0% 1%" name="main_topic_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>_task_quantity" 
