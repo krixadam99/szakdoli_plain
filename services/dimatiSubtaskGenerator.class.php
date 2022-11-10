@@ -336,8 +336,8 @@
                 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableSet("A", $base_set) . " valamint az ";
-                $task_text = $task_text . "R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció.</div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg, hogy a következő tulajdonságok közül mellyeket teljesíti a fenti reláció: reflexív, irreflexív, szimmetrikus, antisszimmetrikus, asszimmetrikus, tranzitivitív, dichotóm, trichotóm, ekvivalencia reláció.</div>";
+                $task_text = $task_text . "R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció.</label></div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg, hogy a következő tulajdonságok közül mellyeket teljesíti a fenti reláció: reflexív, irreflexív, szimmetrikus, antisszimmetrikus, asszimmetrikus, tranzitivitív, dichotóm, trichotóm, ekvivalencia reláció.</label></div>";
                 
                 // + What is missing...
                 $characteristics = array(
@@ -352,8 +352,8 @@
                     $this->dimat_helper_functions->IsEquivalenceRelation($base_set, $relation)
                 );
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $base_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . ".</div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $base_set) . ";</label></div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . ".</label></div>";
                 $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">Ez a reláció ";
                 foreach($characteristics as $characteristic_counter => $characteristic){
                     if($characteristic_counter !== 0){
@@ -364,7 +364,7 @@
                     }
                     $printable_solution = $printable_solution . $characteristic_array[$characteristic_counter];
                 }
-                $printable_solution = $printable_solution . ".</div>";
+                $printable_solution = $printable_solution . ".</label></div>";
                 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
@@ -392,24 +392,24 @@
                 $characteristics = $this->dimat_helper_functions->GetCharacteristics();
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableSet("A", $personal_set) . ".</div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Készíts olyan relációt, amely teljesíti a következő feltételeket:</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableSet("A", $personal_set) . ".</label></div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Készíts olyan relációt, amely teljesíti a következő feltételeket:</label></div>";
                 $task_text = $task_text . "<ul>";
                 $characteristic_counter = 0;
                 foreach($characteristics as $characteristic_name => $is_true){
-                    $task_text = $task_text . "<li>";
+                    $task_text = $task_text . "<li class=\"editable_box\"><label class=\"editable_label\">";
                     if(!$is_true){
                         $task_text = $task_text . "Nem ";
                     }
                     if($characteristic_counter !== 0){
                         $task_text = $task_text . ", ";
                     }
-                    $task_text = $task_text . $characteristic_name .  "</li>";
+                    $task_text = $task_text . $characteristic_name .  "</label></li>";
                 }
                 $task_text = $task_text . "</ul>";
 
 
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Néhány lehetséges reláció:</div>";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Néhány lehetséges reláció:</label></div>";
 
                 $all_possible_relation = $this->dimat_helper_functions->GetAllPossibleRelations($personal_set); 
                 $filtered_relations = $this->dimat_helper_functions->FilterRelationsWithCharacteristics($personal_set, $all_possible_relation, $characteristics, 0);
@@ -418,7 +418,7 @@
                         break;
                     }
 
-                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableRelation("", $filtered_relation, false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableRelation("", $filtered_relation, false) . "</label></div>";
                 }
                 
                 array_push($descriptions, $task_text);
@@ -452,18 +452,18 @@
                 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . " és " . PrintServices::CreatePrintableSet("B", $second_set) . " halmazok, valamint az ";
-                $task_text = $task_text . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció. Döntsd el, hogy a reláció függvény-e!</div>";
+                $task_text = $task_text . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció. Döntsd el, hogy a reláció függvény-e!</label></div>";
 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . ";</div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</label></div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . "R \u{2286} A \u{00D7} B, " . PrintServices::CreatePrintableRelation("R", $relation) . ";</label></div>";
                 $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">A reláció";
                 
                 $is_function = $this->dimat_helper_functions->IsFunction($relation);
                 if($is_function){
-                    $printable_solution = $printable_solution . " függvény.</div>"; 
+                    $printable_solution = $printable_solution . " függvény.</label></div>"; 
                 }else{
-                    $printable_solution = $printable_solution . " nem függvény.</div>";
+                    $printable_solution = $printable_solution . " nem függvény.</label></div>";
                 }
                 
                 array_push($descriptions, $task_text);
@@ -501,7 +501,7 @@
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . " és " . PrintServices::CreatePrintableSet("B", $second_set) . " halmazok, valamint az ";
                 $task_text = $task_text . "f \u{2208} A \u{2192} B, ";
-                $task_text = $task_text . PrintServices::CreatePrintableRelation("f", $function) . " függvény. Döntsd el, hogy a függvény mely tulajdonságokat teljesíti: injektív, szürjektív, bijektív.</div>";
+                $task_text = $task_text . PrintServices::CreatePrintableRelation("f", $function) . " függvény. Döntsd el, hogy a függvény mely tulajdonságokat teljesíti: injektív, szürjektív, bijektív.</label></div>";
 
                 $characteristics = array(
                     $this->dimat_helper_functions->IsSurjective($function, $second_set),
@@ -510,8 +510,8 @@
                 );
                 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</div>";
-                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">f \u{2208} A \u{2192} B, " . PrintServices::CreatePrintableRelation("f", $function) . ".</div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . ";</label></div>";
+                $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">f \u{2208} A \u{2192} B, " . PrintServices::CreatePrintableRelation("f", $function) . ".</label></div>";
                 $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">Ez a függvény ";
                 foreach($characteristics as $characteristic_counter => $characteristic){
                     if($characteristic_counter !== 0){
@@ -522,7 +522,7 @@
                     }
                     $printable_solution = $printable_solution . $characteristic_array[$characteristic_counter];
                 }
-                $printable_solution = $printable_solution . ".</div>";
+                $printable_solution = $printable_solution . ".</label></div>";
                 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
@@ -570,9 +570,9 @@
                     ]);
                 }else{
                     $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                    $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott a " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám</div>";
+                    $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott a " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám</label></div>";
                     $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                    $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . "</div>";
+                    $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . "</label></div>";
 
                     $previous_task = "";
                     for($counter = 0; $counter < 2; $counter++){
@@ -607,8 +607,8 @@
                         }
 
                         $previous_task = $new_task;
-                        $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label>" . $task_text_part . "</div>";
-                        $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label>" . $solution_text_part . "</div>";
+                        $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label></div><div class=\"editable_box\"><label class=\"editable_label\">" . $task_text_part . "</label></div>";
+                        $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label></div><div class=\"editable_box\"><label class=\"editable_label\">" . $solution_text_part . "</label></div>";
                     }
                     
                     array_push($descriptions, $task_text);
@@ -659,9 +659,9 @@
                     }
 
                     $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Adottak a ";
-                    $task_text =  $task_text . $complex_numbers_text . " komplex számok.</div>";
+                    $task_text =  $task_text . $complex_numbers_text . " komplex számok.</label></div>";
                     $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">";
-                    $printable_solution =  $printable_solution . $complex_numbers_text . "</div>";
+                    $printable_solution =  $printable_solution . $complex_numbers_text . "</label></div>";
 
                     $actual_operation_dictionary = array("addition" => [], "multiplication" => [], "substraction" => [], "division" => []);
                     for($counter = 0; $counter < 2; $counter++){
@@ -678,8 +678,8 @@
                             default:break;
                         }
 
-                        $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label>Add meg a " . $new_element[0] . " $operator " . $new_element[1] . " művelet eredményét!</div>";
-                        $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label>" . PrintServices::CreatePrintableComplexNumberAlgebraic($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</div>";
+                        $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . $new_element[0] . " $operator " . $new_element[1] . " művelet eredményét!</label></div>";
+                        $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $counter + 1 . ". részfeladat: </label></div><div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableComplexNumberAlgebraic($new_element[0] . " $operator " . $new_element[1], $solution_for_new_element) . "</label></div>";
                     }
                     
                     array_push($descriptions, $task_text);
@@ -714,14 +714,14 @@
                 array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</label></div>";
 
                 $trigonometric_forms = [$this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[0]), $this->dimat_helper_functions->GetTrigonometricForm($pair_of_complex_numbers[1])];
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[1], true, false) . "</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a fenti komplex számok trigonometrikus alakját!</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[0], true, false) . "</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $trigonometric_forms[1], true, false) . "</label></div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_0_" . $subtask_counter . "_0" => $trigonometric_forms[0],
@@ -759,14 +759,14 @@
                 array_push($task_data["pairs_of_complex_numbers"], $pair_of_complex_numbers);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottok az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . " és " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[0]) . " komplex számok.</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $pair_of_complex_numbers[0]) . ", " . PrintServices::CreatePrintableComplexNumberAlgebraic("y", $pair_of_complex_numbers[1]) . ".</label></div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("multiplication", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1]), $this->dimat_helper_functions->UseMoivre("division", $pair_of_complex_numbers[0], $pair_of_complex_numbers[1])];
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a fenti komplex számok trigonometrikus alakját!</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x * y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x / y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a fenti komplex számok trigonometrikus alakját!</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x * y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x / y = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</label></div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_1_" . $subtask_counter . "_0" => $operations[0],
@@ -807,14 +807,14 @@
                 array_push($task_data["powers"], [$first_power, $second_power]);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</label></div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $first_power), $this->dimat_helper_functions->UseMoivre("power", $complex_number, 0, $second_power)];
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg az x<span class=\"exp\">$first_power</span> és x<span class=\"exp\">$second_power</span> hatványozások eredményét!</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x<span class=\"exp\">$first_power</span> = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x<span class=\"exp\">$second_power</span>= " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg az x<span class=\"exp\">$first_power</span> és x<span class=\"exp\">$second_power</span> hatványozások eredményét!</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x<span class=\"exp\">$first_power</span> = " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[0], true, false) . "</label></div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">x<span class=\"exp\">$second_power</span>= " .  PrintServices::CreatePrintableComplexNumberTrigonometric("", $operations[1], true, false) . "</label></div>";
 
                 $solutions = array_merge($solutions,[
                     "solution_0_" . $subtask_counter . "_0" => $operations[0],
@@ -855,21 +855,21 @@
                 array_push($task_data["roots"], [$first_root, $second_root]);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adott az " .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . " komplex szám.</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableComplexNumberAlgebraic("x", $complex_number) . ".</label></div>";
 
                 $operations = [$this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $first_root), $this->dimat_helper_functions->UseMoivre("root", $complex_number, 0, $second_root)];
-                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg az <span class=\"exp\">$first_root</span>\u{221A}x és <span class=\"exp\">$second_root</span>\u{221A}x gyökvonás eredményét!</div>";
+                $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg az <span class=\"exp\">$first_root</span>\u{221A}x és <span class=\"exp\">$second_root</span>\u{221A}x gyökvonás eredményét!</label></div>";
                 
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\"><span class=\"exp\">$first_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$first_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$first_root"], false, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\"><span class=\"exp\">$first_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$first_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$first_root"], false, false) . "</label></div>";
                 foreach($operations[0]["arguments"] as $root_counter => $root){
-                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[0]["size"], $root], false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[0]["size"], $root], false) . "</label></div>";
                 }
 
-                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\"><span class=\"exp\">$second_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$second_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$second_root"], false, false) . "</div>";
+                $printable_solution = $printable_solution. "<div class=\"editable_box\"><label class=\"editable_label\"><span class=\"exp\">$second_root</span>\u{221A}x = " . PrintServices::CreatePrintableComplexNumberTrigonometric("", ["<span class=\"exp\">$second_root</span>\u{221A}|x|", "(\u{03C6} + 2*k*\u{03C0})/$second_root"], false, false) . "</label></div>";
                 foreach($operations[1]["arguments"] as $root_counter => $root){
-                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[1]["size"], $root], false) . "</div>";
+                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">k = $root_counter \u{2192} " . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$operations[1]["size"], $root], false) . "</label></div>";
                 }
 
                 $solutions = array_merge($solutions,[
@@ -929,14 +929,14 @@
                 array_push($task_data["result_expressions_exponent"], $result_pair[1]);
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $task_text .= "<div class=\"editable_box\"><label class=\"editable_label\">Adott a ($first_number*x<span class=\"exp\">$first_exponent</span> $second_number*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">$third_exponent</span> kifejezés.</div>";
-                $task_text .= "<div class=\"editable_box\"><label class=\"editable_label\"> Határozd meg az x<span class=\"exp\">" . $result_pair[1] . "</span> együtthatóját!</div>";
+                $task_text .= "<div class=\"editable_box\"><label class=\"editable_label\">Adott a ($first_number*x<span class=\"exp\">$first_exponent</span> $second_number*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">$third_exponent</span> kifejezés.</label></div>";
+                $task_text .= "<div class=\"editable_box\"><label class=\"editable_label\"> Határozd meg az x<span class=\"exp\">" . $result_pair[1] . "</span> együtthatóját!</label></div>";
                 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
-                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">($first_number*x<span class=\"exp\">$first_exponent</span>" . PrintServices::PlusMinus($second_number) . abs($second_number) . "*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">$third_exponent</span> = </div>";
-                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">(i=0..$third_exponent) ($third_exponent alatt i)*($first_number*x<span class=\"exp\">$first_exponent</span>)<span class=\"exp\">(" . $third_exponent . "-i)</span>*($second_number*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">i</span> = </div>";
+                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">($first_number*x<span class=\"exp\">$first_exponent</span>" . PrintServices::PlusMinus($second_number) . abs($second_number) . "*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">$third_exponent</span> = </label></div>";
+                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">(i=0..$third_exponent) ($third_exponent alatt i)*($first_number*x<span class=\"exp\">$first_exponent</span>)<span class=\"exp\">(" . $third_exponent . "-i)</span>*($second_number*x<span class=\"exp\">$second_exponent</span>)<span class=\"exp\">i</span> = </label></div>";
                 $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">(i=0..$third_exponent) ($third_exponent alatt i)*x<span class=\"exp\">(" . $first_exponent*$third_exponent . PrintServices::PlusMinus($second_exponent-$first_exponent) . abs($second_exponent-$first_exponent) . "*i" . ")</span>*";
-                $printable_solution .= $first_number . "<span class=\"exp\">(" . $third_exponent . "-i)</span>*$second_number<span class=\"exp\">i</span></div>";
+                $printable_solution .= $first_number . "<span class=\"exp\">(" . $third_exponent . "-i)</span>*$second_number<span class=\"exp\">i</span></label></div>";
                 $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">i: " . $first_exponent * $third_exponent . "+i*" . $second_exponent - $first_exponent . "=" . $result_pair[1] . "\u{2194}";
                 $printable_solution .= "i*" . $second_exponent - $first_exponent . "=" . $result_pair[1] - $first_exponent * $third_exponent;
                 
@@ -947,8 +947,8 @@
                     $final_index = $first_exponent * $third_exponent;
                 }
                
-                $printable_solution .= "\u{2192}</div><div class=\"editable_box\"><label class=\"editable_label\">($third_exponent alatt $final_index)*x<span class=\"exp\">(" . $first_exponent*$third_exponent . PrintServices::PlusMinus($second_exponent-$first_exponent) . abs($second_exponent-$first_exponent) . "*$final_index" . ")</span>*";
-                $printable_solution .= $first_number . "<span class=\"exp\">(" . $third_exponent . "-$final_index)</span>*$second_number<span class=\"exp\">$final_index</span> =" . $result_pair[0] . "x<span class=\"exp\">" . $result_pair[1] . "</span></div>";
+                $printable_solution .= "\u{2192}</label></div><div class=\"editable_box\"><label class=\"editable_label\">($third_exponent alatt $final_index)*x<span class=\"exp\">(" . $first_exponent*$third_exponent . PrintServices::PlusMinus($second_exponent-$first_exponent) . abs($second_exponent-$first_exponent) . "*$final_index" . ")</span>*";
+                $printable_solution .= $first_number . "<span class=\"exp\">(" . $third_exponent . "-$final_index)</span>*$second_number<span class=\"exp\">$final_index</span> =" . $result_pair[0] . "x<span class=\"exp\">" . $result_pair[1] . "</span></label></div>";
 
 
                 array_push($descriptions, $task_text);
@@ -992,7 +992,7 @@
 
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text .= "<div class=\"editable_box\"><label class=\"editable_label\">Adottak a " . PrintServices::CreatePrintablePlaces($roots) . " helyek. ";
-                $task_text .= "A Viéte formula használatával határozd meg azt a polinomot, amelynek a fenti pontok a gyökei és " . $polynomial_expression[0] . " a főegyütthatója!</div>";
+                $task_text .= "A Viéte formula használatával határozd meg azt a polinomot, amelynek a fenti pontok a gyökei és " . $polynomial_expression[0] . " a főegyütthatója!</label></div>";
                 
                 array_push($task_data["polynomial_expression_roots"], $roots);
                 array_push($task_data["main_coefficients"], $polynomial_expression[0]);
@@ -1007,7 +1007,7 @@
                     }
                     $printable_solution .= "(x" . PrintServices::PlusMinus(-1*$roots[$root_counter]) . abs($roots[$root_counter]) . ")";
                 }
-                $printable_solution .= "</div>";
+                $printable_solution .= "</label></div>";
 
                 $indices = [];
                 for($index_counter = 0; $index_counter < count($roots); ++$index_counter){
@@ -1052,9 +1052,9 @@
                         $printable_solution .= " = " . $polynomial_expression[$bottom_index_counter];
                     }
                     
-                    $printable_solution .= "</div>";
+                    $printable_solution .= "</label></div>";
                 }
-                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">P[x] = " . PrintServices::CreatePrintablePolynomial($polynomial_expression) . "</div>";
+                $printable_solution .= "<div class=\"editable_box\"><label class=\"editable_label\">P[x] = " . PrintServices::CreatePrintablePolynomial($polynomial_expression) . "</label></div>";
 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
@@ -1109,7 +1109,7 @@
                 }else{
                     $printable_solution .= "nem szerkeszthető meg";
                 } 
-                $printable_solution .= ".</div>";
+                $printable_solution .= ".</label></div>";
 
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);

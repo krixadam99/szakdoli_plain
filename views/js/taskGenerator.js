@@ -28,7 +28,7 @@ function Editing(elements, new_value = "", style_key){
     for(let element of elements){
         switch(style_key){
             case "text-align":{
-                ModifyElementStyle(element.closest("div"), {"text-align": new_value})
+                ModifyElementStyle(element.closest(".editable_box"), {"text-align": new_value})
             };break
             case "size":{
                 let new_size = `calc(${new_value}px + 0.3vw)`
@@ -69,10 +69,10 @@ function Editing(elements, new_value = "", style_key){
                 }
             };break
             case "margin-bottom":{
-                ModifyElementStyle(element.closest("div"), {"margin-bottom": new_value})
+                ModifyElementStyle(element.closest(".editable_box"), {"margin-bottom": new_value})
             };break
             case "margin-top":{
-                ModifyElementStyle(element.closest("div"), {"margin-top": new_value})
+                ModifyElementStyle(element.closest(".editable_box"), {"margin-top": new_value})
             };break
             default:break;
         }
@@ -116,21 +116,21 @@ function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
     return new_element
 }
 
-function AddEventsToParagraphLabel(label_element){
-    label_element.addEventListener("click", ()=>{
-        label_element.style["background-color"] = "rgb(255, 237, 230)"
+function AddEventsToParagraphLabel(element, tag_bame){
+    element.addEventListener("click", ()=>{
+        element.style["background-color"] = "rgb(255, 237, 230)"
 
-        if(!chosen_labels_for_edition.includes(label_element)){
-            chosen_labels_for_edition.push(label_element)
+        if(!chosen_elements_for_edition.includes(element)){
+            chosen_elements_for_edition.push(element)
         }else{
-            label_element.style["background-color"] = "white"
-            chosen_labels_for_edition = RemoveElement(chosen_labels_for_edition, label_element)
+            element.style["background-color"] = "white"
+            chosen_elements_for_edition = RemoveElement(chosen_elements_for_edition, element)
         }
     })
 
-    label_element.addEventListener("dblclick", ()=>{
-        edited_label_parent = label_element.closest("div")
-        editind_box = ChangeElementToAnother(label_element, "div", "textarea")
+    element.addEventListener("dblclick", ()=>{
+        edited_label_parent = element.closest(".editable_box")
+        editind_box = ChangeElementToAnother(element, ".editable_box", "textarea")
 
         editind_box.addEventListener("click", (event)=>{
             cursor_actual_pos = event.target.selectionEnd
@@ -147,7 +147,7 @@ let save_pdf_button = document.getElementById("save_pdf_button")
 let preview = document.getElementById("preview")
 let new_task_generator_button = document.getElementById("new_task_generator_button")
 let page_container = document.getElementById("page_container")
-let chosen_labels_for_edition = []
+let chosen_elements_for_edition = []
 let edited_label_parent = NaN
 
 let add_new_task_button = document.getElementById("add_new_task")
@@ -214,7 +214,7 @@ if(page_container){
     for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
         let labels = page_container_elements[children_counter].querySelectorAll("label")
         for(let label_element of labels){
-            AddEventsToParagraphLabel(label_element)
+            AddEventsToParagraphLabel(label_element, "label")
         }
     }  
 
@@ -222,15 +222,15 @@ if(page_container){
         if(event.ctrlKey){
             if(all_highlighted){
                 all_highlighted = false
-                chosen_labels_for_edition = []
+                chosen_elements_for_edition = []
                 for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
                     let labels = page_container_elements[children_counter].querySelectorAll("label")
                     for(let label_element of labels){
-                        chosen_labels_for_edition.push(label_element)
+                        chosen_elements_for_edition.push(label_element)
                     }
                 }
             }else{
-                chosen_labels_for_edition = []
+                chosen_elements_for_edition = []
                 all_highlighted = true
             }
     
@@ -276,41 +276,41 @@ if(remove_task_buttons){
 
 if(left_alignment){
     left_alignment.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "left", "text-align")
+        Editing(chosen_elements_for_edition, "left", "text-align")
         AddButtonClickEffect(left_alignment)
     })
 }
 
 if(center_alignment){
     center_alignment.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "center", "text-align")
+        Editing(chosen_elements_for_edition, "center", "text-align")
         AddButtonClickEffect(center_alignment)
     })
 }
 
 if(right_alignment){
     right_alignment.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "right", "text-align")
+        Editing(chosen_elements_for_edition, "right", "text-align")
         AddButtonClickEffect(right_alignment)
     })
 }
 
 if(justify_alignment){
     justify_alignment.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "justify", "text-align")
+        Editing(chosen_elements_for_edition, "justify", "text-align")
         AddButtonClickEffect(justify_alignment)
     })
 }
 
 if(font_size_input){
     font_size_input.addEventListener("input", ()=>{
-        Editing(chosen_labels_for_edition, font_size_input.value, "size")
+        Editing(chosen_elements_for_edition, font_size_input.value, "size")
     })
 }
 
 if(font_color_input){
     font_color_input.addEventListener("input", ()=>{
-        Editing(chosen_labels_for_edition, font_color_input.value, "color")
+        Editing(chosen_elements_for_edition, font_color_input.value, "color")
     })
 }
 
@@ -318,47 +318,47 @@ if(font_family_select){
     font_family_select.addEventListener("change", ()=>{
         let chosen_family = font_family_select.options[font_family_select.options.selectedIndex].value
         console.log(chosen_family)
-        Editing(chosen_labels_for_edition, chosen_family, "family")
+        Editing(chosen_elements_for_edition, chosen_family, "family")
     })
 }
 
 if(underlined_button){
     underlined_button.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "", "underlined")
+        Editing(chosen_elements_for_edition, "", "underlined")
         AddButtonClickEffect(underlined_button)
     })
 }
 
 if(crossed_button){
     crossed_button.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "", "crossed")
+        Editing(chosen_elements_for_edition, "", "crossed")
         AddButtonClickEffect(crossed_button)
     })
 }
 
 if(bold_button){
     bold_button.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "", "bold")
+        Editing(chosen_elements_for_edition, "", "bold")
         AddButtonClickEffect(bold_button)
     })
 }
 
 if(italic_button){
     italic_button.addEventListener("click", ()=>{
-        Editing(chosen_labels_for_edition, "", "italic")
+        Editing(chosen_elements_for_edition, "", "italic")
         AddButtonClickEffect(italic_button)
     })
 }
 
 if(linebreak_before_input){
     linebreak_before_input.addEventListener("input", ()=>{
-        Editing(chosen_labels_for_edition, linebreak_before_input.value + "%", "margin-bottom")
+        Editing(chosen_elements_for_edition, linebreak_before_input.value + "%", "margin-bottom")
     })
 }
 
 if(linebreak_after_input){
     linebreak_after_input.addEventListener("input", ()=>{
-        Editing(chosen_labels_for_edition, linebreak_after_input.value + "%", "margin-top")
+        Editing(chosen_elements_for_edition, linebreak_after_input.value + "%", "margin-top")
     })
 }
 
@@ -368,7 +368,7 @@ if(save_pdf_button){
 
         all_highlighted = false
         let page_container_elements = page_container.children
-        chosen_labels_for_edition = Array.from(page_container_elements)
+        chosen_elements_for_edition = Array.from(page_container_elements)
         for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
             let labels = page_container_elements[children_counter].querySelectorAll("label")
             for(let label_element of labels){   
@@ -391,7 +391,7 @@ window.addEventListener("click", (event)=>{
     if(edited_label_parent){
         let textarea = edited_label_parent.querySelector("textarea")
         if(textarea && event.target !== textarea && event.target !== document.getElementById("lt_button")){
-            let label = ChangeElementToAnother(edited_label_parent.querySelector("textarea"), "div", "label")
+            let label = ChangeElementToAnother(edited_label_parent.querySelector("textarea"), ".editable_box", "label")
             AddEventsToParagraphLabel(label)
         }
     }
