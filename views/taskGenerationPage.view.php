@@ -116,11 +116,11 @@
                     <div id="linebreak_editor">
                         <div id="linebreak_before">
                             <label style="width:auto">Sortörés előtte: </label>
-                            <input type="number" min="1" max="100" step="3" value="6" style="width:50%; margin: auto" id="linebreak_before_input">
+                            <input type="number" min="1" max="100" step="1" value="1" style="width:50%; margin: auto" id="linebreak_before_input">
                         </div>
                         <div id="linebreak_after">
                             <label style="width:auto">Sortörés utána: </label>
-                            <input type="number" min="1" max="100" step="3" value="6" style="width:50%; margin: auto" id="linebreak_after_input">
+                            <input type="number" min="1" max="100" step="1" value="1" style="width:50%; margin: auto" id="linebreak_after_input">
                         </div>
                     </div>
                     <button id="lt_button">lt</button>
@@ -146,17 +146,32 @@
                             <?php endforeach?>
                         <?php else:?>
                             <?php for($exam_counter = 0; $exam_counter < $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
-                                <?= $exam_counter + 1?>. feladatsor:
+                                <div class="editable_box" style="margin-top:3%">
+                                    <label class="editable_label">
+                                        <?= $exam_counter + 1?>. feladatsor
+                                    </label>
+                                </div>
                                 <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
-                                    <?= $_SESSION["preview_tasks"][$task_counter]["descriptions"][$exam_counter] ?>
+                                    <?php
+                                        $description = $_SESSION["preview_tasks"][$task_counter]["descriptions"][$exam_counter];
+                                        $description = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $description);
+                                    ?>
+                                    <?=$description?>
                                 <?php endfor?>
                             <?php endfor?>
 
-                            
                             <?php for($exam_counter = 1; $exam_counter <= $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
-                                <?= $exam_counter?>. feladatsor:
+                                <div class="editable_box" style="margin-top:3%">    
+                                    <label class="editable_label">    
+                                        <?= $exam_counter?>. feladatsor:
+                                    </label>
+                                </div>
                                 <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
-                                    <?= $_SESSION["preview_tasks"][$task_counter]["printable_solutions"][$exam_counter] ?>
+                                    <?php 
+                                        $printable_solution = $_SESSION["preview_tasks"][$task_counter]["printable_solutions"][$exam_counter];
+                                        $printable_solution = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $printable_solution);
+                                    ?>
+                                    <?=$printable_solution?>
                                 <?php endfor?>
                             <?php endfor?>
                         <?php endif?>

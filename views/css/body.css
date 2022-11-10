@@ -715,6 +715,11 @@ ul {
     width: 90%;
 }
 
+.editable_box {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
 .prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
     border-collapse: collapse;
 }

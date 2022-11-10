@@ -414,7 +414,8 @@
             $linear_congrences_algorithm = [];
             $solutions = [];
             foreach($triplets as $index => $triplet){
-                $algorithm = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($triplet);
+                //$algorithm = $this->dimat_helper_functions->DetermineLinearCongruenceSolution($triplet);
+                $algorithm = $this->dimat_helper_functions->DetermineLinearCongruenceSolutionSmart($triplet);
                 array_push($linear_congrences_algorithm, $algorithm["steps"]);
                 array_push($solutions, $algorithm["solution"]);
             }
@@ -425,10 +426,10 @@
                 $second_number = $triplets[$linear_congruence_counter][1];
                 $third_number = $triplets[$linear_congruence_counter][2];
 
-                $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">" . $first_number . "*x \u{2261} " . $second_number . " mod(" . $third_number . ")</label></div>";
+                $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Old meg a " . $first_number . "*x \u{2261} " . $second_number . " mod(" . $third_number . ") lineáris kongruenciát!</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div>";
                 
-                for($step_counter = 0; $step_counter < count($actual_steps) - 1; $step_counter++){
+                /*for($step_counter = 0; $step_counter < count($actual_steps) - 1; $step_counter++){
                     $previous_step = $actual_steps[$step_counter];
                     $next_step = $actual_steps[$step_counter + 1];
                     
@@ -484,8 +485,10 @@
                         $final_b -= $final_modulo;
                     }
                 }
-                
                 $printable_solution =  $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:") . "</label></div>";
+                */
+                
+                $printable_solution =  $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableCongruenceSolution("x", $actual_steps) . "</label></div>";
 
 
                 array_push($descriptions, $task_description);

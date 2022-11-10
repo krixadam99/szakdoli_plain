@@ -138,6 +138,26 @@ function AddEventsToParagraphLabel(element, tag_bame){
     })
 }
 
+function removeHighlights(){
+    all_highlighted = false
+    chosen_elements_for_edition = []
+    let page_container_elements = page_container.children
+
+    for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+        let labels = page_container_elements[children_counter].querySelectorAll("label")
+        for(let label_element of labels){
+            chosen_elements_for_edition.push(label_element)
+        }
+    }
+
+    for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+        let labels = page_container_elements[children_counter].querySelectorAll("label")
+        for(let label_element of labels){   
+            label_element.click()
+        }
+    }
+}
+
 // Variables
 let small_exam_generation_card = document.getElementById("small_exam_generation")
 let big_exam_generation_card = document.getElementById("big_exam_generation")
@@ -221,23 +241,16 @@ if(page_container){
     page_container.addEventListener("click", (event)=>{
         if(event.ctrlKey){
             if(all_highlighted){
-                all_highlighted = false
-                chosen_elements_for_edition = []
-                for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
-                    let labels = page_container_elements[children_counter].querySelectorAll("label")
-                    for(let label_element of labels){
-                        chosen_elements_for_edition.push(label_element)
-                    }
-                }
+                removeHighlights();
             }else{
                 chosen_elements_for_edition = []
                 all_highlighted = true
-            }
-    
-            for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
-                let labels = page_container_elements[children_counter].querySelectorAll("label")
-                for(let label_element of labels){   
-                    label_element.click()
+
+                for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
+                    let labels = page_container_elements[children_counter].querySelectorAll("label")
+                    for(let label_element of labels){   
+                        label_element.click()
+                    }
                 }
             }
         }
@@ -252,7 +265,14 @@ if(add_new_task_button){
         let topic_select = parent_element.querySelector(".topic_select")
         let subtopic_select = parent_element.querySelector(".subtopic_select")
         let selected_main_topic = topic_select.options.selectedIndex
-        let selected_subtopic = subtopic_select.options.selectedIndex
+
+        let selected_subtopic = 0
+        if(subtopic_select.tagName === "SELECT"){
+            selected_subtopic = subtopic_select.options.selectedIndex
+        }
+
+        console.log(subtopic_select)
+
         let chosen_div = document.getElementById("big_exam_task_" + selected_main_topic + "_" + selected_subtopic)
 
         if(chosen_div != null){
@@ -366,15 +386,7 @@ if(save_pdf_button){
     save_pdf_button.addEventListener("click", (event)=>{
         event.preventDefault()
 
-        all_highlighted = false
-        let page_container_elements = page_container.children
-        chosen_elements_for_edition = Array.from(page_container_elements)
-        for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
-            let labels = page_container_elements[children_counter].querySelectorAll("label")
-            for(let label_element of labels){   
-                label_element.click()
-            }
-        }
+        removeHighlights();
 
 
         let preview_content = document.getElementById("page_container").cloneNode(true)
