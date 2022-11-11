@@ -170,16 +170,16 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>. Azt mondjuk, hogy az a és b szám kongruens egymással m modulusra, ha ugyanazt a maradékot adják az m-mel való maradékos osztás során.
+                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<sup>\u{2265}2</sup>. Azt mondjuk, hogy az a és b szám kongruens egymással m modulusra, ha ugyanazt a maradékot adják az m-mel való maradékos osztás során.
                         Ezt <i> a \u{2263} b (mod m)</i> fogjuk jelölni. Legyen a és b kongruens m-mel osztva.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>.
-                        Legyen a és b kongruens m-mel osztva. Ekkor korábbi definíciónk szerint a = q<span class=\"bottom\">a</span> * m + r és b = q<span class=\"bottom\">b</span> * m + r.
-                        Vegyük a két egyenlet különbségét, azaz a - b = q<span class=\"bottom\">a</span> * m + r - q<span class=\"bottom\">b</span> * m - r = (q<span class=\"bottom\">a</span> - q<span class=\"bottom\">b</span>) * m. 
-                        Mivel a q<span class=\"bottom\">a</span> és q<span class=\"bottom\">b</span> egészek, így a különbségük is az, ezért létezik olyan egész, amellyel m-et megszorozva a - b-t kapunk, azaz m | a - b.
+                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<sup>\u{2265}2</sup>.
+                        Legyen a és b kongruens m-mel osztva. Ekkor korábbi definíciónk szerint a = q<sub>a</sub> * m + r és b = q<sub>b</sub> * m + r.
+                        Vegyük a két egyenlet különbségét, azaz a - b = q<sub>a</sub> * m + r - q<sub>b</sub> * m - r = (q<sub>a</sub> - q<sub>b</sub>) * m. 
+                        Mivel a q<sub>a</sub> és q<sub>b</sub> egészek, így a különbségük is az, ezért létezik olyan egész, amellyel m-et megszorozva a - b-t kapunk, azaz m | a - b.
                         Röviden: <b>a \u{2263} b (mod m) \u{2194} a = b + m * k (k \u{2208} \u{2124}) \u{2194}  m | a - b</b>.
                     </label>
                 </div>",
@@ -195,13 +195,13 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen a \u{2208} \u{2124} \ {-1, 0, 1}, ekkor az előző szerint a = \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span></span> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<span class=\"exp\">+</span> \u{220B} p<span class=\"bottom\">i</span> páronként különböző prím \u{2227} \u{03B1}<span class=\"bottom\">i</span> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)). Ezt nevezzük az a szám <b>kanonikus felbontásának</b>.
+                        Legyen a \u{2208} \u{2124} \ {-1, 0, 1}, ekkor az előző szerint a = \u{220F}<sup>m</sup><sub>i=1</sub>p<sub>i</sub><sup>\u{03B1}<sub>i</sub></sup> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<sup>+</sup> \u{220B} p<sub>i</sub> páronként különböző prím \u{2227} \u{03B1}<sub>i</sub> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)). Ezt nevezzük az a szám <b>kanonikus felbontásának</b>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen a \u{2208} \u{2124} \ {-1, 0, 1}. Előbbi szerint: a = \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span></span> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<span class=\"exp\">+</span> \u{220B} p<span class=\"bottom\">i</span> páronként különböző prím \u{2227} \u{03B1}<span class=\"bottom\">i</span> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)).
-                        Ekkor az a szám pozitív osztóinak számát egy egyszerű variációval megkapjuk. A kanonikus alakban lévő kitevőket változtatva, különböző osztókat kapunk meg. Ezeken túl pedig más osztó nem lehetséges, mivel a prímfelbontás egyértelmű. Így pedig az <b>összes pozitív osztó száma: d(a) =  \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>(\u{03B1}<span class=\"bottom\">i</span> + 1)</b> (ahol \u{03B1}<span class=\"bottom\">i</span> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban).
+                        Legyen a \u{2208} \u{2124} \ {-1, 0, 1}. Előbbi szerint: a = \u{220F}<sup>m</sup><sub>i=1</sub>p<sub>i</sub><sup>\u{03B1}<sub>i</sub></sup> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<sup>+</sup> \u{220B} p<sub>i</sub> páronként különböző prím \u{2227} \u{03B1}<sub>i</sub> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)).
+                        Ekkor az a szám pozitív osztóinak számát egy egyszerű variációval megkapjuk. A kanonikus alakban lévő kitevőket változtatva, különböző osztókat kapunk meg. Ezeken túl pedig más osztó nem lehetséges, mivel a prímfelbontás egyértelmű. Így pedig az <b>összes pozitív osztó száma: d(a) =  \u{220F}<sup>m</sup><sub>i=1</sub>(\u{03B1}<sub>i</sub> + 1)</b> (ahol \u{03B1}<sub>i</sub> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban).
                     </label>
                 </div>"
             ];
@@ -250,21 +250,21 @@
                         Legyen \u{2124} \u{220B} n \u{2265} 2. Ekkor definiáljuk a ~ relációt a következő képpen: ~ \u{2286} \u{2124} \u{00D7} \u{2124}, ~ := { (a, b) \u{2208} \u{2124} \u{00D7} \u{2124} | n | a - b}, azaz pontosan akkor van (a, b) rendezett pár benne a ~ relációban, ha azonos maradékot adnak n-nel osztva (azaz kongruensek modulo n).
                         Ez a reláció ekvivalencia reláció (ezt a kongruenciák tulajdonságainál (4. téma) látjuk be), így meghatározhatunk egy osztályozást. 
                         Jelöljük a <span style=\"text-decoration: overline\">a</span>-val azt a halmazt, amely azokat az elemeket tartalmazza, melyek n-nel osztva a maradékot adnak, azaz <span style=\"text-decoration: overline\">a</span> = { b \u{2208} \u{2124} | n | a - b} = { ..., a - n, a, a + n, ...} = a + n * \u{2124} (az n * \u{2124} helyett használható az n * k (k \u{2208} \u{2124} jelölés is)). Ezt <b>maradékosztálynak</b> nevezzük.
-                        Ekkor egy osztályozást határoz meg az egész számokon a következő szuperhalmaz: { { n-nel osztva 0 maradékot adó egészek}, ..., { n-nel osztva n-1 maradékot adó egészek} } = { <span style=\"text-decoration: overline\">0</span>, ..., <span style=\"text-decoration: overline\">n-1</span> }. Ezt a \u{2124}/<span class=\"bottom\">n</span>\u{2124}-nel jelöljük és <b>teljes maradékrendszernek</b> nevezzük.
+                        Ekkor egy osztályozást határoz meg az egész számokon a következő szuperhalmaz: { { n-nel osztva 0 maradékot adó egészek}, ..., { n-nel osztva n-1 maradékot adó egészek} } = { <span style=\"text-decoration: overline\">0</span>, ..., <span style=\"text-decoration: overline\">n-1</span> }. Ezt a \u{2124}/<sub>n</sub>\u{2124}-nel jelöljük és <b>teljes maradékrendszernek</b> nevezzük.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">  
-                        Legyen <span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}, ekkor <span style=\"text-decoration: overline\">a</span> \u{00B1} <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">a \u{00B1} b</span> és <span style=\"text-decoration: overline\">a</span> * <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">a * b</span>.
+                        Legyen <span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124}, ekkor <span style=\"text-decoration: overline\">a</span> \u{00B1} <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">a \u{00B1} b</span> és <span style=\"text-decoration: overline\">a</span> * <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">a * b</span>.
                         Megjegyzendő, hogy a bal oldali szorzás és hozzáadás művelete nem azonos a jobb oldalival, hiszen az előbbi két halmaz között lett elvégezve (értelemszerűen az első halmaz minden eleméhez hozzáadjuk / megszorozzuk a második halmaz minden elemét/elemével), az utóbbi két egész között lesz végrehajtva. Az itt bevezetett (bal oldali) szorzás és hozzáadás műveletek kommutatívak, asszociatívak, diszrtibutívak, zártak és van neutrális elemük (előbbinél <span style=\"text-decoration: overline\">1</span>, utóbbinál <span style=\"text-decoration: overline\">0</span>). 
                         Viszont míg a hozzáadás esetén van minden elemnek inverzeleme, addig ez a szorzásra már nem igaz (pl.: <span style=\"text-decoration: overline\">0</span>). Ezért lesz szükségünk majd a redukált maradékrendszer fogalmának bevezetésére.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen \u{2124} \u{220B} n \u{2265} 2. A (\u{2124}/<span class=\"bottom\">n</span>\u{2124})<span class=\"exp\">*</span> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} | \u{2203} <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}: <span style=\"text-decoration: overline\">a</span> * <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">1</span> }. Ezt <b>redukált maradékrendszernek</b> nevezzük.
+                        Legyen \u{2124} \u{220B} n \u{2265} 2. A (\u{2124}/<sub>n</sub>\u{2124})<sup>*</sup> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} | \u{2203} <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124}: <span style=\"text-decoration: overline\">a</span> * <span style=\"text-decoration: overline\">b</span> = <span style=\"text-decoration: overline\">1</span> }. Ezt <b>redukált maradékrendszernek</b> nevezzük.
                         Ebben azok a maradékosztályok vannak benne, amelyeknek van inverz elemük a szorzásra nézve.
-                        Belátható, hogy (\u{2124}/<span class=\"bottom\">n</span>\u{2124})<span class=\"exp\">*</span> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} | gcd(a,n) = 1 }, azaz azok a maradékosztályok vannak benne, amelyeknek az elemei relatív prímek n-hez, azaz nincsen az egységen kívül más közös osztójuk n-nel.
+                        Belátható, hogy (\u{2124}/<sub>n</sub>\u{2124})<sup>*</sup> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} | gcd(a,n) = 1 }, azaz azok a maradékosztályok vannak benne, amelyeknek az elemei relatív prímek n-hez, azaz nincsen az egységen kívül más közös osztójuk n-nel.
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -276,22 +276,22 @@
                     <label class=\"definition_label\">
                         Az Euler- féle \u{03C6} függvény megadja egy pozitív egész szám esetén, hogy hány darab pozitív, hozzá relatív prím létezik, azaz, hány olyan pozitív szám van, amelynek az egységen kívül nincsen már közös osztója a számmal.
                         Ez a \u{2124} \u{220B} p prím esetén p - 1 (különben nem lenne prím). Az 1-hez a függvény 1-et rendel.
-                        Ha az \u{2124} \u{220B} a = p<span class=\"exp\">\u{03B1}</span> alakú, ahol p prím és alfa pedig nemnegatív egész, akkor bebizonyítható, hogy <b>\u{03C6}(a)</b> = a - p<span class=\"exp\">\u{03B1} - 1</span> = <b>p<span class=\"exp\">\u{03B1} - 1</span> * (p - 1)</b>.
+                        Ha az \u{2124} \u{220B} a = p<sup>\u{03B1}</sup> alakú, ahol p prím és alfa pedig nemnegatív egész, akkor bebizonyítható, hogy <b>\u{03C6}(a)</b> = a - p<sup>\u{03B1} - 1</sup> = <b>p<sup>\u{03B1} - 1</sup> * (p - 1)</b>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Az is bebizonyítható, hogy ez a függvény multiplikatív, azaz \u{03C6}(a * b) = \u{03C6}(a) * \u{03C6}(b) (a, b \u{2208} \u{2124}).
-                        Végül az \u{2124}<span class=\"exp\">>1</span> \u{220B} a = \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span></span> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<span class=\"exp\">+</span> \u{220B} p<span class=\"bottom\">i</span> páronként különböző prím \u{2227} \u{03B1}<span class=\"bottom\">i</span> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)) kanonikus alak alapján már bármely összetett számra meghatározható a pozitív, hozzá relatív prímek száma.
+                        Végül az \u{2124}<sup>>1</sup> \u{220B} a = \u{220F}<sup>m</sup><sub>i=1</sub>p<sub>i</sub><sup>\u{03B1}<sub>i</sub></sup> (m \u{2265} 1, (i \u{2208} {1,...,m} \u{2282} \u{2115}): \u{2124}<sup>+</sup> \u{220B} p<sub>i</sub> páronként különböző prím \u{2227} \u{03B1}<sub>i</sub> \u{2265} 0 (a prímszám előfordulása a prímfelbontásban)) kanonikus alak alapján már bármely összetett számra meghatározható a pozitív, hozzá relatív prímek száma.
                         <b>\u{03C6}(a)
-                        = \u{03C6}(\u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span></span>)
-                        = \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>\u{03C6}(p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span></span>)
-                        = \u{220F}<span class=\"exp\">m</span><span class=\"bottom\">i=1</span>(p<span class=\"bottom\">i</span><span class=\"exp\">\u{03B1}<span class=\"bottom\">i</span> - 1</span> * (p<span class=\"bottom\">i</span> - 1))</b>.
+                        = \u{03C6}(\u{220F}<sup>m</sup><sub>i=1</sub>p<sub>i</sub><sup>\u{03B1}<sub>i</sub></sup>)
+                        = \u{220F}<sup>m</sup><sub>i=1</sub>\u{03C6}(p<sub>i</sub><sup>\u{03B1}<sub>i</sub></sup>)
+                        = \u{220F}<sup>m</sup><sub>i=1</sub>(p<sub>i</sub><sup>\u{03B1}<sub>i</sub> - 1</sup> * (p<sub>i</sub> - 1))</b>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Korábbi tétel szerint (\u{2124}/<span class=\"bottom\">n</span>\u{2124})<span class=\"exp\">*</span> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} | gcd(a,n) = 1 }, vagyis ahhoz, hogy megkapjuk a |(\u{2124}/<span class=\"bottom\">n</span>\u{2124})<span class=\"exp\">*</span>|-et elég meghatározni a \u{03C6}(n)-et.
+                        Korábbi tétel szerint (\u{2124}/<sub>n</sub>\u{2124})<sup>*</sup> = { <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} | gcd(a,n) = 1 }, vagyis ahhoz, hogy megkapjuk a |(\u{2124}/<sub>n</sub>\u{2124})<sup>*</sup>|-et elég meghatározni a \u{03C6}(n)-et.
                     </label>
                 </div>"
             ];
@@ -351,7 +351,7 @@
                         A legnagyobb közös osztót az <i>LNKO(a,b)</i>-vel, <i>gcd(a,b)</i>-mel, esetleg <i>(a,b)</i>-vel jelöljük.  A másodikat és az elsőt fogom használni. Ritkán a harmadikat is, bár az összetéveszthető a rendezett párokkal, vagy nyílt intervallummal.
                         Adott \u{2124} \u{220B} a gcd(0, a) = |a|. Nyilván |a| \u{2265} 0, és |a| a legnagyobb olyan szám, amely osztója a-nak. Végül azt is tudjuk, hogy bármely szám osztója a 0-nak, így a |a| is.
                         Az is bebizonyítható, hogy gcd(a, b) = gcd(a, b - k * a) (a, b, k \u{2208} \u{2124}). 
-                        Ehhez vennünk kell a { d \u{2208} \u{2124}<span class=\"exp\">\u{2265}0</span> : d | a \u{2227} d | b} és { d \u{2208} \u{2124}<span class=\"exp\">\u{2265}0</span> : d | a \u{2227} d | b - a * k} halmazokat és be kell látni, hogy azonosak, így pedig a véges elemszámuk miatt a maximumuk (ami rendre gcd(a, b) és gcd(a, b - k * a)) is egyenlő.
+                        Ehhez vennünk kell a { d \u{2208} \u{2124}<sup>\u{2265}0</sup> : d | a \u{2227} d | b} és { d \u{2208} \u{2124}<sup>\u{2265}0</sup> : d | a \u{2227} d | b - a * k} halmazokat és be kell látni, hogy azonosak, így pedig a véges elemszámuk miatt a maximumuk (ami rendre gcd(a, b) és gcd(a, b - k * a)) is egyenlő.
                         Az Eukleidészi- algoritmus segítségével bizonyítjuk, hogy bármely két egész számnak van legnagyobb közös osztója.
                     </label>
                 </div>
@@ -378,20 +378,20 @@
                     <label class=\"definition_label\">
                         Adottak a \u{2124} \u{220B} a, b számok. Feltételezzük, hogy mind a kettő nemnegatív (ha negatívak, akkor vegyük az abszolútértéküket, ugyanis a legnagyobb közös osztó ugyanaz marad), valamint az a \u{2265} b.
                         Majd hajtsuk végre a következő maradékos osztásokat:<br>
-                        a = q<span class=\"bottom\">0</span> * b + r<span class=\"bottom\">0</span>;<br>
-                        b = q<span class=\"bottom\">1</span> * r<span class=\"bottom\">0</span> + r<span class=\"bottom\">1</span>;<br>
-                        r<span class=\"bottom\">0</span> = q<span class=\"bottom\">2</span> * r<span class=\"bottom\">1</span> + r<span class=\"bottom\">2</span>;<br>
+                        a = q<sub>0</sub> * b + r<sub>0</sub>;<br>
+                        b = q<sub>1</sub> * r<sub>0</sub> + r<sub>1</sub>;<br>
+                        r<sub>0</sub> = q<sub>2</sub> * r<sub>1</sub> + r<sub>2</sub>;<br>
                         ...<br>
-                        r<span class=\"bottom\">i-2</span> = q<span class=\"bottom\">i</span> * r<span class=\"bottom\">i-1</span> + r<span class=\"bottom\">i</span>.
+                        r<sub>i-2</sub> = q<sub>i</sub> * r<sub>i-1</sub> + r<sub>i</sub>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Mivel itt végig maradékos osztást hajtottunk végre, ezért a korábbi tétel alapján |b| = b > |r<span class=\"bottom\">0</span>| = r<span class=\"bottom\">0</span> > ... > |r<span class=\"bottom\">i</span>| = r<span class=\"bottom\">i</span> \u{2265} 0,
-                        tehát a maradékok egy szigorúan monoton csökkenő számsorozatot alkotnak, ebből pedig következik, hogy az algoritmus véges számú lépésben véget ér. Az i-t értelemszerűen érdemes úgy megválasztani, hogy az r<span class=\"bottom\">i</span> 0 legyen.
-                        Felhasználva a korábbi tételeinket: gcd(a, b) = gcd(b, a - k<span class=\"bottom\">0</span> * b) [k<span class=\"bottom\">0</span> \u{2208} \u{2124}, ezért kicserélhető q<span class=\"bottom\">0</span>-ra] = gcd(b, a -  q<span class=\"bottom\">0</span> * b) 
-                        = gcd(b, r<span class=\"bottom\">0</span>) = gcd(r<span class=\"bottom\">0</span>, b - k<span class=\"bottom\">1</span> * r<span class=\"bottom\">0</span>) [k<span class=\"bottom\">1</span> \u{2208} \u{2124}, ezért kicserélhető q<span class=\"bottom\">1</span>-re] = gcd(r<span class=\"bottom\">0</span>, b - q<span class=\"bottom\">1</span> * r<span class=\"bottom\">0</span>) 
-                        = gcd(r<span class=\"bottom\">0</span>, r<span class=\"bottom\">1</span>) = ... = gcd(r<span class=\"bottom\">i-1</span>, r<span class=\"bottom\">i</span>) = gcd(r<span class=\"bottom\">i-1</span>, 0) = |r<span class=\"bottom\">i-1</span>| = r<span class=\"bottom\">i-1</span>.
+                        Mivel itt végig maradékos osztást hajtottunk végre, ezért a korábbi tétel alapján |b| = b > |r<sub>0</sub>| = r<sub>0</sub> > ... > |r<sub>i</sub>| = r<sub>i</sub> \u{2265} 0,
+                        tehát a maradékok egy szigorúan monoton csökkenő számsorozatot alkotnak, ebből pedig következik, hogy az algoritmus véges számú lépésben véget ér. Az i-t értelemszerűen érdemes úgy megválasztani, hogy az r<sub>i</sub> 0 legyen.
+                        Felhasználva a korábbi tételeinket: gcd(a, b) = gcd(b, a - k<sub>0</sub> * b) [k<sub>0</sub> \u{2208} \u{2124}, ezért kicserélhető q<sub>0</sub>-ra] = gcd(b, a -  q<sub>0</sub> * b) 
+                        = gcd(b, r<sub>0</sub>) = gcd(r<sub>0</sub>, b - k<sub>1</sub> * r<sub>0</sub>) [k<sub>1</sub> \u{2208} \u{2124}, ezért kicserélhető q<sub>1</sub>-re] = gcd(r<sub>0</sub>, b - q<sub>1</sub> * r<sub>0</sub>) 
+                        = gcd(r<sub>0</sub>, r<sub>1</sub>) = ... = gcd(r<sub>i-1</sub>, r<sub>i</sub>) = gcd(r<sub>i-1</sub>, 0) = |r<sub>i-1</sub>| = r<sub>i-1</sub>.
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -407,23 +407,23 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         A gcd(a,b) meghatározásánál használt Eukleidészi- algoritmust felhasználva alkotjuk meg az itteni algoritmust. Azt szeretnénk elérni, hogy minden maradékot felírhassunk az a és b lineáris kombinációjaként.<br>
-                        r<span class=\"bottom\">-2</span> := 1*a + 0*b = a (m<span class=\"bottom\">-2</span> := 1, n<span class=\"bottom\">-2</span> := 0);<br>
-                        r<span class=\"bottom\">-1</span> := 0*a + 1*b = b (m<span class=\"bottom\">-1</span> := 0, n<span class=\"bottom\">-1</span> := 1);<br>
-                        r<span class=\"bottom\">0</span> = a - q<span class=\"bottom\">0</span> * b (m<span class=\"bottom\">0</span> := 1, n<span class=\"bottom\">0</span> := -q<span class=\"bottom\">0</span>);<br>
-                        r<span class=\"bottom\">1</span> = b - q<span class=\"bottom\">1</span> * r<span class=\"bottom\">0</span> = b - q<span class=\"bottom\">1</span> * (a - q<span class=\"bottom\">0</span> * b) =  b * (1 + q<span class=\"bottom\">1</span> * q<span class=\"bottom\">0</span>) - q<span class=\"bottom\">1</span> * a (m<span class=\"bottom\">1</span> := -q<span class=\"bottom\">1</span>, n<span class=\"bottom\">1</span> := 1 + q<span class=\"bottom\">1</span> * q<span class=\"bottom\">0</span>);<br>
+                        r<sub>-2</sub> := 1*a + 0*b = a (m<sub>-2</sub> := 1, n<sub>-2</sub> := 0);<br>
+                        r<sub>-1</sub> := 0*a + 1*b = b (m<sub>-1</sub> := 0, n<sub>-1</sub> := 1);<br>
+                        r<sub>0</sub> = a - q<sub>0</sub> * b (m<sub>0</sub> := 1, n<sub>0</sub> := -q<sub>0</sub>);<br>
+                        r<sub>1</sub> = b - q<sub>1</sub> * r<sub>0</sub> = b - q<sub>1</sub> * (a - q<sub>0</sub> * b) =  b * (1 + q<sub>1</sub> * q<sub>0</sub>) - q<sub>1</sub> * a (m<sub>1</sub> := -q<sub>1</sub>, n<sub>1</sub> := 1 + q<sub>1</sub> * q<sub>0</sub>);<br>
                         ...<br>
                         Tegyük fel, hogy a k.-ik (0 \u{2264} k \u{2264} (i - 1)) lépésig (a k.-ik már nem) minden maradékot fel tudtunk írni a és b lineáris kombinációjaként, 
-                        vagyis r<span class=\"bottom\">k-2</span> = m<span class=\"bottom\">k-2</span> * a + n<span class=\"bottom\">k-2</span> * b és r<span class=\"bottom\">k-1</span> = m<span class=\"bottom\">k-1</span> * a + n<span class=\"bottom\">k-1</span> * b.<br>
-                        Ekkor az Eukleidészi- algoritmus szerint: r<span class=\"bottom\">k</span> = r<span class=\"bottom\">k-2</span> - q<span class=\"bottom\">k</span> * r<span class=\"bottom\">k-1</span>
-                        = m<span class=\"bottom\">k-2</span> * a + n<span class=\"bottom\">k-2</span> * b - q<span class=\"bottom\">k</span> * (m<span class=\"bottom\">k-1</span> * a + n<span class=\"bottom\">k-1</span> * b)
-                        = a * (m<span class=\"bottom\">k-2</span> - q<span class=\"bottom\">k</span> * m<span class=\"bottom\">k-1</span>) + b*(n<span class=\"bottom\">k-2</span> - q<span class=\"bottom\">k</span> * n<span class=\"bottom\">k-1</span>)
-                        = a * m<span class=\"bottom\">k</span>  + b*n<span class=\"bottom\">k</span> (m<span class=\"bottom\">k</span> := m<span class=\"bottom\">k-2</span> - q<span class=\"bottom\">k</span> * m<span class=\"bottom\">k-1</span>, n<span class=\"bottom\">k</span> := n<span class=\"bottom\">k-2</span> - q<span class=\"bottom\">k</span> * n<span class=\"bottom\">k-1</span>).
+                        vagyis r<sub>k-2</sub> = m<sub>k-2</sub> * a + n<sub>k-2</sub> * b és r<sub>k-1</sub> = m<sub>k-1</sub> * a + n<sub>k-1</sub> * b.<br>
+                        Ekkor az Eukleidészi- algoritmus szerint: r<sub>k</sub> = r<sub>k-2</sub> - q<sub>k</sub> * r<sub>k-1</sub>
+                        = m<sub>k-2</sub> * a + n<sub>k-2</sub> * b - q<sub>k</sub> * (m<sub>k-1</sub> * a + n<sub>k-1</sub> * b)
+                        = a * (m<sub>k-2</sub> - q<sub>k</sub> * m<sub>k-1</sub>) + b*(n<sub>k-2</sub> - q<sub>k</sub> * n<sub>k-1</sub>)
+                        = a * m<sub>k</sub>  + b*n<sub>k</sub> (m<sub>k</sub> := m<sub>k-2</sub> - q<sub>k</sub> * m<sub>k-1</sub>, n<sub>k</sub> := n<sub>k-2</sub> - q<sub>k</sub> * n<sub>k-1</sub>).
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Mivel gcd(a,b) = r<span class=\"bottom\">i-1</span>, és r<span class=\"bottom\">i-1</span> a kibővített Eukleidészi- algoritmus szerint felírható az a és b lineáris kombinációjaként, ezért a legnagyobb közös osztó is.
-                        Ezt nevezzük Bézout- azonosságnak: gcd(a,b) = a * x + b * y ( = a * m<span class=\"bottom\">i-1</span> + b * n<span class=\"bottom\">i-1</span>) (x, y \u{2208} \u{2124}).
+                        Mivel gcd(a,b) = r<sub>i-1</sub>, és r<sub>i-1</sub> a kibővített Eukleidészi- algoritmus szerint felírható az a és b lineáris kombinációjaként, ezért a legnagyobb közös osztó is.
+                        Ezt nevezzük Bézout- azonosságnak: gcd(a,b) = a * x + b * y ( = a * m<sub>i-1</sub> + b * n<sub>i-1</sub>) (x, y \u{2208} \u{2124}).
                         Adottak a \u{2124} \u{220B} a, b, c számok, továbbá tudjuk, hogy c | a * b és gcd(c, a) = 1, ekkor c | b. Bézout szerint, ekkor 1 = c * x + a * y (x, y \u{2208} \u{2124}), mind a két oldalt b-vel szorozva pedig b = c * x * b + a * b * y, ahol a b a jobb oldal mindkét tagját osztja, így pedig a bal oldalt, azaz a b-t is.
                         Következmény: ha a p szám prím és osztója az a * b szorzatnak, akkor osztója a-nak, vagy b-nek is. Sőt ez kiterjeszthető többtényezős szorzatra is.
                     </label>
@@ -467,15 +467,15 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Korábban már vettünk kongruenciákat. Azt mondtuk, hogy az a és b számok kongruensek m modulussal, amennyiben azonos maradékot adnak m-mel osztva.
-                        Azt is beláttuk, hogy (a, b \u{2208} \u{2124})(m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>):a \u{2261} b (mod m) \u{2194} a = b + m * k (k \u{2208} \u{2124}) \u{2194} m | a - b. Jöjjön a kongruenciák néhány tulajdonsága.
+                        Azt is beláttuk, hogy (a, b \u{2208} \u{2124})(m \u{2208} \u{2124}<sup>\u{2265}2</sup>):a \u{2261} b (mod m) \u{2194} a = b + m * k (k \u{2208} \u{2124}) \u{2194} m | a - b. Jöjjön a kongruenciák néhány tulajdonsága.
                     </label>
                     <ul class=\"definition_list\">
-                        <li><label>(\u{2200} a \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a \u{2261} a (mod m) (ugyanis: m | 0 = a - a) (reflexivitás);</label></li>
-                        <li><label>(\u{2200} a, b \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a \u{2261} b (mod m) \u{2194} b \u{2261} a (mod m) (ugyanis: m | a - b \u{2194} m | b - a) (szimmetria);</label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a \u{2261} b (mod m) \u{2227} b \u{2261} c (mod m) \u{2192} a \u{2261} c (mod m) (ugyanis: (m | a - b \u{2227} m | b - c) \u{2194} (m * k + b = a (k \u{2208} \u{2124}) \u{2227} m * l + c = b (l \u{2208} \u{2124})) \u{2194} (m * (k + l) = a - c) \u{2194} m | a - c) (tranzitivitás);</label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a \u{2261} b (mod m) \u{2194} a \u{00B1} c \u{2261} b \u{00B1} c (mod m) (ugyanis: m | a - b \u{2194} m | a \u{00B1} c - (b \u{00B1} c) = a \u{00B1} c - b \u{2213} c = a - b);</label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a \u{2261} b (mod m) \u{2192} a * c \u{2261} b * c (mod m) (ugyanis: m | a - b \u{2192} m | a * c - b * c = (a - b) * c);</label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a * c \u{2261} b * c (mod m) \u{2192} a \u{2261} b (mod m/gcd(m,c)).</label></li>
+                        <li><label>(\u{2200} a \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} a (mod m) (ugyanis: m | 0 = a - a) (reflexivitás);</label></li>
+                        <li><label>(\u{2200} a, b \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} b (mod m) \u{2194} b \u{2261} a (mod m) (ugyanis: m | a - b \u{2194} m | b - a) (szimmetria);</label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} b (mod m) \u{2227} b \u{2261} c (mod m) \u{2192} a \u{2261} c (mod m) (ugyanis: (m | a - b \u{2227} m | b - c) \u{2194} (m * k + b = a (k \u{2208} \u{2124}) \u{2227} m * l + c = b (l \u{2208} \u{2124})) \u{2194} (m * (k + l) = a - c) \u{2194} m | a - c) (tranzitivitás);</label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} b (mod m) \u{2194} a \u{00B1} c \u{2261} b \u{00B1} c (mod m) (ugyanis: m | a - b \u{2194} m | a \u{00B1} c - (b \u{00B1} c) = a \u{00B1} c - b \u{2213} c = a - b);</label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} b (mod m) \u{2192} a * c \u{2261} b * c (mod m) (ugyanis: m | a - b \u{2192} m | a * c - b * c = (a - b) * c);</label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a * c \u{2261} b * c (mod m) \u{2192} a \u{2261} b (mod m/gcd(m,c)).</label></li>
                     </ul>
                 </div>",
                 "<div class=\"defined\">
@@ -485,26 +485,26 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span> számok. Ekkor az a * x \u{2261} b (mod m) kongruenciát lineárisnak nevezzük.
+                        Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<sup>\u{2265}2</sup> számok. Ekkor az a * x \u{2261} b (mod m) kongruenciát lineárisnak nevezzük.
                         A feladat az, hogy megkeressük azokat az x számokat, amellyel igaz állítást kapunk, azaz a * x és b azonos maradékot ad m-mel osztva.
-                        Nem mindig lesz megoldható ez a feladat. Az ekvivalenciákat követve: a * x \u{2261} b (mod m) \u{2194} m | a * x - b \u{2194} a * x +  (-y) * m = b. Vegyük az a és m legnagyobb közös osztóját (jelöljük d-vel), ekkor az egyenlet a következő formát veszi fel: d * a<span class=\"bottom\">d</span> * x + d * m<span class=\"bottom\">d</span> * y = b. 
+                        Nem mindig lesz megoldható ez a feladat. Az ekvivalenciákat követve: a * x \u{2261} b (mod m) \u{2194} m | a * x - b \u{2194} a * x +  (-y) * m = b. Vegyük az a és m legnagyobb közös osztóját (jelöljük d-vel), ekkor az egyenlet a következő formát veszi fel: d * a<sub>d</sub> * x + d * m<sub>d</sub> * y = b. 
                         A bal oldal osztható d-vel, így pedig a jobb oldalnak is oszthatónak kell lennie. Az a * x \u{2261} b (mod m) lineáris kongruencia pontosan akkor oldható meg, ha (a,m) | b.
                         \"Sima\" kongruenciák esetén nincs ekvivalencia, például a (3,9) | 6, de 3 és 6 nem ad azonos maradékot 9-cel osztva. Ott ez szükséges, de nem elégséges feltétel.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Egy lehetsége megoldása az (a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a * x \u{2261} b (mod m) lineáris kongruenciának:<br>
+                        Egy lehetsége megoldása az (a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a * x \u{2261} b (mod m) lineáris kongruenciának:<br>
                         1. lépés: ellenőrizzük, hogy (a, m) | b;<br>
                         2. lépés: ha a = 0, akkor |m| | b, ekkor megállhatunk, x bármi lehet; <br>
                         3. lépés: vesszük az a és b maradékát m-mel osztva;<br>
                         4. lépés: amíg a b nem osztható az a-val:<br>
-                        4.1. lépés: b<span class=\"bottom\">+</span> := b;<br>
-                        4.2. lépés: b<span class=\"bottom\">-</span> := b;<br>
-                        4.3. lépés: amíg (a,b<span class=\"bottom\">+</span>) == 1 és (a,b<span class=\"bottom\">-</span>) == 1:<br>
-                        4.3.1. lépés: b<span class=\"bottom\">+</span> := b<span class=\"bottom\">+</span> + m;<br>
-                        4.3.2. lépés: b<span class=\"bottom\">-</span> := b<span class=\"bottom\">-</span> - m;<br>
-                        4.4. lépés: ha (a,b<span class=\"bottom\">+</span>) == 1, akkor b := b<span class=\"bottom\">+</span>, különben b := b<span class=\"bottom\">-</span><br>
+                        4.1. lépés: b<sub>+</sub> := b;<br>
+                        4.2. lépés: b<sub>-</sub> := b;<br>
+                        4.3. lépés: amíg (a,b<sub>+</sub>) == 1 és (a,b<sub>-</sub>) == 1:<br>
+                        4.3.1. lépés: b<sub>+</sub> := b<sub>+</sub> + m;<br>
+                        4.3.2. lépés: b<sub>-</sub> := b<sub>-</sub> - m;<br>
+                        4.4. lépés: ha (a,b<sub>+</sub>) == 1, akkor b := b<sub>+</sub>, különben b := b<sub>-</sub><br>
                         4.5. lépés: osztjuk a kongruenciát gcd(a, b)-vel;<br>
                         5. lépés: osztjuk a kongruenciát gcd(a,b) = a -val.
                     </label>
@@ -566,11 +566,11 @@
                 <label class=\"definition_label\">
                     (a, b, c \u{2208} \u{2124}): a * x + b * y = c II. lehetséges megoldása:<br>
                     1. lépés: ellenőrizzük, hogy (a,b) | c;<br>
-                    2. lépés: meghatározni egy x<span class=\"bottom\">0</span> és y<span class=\"bottom\">0</span> alapmegoldást;<br>
-                    2.1. lépés: kibővíttt Eukleidészi- algoritmussal határozzuk meg a megoldását a gcd(a,b) = a * x<span class=\"bottom\">a</span> + b * y<span class=\"bottom\">b</span> (x<span class=\"bottom\">a</span>, y<span class=\"bottom\">b</span> \u{2208} \u{2124});<br>
-                    2.2. lépés: szorozzuk be mind a két oldalt (c/gcd(a,b))-val, így c = a * x<span class=\"bottom\">a</span> * (c/gcd(a,b)) + b * y<span class=\"bottom\">b</span> * (c/gcd(a,b)) (x<span class=\"bottom\">a</span>, y<span class=\"bottom\">b</span> \u{2208} \u{2124});<br>
-                    2.3. lépés: az alap megoldások így: x<span class=\"bottom\">0</span> = x<span class=\"bottom\">a</span> * (c/gcd(a,b)) és y<span class=\"bottom\">0</span> = y<span class=\"bottom\">b</span> * (c/gcd(a,b));<br>
-                    3. lépés: behelyettesítés az x = x<span class=\"bottom\">0</span> + k * (b/gcd(a,b)) és y = y<span class=\"bottom\">0</span> - k * (a/gcd(a,b)) egyenletekbe, ahol a k egy tetszőleges egész szám, ami közös a két egyenletben.
+                    2. lépés: meghatározni egy x<sub>0</sub> és y<sub>0</sub> alapmegoldást;<br>
+                    2.1. lépés: kibővíttt Eukleidészi- algoritmussal határozzuk meg a megoldását a gcd(a,b) = a * x<sub>a</sub> + b * y<sub>b</sub> (x<sub>a</sub>, y<sub>b</sub> \u{2208} \u{2124});<br>
+                    2.2. lépés: szorozzuk be mind a két oldalt (c/gcd(a,b))-val, így c = a * x<sub>a</sub> * (c/gcd(a,b)) + b * y<sub>b</sub> * (c/gcd(a,b)) (x<sub>a</sub>, y<sub>b</sub> \u{2208} \u{2124});<br>
+                    2.3. lépés: az alap megoldások így: x<sub>0</sub> = x<sub>a</sub> * (c/gcd(a,b)) és y<sub>0</sub> = y<sub>b</sub> * (c/gcd(a,b));<br>
+                    3. lépés: behelyettesítés az x = x<sub>0</sub> + k * (b/gcd(a,b)) és y = y<sub>0</sub> - k * (a/gcd(a,b)) egyenletekbe, ahol a k egy tetszőleges egész szám, ami közös a két egyenletben.
                 </label>
             </div>"
         ];
@@ -614,39 +614,39 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen n, m \u{2264} 2 egészek úgy, hogy gcd(n,m) = 1. Ekkor az f: \u{2124}/<span class=\"bottom\">n*m</span>\u{2124} \u{2192} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{00D7} \u{2124}/<span class=\"bottom\">m</span>\u{2124}, 
+                        Legyen n, m \u{2264} 2 egészek úgy, hogy gcd(n,m) = 1. Ekkor az f: \u{2124}/<sub>n*m</sub>\u{2124} \u{2192} \u{2124}/<sub>n</sub>\u{2124} \u{00D7} \u{2124}/<sub>m</sub>\u{2124}, 
                         f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span>,<span style=\"text-decoration: overline\">a</span>) egy bijektív függvény.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Egyértelműség:<br>
-                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) \u{2260} (<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">2</span>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
-                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban \u{2194} n * m | a - b \u{2194} n * m * k + b = a (k \u{2208} \u{2124}). 
-                        Ezt behelyettesítve az (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>)-ba: <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és 
-                        <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}. Mind a két esetben kiesik az n * m * k tag, így valójában <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és
-                        <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}, azaz (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) = (<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">b</span><span class=\"bottom\">2</span>).
+                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n*m</sub>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><sub>1</sub>,<span style=\"text-decoration: overline\">a</span><sub>2</sub>) \u{2260} (<span style=\"text-decoration: overline\">b</span><sub>1</sub>,<span style=\"text-decoration: overline\">b</span><sub>2</sub>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<sub>n*m</sub>\u{2124}-ban.
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n*m</sub>\u{2124}-ban \u{2194} n * m | a - b \u{2194} n * m * k + b = a (k \u{2208} \u{2124}). 
+                        Ezt behelyettesítve az (<span style=\"text-decoration: overline\">a</span><sub>2</sub>,<span style=\"text-decoration: overline\">a</span><sub>2</sub>)-ba: <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} és 
+                        <span style=\"text-decoration: overline\">n * m * k + b</span> \u{2208} \u{2124}/<sub>m</sub>\u{2124}. Mind a két esetben kiesik az n * m * k tag, így valójában <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} és
+                        <span style=\"text-decoration: overline\">n * m * k + b</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>m</sub>\u{2124}, azaz (<span style=\"text-decoration: overline\">a</span><sub>1</sub>,<span style=\"text-decoration: overline\">a</span><sub>2</sub>) = (<span style=\"text-decoration: overline\">b</span><sub>1</sub>,<span style=\"text-decoration: overline\">b</span><sub>2</sub>).
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Injektivitás:
-                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> \u{2260} <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
-                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124} \u{2194} m | a - b \u{2194} m * k = a - b (k \u{2208} \u{2124}) és
-                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{2194} n | a - b \u{2194} n * l = a - b (l \u{2208} \u{2124}).
+                        Tegyük fel, hogy (<span style=\"text-decoration: overline\">a</span>, <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n*m</sub>\u{2124}): f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span><sub>1</sub>,<span style=\"text-decoration: overline\">a</span><sub>2</sub>) = f(<span style=\"text-decoration: overline\">b</span>), hogy <span style=\"text-decoration: overline\">a</span> \u{2260} <span style=\"text-decoration: overline\">b</span> \u{2124}/<sub>n*m</sub>\u{2124}-ban.
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>m</sub>\u{2124} \u{2194} m | a - b \u{2194} m * k = a - b (k \u{2208} \u{2124}) és
+                        <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} \u{2194} n | a - b \u{2194} n * l = a - b (l \u{2208} \u{2124}).
                         Valamint a Bézout- azonosság szerint: gcd(n,m) = 1 = n * x + m * y (x, y \u{2208} \u{2124}), mind a két oldalt (a-b)-vel szorozzuk, (a - b) = (a - b) * n * x + (a - b) * m * y = m * k * n * x + n * l * m * y, a jobb oldal osztható (n * m)-mel, így pedig az egyenlőségjel miatt az a - b is.
-                        m * n | a - b \u{2194} <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}, azaz <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<span class=\"bottom\">n*m</span>\u{2124}-ban.
+                        m * n | a - b \u{2194} <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2208} \u{2124}/<sub>n*m</sub>\u{2124}, azaz <span style=\"text-decoration: overline\">a</span> = <span style=\"text-decoration: overline\">b</span> \u{2124}/<sub>n*m</sub>\u{2124}-ban.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Szürjektivitás:
-                        Kell keresnünk minden (<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">1</span>,<span style=\"text-decoration: overline\">a</span><span class=\"bottom\">2</span>) \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} \u{00D7} \u{2124}/<span class=\"bottom\">m</span>\u{2124} párhoz egy megfelelő <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<span class=\"bottom\">n*m</span>\u{2124} maradékosztályt.
+                        Kell keresnünk minden (<span style=\"text-decoration: overline\">a</span><sub>1</sub>,<span style=\"text-decoration: overline\">a</span><sub>2</sub>) \u{2208} \u{2124}/<sub>n</sub>\u{2124} \u{00D7} \u{2124}/<sub>m</sub>\u{2124} párhoz egy megfelelő <span style=\"text-decoration: overline\">a</span> \u{2208} \u{2124}/<sub>n*m</sub>\u{2124} maradékosztályt.
                         A Bézout- azonosság szerint: gcd(n,m) = 1 = n * x + m * y (x, y \u{2208} \u{2124}), vagyis n * x \u{2261} 1 (mod m) és m * y \u{2261} 1 (mod n).
-                        Vegyük az n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span> számot. Nézzük meg ennek mi a függvény általi képe: f(<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>) = (<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>,<span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span>), ahol
-                        <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124} és <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">m</span>\u{2124}.
-                        A fentieket persze átírhatjuk: <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">0 + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">1 * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">a<span class=\"bottom\">1</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}, hasonlóan
-                        <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span></span> = <span style=\"text-decoration: overline\">n * x * a<span class=\"bottom\">2</span> + 0</span> = <span style=\"text-decoration: overline\">1 * a<span class=\"bottom\">2</span></span> = <span style=\"text-decoration: overline\">a<span class=\"bottom\">2</span></span> \u{2208} \u{2124}/<span class=\"bottom\">n</span>\u{2124}. Tehát a n * x * a<span class=\"bottom\">2</span> + m * y * a<span class=\"bottom\">1</span> megfelelő szám.
+                        Vegyük az n * x * a<sub>2</sub> + m * y * a<sub>1</sub> számot. Nézzük meg ennek mi a függvény általi képe: f(<span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span>) = (<span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span>,<span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span>), ahol
+                        <span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span> \u{2208} \u{2124}/<sub>n</sub>\u{2124} és <span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span> \u{2208} \u{2124}/<sub>m</sub>\u{2124}.
+                        A fentieket persze átírhatjuk: <span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span> = <span style=\"text-decoration: overline\">0 + m * y * a<sub>1</sub></span> = <span style=\"text-decoration: overline\">1 * a<sub>1</sub></span> = <span style=\"text-decoration: overline\">a<sub>1</sub></span> \u{2208} \u{2124}/<sub>n</sub>\u{2124}, hasonlóan
+                        <span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + m * y * a<sub>1</sub></span> = <span style=\"text-decoration: overline\">n * x * a<sub>2</sub> + 0</span> = <span style=\"text-decoration: overline\">1 * a<sub>2</sub></span> = <span style=\"text-decoration: overline\">a<sub>2</sub></span> \u{2208} \u{2124}/<sub>n</sub>\u{2124}. Tehát a n * x * a<sub>2</sub> + m * y * a<sub>1</sub> megfelelő szám.
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -657,10 +657,10 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Legyen az n \u{2264} 2:<br>
-                        (a<span class=\"bottom\">1</span>, b<span class=\"bottom\">1</span> \u{2208} \u{2124} és m<span class=\"bottom\">1</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">1</span> * x \u{2261} b<span class=\"bottom\">1</span> (mod m<span class=\"bottom\">1</span>)<br>
-                        (a<span class=\"bottom\">2</span>, b<span class=\"bottom\">2</span> \u{2208} \u{2124} és m<span class=\"bottom\">2</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">2</span> * x \u{2261} b<span class=\"bottom\">2</span> (mod m<span class=\"bottom\">2</span>)<br>
+                        (a<sub>1</sub>, b<sub>1</sub> \u{2208} \u{2124} és m<sub>1</sub> \u{2208} \u{2124}<sup>\u{2265}2</sup>): a<sub>1</sub> * x \u{2261} b<sub>1</sub> (mod m<sub>1</sub>)<br>
+                        (a<sub>2</sub>, b<sub>2</sub> \u{2208} \u{2124} és m<sub>2</sub> \u{2208} \u{2124}<sup>\u{2265}2</sup>): a<sub>2</sub> * x \u{2261} b<sub>2</sub> (mod m<sub>2</sub>)<br>
                         ...<br>
-                        (a<span class=\"bottom\">n</span>, b<span class=\"bottom\">n</span> \u{2208} \u{2124} és m<span class=\"bottom\">n</span> \u{2208} \u{2124}<span class=\"exp\">\u{2265}2</span>): a<span class=\"bottom\">n</span> * x \u{2261} b<span class=\"bottom\">n</span> (mod m<span class=\"bottom\">n</span>)<br>
+                        (a<sub>n</sub>, b<sub>n</sub> \u{2208} \u{2124} és m<sub>n</sub> \u{2208} \u{2124}<sup>\u{2265}2</sup>): a<sub>n</sub> * x \u{2261} b<sub>n</sub> (mod m<sub>n</sub>)<br>
                         Keressük azokat a számokat, amely egyszerre teljesíti ezt a kongruenciarendszert.
                         A kongruenciarendszer megoldhatóságának első feltétele az, hogy a modulusok páronként relatív prímek. Ha van 2 amelynél a modulus nem relatív prím, akkor azt kell megnézni, hogy azonosak-e ezek a kongruenciák, amennyiben nem, akkor a rendszert nem lehet megoldani, különben valamelyik kongruenciát ki lehet venni.
                     </label>
@@ -673,10 +673,10 @@
                         3. lépés: i := 1;<br>
                         4. lépés: amíg 1-nél több kongruencia van (i < n):<br>
                         4.1. lépés: az első két kongruenciát vonjuk össze eggyé.<br>
-                        4.1.1. lépés: kibővített eukleidészi algoritmussal keressük meg az i == 1 esetén az m<span class=\"bottom\">1</span> * x + m<span class=\"bottom\">2</span> * y = 1, az i > 1 esetén pedig az m<span class=\"bottom\">1,i</span> * x + m<span class=\"bottom\">i+1</span> * y = 1 egyenlet egy-egy alapmegoldását az x-re és y-ra;<br>
-                        4.1.2. lépés: i == 1 esetén: b<span class=\"bottom\">1,2</span> = m<span class=\"bottom\">1</span> * x * b<span class=\"bottom\">2</span> + m<span class=\"bottom\">2</span> * y * b<span class=\"bottom\">1</span>, az i > 1 esetén pedig b<span class=\"bottom\">1,i+1</span> = m<span class=\"bottom\">1,i</span> * x * b<span class=\"bottom\">i+1</span> + m<span class=\"bottom\">i+1</span> * y * b<span class=\"bottom\">1,i</span>;<br>
-                        4.1.3. lépés: i == 1 esetén: m<span class=\"bottom\">1,2</span> = m<span class=\"bottom\">1</span> * m<span class=\"bottom\">2</span>, az i > 1 esetén pedig m<span class=\"bottom\">1,i+1</span> = m<span class=\"bottom\">1,i</span> * m<span class=\"bottom\">i+1</span>;<br>
-                        4.1.4. lépés: az összevont kongruencia: x \u{2261} b<span class=\"bottom\">1,i+1</span> (mod m<span class=\"bottom\">1,i+1</span>);<br>
+                        4.1.1. lépés: kibővített eukleidészi algoritmussal keressük meg az i == 1 esetén az m<sub>1</sub> * x + m<sub>2</sub> * y = 1, az i > 1 esetén pedig az m<sub>1,i</sub> * x + m<sub>i+1</sub> * y = 1 egyenlet egy-egy alapmegoldását az x-re és y-ra;<br>
+                        4.1.2. lépés: i == 1 esetén: b<sub>1,2</sub> = m<sub>1</sub> * x * b<sub>2</sub> + m<sub>2</sub> * y * b<sub>1</sub>, az i > 1 esetén pedig b<sub>1,i+1</sub> = m<sub>1,i</sub> * x * b<sub>i+1</sub> + m<sub>i+1</sub> * y * b<sub>1,i</sub>;<br>
+                        4.1.3. lépés: i == 1 esetén: m<sub>1,2</sub> = m<sub>1</sub> * m<sub>2</sub>, az i > 1 esetén pedig m<sub>1,i+1</sub> = m<sub>1,i</sub> * m<sub>i+1</sub>;<br>
+                        4.1.4. lépés: az összevont kongruencia: x \u{2261} b<sub>1,i+1</sub> (mod m<sub>1,i+1</sub>);<br>
                         4.2. lépés: az összevont kongruenciára cseréljük ki az első két kongruenciát;<br>
                         4.3. lépés: i := i + 1; <br>
                         5. lépés: a visszamart kongruencia a megoldás.
@@ -725,7 +725,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        A P[x] = a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> (x \u{2208} \u{2124}) kifejezést az egészek felett értelmezett polinomnak nevezzük.
+                        A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> (x \u{2208} \u{2124}) kifejezést az egészek felett értelmezett polinomnak nevezzük.
                         Tulajdonképpen a polinomot felírhatjuk olyan végtelen hosszú számsorozatként, ahol véges számú nem-nulla tag van. Amennyiben az x helyére beírunk egy értelmezés tartomány béli elemet, akkor a polinomot a helyen kiértékelve megkapjuk a helyettesítési értéket.
                         A polinom legmagasabb fokú tagja melletti számot a polinom főegyütthatójának, a nullad rendű tag együtthatóját pedig konstans tagnak nevezzük. Amennyiben egy értelmezési tartomány béli helyen a polinomnak a helyettesítési értéke 0, akkor azt a polinom gyökének nevezzük.
                         Az algebra alaptétele szerint egy n-ed rendű komplex számtest felett értelmezett polinomnak a multiplicitásokat beleszámítva pontosan n darab gyöke van.
@@ -738,20 +738,20 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        A P[x] = a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> polinomot más alakban is fel tudjuk írni.
-                        Horner- rendzés: P[x] = ((...(a<span class=\"bottom\">n</span> * x + a<span class=\"bottom\">n-1</span>)...) * x + a<span class=\"bottom\">1</span>) * x + a<span class=\"bottom\">0</span>.
+                        A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> polinomot más alakban is fel tudjuk írni.
+                        Horner- rendzés: P[x] = ((...(a<sub>n</sub> * x + a<sub>n-1</sub>)...) * x + a<sub>1</sub>) * x + a<sub>0</sub>.
                         Ebből rekurzívan megkapjuk a helyettesítési értéket:<br>
-                        c<span class=\"bottom\">n</span> = a<span class=\"bottom\">n</span>;<br>
-                        c<span class=\"bottom\">n-1</span> = c<span class=\"bottom\">n</span> * x + a<span class=\"bottom\">n-1</span>;<br>
-                        c<span class=\"bottom\">n-2</span> = c<span class=\"bottom\">n-1</span> * x + a<span class=\"bottom\">n-2</span>;<br>
+                        c<sub>n</sub> = a<sub>n</sub>;<br>
+                        c<sub>n-1</sub> = c<sub>n</sub> * x + a<sub>n-1</sub>;<br>
+                        c<sub>n-2</sub> = c<sub>n-1</sub> * x + a<sub>n-2</sub>;<br>
                         ...<br>
-                        c<span class=\"bottom\">1</span> = c<span class=\"bottom\">2</span> * x + a<span class=\"bottom\">1</span>;<br>
-                        c<span class=\"bottom\">0</span> = c<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> = P[x].
+                        c<sub>1</sub> = c<sub>2</sub> * x + a<sub>1</sub>;<br>
+                        c<sub>0</sub> = c<sub>1</sub> * x + a<sub>0</sub> = P[x].
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az x<span class=\"bottom\">0</span> behelyettesítése során tulajdonképpen megkapjuk a P[x] / (x - x<span class=\"bottom\">0</span>) hányadospolinomot és maradékpolinomot. A helyettesítési érték lesz a maradék, a hányadospolinomot pedig a c<span class=\"bottom\">n</span> * x<span class=\"exp\">n-1</span> + c<span class=\"bottom\">n-1</span> * x<span class=\"exp\">n-2</span> + ... + c<span class=\"bottom\">1</span> határozza meg.
+                        Az x<sub>0</sub> behelyettesítése során tulajdonképpen megkapjuk a P[x] / (x - x<sub>0</sub>) hányadospolinomot és maradékpolinomot. A helyettesítési érték lesz a maradék, a hányadospolinomot pedig a c<sub>n</sub> * x<sup>n-1</sup> + c<sub>n-1</sub> * x<sup>n-2</sup> + ... + c<sub>1</sub> határozza meg.
                     </label>
                 </div>"
             ];
@@ -795,13 +795,13 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Adottak a P[x] és R[x] polinomok. Ekkor attól függően, hogy mi a polinomok értelmezési tartománya eltérő lehet a hányadospolinom és maradékpolinom foka. 
-                        A valós számtest felett például deg(P[x]/R[x]) = deg(P[x]) - deg(Q[x]). De a \u{2124}/<span class=\"bottom\">n</span>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) - deg(Q[x]) \u{2265} deg(P[x]/R[x]).
+                        A valós számtest felett például deg(P[x]/R[x]) = deg(P[x]) - deg(Q[x]). De a \u{2124}/<sub>n</sub>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) - deg(Q[x]) \u{2265} deg(P[x]/R[x]).
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Adottak a P[x] és R[x] polinomok. Itt attól függően, hogy mi a polinomok értelmezési tartománya eltérő lehet a szorzatpolinom foka. 
-                        A valós számtest felett például deg(P[x] * R[x]) = deg(P[x]) + deg(Q[x]). De a \u{2124}/<span class=\"bottom\">n</span>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) + deg(Q[x]) \u{2265} deg(P[x] * R[x]).
+                        A valós számtest felett például deg(P[x] * R[x]) = deg(P[x]) + deg(Q[x]). De a \u{2124}/<sub>n</sub>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) + deg(Q[x]) \u{2265} deg(P[x] * R[x]).
                     </label>
                 </div>"
             ];
@@ -845,10 +845,10 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adottak a (x<span class=\"bottom\">1</span>, y<span class=\"bottom\">1</span>), (x<span class=\"bottom\">2</span>, y<span class=\"bottom\">2</span>), ..., (x<span class=\"bottom\">n + 1</span>, y<span class=\"bottom\">n + 1</span>) pontok. Ekkor szeretnénk meghatározni azt az n-ed fokú görbét, amelyre illeszkednek a pontok.
+                        Adottak a (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), ..., (x<sub>n + 1</sub>, y<sub>n + 1</sub>) pontok. Ekkor szeretnénk meghatározni azt az n-ed fokú görbét, amelyre illeszkednek a pontok.
                         Az első módszer a Lagrange- interpoláció lesz. Bevezetjük a Lagrange- alappolinomokat. Az i.-ik (i \u{2208} {1,..,n}) alappolinom olyan, hogy az i.-ik pontnál 1-et, a többi helyen pedig 0-t vesz fel. Sorra megszorozzuk az alappolinomokat a helyhez tartozó értékkel. Végül összeadjuk őket.<br>
-                        (i \u{2208} {1,..,n}): l<span class=\"bottom\">(x<span class=\"bottom\">i</span>,y<span class=\"bottom\">i</span>)</span>[x] := l<span class=\"bottom\">i</span>[x] = (\u{220F}<span class=\"exp\">n</span><span class=\"bottom\">j=1, j \u{2260} i</span>(x - x<span class=\"bottom\">j</span>))/(\u{220F}<span class=\"exp\">n</span><span class=\"bottom\">j=1, j \u{2260} i</span>(x<span class=\"bottom\">i</span> - x<span class=\"bottom\">j</span>)). Valóban l<span class=\"bottom\">i</span>[x<span class=\"bottom\">i</span>] = 1 és (i \u{2260} j): l<span class=\"bottom\">i</span>[x<span class=\"bottom\">j</span>] = 0 a számláló miatt.
-                        Az interpolációs polinom pedig: L[x] := \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=1</span>(y<span class=\"bottom\">i</span> * l<span class=\"bottom\">i</span>[x]). Ebbe a polinomba az x<span class=\"bottom\">i</span>-t helyettesítve egyedül az i.-ik tag nem lesz nulla (ugyanis (i \u{2260} j): l<span class=\"bottom\">j</span>[x<span class=\"bottom\">i</span>] = 0), az ottani alappolinom értéke pedig 1 (l<span class=\"bottom\">i</span>[x<span class=\"bottom\">i</span>] = 1), amelyet y<span class=\"bottom\">i</span>-vel megszorozva a helyettesítési érték valóban y<span class=\"bottom\">i</span> lesz.
+                        (i \u{2208} {1,..,n}): l<sub>(x<sub>i</sub>,y<sub>i</sub>)</sub>[x] := l<sub>i</sub>[x] = (\u{220F}<sup>n</sup><sub>j=1, j \u{2260} i</sub>(x - x<sub>j</sub>))/(\u{220F}<sup>n</sup><sub>j=1, j \u{2260} i</sub>(x<sub>i</sub> - x<sub>j</sub>)). Valóban l<sub>i</sub>[x<sub>i</sub>] = 1 és (i \u{2260} j): l<sub>i</sub>[x<sub>j</sub>] = 0 a számláló miatt.
+                        Az interpolációs polinom pedig: L[x] := \u{220F}<sup>n</sup><sub>i=1</sub>(y<sub>i</sub> * l<sub>i</sub>[x]). Ebbe a polinomba az x<sub>i</sub>-t helyettesítve egyedül az i.-ik tag nem lesz nulla (ugyanis (i \u{2260} j): l<sub>j</sub>[x<sub>i</sub>] = 0), az ottani alappolinom értéke pedig 1 (l<sub>i</sub>[x<sub>i</sub>] = 1), amelyet y<sub>i</sub>-vel megszorozva a helyettesítési érték valóban y<sub>i</sub> lesz.
                         Így ezen a polinomon valóban rajta vannak az említett pontok. 
                     </label>
                 </div>

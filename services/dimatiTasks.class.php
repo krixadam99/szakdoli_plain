@@ -196,7 +196,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az \u{2A2F}<span class=\"bottom\">i=1</span><span class=\"exp\">n</span>A<span class=\"bottom\">i</span> halmazok Descartes- szorzatának egy (nemüres) részhalmazát a felsorolt halmazokon értelmezett relációnak nevezzük. Amennyiben csak két halmaz van, akkor a relációt binárisnak nevezzük. Ha pedig a halmazok mind ugyanazok, akkor a reláció homogén.
+                        Az \u{2A2F}<sub>i=1</sub><sup>n</sup>A<sub>i</sub> halmazok Descartes- szorzatának egy (nemüres) részhalmazát a felsorolt halmazokon értelmezett relációnak nevezzük. Amennyiben csak két halmaz van, akkor a relációt binárisnak nevezzük. Ha pedig a halmazok mind ugyanazok, akkor a reláció homogén.
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -211,33 +211,33 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor Dom<span class=\"bottom\">R</span> = { a \u{2208} A | \u{2203} b \u{2208} B: (a,b) \u{2208} R}. Ezt nevezzük az <b>R reláció értelmezési tartományának</b>. Informálisan: készítünk egy halmazt az R relációt alkotó rendezett párok első elemeiből.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor Dom<sub>R</sub> = { a \u{2208} A | \u{2203} b \u{2208} B: (a,b) \u{2208} R}. Ezt nevezzük az <b>R reláció értelmezési tartományának</b>. Informálisan: készítünk egy halmazt az R relációt alkotó rendezett párok első elemeiből.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor Ran<span class=\"bottom\">R</span> = { b \u{2208} B | \u{2203} a \u{2208} A: (a,b) \u{2208} R}. Ezt nevezzük az <b>R reláció értékkészletének</b>. Informálisan: készítünk egy halmazt az R relációt alkotó rendezett párok második elemeiből.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor Ran<sub>R</sub> = { b \u{2208} B | \u{2203} a \u{2208} A: (a,b) \u{2208} R}. Ezt nevezzük az <b>R reláció értékkészletének</b>. Informálisan: készítünk egy halmazt az R relációt alkotó rendezett párok második elemeiből.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az N halmaz. Ekkor R<span class=\"bottom\">N</span> = { (a,b) \u{2208} R | a \u{2208} N } \u{2286} R. Ezt nevezzük az <b>R reláció N halmazra vett megszorítása</b>. Informálisan: kivesszük azokat a rendezett párokat R-ből, amik első elemei benne vannak N-ben.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az N halmaz. Ekkor R<sub>N</sub> = { (a,b) \u{2208} R | a \u{2208} N } \u{2286} R. Ezt nevezzük az <b>R reláció N halmazra vett megszorítása</b>. Informálisan: kivesszük azokat a rendezett párokat R-ből, amik első elemei benne vannak N-ben.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor R<span class=\"exp\">-1</span> = { (b,a) \u{2208} B \u{2A2F} A | (a,b) \u{2208} R } \u{2286} B \u{2A2F} A. Ezt nevezzük az <b>R reláció inverzének</b>. Informálisan: az R reláció rendezett párjainak elemeit megfordítjuk. 
-                        Megjegyzendő tehát, hogy Dom<span class=\"bottom\">f<span class=\"exp\">-1</span></span> = Ran<span class=\"bottom\">f</span> és Ran<span class=\"bottom\">f<span class=\"exp\">-1</span></span> = Dom<span class=\"bottom\">f</span>.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor R<sup>-1</sup> = { (b,a) \u{2208} B \u{2A2F} A | (a,b) \u{2208} R } \u{2286} B \u{2A2F} A. Ezt nevezzük az <b>R reláció inverzének</b>. Informálisan: az R reláció rendezett párjainak elemeit megfordítjuk. 
+                        Megjegyzendő tehát, hogy Dom<sub>f<sup>-1</sup></sub> = Ran<sub>f</sub> és Ran<sub>f<sup>-1</sup></sub> = Dom<sub>f</sub>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az I halmaz. Ekkor R(I) = { b \u{2208} B | a  \u{2208} I \u{2227} (a,b) \u{2208} R } \u{2286} Ran<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció I halmazon felvett képének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon második elemeit, ahol az első elem benne van az I halmazban.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az I halmaz. Ekkor R(I) = { b \u{2208} B | a  \u{2208} I \u{2227} (a,b) \u{2208} R } \u{2286} Ran<sub>R</sub>. Ezt nevezzük az <b>R reláció I halmazon felvett képének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon második elemeit, ahol az első elem benne van az I halmazban.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az D halmaz. Ekkor R<span class=\"exp\">-1</span>(D) = { a \u{2208} A | b  \u{2208} D \u{2227} (a,b) \u{2208} R } \u{2286} Dom<span class=\"bottom\">R</span>. Ezt nevezzük az <b>R reláció D halmazon felvett ősképének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon első elemeit, ahol a második elem benne van a D halmazban.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és az D halmaz. Ekkor R<sup>-1</sup>(D) = { a \u{2208} A | b  \u{2208} D \u{2227} (a,b) \u{2208} R } \u{2286} Dom<sub>R</sub>. Ezt nevezzük az <b>R reláció D halmazon felvett ősképének</b>. Informálisan: kivesszük az R reláció rendezett párjainak azon első elemeit, ahol a második elem benne van a D halmazban.
                     </label>
                 </div>"
             ];
@@ -288,7 +288,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és \u{2205} \u{2260} S \u{2286} C \u{2A2F} D relációk, ahol az A, B, C és D halmazok nem feltétlen különbözőek. Az S \u{2218} R kompozíció alatt a következő relációt értjük: S \u{2218} R = { (a,d) \u{2208} A \u{2A2F} D | \u{2203} b \u{2208} B: (a,b) \u{2208} R \u{2227} (b,d) \u{2208} S }. Például a nagybácsija reláció a testvére és szülője relációk kompozíciója. Informálisan: a jobb oldali tag rendezett párjainak második elemeit \"összekötjük\" a bal oldali reláció rendezett párjainak azonos első elemeivel. Majd az összekötés során kapott hármasok 1. és 3. elemeiből képzett rendezett párjai alkotják a kompozíciót. Tulajdonságok: asszociatív, valamint: (R \u{2218} S)<span class=\"exp\">-1</span> = S<span class=\"exp\">-1</span> \u{2218} R<span class=\"exp\">-1</span>.
+                        Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és \u{2205} \u{2260} S \u{2286} C \u{2A2F} D relációk, ahol az A, B, C és D halmazok nem feltétlen különbözőek. Az S \u{2218} R kompozíció alatt a következő relációt értjük: S \u{2218} R = { (a,d) \u{2208} A \u{2A2F} D | \u{2203} b \u{2208} B: (a,b) \u{2208} R \u{2227} (b,d) \u{2208} S }. Például a nagybácsija reláció a testvére és szülője relációk kompozíciója. Informálisan: a jobb oldali tag rendezett párjainak második elemeit \"összekötjük\" a bal oldali reláció rendezett párjainak azonos első elemeivel. Majd az összekötés során kapott hármasok 1. és 3. elemeiből képzett rendezett párjai alkotják a kompozíciót. Tulajdonságok: asszociatív, valamint: (R \u{2218} S)<sup>-1</sup> = S<sup>-1</sup> \u{2218} R<sup>-1</sup>.
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -402,13 +402,13 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Ha az f \u{2286} D \u{2A2F} R reláció függvény, akkor ezt így jelöljük: f \u{2208} D \u{2192} R. Ha Dom<span class=\"bottom\">f</span> = D, akkor a f : D \u{2192} R jelölést használjuk. Ekkor a D az alaphalmaz, az R a képhalmaz.
+                        Ha az f \u{2286} D \u{2A2F} R reláció függvény, akkor ezt így jelöljük: f \u{2208} D \u{2192} R. Ha Dom<sub>f</sub> = D, akkor a f : D \u{2192} R jelölést használjuk. Ekkor a D az alaphalmaz, az R a képhalmaz.
                         Az f függvény képe: graph(f) = { {{x}, {x,f(x)}} | x \u{2208} D } = {(x, f(x)) | x \u{2208} D}. Egyváltozós (skalár) függvény (azaz bináris reláció) esetén, a helyek az abszcisszán, az értékek pedig az ordinátán helyezkednek el. A nulvektor pedig az origó.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f és g függvények azonosak, ha értelmezési tartományuk (azaz Dom<span class=\"bottom\">f</span> és Dom<span class=\"bottom\">g</span>) azonosak, valamint bármely értelmezési tartomány béli helyen a függvények azonos értéket vesznek fel.
+                        Az f és g függvények azonosak, ha értelmezési tartományuk (azaz Dom<sub>f</sub> és Dom<sub>g</sub>) azonosak, valamint bármely értelmezési tartomány béli helyen a függvények azonos értéket vesznek fel.
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -423,12 +423,12 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f \u{2208} D \u{2192} R függvény <b>szürjektív</b>, ha Ran<span class=\"bottom\">f</span> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
+                        Az f \u{2208} D \u{2192} R függvény <b>szürjektív</b>, ha Ran<sub>f</sub> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Az f \u{2208} D \u{2192} R függvény <b>injektív</b> (vagy <b>invertálható</b>), ha az inverz relációja függvény, azaz az inverze egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen a második eleme alapján. Formálisan: (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): f(x) = f(y) \u{2194} x = y. Másképpen (\u{2200} x, y \u{2208} Dom<span class=\"bottom\">f</span>): x \u{2260} y \u{2192} f(x) \u{2260} f(y). Ha f és g injektív függvények, akkor kompozíciójuk is injektív függvény.
+                        Az f \u{2208} D \u{2192} R függvény <b>injektív</b> (vagy <b>invertálható</b>), ha az inverz relációja függvény, azaz az inverze egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen a második eleme alapján. Formálisan: (\u{2200} x, y \u{2208} Dom<sub>f</sub>): f(x) = f(y) \u{2194} x = y. Másképpen (\u{2200} x, y \u{2208} Dom<sub>f</sub>): x \u{2260} y \u{2192} f(x) \u{2260} f(y). Ha f és g injektív függvények, akkor kompozíciójuk is injektív függvény.
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -488,7 +488,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        A \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) komplex szám hossza alatt a \u{221A}(w*<span style=\"text-decoration : overline\">w</span>) = \u{221A}(a<span class=\"exp\">2</span> + b<span class=\"exp\">2</span>) valós számot értjük, ezt a |w|-vel jelöljük. Tulajdonságok: |a| = 0, pontosan akkor, ha az a = 0; (\u{2200} a, b \u{2208} \u{2102}):|a*b| = |a|*|b|; (\u{2200} a, b \u{2208} \u{2102}): |a|/|b| = |a/b|, végül a háromszög- egyenlőtlenség: (\u{2200} a, b \u{2208} \u{2102}): |a + b| \u{2264} |a| + |b|.
+                        A \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) komplex szám hossza alatt a \u{221A}(w*<span style=\"text-decoration : overline\">w</span>) = \u{221A}(a<sup>2</sup> + b<sup>2</sup>) valós számot értjük, ezt a |w|-vel jelöljük. Tulajdonságok: |a| = 0, pontosan akkor, ha az a = 0; (\u{2200} a, b \u{2208} \u{2102}):|a*b| = |a|*|b|; (\u{2200} a, b \u{2208} \u{2102}): |a|/|b| = |a/b|, végül a háromszög- egyenlőtlenség: (\u{2200} a, b \u{2208} \u{2102}): |a + b| \u{2264} |a| + |b|.
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -514,8 +514,8 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                     Adott \u{2102} \u{220B} w = a + b * i (a, b \u{2208} \u{211D}) és \u{2102} \u{220B} z = c + d * i (c, d \u{2208} \u{211D}). Ekkor a <b>w / z</b> 
-                    = (w * <span style=\"text-decoration : overline\">z</span>) / |z|<span class=\"exp\">2</span>
-                    = <b>((a * c + b * d) + i * (b * c - a * d)) / (c<span class=\"exp\">2</span> + d<span class=\"exp\">2</span>)</b>.
+                    = (w * <span style=\"text-decoration : overline\">z</span>) / |z|<sup>2</sup>
+                    = <b>((a * c + b * d) + i * (b * c - a * d)) / (c<sup>2</sup> + d<sup>2</sup>)</b>.
                     </label>
                 </div>"
             ];
@@ -579,14 +579,14 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<span class=\"bottom\">1</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">2</span>)).
-                        Ekkor <b>w * z = |w| * |z| * (cos(\u{03C6}<span class=\"bottom\">1</span> + \u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span> + \u{03C6}<span class=\"bottom\">2</span>))</b>.
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<sub>1</sub>) + i * sin(\u{03C6}<sub>1</sub>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>2</sub>)).
+                        Ekkor <b>w * z = |w| * |z| * (cos(\u{03C6}<sub>1</sub> + \u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>1</sub> + \u{03C6}<sub>2</sub>))</b>.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<span class=\"bottom\">1</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">2</span>)).
-                        Ekkor <b>w / z = (|w| / |z|) * (cos(\u{03C6}<span class=\"bottom\">1</span> - \u{03C6}<span class=\"bottom\">2</span>) + i * sin(\u{03C6}<span class=\"bottom\">1</span> - \u{03C6}<span class=\"bottom\">2</span>))</b>.
+                        Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<sub>1</sub>) + i * sin(\u{03C6}<sub>1</sub>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>2</sub>)).
+                        Ekkor <b>w / z = (|w| / |z|) * (cos(\u{03C6}<sub>1</sub> - \u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>1</sub> - \u{03C6}<sub>2</sub>))</b>.
                     </label>
                 </div>"
             ];
@@ -625,7 +625,7 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
-                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): w<span class=\"exp\">m</span> = |w|<span class=\"exp\">m</span> * (cos(m * \u{03C6}) + i * sin(m * \u{03C6}))</b>.
+                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): w<sup>m</sup> = |w|<sup>m</sup> * (cos(m * \u{03C6}) + i * sin(m * \u{03C6}))</b>.
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -636,7 +636,7 @@
                 <div class=\"definition\">
                     <label class=\"definition_label\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
-                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): <span class=\"exp\">m</span>\u{221A}w = <span class=\"exp\">m</span>\u{221A}|w| (cos((\u{03C6} + 2 * k * \u{03C0}) / m) + i * sin((\u{03C6} + 2 * k * \u{03C0}) / m))</b> (k = 0,1,..,m-1).
+                        Ekkor <b>(\u{2200} m \u{2208} \u{2124}): <sup>m</sup>\u{221A}w = <sup>m</sup>\u{221A}|w| (cos((\u{03C6} + 2 * k * \u{03C0}) / m) + i * sin((\u{03C6} + 2 * k * \u{03C0}) / m))</b> (k = 0,1,..,m-1).
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -655,7 +655,7 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Azt mondjuk, hogy a w komplex szám az n.-ik egységyök, ha w<span class=\"exp\">n</span> = 1. Előzőek szerint ekkor: \u{03C6} = (p / n) * 2 * \u{03C0} alakú (ahol (p, n) = 1). 
+                        Azt mondjuk, hogy a w komplex szám az n.-ik egységyök, ha w<sup>n</sup> = 1. Előzőek szerint ekkor: \u{03C6} = (p / n) * 2 * \u{03C0} alakú (ahol (p, n) = 1). 
                         Ha nincsen olyan osztója n-nek, amelyre a w-t emelve 1-et kapnánk, de a w n.-ik egységgyök, akkor a w-t n.-ik primitív egységgyöknek nevezzük.
                     </label>
                 </div>"
@@ -696,22 +696,22 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<span class=\"exp\">k</span><span class=\"bottom\">i=1</span>i (ha k > 0) és 1, ha k = 0.
+                        Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<sup>k</sup><sub>i=1</sub>i (ha k > 0) és 1, ha k = 0.
                         Adottak az n, m \u{220B} \u{2124} egészek, ahol n \u{2265} m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az \u{276C} n alatt m \u{276D} jelölést használjuk az oldalon. 
                         Tulajdonságok: \u{276C} n alatt m \u{276D} = \u{276C} n alatt (m-n) \u{276D}; \u{276C} (n-1) alatt m \u{276D} + \u{276C} (n-1) alatt (m-1) \u{276D} = \u{276C} n alatt m \u{276D}.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        <b>Binomiális tétel: (a + b)<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D}a<span class=\"exp\">i</span>b<span class=\"exp\">n-i</span></b>, 
+                        <b>Binomiális tétel: (a + b)<sup>n</sup> = \u{220F}<sup>n</sup><sub>i=0</sub>\u{276C} n alatt i \u{276D}a<sup>i</sup>b<sup>n-i</sup></b>, 
                         ugyanis az i.-ik (i \u{2208} {0,1,...,n}) lépés során, i darab zárójel esetén választunk a-t és n-i esetén b-t. Ismétlés nélküli kombináció esetén pedig n darab zárójelből i darabot \u{276C} n alatt i \u{276D} féle képpen lehet kiválasztani.
-                        Tulajdonságok: (1+1)<span class=\"exp\">n</span> = 2<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D} = \u{276C} n alatt 0 \u{276D} + ... + \u{276C} n alatt n \u{276D}, azaz egy halmaz részhalmazainak száma 2<span class=\"exp\">halmaz elemszáma</span> (0 elemű, 1 elemű, ..., n elemű részhalmazok száma);
-                        0<span class=\"exp\">n</span> = \u{220F}<span class=\"exp\">n</span><span class=\"bottom\">i=0</span>\u{276C} n alatt i \u{276D}1<span class=\"exp\">i</span>(-1)<span class=\"exp\">n-i</span> = \u{276C} n alatt 0 \u{276D} - \u{276C} n alatt 1 \u{276D} + ... \u{00B1} \u{276C} n alatt n \u{276D}, azaz egy halmaz páros és páratlan elemszámú részhalmazainak száma azonos.
+                        Tulajdonságok: (1+1)<sup>n</sup> = 2<sup>n</sup> = \u{220F}<sup>n</sup><sub>i=0</sub>\u{276C} n alatt i \u{276D} = \u{276C} n alatt 0 \u{276D} + ... + \u{276C} n alatt n \u{276D}, azaz egy halmaz részhalmazainak száma 2<sup>halmaz elemszáma</sup> (0 elemű, 1 elemű, ..., n elemű részhalmazok száma);
+                        0<sup>n</sup> = \u{220F}<sup>n</sup><sub>i=0</sub>\u{276C} n alatt i \u{276D}1<sup>i</sup>(-1)<sup>n-i</sup> = \u{276C} n alatt 0 \u{276D} - \u{276C} n alatt 1 \u{276D} + ... \u{00B1} \u{276C} n alatt n \u{276D}, azaz egy halmaz páros és páratlan elemszámú részhalmazainak száma azonos.
                     </label>
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Polinomiális tétel: (a<span class=\"bottom\">1</span> + ... + a<span class=\"bottom\">k</span>)<span class=\"exp\">n</span> = \u{220F}<span class=\"bottom\">i<span class=\"bottom\">1</span>+...+i<span class=\"bottom\">k</span> = n</span>(x<span class=\"bottom\">1</span><span class=\"exp\">i<span class=\"bottom\">1</span></span>*...*x<span class=\"bottom\">k</span><span class=\"exp\">i<span class=\"bottom\">k</span></span>) * n!/(i<span class=\"bottom\">1</span>!*...*i<span class=\"bottom\">k</span>!).
+                        Polinomiális tétel: (a<sub>1</sub> + ... + a<sub>k</sub>)<sup>n</sup> = \u{220F}<sub>i<sub>1</sub>+...+i<sub>k</sub> = n</sub>(x<sub>1</sub><sup>i<sub>1</sub></sup>*...*x<sub>k</sub><sup>i<sub>k</sub></sup>) * n!/(i<sub>1</sub>!*...*i<sub>k</sub>!).
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -721,12 +721,12 @@
                 </div>
                 <div class=\"definition\">
                     <label class=\"definition_label\">
-                        Adott egy n-ed fokú polinom az a<span class=\"bottom\">n</span> * (x - x<span class=\"bottom\">1</span>) * (x - x<span class=\"bottom\">2</span>) * ... * (x - x<span class=\"bottom\">n</span>) szorzatalakban.
-                        Ekkor megszeretnénk kapni a polinom a<span class=\"bottom\">n</span> * x<span class=\"exp\">n</span> + ... + a<span class=\"bottom\">1</span> * x + a<span class=\"bottom\">0</span> összegalakját, azaz az a<span class=\"bottom\">i</span>-ket (i \u{2208} {0,1,...,n}). 
-                        Az a<span class=\"bottom\">i</span> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Ez persze azt jelenti, hogy n - i darab konstans tagot választunk és ebből \u{276C} n alatt i \u{276D} van.
+                        Adott egy n-ed fokú polinom az a<sub>n</sub> * (x - x<sub>1</sub>) * (x - x<sub>2</sub>) * ... * (x - x<sub>n</sub>) szorzatalakban.
+                        Ekkor megszeretnénk kapni a polinom a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> összegalakját, azaz az a<sub>i</sub>-ket (i \u{2208} {0,1,...,n}). 
+                        Az a<sub>i</sub> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Ez persze azt jelenti, hogy n - i darab konstans tagot választunk és ebből \u{276C} n alatt i \u{276D} van.
                         Azaz egy olyan \u{276C} n alatt i \u{276D} tagú összeget kapunk az i.-ik együttható meghatározásánál, melyben minden tag n - i darab gyököt tartalmazó szorzat (összes lehetséges n - i elemszámú kombinációját kivesszük az n darab gyöknek, majd az egyes kombinációkban lévő elemeket szorozzuk össze).
                         Eszerint az i.-ik (i \u{2208} {0,1,...,n}) együttható képlete:
-                        <b>a<span class=\"bottom\">i</span> = a<span class=\"bottom\">n</span> * (-1)<span class=\"exp\">(n-i)</span> * \u{2211}<span class=\"bottom\">1 \u{2264} j<span class=\"bottom\">1</span> < j<span class=\"bottom\">2</span> < ... < j<span class=\"bottom\">(n - i)</span> \u{2264} n</span>x<span class=\"bottom\">j<span class=\"bottom\">1</span></span>* ... *x<span class=\"bottom\">j<span class=\"bottom\">(n-i)</span></span></b>.
+                        <b>a<sub>i</sub> = a<sub>n</sub> * (-1)<sup>(n-i)</sup> * \u{2211}<sub>1 \u{2264} j<sub>1</sub> < j<sub>2</sub> < ... < j<sub>(n - i)</sub> \u{2264} n</sub>x<sub>j<sub>1</sub></sub>* ... *x<sub>j<sub>(n-i)</sub></sub></b>.
                     </label>
                 </div>"
             ];

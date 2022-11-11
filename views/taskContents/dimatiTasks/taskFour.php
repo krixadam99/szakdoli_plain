@@ -4,13 +4,13 @@
     <div class="task_data">
         <?php foreach($pair_of_sets as $set_name => $set_elements):?>
             <label class="task_label">
-                <?= PrintServices::CreatePrintableSet($set_name . "<span class=\"bottom\">$bottom_index</span>", $set_elements)?>
+                <?= PrintServices::CreatePrintableSet($set_name . "<sub>$bottom_index</sub>", $set_elements)?>
             </label>
         <?php endforeach?>
 
         <label class="task_label">
-            <?="R<span class=\"bottom\">$bottom_index</span> \u{2286} A<span class=\"bottom\">$bottom_index</span> \u{00D7} B<span class=\"bottom\">$bottom_index</span>, "?>
-            <?= PrintServices::CreatePrintableRelation("R<span class=\"bottom\">$bottom_index</span>", $_SESSION["task"]["first_subtasks"]["relations"][$set_pair_counter])?>
+            <?="R<sub>$bottom_index</sub> \u{2286} A<sub>$bottom_index</sub> \u{00D7} B<sub>$bottom_index</sub>, "?>
+            <?= PrintServices::CreatePrintableRelation("R<sub>$bottom_index</sub>", $_SESSION["task"]["first_subtasks"]["relations"][$set_pair_counter])?>
         </label>
     </div>
     <div class="small_task_container">
@@ -30,13 +30,13 @@
     <div class="task_data">
         <?php foreach($pair_of_sets as $set_name => $set_elements):?>
             <label class="task_label">
-                <?= PrintServices::CreatePrintableSet($set_name . "<span class=\"bottom\">$bottom_index</span>", $set_elements)?>
+                <?= PrintServices::CreatePrintableSet($set_name . "<sub>$bottom_index</sub>", $set_elements)?>
             </label>
         <?php endforeach?>
 
         <label class="task_label">
-            <?="f<span class=\"bottom\">$bottom_index</span> \u{2208} A<span class=\"bottom\">$bottom_index</span> \u{2192} B<span class=\"bottom\">$bottom_index</span>, "?>
-            <?= PrintServices::CreatePrintableRelation("f" . "<span class=\"bottom\">$bottom_index</span>", $_SESSION["task"]["second_subtasks"]["functions"][$set_pair_counter])?>
+            <?="f<sub>$bottom_index</sub> \u{2208} A<sub>$bottom_index</sub> \u{2192} B<sub>$bottom_index</sub>, "?>
+            <?= PrintServices::CreatePrintableRelation("f" . "<sub>$bottom_index</sub>", $_SESSION["task"]["second_subtasks"]["functions"][$set_pair_counter])?>
         </label>
     </div>
     <div class="small_task_container">

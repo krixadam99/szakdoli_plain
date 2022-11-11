@@ -85,7 +85,7 @@
                     $coefficient = $coefficient === 1 && $actual_index !== 0?"":$coefficient;
                     $coefficient = $coefficient === -1 && $coefficient_index === 0?"-":$coefficient;
                     $variable = $actual_index === 0?"":"x";
-                    $expo = $actual_index <= 1?"":"<span class=\"exp\">$actual_index</span>";
+                    $expo = $actual_index <= 1?"":"<sup>$actual_index</sup>";
                     echo($prefix . $coefficient . $variable . $expo);
                 }
             }
@@ -267,7 +267,7 @@
                 if($pair_counter !== 0){
                     $text = $text . " * ";
                 }
-                $text = $text . $pair[0] . "<span class=\"exp\">" .  $pair[1] . "</span>";
+                $text = $text . $pair[0] . "<sup>" .  $pair[1] . "</sup>";
             }
             return $text;
         }
@@ -334,7 +334,7 @@
                     if($degree - 1 === $coefficient_counter){
                         $text = $text . "*x";
                     }else{
-                        $text = $text . "*x<span class=\"exp\">" . $degree - $coefficient_counter . "</span>";
+                        $text = $text . "*x<sup>" . $degree - $coefficient_counter . "</sup>";
                     }
                 }
             }
@@ -377,7 +377,7 @@
                     if($actual_degree !== 0){
                         $text = $text . "*x";
                         if($actual_degree !== 1){
-                            $text = $text . "<span class=\"exp\">" . $actual_degree ."</span>";
+                            $text = $text . "<sup>" . $actual_degree ."</sup>";
                         }
                     }
                 }

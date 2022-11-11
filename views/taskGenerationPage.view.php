@@ -132,7 +132,10 @@
                     <?php if(isset($_SESSION["preview_tasks"])):?>
                         <?php if($_SESSION["exam_type"] !== "big"):?>
                             <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
-                                <?= $main_task_counter + 1?>. feladatcsoport:
+                                <?php if($_SESSION["exam_type"] !== "small"):?>
+                                    <?= $main_task_counter + 1?>. feladatcsoport:
+                                <?php endif?>
+                                
                                 <?php 
                                     $descriptions = $main_task["descriptions"]??[];
                                     $printable_solutions = $main_task["printable_solutions"]??[];

@@ -92,7 +92,7 @@ function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
     if(element.tagName === "TEXTAREA"){
         original_text = element.value
     }else{
-        original_text = element.innerText
+        original_text = element.innerHTML
     }
     let next_element = element.nextElementSibling
     let parent_element = element.closest(parent_selecter)

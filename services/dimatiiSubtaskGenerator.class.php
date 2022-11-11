@@ -181,7 +181,7 @@
                         $exponential_form = $exponential_form . " * ";
                     }
                     $exponential_form = $exponential_form . "( " . $factor[1] ." + 1)";
-                    $multplication_form = $multplication_form . $factor[0] . "<span class=\"exp\">" . $factor[1] . "</span>";
+                    $multplication_form = $multplication_form . $factor[0] . "<sup>" . $factor[1] . "</sup>";
                 }
                 $printable_solution = $printable_solution . "</table>";
 
@@ -236,7 +236,7 @@
             $descriptions = [];
 
             for($crs_counter = 0; $crs_counter < $number_of_numbers; $crs_counter++){
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a \u{2124}/<span class=\"bottom\">". $modulos[$crs_counter] . "</span>\u{2124} teljes maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a \u{2124}/<sub>". $modulos[$crs_counter] . "</sub>\u{2124} teljes maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineCompleteResidueSystem($modulos[$crs_counter]);
                 array_push($solutions, $solution);
 
@@ -247,7 +247,7 @@
                     }
                     $set = $set . "<span style=\"border-top:1px solid black\">". $representative_element . "</span>"; 
                 }
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">\u{2124}/<span class=\"bottom\">". $modulos[$crs_counter] . "</span>\u{2124} = {" . $set . "}</label></div>";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">\u{2124}/<sub>". $modulos[$crs_counter] . "</sub>\u{2124} = {" . $set . "}</label></div>";
 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
@@ -274,7 +274,7 @@
             $descriptions = [];
 
             for($rrs_counter = 0; $rrs_counter < $number_of_numbers; $rrs_counter++){
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<span class=\"bottom\">". $modulos[$rrs_counter] . "</span>\u{2124})* redukált maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<sub>". $modulos[$rrs_counter] . "</sub>\u{2124})* redukált maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineReducedResidueSystem($modulos[$rrs_counter]);
                 array_push($solutions, $solution);
 
@@ -285,7 +285,7 @@
                     }
                     $set = $set . "<span style=\"border-top:1px solid black\">". $representative_element . "</span>"; 
                 }
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">(\u{2124}/<span class=\"bottom\">". $modulos[$rrs_counter] . "</span>\u{2124})* = {" . $set . "}</label></div>";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">(\u{2124}/<sub>". $modulos[$rrs_counter] . "</sub>\u{2124})* = {" . $set . "}</label></div>";
 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
@@ -312,7 +312,7 @@
             $descriptions = [];
 
             for($rrs_size_counter = 0; $rrs_size_counter < $number_of_numbers; $rrs_size_counter++){
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_size_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<span class=\"bottom\">". $modulos[$rrs_size_counter] . "</span>\u{2124})* redukált maradékrendszer méretét (maradékosztályainak számát)!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_size_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<sub>". $modulos[$rrs_size_counter] . "</sub>\u{2124})* redukált maradékrendszer méretét (maradékosztályainak számát)!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineEulerPhiValue($modulos[$rrs_size_counter]);
                 array_push($solutions, $solution["solution"]);
                 
@@ -323,12 +323,12 @@
                         $phi_part = $phi_part . " * ";
                         $multiplication_part = $multiplication_part . " * ";
                     }
-                    $phi_part = $phi_part . "\u{03C6}(" . $factor[0] . "<span class=\"exp\">" . $factor[1] . "</span>)"; 
-                    $multiplication_part = $multiplication_part . $factor[0] . "<span class=\"exp\">(" . $factor[1] - 1 . ")</span> * (" .  $factor[0] . " - 1)"; 
+                    $phi_part = $phi_part . "\u{03C6}(" . $factor[0] . "<sup>" . $factor[1] . "</sup>)"; 
+                    $multiplication_part = $multiplication_part . $factor[0] . "<sup>(" . $factor[1] - 1 . ")</sup> * (" .  $factor[0] . " - 1)"; 
                 }
                 
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_size_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">|(\u{2124}/<span class=\"bottom\">".
-                                $modulos[$rrs_size_counter] . "</span>\u{2124})*| = ". 
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_size_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">|(\u{2124}/<sub>".
+                                $modulos[$rrs_size_counter] . "</sub>\u{2124})*| = ". 
                                 $phi_part . " = " .
                                 $multiplication_part . " = " .
                                 $solution["solution"]  . "</label></div>";
@@ -380,7 +380,7 @@
                 $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . $first_number . " és " . $second_number . " számok legnagyobb közös osztóját az Euklideszi algoritmus segítségével!</label></div>";
                 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><table class=\"eucleidan_solution_table\">";
-                $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">i</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<span class=\"bottom\">i-2</span><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">q<span class=\"bottom\">i</span></label></td><td class=\"editable_box\"><label class=\"editable_label\"> * </label></td><td class=\"editable_box\"><label class=\"editable_label\">r<span class=\"bottom\">i-1</span><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<span class=\"bottom\">i</span></label></td></tr>";
+                $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">i</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-2</sub><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">q<sub>i</sub></label></td><td class=\"editable_box\"><label class=\"editable_label\"> * </label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-1</sub><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i</sub></label></td></tr>";
                 foreach($actual_steps as $step_counter => $actual_step){
                     $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">" . $step_counter + 1 . ".</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[0] .  "</label></td><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[1] . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">*</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[2] . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[3] .  "</label></td></tr>";
                 }
@@ -783,7 +783,7 @@
                             }else{
                                 $residue_text = $residue_text . $cell_value;
                             }
-                            $residue_text = $residue_text. "*x<span class=\"exp\">" . $degree - $cell_counter . "</span>";
+                            $residue_text = $residue_text. "*x<sup>" . $degree - $cell_counter . "</sup>";
                         }
                     }else if($residue_degree - $cell_counter < 0){
                         $division_text = $division_text . $cell_value;
@@ -933,7 +933,7 @@
                 $before_modulo = $product["before_modulo"];
                 array_push($solutions, $product["product"]);
                 
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a <b>(" . PrintServices::CreatePrintablePolynomial($multiplicand_polynomial_expression) . ")</b> * <b>(" . PrintServices::CreatePrintablePolynomial($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<span class=\"bottom\">" . $modulo . "</span> felett!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a <b>(" . PrintServices::CreatePrintablePolynomial($multiplicand_polynomial_expression) . ")</b> * <b>(" . PrintServices::CreatePrintablePolynomial($multiplier_polynomial_expression) . ")</b> szorzás eredményét a \u{2124}<sub>" . $modulo . "</sub> felett!</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">" . "(" . PrintServices::CreatePrintablePolynomial($multiplicand_polynomial_expression) . ") * (" . PrintServices::CreatePrintablePolynomial($multiplier_polynomial_expression) . ") = (";
                 $printable_solution = $printable_solution . PrintServices::CreatePrintablePolynomialByPairs($before_modulo);
                 $printable_solution = $printable_solution . ") % " . $modulo . " = ";
@@ -991,7 +991,7 @@
                         $sum_text = $sum_text . $points[$base_polynomial_counter][1];
                     }
                     $polynomial_text = PrintServices::CreatePrintablePolynomialByPairs($base_polynomial_expression);
-                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">l<span class=\"bottom\">(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</span> = ";
+                    $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">l<sub>(" . $points[$base_polynomial_counter][0] . ", " . $points[$base_polynomial_counter][1] . ")</sub> = ";
                     $printable_solution = $printable_solution . $polynomial_text . "</label></div>";
                     $sum_text = $sum_text . " * (" .  $polynomial_text . ")";
                 }
@@ -1047,9 +1047,9 @@
                 $printable_solution = $printable_solution . "<tr>";
                 for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
                     if($column_counter === 0){
-                        $printable_solution = $printable_solution . "<th class=\"editable_box\"><label class=\"editable_label\">x<span class=\"bottom\">i</span></label></th>";
+                        $printable_solution = $printable_solution . "<th class=\"editable_box\"><label class=\"editable_label\">x<sub>i</sub></label></th>";
                     }elseif($column_counter === 1){
-                        $printable_solution = $printable_solution . "<th class=\"editable_box\"><label class=\"editable_label\">y<span class=\"bottom\">i</span></label></th>";
+                        $printable_solution = $printable_solution . "<th class=\"editable_box\"><label class=\"editable_label\">y<sub>i</sub></label></th>";
                     }else{
                         $printable_solution = $printable_solution . "<th class=\"editable_box\"><label class=\"editable_label\">" . $column_counter - 1 . ".lépés</label></th>";
                     }
@@ -1079,14 +1079,14 @@
                                     $denominator_second_index =  $row_index + 1;
                                     $denominator_first_index = $row_index + 1 + $column_index + 1;
 
-                                    $nominator_first =  "y<span class=\"bottom\">" . $denominator_first_index . "</span>";
-                                    $nominator_second = "y<span class=\"bottom\">" . $denominator_second_index . "</span>";
+                                    $nominator_first =  "y<sub>" . $denominator_first_index . "</sub>";
+                                    $nominator_second = "y<sub>" . $denominator_second_index . "</sub>";
                                     if($column_counter > 2){
-                                        $nominator_first =  "y<span class=\"bottom\">" . $denominator_second_index + 1 ."," . $denominator_second_index + $column_index + 1 . "</span>";
-                                        $nominator_second = "y<span class=\"bottom\">" . $denominator_first_index - $column_index - 1 ."," . $denominator_first_index - 1 . "</span>";
+                                        $nominator_first =  "y<sub>" . $denominator_second_index + 1 ."," . $denominator_second_index + $column_index + 1 . "</sub>";
+                                        $nominator_second = "y<sub>" . $denominator_first_index - $column_index - 1 ."," . $denominator_first_index - 1 . "</sub>";
                                     }
 
-                                    $cell_content = "($nominator_first - $nominator_second)/(x<span clss=\"bottom\">" . $denominator_first_index . "</span>-x<span clss=\"bottom\">" . $denominator_second_index . "</span>) = ";
+                                    $cell_content = "($nominator_first - $nominator_second)/(x<sub>" . $denominator_first_index . "</sub>-x<sub>" . $denominator_second_index . "</sub>) = ";
 
                                     $content = $table_data[$column_counter - 2]??"";
                                     if(is_array($content)){
@@ -1182,14 +1182,14 @@
                 
                 $bottom_index = $merged_counter + 1;
                 $diophantine_equation_solution = $detailed_steps[$number_of_congruences_per_system + $merged_counter];
-                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\"><b>" . $merged_counter + 2 . ".1. lépés: az m<span class=\"bottom\">" . $bottom_index . ",1</span> * " .  $first_congruence[2] . " + m<span class=\"bottom\">" . $merged_counter + 1 . ",2</span> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></label></div>";
-                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $this->CreateDiophantineSolutionText("m<span class=\"bottom\">" . $modulo_bottom_index . ",1</span>", "m<span class=\"bottom\">" . $modulo_bottom_index . ",2</span>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]) . "</label></div>";
+                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\"><b>" . $merged_counter + 2 . ".1. lépés: az m<sub>" . $bottom_index . ",1</sub> * " .  $first_congruence[2] . " + m<sub>" . $merged_counter + 1 . ",2</sub> * " . $second_congruence[2] . " = 1 lineáris diofantikus egyenlet megoldása:</b></label></div>";
+                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $this->CreateDiophantineSolutionText("m<sub>" . $modulo_bottom_index . ",1</sub>", "m<sub>" . $modulo_bottom_index . ",2</sub>", [$first_congruence[2],$second_congruence[2], 1], $diophantine_equation_solution["steps"],  $diophantine_equation_solution["solution"]) . "</label></div>";
             
                 $solution = $diophantine_equation_solution["solution"];
                 $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\"><b>" . $merged_counter + 2 . ".2. lépés: Új együtthatók megállapítása</b></label></div>";
-                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\"><b>c<span class=\"bottom\">1, " . $bottom_index + 1 . "</span> =</b>"
-                . "m<span class=\"bottom\">" . $modulo_bottom_index . ",1</span> * " . "m<span class=\"bottom\">" . $bottom_index_c_first . "</span> * " . "c<span class=\"bottom\">" . $bottom_index_c_second . "</span>" . " + "
-                . "m<span class=\"bottom\">" . $modulo_bottom_index . ",2</span> * " . "m<span class=\"bottom\">" . $bottom_index_c_second . "</span> * " . "c<span class=\"bottom\">" . $bottom_index_c_first . "</span>"  .  " = "
+                $task_solution = $task_solution . "<div class=\"editable_box\"><label class=\"editable_label\"><b>c<sub>1, " . $bottom_index + 1 . "</sub> =</b>"
+                . "m<sub>" . $modulo_bottom_index . ",1</sub> * " . "m<sub>" . $bottom_index_c_first . "</sub> * " . "c<sub>" . $bottom_index_c_second . "</sub>" . " + "
+                . "m<sub>" . $modulo_bottom_index . ",2</sub> * " . "m<sub>" . $bottom_index_c_second . "</sub> * " . "c<sub>" . $bottom_index_c_first . "</sub>"  .  " = "
                 . "<b>" . $solution[0][1] . " * " . $first_congruence[2] . " * " . $second_congruence[1] . " + " . $solution[1][0] . " * " . $second_congruence[2] . " * " . $first_congruence[1] ." = "
                 . $solution[0][1] * $first_congruence[2] * $second_congruence[1] + $solution[1][0] * $second_congruence[2] * $first_congruence[1]
                 . "</b></label></div>";
@@ -1208,7 +1208,7 @@
         private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
             $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a ";
             $task_solution = "<table class=\"solution_table\">";
-            $task_solution = $task_solution . "<tr><th class=\"editable_box\"><label class=\"editable_label\">x<span class=\"bottom\">i</span></label></th>";
+            $task_solution = $task_solution . "<tr><th class=\"editable_box\"><label class=\"editable_label\">x<sub>i</sub></label></th>";
             $degree = count($polynomial_expression) - 1;
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
                 if($coefficient_counter !== 0){
@@ -1216,10 +1216,10 @@
                     $coefficient = abs($coefficient);
                 }
                 $task_description = $task_description . PrintServices::CreatePrintablePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
-                $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">p<span class=\"bottom\">" . $degree - $coefficient_counter . "</span> = " . $coefficient . "</label></th>";
+                $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">p<sub>" . $degree - $coefficient_counter . "</sub> = " . $coefficient . "</label></th>";
             }
             $task_description = $task_description . " polinom helyettesítési értékét a ";
-            $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">P[x<span class=\"bottom\">i</span>]</label></th>";
+            $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">P[x<sub>i</sub>]</label></th>";
             $task_solution = $task_solution . "</tr>";
             
             foreach($horner_schemes as $row_counter => $horner_scheme){
@@ -1229,7 +1229,7 @@
                 $task_description = $task_description . $places[$row_counter];
 
                 $task_solution = $task_solution . "<tr>";
-                $task_solution = $task_solution . "<td class=\"editable_box\" class=\"editable_box\"><label class=\"editable_label\">x<span class=\"bottom\">" . $row_counter + 1 . "</span> = " . $places[$row_counter] . "</label></td><td class=\"editable_box\" class=\"editable_box\"><label class=\"editable_label\"></label></td>";
+                $task_solution = $task_solution . "<td class=\"editable_box\" class=\"editable_box\"><label class=\"editable_label\">x<sub>" . $row_counter + 1 . "</sub> = " . $places[$row_counter] . "</label></td><td class=\"editable_box\" class=\"editable_box\"><label class=\"editable_label\"></label></td>";
                 foreach($horner_scheme as $cell_counter => $cell_data){
                     $task_solution = $task_solution . "<td class=\"editable_box\" class=\"editable_box\"><label class=\"editable_label\">" . $cell_data . "</label></td>";
                 }

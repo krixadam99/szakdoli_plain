@@ -26,7 +26,7 @@
 <br>
 
 <label class="task_label">
-    2. részfeladat: Határozd meg a következő számok esetén a prímfelbontásokat! A hatványalapot és kitevőt <b>(alap, kitevő)</b> alakban add meg, a rendezett párokat vesszővel válaszd el (pl.: 2<span class="exp">2</span>*3<span class="exp">2</span> helyett írj (2,2),(3,2)-t)!
+    2. részfeladat: Határozd meg a következő számok esetén a prímfelbontásokat! A hatványalapot és kitevőt <b>(alap, kitevő)</b> alakban add meg, a rendezett párokat vesszővel válaszd el (pl.: 2<sup>2</sup>*3<sup>2</sup> helyett írj (2,2),(3,2)-t)!
 </label>
 <?php foreach($_SESSION["task"]["prime_factorization_numbers"] as $prime_factorization_index => $number):?>
     <div class="small_task_container">

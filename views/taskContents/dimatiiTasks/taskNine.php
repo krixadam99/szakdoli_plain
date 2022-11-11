@@ -1,15 +1,15 @@
 <?php $lagrange_points = $_SESSION["task"]["lagrange_points"]?>
 <label class="task_label">
     1. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
-    Míg megfelelő ponthoz tartozó alappolinomt az <i>l</i><span class="bottom">pont</span>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
-    A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    Míg megfelelő ponthoz tartozó alappolinomt az <i>l</i><sub>pont</sub>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
+    A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">
     <?php for($point_counter = 0; $point_counter < count($lagrange_points); $point_counter++):?>
         <?php 
             $task_counter = "0_" . $point_counter;
-            $solution_label = "<i>l</i><span class=\"bottom\">(" . $lagrange_points[$point_counter][0] . ", " . $lagrange_points[$point_counter][1] . ")</span>[x] = ";
+            $solution_label = "<i>l</i><sub>(" . $lagrange_points[$point_counter][0] . ", " . $lagrange_points[$point_counter][1] . ")</sub>[x] = ";
             include("./views/taskContents/solutionInput.php")
         ?>
     <?php endfor?>
@@ -24,7 +24,7 @@
 <?php $task_counter = 1?>
 <label class="task_label">
     2. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval! A cellákban a számlálót és nevezőt '/' jellel elválasztva add meg! 
-    Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<span class="exp">2</span>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">
@@ -32,9 +32,9 @@
         <tr>
             <?php for($column_counter=0; $column_counter < count($newton_points) + 1; $column_counter++):?>
                 <?php if($column_counter === 0):?>
-                    <th>x<span class="bottom">i</span></th>
+                    <th>x<sub>i</sub></th>
                 <?php elseif($column_counter === 1):?>
-                    <th>y<span class="bottom">i</span></th>
+                    <th>y<sub>i</sub></th>
                 <?php else:?>
                     <th><?=$column_counter - 1?>. lépés</th>
                 <?php endif?>

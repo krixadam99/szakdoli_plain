@@ -18,7 +18,7 @@
                 <?php elseif($column_counter == 0):?>
                     <td style="width:10%">
                         <?php if(!$first_cell_should_be_filled):?>
-                            x<span class="bottom"><?=$row_counter + 1?></span> = <?=$first_cell_datas[$row_counter]??""?>
+                            x<sub><?=$row_counter + 1?></sub> = <?=$first_cell_datas[$row_counter]??""?>
                         <?php else:?>
                             <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0"]??"";?>
                             <input type="text" name=<?="solution_" . $task_counter . "_0" ?> value="<?=$current_answer["answer"]??"x = ..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>

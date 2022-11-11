@@ -17,7 +17,7 @@
             $first_cell_datas = $polynomial_task_details[2];
             $first_cell_should_be_filled = false;
             for($column_counter = 1; $column_counter < $column_number-1; $column_counter++){
-                array_push($table_header_cells, "p<span class=\"bottom\">" .  $polynomial_task_details[0] - $column_counter + 1 . "</span> = " . $polynomial_task_details[1][$column_counter - 1]);
+                array_push($table_header_cells, "p<sub>" .  $polynomial_task_details[0] - $column_counter + 1 . "</sub> = " . $polynomial_task_details[1][$column_counter - 1]);
             }
             array_push($table_header_cells, $polynomial_names[$task_index]);
         ?>
@@ -39,7 +39,7 @@
         $table_header_cells = ["x"];
         $first_cell_should_be_filled = true;
         for($column_counter = 1; $column_counter < $column_number-1; $column_counter++){
-            array_push($table_header_cells, "p<span class=\"bottom\">" .  $divide_polynomials[0] - $column_counter + 1 . "</span> = " . $divide_polynomials[1][$column_counter - 1]);
+            array_push($table_header_cells, "p<sub>" .  $divide_polynomials[0] - $column_counter + 1 . "</sub> = " . $divide_polynomials[1][$column_counter - 1]);
         }
         array_push($table_header_cells, $polynomial_names[2]);
     ?>
