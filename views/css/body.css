@@ -885,7 +885,8 @@ ul {
 }
 
 .student_grades_form input,
-.student_grades_form select {
+.student_grades_form select,
+.student_grades_form td.empty_td {
     width: 90%;
     padding: 10px 5%;
     border: 0px;

@@ -1,8 +1,10 @@
 <?php
-    $pending_teacher_groups = $this->GetPendingTeacherGroups();
-    $pending_student_groups = $this->GetPendingStudentGroups();
-    $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_student_group = $this->GetApprovedStudentGroup();
+    $pending_teacher_groups = $this->pending_teacher_groups;
+    $pending_student_groups = $this->pending_student_groups;
+    $approved_teacher_groups = $this->approved_teacher_groups;
+    $approved_student_group = $this->approved_student_group;
+    $denied_student_groups = $this->denied_student_groups;
+    $withdrawn_student_groups = $this->withdrawn_student_groups;
 
     $actual_page = "notifications";
 ?>
@@ -31,21 +33,21 @@
                     <label>Demonstrátori kérése a <?=$pending_teacher_group["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$pending_teacher_group["subject_group"]?>. csoport esetében elbírálás alatt áll!</label>
                 </div>
             <?php endforeach?>
-            <?php foreach($pending_student_groups as $index => $pending_student_groups):?>
+            <?php foreach($pending_student_groups as $index => $pending_student_group):?>
                 <div class="notification_box">
-                    <?php if($pending_student_groups["subject_group"] === "1"):?>
+                    <?php if($pending_student_group["subject_group"] === "0"):?>
                         <label>
-                            Jelentkezzen valamelyik tárgy csoportjába a "Csoport hozzáadás/Csoporthoz való csatlakozás" menüpont alatt! Ha nem találja a megfelelő csoportot, akkor várja meg míg a csoporthoz hozzá lesz rendelve demonstrátor!
+                            Jelentkezzen valamelyik tárgy csoportjába a navigációs menü 1. sorában lévő + ikonra kattintva! Ha nem találja a megfelelő csoportot, akkor várja meg míg a csoporthoz hozzá lesz rendelve demonstrátor!
                         </label>
                     <?php else:?>
                         <label>
                             A 
-                            <?php if($pending_student_groups["subject_id"]=="i"):?>
+                            <?php if($pending_student_group["subject_id"]=="i"):?>
                                 Diszkrét matematika I.
-                            <?php elseif($pending_student_groups["subject_id"]=="ii"):?>
+                            <?php elseif($pending_student_group["subject_id"]=="ii"):?>
                                 Diszkrét matematika II.
                             <?php endif?>
-                            tárgy <?=$pending_student_groups["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
+                            tárgy <?=$pending_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
                         </label>
                     <?php endif?>
                 </div>
@@ -75,6 +77,38 @@
         </div>
 
         <!-- Requests that were denied -->
+        <div id="notification_container">
+            <?php foreach($denied_student_groups as $index => $denied_student_group):?>
+                <div class="notification_box">
+                    <label>
+                        A 
+                        <?php if($denied_student_group["subject_id"]=="i"):?>
+                            Diszkrét matematika I.
+                        <?php elseif($denied_student_group["subject_id"]=="ii"):?>
+                            Diszkrét matematika II.
+                        <?php endif?>
+                        tárgy <?=$denied_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elutasításra került!
+                    </label>
+                </div>
+            <?php endforeach?>
+        </div>
+
+        <!-- Requests that were withdrawn -->
+        <div id="notification_container">
+            <?php foreach($withdrawn_student_groups as $index => $withdrawn_student_group):?>
+                <div class="notification_box">
+                    <label>
+                        A 
+                        <?php if($withdrawn_student_group["subject_id"]=="i"):?>
+                            Diszkrét matematika I.
+                        <?php elseif($withdrawn_student_group["subject_id"]=="ii"):?>
+                            Diszkrét matematika II.
+                        <?php endif?>
+                        tárgy <?=$withdrawn_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése visszavonásra került!
+                    </label>
+                </div>
+            <?php endforeach?>
+        </div>
         
         <!-- If there is no more group that is pending, then let's display that too -->
         <?php if(count($pending_teacher_groups) == 0 && count($pending_student_groups) == 0):?>

@@ -10,7 +10,27 @@
         $expectation_rules_with_key[$expectation_rule["task_type"]] = $expectation_rule;
     }
 
+    $points = [];
+    foreach($students_grades as $index => $student){
+        $small_test_point = 0;
+        foreach($student as $key => $value){
+          if(is_numeric(strpos($key, "small_test"))){
+            $small_test_point += $value;
+          }
+        }
+        $middle_term_exam_point = max($student["middle_term_exam"],$student["middle_term_exam_correction"]);
+        $final_term_exam_point = max($student["final_term_exam"],$student["final_term_exam_correction"]);
+
+        $points[$student["neptun_code"]] = [];
+        $points[$student["neptun_code"]]["small_test"] =  $small_test_point;
+        $points[$student["neptun_code"]]["middle_term_exam"] =  $middle_term_exam_point;
+        $points[$student["neptun_code"]]["final_term_exam"] = $final_term_exam_point;
+        $points[$student["neptun_code"]]["sum"] = $student["extra"] + $middle_term_exam_point + $final_term_exam_point;
+    }
+
     $actual_page = "student_grades";
+
+
 ?>
 
 
@@ -91,6 +111,31 @@
                                         <?php if($student["practice_count"] < $expectation_rules["practice_count"]["minimum_for_pass"]):?>
                                             Nem kaphat érdemjegyet
                                         <?php else:?>
+                                            <?php if(
+                                                    $points[$student["neptun_code"]]["small_test"] < $expectation_rules["small_tests"]["minimum_for_pass"]
+                                                ||  $points[$student["neptun_code"]]["middle_term_exam"] < $expectation_rules["middle_term_exam"]["minimum_for_pass"]
+                                                ||  $points[$student["neptun_code"]]["final_term_exam"] < $expectation_rules["final_term_exam"]["minimum_for_pass"]
+                                            ):?>
+                                                1
+                                            <?php else:?>
+                                                <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["excellent_level_point"]):?>
+                                                    <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["good_level_point"]):?>
+                                                        <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["satisfactory_level_point"]):?>
+                                                            <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["pass_level_point"]):?>
+                                                                1
+                                                            <?php else:?>
+                                                                2
+                                                            <?php endif?>
+                                                        <?php else:?>
+                                                            3
+                                                        <?php endif?>
+                                                    <?php else:?>
+                                                        4
+                                                    <?php endif?>
+                                                <?php else:?>
+                                                    5
+                                                <?php endif?>
+                                            <?php endif?>
                                         <?php endif?>
                                     </td>
 
@@ -183,7 +228,6 @@
                     <table>
                         <tr class="header_row">
                             <th>KÖVETELMÉNY TÍPUSA</th>
-                            <th>JOBB SZÁMÍTSON?</th>
                             <th>SZÜKSÉGES MINIMUM PONTSZÁM</th>
                             <th>MAXIMUM PONTSZÁM</th>
                         </tr>
@@ -200,26 +244,29 @@
                                     case "small_tests":$task_type_name="Kis zárthelyik";break;
                                 }
                             ?>
-                            <tr id=<?=$id?> class="expectation_table_row">
-                                <td>
-                                    <?=$task_type_name?>
-                                </td>
-                                <td style="padding:0%">
-                                    <select class="student_expectation_rules_select" name="<?=$id . "_is_better"?>">
-                                        <option <?=$expectation_rule["is_better"] === "-1"?"selected":""?>>-</option>
-                                        <option <?=$expectation_rule["is_better"] === "0"?"selected":""?>>NEM</option>
-                                        <option <?=$expectation_rule["is_better"] === "1"?"selected":""?>>IGEN</option>
-                                    </select>
-                                </td>
-                                <td style="padding:0%">
-                                    <input type="number" min="0" class="student_expectation_rules_input" name="<?=$id . "_minimum_for_pass"?>" value="<?=$expectation_rule["minimum_for_pass"]?>">
-                                    </input>
-                                </td>
-                                <td style="padding:0%">
-                                    <input type="number" min="0" class="student_expectation_rules_input" name="<?=$id . "_maximum_value"?>" value="<?=$expectation_rule["maximum_value"]?>">
-                                    </input>
-                                </td>                          
-                            </tr>
+                            <?php if(!in_array($expectation_rule["task_type"],["final_term_exam_correction", "middle_term_exam_correction"])):?>
+                                <tr id=<?=$id?> class="expectation_table_row">
+                                    <td>
+                                        <?php if($expectation_rule["task_type"] === "final_term_exam"):?>
+                                            <?=$task_type_name?><br>
+                                            Évvégi zárthelyi javítás/pótlás
+                                        <?php elseif($expectation_rule["task_type"] === "middle_term_exam"):?>
+                                            <?=$task_type_name?><br>
+                                            Évközi zárthelyi javítás/pótlás
+                                        <?php elseif(!in_array($expectation_rule["task_type"],["final_term_exam", "middle_term_exam", "final_term_exam_correction", "middle_term_exam_correction"])):?>
+                                            <?=$task_type_name?>
+                                        <?php endif?>
+                                    </td>
+                                    <td style="padding:0%">
+                                        <input type="number" min="0" class="student_expectation_rules_input" name="<?=$id . "_minimum_for_pass"?>" value="<?=$expectation_rule["minimum_for_pass"]?>">
+                                        </input>
+                                    </td>
+                                    <td style="padding:0%">
+                                        <input type="number" min="0" class="student_expectation_rules_input" name="<?=$id . "_maximum_value"?>" value="<?=$expectation_rule["maximum_value"]?>">
+                                        </input>
+                                    </td> 
+                                </tr>
+                            <?php endif?>    
                         <?php endforeach?>
                     </table>
                 </div>
