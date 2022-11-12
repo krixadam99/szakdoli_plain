@@ -13,6 +13,13 @@
         }
     }
 
+    $not_withdrawn_students = [];
+    foreach($students as $student){
+        if($student["application_request_status"] !== "WITHDRAWN"){
+            array_push($not_withdrawn_students, $student);
+        }
+    }
+
     $actual_page = "student_handling";
 ?>
 
@@ -31,7 +38,7 @@
     <?php include("./partials/header.php")?>
     <main>
         <?php include("./partials/groupSelection.php")?>
-        <?php if(count($students) != 0):?>
+        <?php if(count($not_withdrawn_students) != 0):?>
             <form id="student_handling_form" action="./index.php?site=studentHandling" method="POST">
                 <table>
                     <tr id="header_row">
@@ -40,36 +47,34 @@
                         <th>CSOPORT</th>
                         <th>DÖNTÉS</th>
                     </tr>
-                    <?php foreach($students as $index => $student):?>
-                        <?php if($student["application_request_status"] !== "WITHDRAWN"):?>
-                            <tr id=<?=$student["group_number"]?> class="student_row">
-                                <td><?=$student["neptun_code"]?></td>
-                                <td><?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
-                                <td><?=$student["group_number"]?></td>
-                                <td>
-                                    <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
-                                        <?php if($student["application_request_status"] === "PENDING"):?>
-                                            <option selected>-</option>
-                                            <option >ELFOGADÁS</option>
-                                            <option>ELUTASÍTÁS</option>
-                                        <?php elseif($student["application_request_status"] === "APPROVED"):?>
-                                            <option selected>-</option>
-                                            <option>TÖRLÉS</option>
-                                        <?php elseif($student["application_request_status"] === "DENIED"):?>
-                                            <option selected>-</option>
-                                            <option>VISSZAVÉTEL</option>
-                                        <?php endif?>
-                                    </select>
-                                </td>
-                            </tr>
-                        <?php endif?>
+                    <?php foreach($not_withdrawn_students as $index => $student):?>
+                        <tr id=<?=$student["group_number"]?> class="student_row">
+                            <td><?=$student["neptun_code"]?></td>
+                            <td><?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></td>
+                            <td><?=$student["group_number"]?></td>
+                            <td>
+                                <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
+                                    <?php if($student["application_request_status"] === "PENDING"):?>
+                                        <option selected>-</option>
+                                        <option >ELFOGADÁS</option>
+                                        <option>ELUTASÍTÁS</option>
+                                    <?php elseif($student["application_request_status"] === "APPROVED"):?>
+                                        <option selected>-</option>
+                                        <option>TÖRLÉS</option>
+                                    <?php elseif($student["application_request_status"] === "DENIED"):?>
+                                        <option selected>-</option>
+                                        <option>VISSZAVÉTEL</option>
+                                    <?php endif?>
+                                </select>
+                            </td>
+                        </tr>
                     <?php endforeach?>
                 </table>
                 <button type="submit" class="finalize_button">VÉGLEGESÍTÉS</button>
             </form>
         <?php else:?>
-            <div id="notification_box">
-                <label>Nincsen diák a <?=$_SESSION['subject']=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$_SESSION['group']?> csoportjában!</label>
+            <div class="notification_box">
+                <label>Nem jelentkezett még diák a <?=$_SESSION['subject']=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$_SESSION['group']?> csoportjába!</label>
             </div>
         <?php endif?>
     </main>

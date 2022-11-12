@@ -58,6 +58,7 @@
                                 <th style="position: sticky;left: 0;background: rgba(255, 255, 255, 0.751);z-index: 1;backdrop-filter: blur(3px)">NEPTUN</th>
                                 <th>TÁRGY</th>
                                 <th>CSOPORT</th>
+                                <th>ÉRDEMJEGY</th>
                                 <th>JELENLÉT</th>
                                 <th>EXTRA</th>
                                 <th>ÉVKÖZI ZH</th>
@@ -86,6 +87,13 @@
                                     <td style="border-left:1px dashed black">
                                         <?=$student["group_number"]?>
                                     </td>
+                                    <td style="border-left:1px dashed black">
+                                        <?php if($student["practice_count"] < $expectation_rules["practice_count"]["minimum_for_pass"]):?>
+                                            Nem kaphat érdemjegyet
+                                        <?php else:?>
+                                        <?php endif?>
+                                    </td>
+
                                     <td style="padding:0%">
                                         <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_grade_input_practice" value="<?=$student["practice_count"]?>">
                                         </input>
@@ -157,7 +165,7 @@
                     <button type="submit" class="finalize_button">RÖGZÍTÉS</button>
                 </form>
             <?php else:?>
-                <div id="notification_box">
+                <div class="notification_box">
                     <label>Nincsen elfogadott diák a <?=$_SESSION['subject']=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> tárgy <?=$_SESSION['group']?> csoportjában!</label>
                 </div>
             <?php endif?>

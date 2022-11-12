@@ -44,6 +44,12 @@
                     $expectation_rules = $model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                     $task_due_dates = $model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                     $grade_levels = $model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
+
+                    $expectation_rules_tmp = [];
+                    foreach($expectation_rules as $expectation_rule){
+                        $expectation_rules_tmp[$expectation_rule["task_type"]] = $expectation_rule;
+                    }
+                    $expectation_rules = $expectation_rules_tmp;
                     
                     include(ROOT_DIRECTORY . "/views/studentGradesPage.view.php");
                 }else{

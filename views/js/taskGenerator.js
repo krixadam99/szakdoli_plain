@@ -158,6 +158,77 @@ function removeHighlights(){
     }
 }
 
+function OpenNewPrompt(field_labels, action){
+    if(edited_label_parent){
+        let main = document.querySelector("main")
+                
+        let new_prompt_container = document.createElement("div")
+        new_prompt_container.id = "new_prompt_container"
+        
+        let prompt_box = document.createElement("div")
+        prompt_box.id = "prompt_box"
+        
+        let new_inputs = []
+        for(let field_label of field_labels){
+            let prompt_row = document.createElement("div")
+            prompt_row.style["display"] = "flex"
+            prompt_row.style["margin"] = "2% auto"
+            
+            let prompt_input = document.createElement("input")
+            prompt_input.style["width"] = "30%"
+            prompt_input.style["margin"] = "auto auto auto 2%"
+            prompt_input.type = "text"
+            prompt_input.value = "0"
+
+            let prompt_input_label = document.createElement("label")
+            prompt_input_label.innerText = field_label
+            prompt_input_label.style["width"] = "25%"
+
+            new_inputs.push(prompt_input)
+            prompt_row.appendChild(prompt_input_label)
+            prompt_row.appendChild(prompt_input)
+            prompt_box.appendChild(prompt_row)
+        }
+        let prompt_submit_button = document.createElement("button")
+        prompt_submit_button.id = "prompt_submit_button"
+        prompt_submit_button.innerText = "Hozzáadás"
+        prompt_submit_button.style["width"] = "15%"
+        prompt_submit_button.style["margin"] = "1% auto 1% 0%"
+        
+        prompt_box.appendChild(prompt_submit_button)
+        new_prompt_container.appendChild(prompt_box)
+        main.appendChild(new_prompt_container)
+
+        new_prompt_container.addEventListener("click", (event)=>{
+            if(!event.target.closest("#prompt_box")) {
+                main.removeChild(new_prompt_container)
+            }
+        })
+
+        prompt_submit_button.addEventListener("click", ()=>{
+            switch(action){
+                case "sub":{
+                    let textarea = edited_label_parent.querySelector("textarea")
+                    textarea.value = textarea.value.substring(0,cursor_actual_pos) + "<sub>" + new_inputs[0].value + "</sub>" + textarea.value.substring(cursor_actual_pos) 
+                    AddButtonClickEffect(sub_button)
+                };break;
+                case "sup":{
+                    let textarea = edited_label_parent.querySelector("textarea")
+                    textarea.value = textarea.value.substring(0,cursor_actual_pos) + "<sup>" + new_inputs[0].value + "</sup>" + textarea.value.substring(cursor_actual_pos) 
+                    AddButtonClickEffect(sup_button)
+                };break;
+                case "fraction":{
+                    let textarea = edited_label_parent.querySelector("textarea")
+                    textarea.value = textarea.value.substring(0,cursor_actual_pos) + "<span class=\"fraction\"><span class=\"nominator\">" + new_inputs[0].value + "</span><span class=\"denominator\">" + new_inputs[1].value + "</span></span>" + textarea.value.substring(cursor_actual_pos) 
+                    AddButtonClickEffect(fraction_button)
+                };break;
+                default:break;
+            }
+            main.removeChild(new_prompt_container)
+        })
+    }
+}
+
 // Variables
 let small_exam_generation_card = document.getElementById("small_exam_generation")
 let big_exam_generation_card = document.getElementById("big_exam_generation")
@@ -189,6 +260,12 @@ let justify_alignment = document.getElementById("justify_alignment")
 
 let linebreak_before_input = document.getElementById("linebreak_before_input")
 let linebreak_after_input = document.getElementById("linebreak_after_input")
+
+let special_character_button = document.getElementById("special_character_button")
+let special_character_cells = document.querySelectorAll(".special_character_cell")
+let sup_button = document.getElementById("exp_button")
+let sub_button = document.getElementById("bottom_button")
+let fraction_button = document.getElementById("fraction_button")
 
 let all_highlighted = false
 
@@ -372,15 +449,73 @@ if(italic_button){
 
 if(linebreak_before_input){
     linebreak_before_input.addEventListener("input", ()=>{
-        Editing(chosen_elements_for_edition, linebreak_before_input.value + "%", "margin-bottom")
+        Editing(chosen_elements_for_edition, linebreak_before_input.value + "%", "margin-top")
     })
 }
 
 if(linebreak_after_input){
     linebreak_after_input.addEventListener("input", ()=>{
-        Editing(chosen_elements_for_edition, linebreak_after_input.value + "%", "margin-top")
+        Editing(chosen_elements_for_edition, linebreak_after_input.value + "%", "margin-bottom")
     })
 }
+
+if(special_character_button){
+    special_character_button.addEventListener("mouseenter", ()=>{
+        let special_characters_holder = special_character_button.querySelector(".special_characters")
+        special_characters_holder.style["display"] = "block"
+    })
+
+    special_character_button.addEventListener("mouseleave", ()=>{
+        let special_characters_holder = special_character_button.querySelector(".special_characters")
+        special_characters_holder.style["display"] = "none"
+    })
+}
+
+if(special_character_button){
+    special_character_button.addEventListener("mouseenter", ()=>{
+        let special_characters_holder = special_character_button.querySelector(".special_characters")
+        special_characters_holder.style["display"] = "block"
+    })
+
+    special_character_button.addEventListener("mouseleave", ()=>{
+        let special_characters_holder = special_character_button.querySelector(".special_characters")
+        special_characters_holder.style["display"] = "none"
+    })
+}
+
+if(special_character_cells){
+    special_character_cells.forEach((special_character_cell)=>{
+        special_character_cell.addEventListener("click", ()=>{
+            if(edited_label_parent){
+                let character_span = special_character_cell.querySelector("span")
+                let html_entity = character_span.getAttribute("entity")
+
+                let textarea = edited_label_parent.querySelector("textarea")
+                textarea.value = textarea.value.substring(0,cursor_actual_pos) + html_entity + textarea.value.substring(cursor_actual_pos) 
+                AddButtonClickEffect(special_character_cell)
+            }
+        })
+    })
+}
+
+if(sup_button){
+    sup_button.addEventListener("click", ()=>{
+        OpenNewPrompt(["Add meg a felső indexet!"], "sup")
+    })
+}
+
+if(sub_button){
+    sub_button.addEventListener("click", ()=>{
+        OpenNewPrompt(["Add meg az alsó indexet!"], "sub")
+    })
+}
+
+if(fraction_button){
+    fraction_button.addEventListener("click", ()=>{
+        OpenNewPrompt(["Add meg a számlálót!", "Add meg a nevezőt!"], "fraction")
+    })
+}
+
 
 if(save_pdf_button){
     save_pdf_button.addEventListener("click", (event)=>{
@@ -402,16 +537,13 @@ if(save_pdf_button){
 window.addEventListener("click", (event)=>{
     if(edited_label_parent){
         let textarea = edited_label_parent.querySelector("textarea")
-        if(textarea && event.target !== textarea && event.target !== document.getElementById("lt_button")){
+        if(    textarea 
+            && event.target !== textarea 
+            && event.target.closest("#page_container")
+        ){
             let label = ChangeElementToAnother(edited_label_parent.querySelector("textarea"), ".editable_box", "label")
             AddEventsToParagraphLabel(label)
+            edited_label_parent = NaN
         }
     }
 })
-
-if(document.getElementById("lt_button")){
-    document.getElementById("lt_button").addEventListener("click", ()=>{
-        let textarea = edited_label_parent.querySelector("textarea")
-        textarea.value = textarea.value.substring(0,cursor_actual_pos) + "<span style=\"content: \"\\2282\";\">&lt</span>" + textarea.value.substring(cursor_actual_pos) 
-    })
-}

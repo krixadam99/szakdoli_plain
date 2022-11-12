@@ -128,9 +128,9 @@
                         <li><label>(\u{2200} a, b \u{2208} \u{2124}) : a | b \u{2227} b | a \u{2194} a = \u{00B1} b; </label></li>
                         <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} b | c \u{2194} a | c (tranzitivitás); </label></li>
                         <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} a | c \u{2194} a | b \u{00B1} c; </label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} a | b \u{00B1} c \u{2194} a | c; </label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} c | d \u{2194} a * c | b * d; </label></li>
-                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2194} a | b * c. </label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} a | b \u{00B1} c \u{2192} a | c; </label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2227} c | d \u{2192} a * c | b * d; </label></li>
+                        <li><label>(\u{2200} a, b, c \u{2208} \u{2124}) : a | b \u{2192} a | b * c. </label></li>
                     </ul>
                 </div>
                 <div class=\"definition\">
