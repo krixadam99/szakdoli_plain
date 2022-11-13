@@ -31,6 +31,7 @@
     $actual_page = "student_grades";
 
 
+    
 ?>
 
 
@@ -46,6 +47,7 @@
 </head>
 <body>
     <?php include("./partials/header.php")?>
+
     <main>
         <?php include("./partials/groupSelection.php")?>
     
