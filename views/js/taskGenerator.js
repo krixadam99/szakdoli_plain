@@ -87,36 +87,53 @@ function AddButtonClickEffect(button, timeout = 200){
     },timeout)
 }
 
-function ChangeElementToAnother(element, parent_selecter, new_element_tag_name){
-    let original_text = ""
-    if(element.tagName === "TEXTAREA"){
-        original_text = element.value
-    }else{
-        original_text = element.innerHTML
-    }
-    let next_element = element.nextElementSibling
-    let parent_element = element.closest(parent_selecter)
+function ChangeElementToAnother(parent_element, children_selector = "editable_label", element_new_tagname = "TEXTAREA"){
+    let children = Array.from(parent_element.children)
+    children.forEach((child)=>{
+        let all = parent_element.querySelectorAll(children_selector)
+        if(Array.from(all).includes(child)){
+            let original_text = ""
+            if(child.tagName === "TEXTAREA" || child.tagName === "INPUT"){
+                original_text = child.value
+            }else{
+                original_text = child.innerHTML
+            }
+    
+            let new_element = document.createElement(element_new_tagname)
+            if(element_new_tagname === "TEXTAREA"){        
+                new_element.value = original_text
+                new_element.style["border-radius"] = "3px"
+                
+                if(child.getAttribute("editing_textarea_cols")){
+                    new_element.cols = child.getAttribute("editing_textarea_cols")
+                }else{
+                    new_element.cols = "100"
+                }
 
-    let new_element = document.createElement(new_element_tag_name)
-    if(new_element_tag_name === "textarea"){        
-        new_element.value = original_text
-        new_element.style["border-radius"] = "3px"
-        new_element.cols = "100"
-        new_element.rows = "5"
-    }else{
-        new_element.innerHTML = original_text
-    }
-    parent_element.removeChild(element)
-    if(next_element){
-        parent_element.insertBefore(next_element, new_element)
-    }else{
-        parent_element.appendChild(new_element)
-    }
+                if(child.getAttribute("editing_textarea_rows")){
+                    new_element.rows = child.getAttribute("editing_textarea_rows")
+                }else{
+                    new_element.rows = "1"
+                }
+            }else{
+                new_element.innerHTML = original_text
+                new_element.classList.add("editable_label")
 
-    return new_element
+                if(child.getAttribute("cols")){
+                    new_element.setAttribute("editing_textarea_cols", child.getAttribute("cols"))
+                }
+
+                if(child.getAttribute("rows")){
+                    new_element.setAttribute("editing_textarea_rows", child.getAttribute("rows"))
+                }
+            }
+            parent_element.replaceChild(new_element,child)
+        }
+        ChangeElementToAnother(child, children_selector, element_new_tagname)
+    })
 }
 
-function AddEventsToParagraphLabel(element, tag_bame){
+function AddEventsToParagraphLabel(element){
     element.addEventListener("click", ()=>{
         element.style["background-color"] = "rgb(255, 237, 230)"
 
@@ -130,10 +147,15 @@ function AddEventsToParagraphLabel(element, tag_bame){
 
     element.addEventListener("dblclick", ()=>{
         edited_label_parent = element.closest(".editable_box")
-        editind_box = ChangeElementToAnother(element, ".editable_box", "textarea")
+        ChangeElementToAnother(edited_label_parent, ".editable_label", "TEXTAREA")
+        edited_label_parent.classList.add("in_editing");
+        edited_label_parent.style["display"] = "inline"
 
-        editind_box.addEventListener("click", (event)=>{
-            cursor_actual_pos = event.target.selectionEnd
+        edited_label_parent.querySelectorAll("TEXTAREA").forEach((editing_box)=>{
+            editing_box.addEventListener("click", (event)=>{
+                cursor_actual_pos = event.target.selectionEnd
+                focused_textarea = event.target
+            })
         })
     })
 }
@@ -158,6 +180,7 @@ function removeHighlights(){
     }
 }
 
+/*
 function OpenNewPrompt(field_labels, action){
     if(edited_label_parent){
         let main = document.querySelector("main")
@@ -228,6 +251,7 @@ function OpenNewPrompt(field_labels, action){
         })
     }
 }
+*/
 
 // Variables
 let small_exam_generation_card = document.getElementById("small_exam_generation")
@@ -266,6 +290,7 @@ let special_character_cells = document.querySelectorAll(".special_character_cell
 let sup_button = document.getElementById("exp_button")
 let sub_button = document.getElementById("bottom_button")
 let fraction_button = document.getElementById("fraction_button")
+let focused_textarea = NaN
 
 let all_highlighted = false
 
@@ -347,9 +372,6 @@ if(add_new_task_button){
         if(subtopic_select.tagName === "SELECT"){
             selected_subtopic = subtopic_select.options.selectedIndex
         }
-
-        console.log(subtopic_select)
-
         let chosen_div = document.getElementById("big_exam_task_" + selected_main_topic + "_" + selected_subtopic)
 
         if(chosen_div != null){
@@ -499,20 +521,79 @@ if(special_character_cells){
 }
 
 if(sup_button){
-    sup_button.addEventListener("click", ()=>{
-        OpenNewPrompt(["Add meg a felső indexet!"], "sup")
+    sup_button.addEventListener("click", ()=>{       
+        if(focused_textarea){
+            let focused_element_parent = focused_textarea.parentNode
+            
+            let new_textarea = document.createElement("textarea")
+            new_textarea.cols = 3
+            new_textarea.rows = 1
+            new_textarea.addEventListener("click", (event)=>{
+                focused_textarea = event.target
+            })
+
+            let new_sup = document.createElement("sup")
+
+            
+            new_sup.appendChild(new_textarea)
+            focused_element_parent.appendChild(new_sup)
+        }
     })
 }
 
 if(sub_button){
     sub_button.addEventListener("click", ()=>{
-        OpenNewPrompt(["Add meg az alsó indexet!"], "sub")
+        if(focused_textarea){
+            let focused_element_parent = focused_textarea.parentNode
+            
+            let new_textarea = document.createElement("textarea")
+            new_textarea.cols = 3
+            new_textarea.rows = 1
+            new_textarea.addEventListener("click", (event)=>{
+                focused_textarea = event.target
+            })
+
+            let new_sup = document.createElement("sub")
+
+            
+            new_sup.appendChild(new_textarea)
+            focused_element_parent.appendChild(new_sup)
+        }
     })
 }
 
 if(fraction_button){
     fraction_button.addEventListener("click", ()=>{
-        OpenNewPrompt(["Add meg a számlálót!", "Add meg a nevezőt!"], "fraction")
+        if(focused_textarea){
+            let focused_element_parent = focused_textarea.parentNode
+
+            let new_textarea_nominator = document.createElement("textarea") 
+            new_textarea_nominator.cols = 5
+            new_textarea_nominator.rows = 1
+            new_textarea_nominator.addEventListener("click", (event)=>{
+                focused_textarea = event.target
+            })
+    
+            let new_textarea_denominator = document.createElement("textarea") 
+            new_textarea_denominator.cols = 5
+            new_textarea_denominator.rows = 1
+            new_textarea_denominator.addEventListener("click", (event)=>{
+                focused_textarea = event.target
+            })
+
+            let fraction_span = document.createElement("span")
+            fraction_span.classList.add("fraction")
+            let nominator_span = document.createElement("span")
+            nominator_span.classList.add("nominator")
+            let denominator_span = document.createElement("span")
+            denominator_span.classList.add("denominator")
+
+            nominator_span.appendChild(new_textarea_nominator)
+            denominator_span.appendChild(new_textarea_denominator)
+            fraction_span.appendChild(nominator_span)
+            fraction_span.appendChild(denominator_span)
+            focused_element_parent.appendChild(fraction_span)
+        }
     })
 }
 
@@ -536,14 +617,22 @@ if(save_pdf_button){
 
 window.addEventListener("click", (event)=>{
     if(edited_label_parent){
-        let textarea = edited_label_parent.querySelector("textarea")
-        if(    textarea 
-            && event.target !== textarea 
+        let textareas = edited_label_parent.querySelectorAll("textarea")
+
+        if(    textareas
+            && !Array.from(textareas).includes(event.target)
             && event.target.closest("#page_container")
         ){
-            let label = ChangeElementToAnother(edited_label_parent.querySelector("textarea"), ".editable_box", "label")
-            AddEventsToParagraphLabel(label)
+            ChangeElementToAnother(edited_label_parent, "textarea", "LABEL")
+
+            let labels = edited_label_parent.querySelectorAll("label")
+            labels.forEach((label)=>{
+                AddEventsToParagraphLabel(label)
+            })
+            edited_label_parent.classList.remove("in_editing")
+            
             edited_label_parent = NaN
+            focused_textarea = NaN
         }
     }
 })

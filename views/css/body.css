@@ -808,6 +808,7 @@ ul {
 .editable_box {
     margin-top: 1%;
     margin-bottom: 1%;
+    display: flex;
 }
 
 .prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
