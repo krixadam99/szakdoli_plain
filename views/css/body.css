@@ -814,15 +814,11 @@ ul {
     background-color: white;
     border: 1px solid gray;
     border-left: 0;
-    position: relative;
-    padding: 2px 6px;
-    bottom: 6px;
 }
 
-textarea {
+.editing_span {
     border: 1px solid rgb(183, 183, 247);
-    resize: none;
-    overflow: auto;
+    padding-right: 30px;
 }
 
 .prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {

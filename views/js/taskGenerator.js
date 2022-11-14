@@ -87,51 +87,25 @@ function AddButtonClickEffect(button, timeout = 200){
     },timeout)
 }
 
-function ChangeElementToAnother(parent_element, children_selector = "editable_label", element_new_tagname = "TEXTAREA"){
+function ChangeElementToAnother(parent_element, children_selector = "editable_label", element_new_tagname = "SPAN"){
     let children = Array.from(parent_element.children)
     children.forEach((child)=>{
         let all = parent_element.querySelectorAll(children_selector)
         if(Array.from(all).includes(child)){
             let original_text = ""
-            if(child.tagName === "TEXTAREA" || child.tagName === "INPUT"){
-                original_text = child.value
-            }else{
-                original_text = child.innerHTML
-            }
+            original_text = child.innerHTML
     
             let new_element = document.createElement(element_new_tagname)
-            if(element_new_tagname === "TEXTAREA"){        
-                new_element.value = original_text
-                new_element.style["border-radius"] = "3px"
-                
-                if(child.getAttribute("editing_textarea_cols")){
-                    new_element.cols = child.getAttribute("editing_textarea_cols")
-                }else{
-                    new_element.cols = "100"
-                }
-
-                if(child.getAttribute("editing_textarea_rows")){
-                    new_element.rows = child.getAttribute("editing_textarea_rows")
-                }else{
-                    new_element.rows = "1"
-                }
-
-                chosen_elements_for_edition.push(new_element)
+            if(element_new_tagname === "SPAN"){
+                new_element.innerHTML = original_text
+                new_element.setAttribute("contentEditable", true)
+                new_element.classList.add("editing_span")
             }else{
                 new_element.innerHTML = original_text
                 new_element.classList.add("editable_label")
-
-                if(child.getAttribute("cols")){
-                    new_element.setAttribute("editing_textarea_cols", child.getAttribute("cols"))
-                }
-
-                if(child.getAttribute("rows")){
-                    new_element.setAttribute("editing_textarea_rows", child.getAttribute("rows"))
-                }
             }
 
             GetComputedStylesOfChild(child, new_element)
-
             parent_element.replaceChild(new_element,child)
         }
         ChangeElementToAnother(child, children_selector, element_new_tagname)
@@ -152,22 +126,22 @@ function AddEventsToParagraphLabel(element){
 
     element.addEventListener("dblclick", ()=>{
         edited_label_parent = element.closest(".editable_box")
-        ChangeElementToAnother(edited_label_parent, ".editable_label", "TEXTAREA")
+        ChangeElementToAnother(edited_label_parent, ".editable_label", "SPAN")
         edited_label_parent.classList.add("in_editing");
         edited_label_parent.style["display"] = "inline"
 
-        edited_label_parent.querySelectorAll("TEXTAREA").forEach((editing_box)=>{
-            editing_box.addEventListener("click", (event)=>{
-                editing_box.style.height = "auto";
-                cursor_actual_pos = event.target.selectionEnd
-                focused_textarea = event.target
-                if(editing_box.parentElement !== edited_label_parent){
-                    editing_box.style["border-right"] = "0px"
+        edited_label_parent.querySelectorAll("span.editing_span").forEach((editing_span)=>{
+            editing_span.addEventListener("click", (event)=>{
+                editing_span.style.height = "auto";
+                cursor_actual_pos = window.getSelection().anchorOffset
+                focused_span = event.target
+                if(editing_span.parentElement !== edited_label_parent){
+                    editing_span.style["border-right"] = "0px"
                 }
             })
 
-            editing_box.addEventListener("input", (event)=>{
-                cursor_actual_pos = event.target.selectionEnd
+            editing_span.addEventListener("keyup", (event)=>{
+                cursor_actual_pos = window.getSelection().anchorOffset
             })
         })
 
@@ -197,79 +171,89 @@ function removeHighlights(){
     }
 }
 
-function AddTextAreaXButton(parent_element, is_grand_parent = true){
+function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
     let new_x_button = document.createElement("button")
     new_x_button.innerText = "x" 
     new_x_button.classList.add("x_button")
     new_x_button.addEventListener("click",()=>{
         let parent = new_x_button.parentElement
-        let parent_next_element = parent.nextElementSibling
-        let parent_previous_element = parent.previousElementSibling
+        let next_element = NaN
+        let previous_element = NaN
 
-        if(    parent_next_element 
-            && parent_previous_element 
-            && parent_next_element.tagName === "TEXTAREA" 
-            && parent_previous_element.tagName === "TEXTAREA"
-        ){
-            parent_previous_element.value = parent_previous_element.value + parent_next_element.value
-            parent_previous_element.cols = 100
-            new_x_button.parentElement.parentElement.removeChild(parent_next_element)
+        if(remove_from === "grand_parent"){
+            next_element = parent.nextElementSibling
+            previous_element = parent.previousElementSibling
+        }else if(remove_from === "grand_grand_parent"){
+            next_element = parent.parentElement.nextElementSibling
+            previous_element = parent.parentElement.previousElementSibling
         }
 
-        if(is_grand_parent){
+        if(    next_element 
+            && previous_element 
+            && Array.from(next_element.classList).includes("editing_span")
+            && Array.from(previous_element.classList).includes("editing_span")
+        ){
+            previous_element.innerText += next_element.innerText
+            next_element.parentElement.removeChild(next_element)
+
+        }
+
+        if(remove_from === "grand_parent"){
             let grand_parent = parent_element.parentElement
             grand_parent.removeChild(new_x_button.parentElement)
-        }else{
+        }else if(remove_from === "grand_grand_parent"){
             let grand_grand_parent = parent_element.parentElement.parentElement
             grand_grand_parent.removeChild(parent_element.parentElement)    
         }
     })
 
-    let new_textarea = CreateNewTextArea(3, 1, {"border-right":0})
+    let new_textarea = CreateNewSpan({"border-right":0, "padding-right":"30px"})
 
     parent_element.appendChild(new_textarea)
     parent_element.appendChild(new_x_button)
 }
 
 function SplitTextAreaIfNecessary(element){
-    let focused_element_parent = focused_textarea.parentNode
-    if(cursor_actual_pos !== focused_textarea.value.length){
-        let new_textarea_first = CreateNewTextArea(50, 1, [])
-        new_textarea_first.value = focused_textarea.value.substring(0,cursor_actual_pos) 
-        
-        let new_textarea_second = CreateNewTextArea(50, 1, [])
-        new_textarea_second.value = focused_textarea.value.substring(cursor_actual_pos)
+    let focused_element_parent = focused_span.parentNode
+    if(cursor_actual_pos !== focused_span.innerText.length){
+        let new_span_first = CreateNewSpan([])
+        new_span_first.innerText = focused_span.innerText.substring(0,cursor_actual_pos)
 
-        GetComputedStylesOfChild(focused_textarea, new_textarea_first)
-        GetComputedStylesOfChild(focused_textarea, new_textarea_second)
+        let new_span_second= CreateNewSpan([])
+        new_span_second.innerText = focused_span.innerText.substring(cursor_actual_pos)
 
-        focused_element_parent.insertBefore(new_textarea_first,focused_textarea)
-        focused_element_parent.insertBefore(element,focused_textarea)
-        focused_element_parent.insertBefore(new_textarea_second,focused_textarea)
-        focused_element_parent.removeChild(focused_textarea)
+
+        GetComputedStylesOfChild(focused_span, new_span_first)
+        GetComputedStylesOfChild(focused_span, new_span_second)
+
+        focused_element_parent.insertBefore(new_span_first,focused_span)
+        focused_element_parent.insertBefore(element,focused_span)
+        focused_element_parent.insertBefore(new_span_second,focused_span)
+        focused_element_parent.removeChild(focused_span)
     }else{
         focused_element_parent.appendChild(element)
     }
 }
 
-function CreateNewTextArea(cols, rows, styles){
-    let new_textarea = document.createElement("textarea")
-    new_textarea.cols = cols
-    new_textarea.rows = rows
-    new_textarea.addEventListener("click", (event)=>{
-        focused_textarea = event.target
-        cursor_actual_pos = event.target.selectionEnd
+function CreateNewSpan(styles){
+    let new_span = document.createElement("span")
+    new_span.classList.add("editing_span")
+    new_span.setAttribute("contentEditable", true)
+
+    new_span.addEventListener("click", (event)=>{
+        focused_span = event.target
+        cursor_actual_pos = window.getSelection().anchorOffset
     })
 
-    new_textarea.addEventListener("input", (event)=>{
-        cursor_actual_pos = event.target.selectionEnd
+    new_span.addEventListener("keyup", (event)=>{
+        cursor_actual_pos = window.getSelection().anchorOffset
     })
 
     for(let key in styles){
-        new_textarea.style[key] = styles[key]
+        new_span.style[key] = styles[key]
     }
 
-    return new_textarea
+    return new_span
 }
 
 function GetComputedStylesOfChild(child, new_element){
@@ -319,7 +303,7 @@ let special_character_cells = document.querySelectorAll(".special_character_cell
 let sup_button = document.getElementById("exp_button")
 let sub_button = document.getElementById("bottom_button")
 let fraction_button = document.getElementById("fraction_button")
-let focused_textarea = NaN
+let focused_span = NaN
 
 let all_highlighted = false
 
@@ -537,11 +521,11 @@ if(special_character_button){
 if(special_character_cells){
     special_character_cells.forEach((special_character_cell)=>{
         special_character_cell.addEventListener("click", ()=>{
-            if(edited_label_parent && focused_textarea){
+            if(edited_label_parent && focused_span){
                 let character_span = special_character_cell.querySelector("span")
                 let html_entity = character_span.getAttribute("entity")
 
-                focused_textarea.value = focused_textarea.value.substring(0,cursor_actual_pos) + html_entity + focused_textarea.value.substring(cursor_actual_pos) 
+                focused_span.innerText = focused_span.innerText.substring(0,cursor_actual_pos) + html_entity + focused_span.innerText.substring(cursor_actual_pos) 
             }
         })
     })
@@ -549,7 +533,7 @@ if(special_character_cells){
 
 if(sup_button){
     sup_button.addEventListener("click", ()=>{       
-        if(focused_textarea){
+        if(focused_span){
             let new_sup = document.createElement("sup")
             AddTextAreaXButton(new_sup)
 
@@ -560,7 +544,7 @@ if(sup_button){
 
 if(sub_button){
     sub_button.addEventListener("click", ()=>{
-        if(focused_textarea){
+        if(focused_span){
             let new_sub = document.createElement("sub")
             AddTextAreaXButton(new_sub)
             
@@ -571,15 +555,15 @@ if(sub_button){
 
 if(fraction_button){
     fraction_button.addEventListener("click", ()=>{
-        if(focused_textarea){
+        if(focused_span){
             let fraction_span = document.createElement("span")
             fraction_span.classList.add("fraction")
             let nominator_span = document.createElement("span")
             nominator_span.classList.add("nominator")
             let denominator_span = document.createElement("span")
             denominator_span.classList.add("denominator")
-            AddTextAreaXButton(nominator_span, false)
-            AddTextAreaXButton(denominator_span, false)
+            AddTextAreaXButton(nominator_span, "grand_grand_parent")
+            AddTextAreaXButton(denominator_span, "grand_grand_parent")
             fraction_span.appendChild(nominator_span)
             fraction_span.appendChild(denominator_span)
 
@@ -608,22 +592,20 @@ if(save_pdf_button){
 
 window.addEventListener("click", (event)=>{
     if(edited_label_parent){
-        let textareas = edited_label_parent.querySelectorAll("textarea")
+        let editing_spans = edited_label_parent.querySelectorAll(".editing_span")
 
-        if(    textareas
-            && !Array.from(textareas).includes(event.target)
+        if(    editing_spans
+            && !Array.from(editing_spans).includes(event.target)
             && event.target.closest("#page_container")
             && event.target.closest(".in_editing") !== edited_label_parent
         ){
-            textareas.forEach((textarea)=>{
-                if(chosen_elements_for_edition.includes(textarea)){
-                    chosen_elements_for_edition.pop(textarea)
+            editing_spans.forEach((editing_span)=>{
+                if(chosen_elements_for_edition.includes(editing_span)){
+                    chosen_elements_for_edition.pop(editing_span)
                 }
             })
 
-            ChangeElementToAnother(edited_label_parent, "textarea", "LABEL")
-
-
+            ChangeElementToAnother(edited_label_parent, ".editing_span", "LABEL")
             edited_label_parent.style["display"] = "block"
 
             edited_label_parent.querySelectorAll("button").forEach((button)=>{
@@ -637,7 +619,7 @@ window.addEventListener("click", (event)=>{
             edited_label_parent.classList.remove("in_editing")
             
             edited_label_parent = NaN
-            focused_textarea = NaN
+            focused_span = NaN
         }
     }
 })
