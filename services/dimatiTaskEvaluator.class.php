@@ -1,8 +1,6 @@
 <?php
     /**
      * This class extends the task evaluator abstract class, and is responsible for evaluating the tasks related to discrete mathematics I..
-     * 
-     * 
     */
     class DimatiTaskEvaluator extends TaskEvaluator{
         /**

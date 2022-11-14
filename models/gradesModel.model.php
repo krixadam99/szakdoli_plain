@@ -21,6 +21,8 @@
          * 
          * This public method returns the  results from the results table for the user given by their neptun code.
          * 
+         * The user can have only one approved student status at a time, that is why only those results should be sent, that belongs to the subject group, where the user's student status is approved.
+         * 
          * @param string $neptun_code The neptun code of the user.
          * 
          * @return array Returns an array containing the results of the student.

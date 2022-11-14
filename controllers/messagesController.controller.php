@@ -55,7 +55,7 @@
 
         /**
          *
-         * This method shows the page for writing a message (basically the messages' page with ).
+         * This method shows the page for writing a message.
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
@@ -78,9 +78,6 @@
         /**
          *
          * This method updates the messages table by a new message.
-         * 
-         * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
-         * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
          *  
          * @return void
         */
@@ -130,7 +127,9 @@
 
         /**
          *
-         * This method updates the messages table by a new message. This will be a reply message to a previous message
+         * This method updates the messages table by a new message. This will be a reply message to a previous message.
+         * 
+         * The reply message id is stored in the session, and is deleted when the user goes to another page.
          *  
          * @return void
         */
@@ -138,8 +137,6 @@
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
                 if(isset($_SESSION["message_id"]) && $_SESSION["thread_count_new"] && $_SESSION["neptun_code_to"]){
-                    $success_parameters = [];
-    
                     $this->ValidateInputs(
                         [
                             $_POST["message_topic"]??-2 => [
@@ -181,7 +178,9 @@
 
         /**
          *
-         * This method removes the selected messages.
+         * This method removes the selected messages temporarily.
+         * 
+         * Only those messages will be removed, which belong to the logged in user, and are not deleted yet.
          *  
          * @return void
         */
@@ -196,6 +195,7 @@
                     $message_id_indexed[$message["message_id"]] = $message;
                 }
                 
+                // The ids of the messages belonging to the user
                 $possible_message_ids = array_keys($message_id_indexed);
                 $query_array = [];
                 foreach($message_ids as $id_counter => $message_id){
@@ -210,9 +210,9 @@
 
                         foreach($merged_messages as $message_counter => $message){
                             if($message["message_id"] == $belongs_to || $message["belongs_to"] == $belongs_to){
-                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){
+                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){ // Remove for the sender
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_sender" => "1"));
-                                }else{
+                                }else{ // Remove for the receiver
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_receiver" => "1")); 
                                 }
                             }
@@ -230,23 +230,24 @@
 
         /**
          *
-         * This method eihter removes the selected messages permanently, or recovers them.
+         * This method recovers the selected (temporarily deleted) messages.
+         * 
+         * Only those messages will be recovered, which belong to the logged in user, and are temporarily deleted.
          *  
          * @return void
         */
-        public function RecoverDeleteddMessages(){
+        public function RecoverDeletedMessages(){
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
                 $message_ids = array_keys($_POST);
 
                 $merged_messages =  $this->message_model->GetMessages($_SESSION["neptun_code"]);
                 $message_id_indexed = [];
-
                 foreach($merged_messages as $message_counter => $message){
                     $message_id_indexed[$message["message_id"]] = $message;
                 }
 
-                
+                // The ids of the messages belonging to the user
                 $possible_message_ids = array_keys($message_id_indexed);
                 $query_array = [];
                 foreach($message_ids as $id_counter => $message_id){
@@ -279,7 +280,12 @@
         }
 
         /**
+         * This private method returns the users associated with the logged in user. The user will be able to send message to these users.
          * 
+         * The associated users are: the teachers, the administrator, and the approved students belonging to the same subject group as the user. 
+         * If the user is a teacher, then the approved students from their subject group also will be associated with them.
+         * 
+         * @return array Returns an array containing neptun codes.
          */
         private function GetAssociteNeptunCodes(){
             $all_neptun_codes_associated = $this->message_model->GetNeptunCodes($_SESSION["neptun_code"]);

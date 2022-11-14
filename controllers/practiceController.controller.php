@@ -30,7 +30,7 @@
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
          * If a logged in user navigated to the practice page, but isn't a student, that is, has no approved subject to practice, then they will be redirected to the notifications page.
-         * Session variables for answers, solution, definitions and task will be unset here, and if the topic number is correct (between 0 and 9 inclusively), then will be set by the GenerateTask method.
+         * Session variables for answers, solution, definitions and task will be unset here, and if the topic number is correct (between 0 and 8 inclusively), then will be set by the GenerateTask method.
          * 
          * @return void
         */
@@ -153,8 +153,12 @@
             }
         }
 
-        /*
-        * 
+        /**
+         * This private method returns the practice points for the user based on the database.
+         *
+         * @param string neptun_code The neptun code of the user.
+         * 
+         * @return array Returns an array containing the user's practice points for his actual subject group.
         */
         private function GetPracticeResults($neptun_code){
             $practice_points = [];

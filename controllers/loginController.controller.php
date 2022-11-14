@@ -193,7 +193,13 @@
         }
 
         /**
+         * This private method generates a new password.
          * 
+         * The method will pick a random capital letter (english alphabet), a number between 0 and 9, a random small letter (english alphabet) and a random special character from the array of ([',', '-', '.', '?', '!']).
+         * Then it will pick 4-8 characters randomly from these four types (english alphabet capital and small letter, number between 0 and 9, and special character from the array of [',', '-', '.', '?', '!']).
+         * Finally, the method returns a permutation of the concatenated string.
+         *  
+         * @return string Returns a permutation of the generated password.
          */
         private function GenerateNewPassword() {
             $small_letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
@@ -228,7 +234,7 @@
                 $new_password .= $new_character;
             }
 
-            return $new_password;
+            return str_shuffle($new_password);
         }
     }
 

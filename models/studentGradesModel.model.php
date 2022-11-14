@@ -1,5 +1,9 @@
 <?php
-
+    /**
+     * This is a model class which is responsible for assigning results to students.
+     * 
+     * This model extends the MainModel class.
+    */
     class StudentGradesModel extends TasksModel {
         /**
          * 
@@ -46,7 +50,7 @@
         }
 
         /**
-         * This public method updates the results table via an array containing the quires.
+         * This public method updates the results table via an array containing the queries.
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
@@ -84,7 +88,7 @@
         }
 
         /**
-         * This public method updates the expectation_rules table via an array containing the quires.
+         * This public method updates the expectation_rules table via an array containing the queries.
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
@@ -109,7 +113,7 @@
         }
 
         /**
-         * This public method updates the task_due_to_date table via an array containing the quires.
+         * This public method updates the task_due_to_date table via an array containing the queries.
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 

@@ -46,7 +46,7 @@
             $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
             $this->approved_teacher_subjects = []; // The subject ids for which the user's teacher status is approved
             $this->approved_student_group = ""; // The group number for which the user's student status is approved
-            $this->approved_student_subject = ""; // The subject ids for which the user's student status is approved
+            $this->approved_student_subject = ""; // The subject id for which the user's student status is approved
             $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
             $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
 
@@ -323,7 +323,19 @@
         }
 
         /**
+         * This method returns whether the user can apply to a group as a demonstrator, or as a student.
+         *
+         * If a user has penging status as a student for the first subject group, then they can apply to a group as a demonstrator, or as a student.
+         * If a user is approved as a student for discrete mathematics I., then they can't apply to any group.
+         * If a user is approved as a student for discrete mathematics II., then they can't apply to any group as a student, and can apply to discrete mathematics I. group as a teacher.
+         * If a user is approved as a teacher for discrete mathematics II., then they can't apply to any group as a student.
+         * In any other cases, the user can apply to a group as a demonstrator, or as a student.
          * 
+         * @param array $pending_student_groups The groups for which the user's student status is pending.
+         * @param string $approved_student_subject The subject name for which the user's student status is approved.
+         * @param array $approved_teacher_subjects The subject names for which the user's teacher status is approved.
+         * 
+         * @return array Returns an array containing 3 booleans: if the group addition icon should be shown in the menu, if the user can apply to a group as a student, and if the user can apply to a group as a teacher.
          */
         static function GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects){
             $show_group_addition_menu = true;

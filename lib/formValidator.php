@@ -46,7 +46,11 @@
         public function SetCorrectParameter($key, $value) { $this->correct_parameters[$key] = $value; }
 
         /**
+         * This method validates user inputs based on validation rules.
          * 
+         * @param array $validation_array This is an array where the keys are the given inputs. The values are associative arrays, containing the attribute of the given answer (the key), and the rules for this attribute (the value).
+         * 
+         * @return array Returns an array containing the error messages.
          */
         protected function ValidateInputs($validation_array){            
             $input_counter = 1;

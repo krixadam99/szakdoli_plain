@@ -1,6 +1,8 @@
 <?php
     /**
+     * This is a model class which is responsible for requesting data for the demonstrator handling page.
      * 
+     * This model extends the MainModel class.
      */
     class AdministratorModel extends MainModel {        
         /**
@@ -28,9 +30,11 @@
         }
 
         /**
-         * This public method updates the user_groups table via queries formed by query data given in an array.
+         * This public method updates the subject_group and user_status tables via queries formed by query data given in an array.
          * 
-         * @param array $query_array An array containing the record of each user who will be updated. A record contains information about the neptun code, subject group, subject name and pending status (basically the attributes of the user_groups table).
+         * This method will also populate the expectiation rules, task_due_to_dates and grade_table tables with rows, if the user is a teacher of a new subject group.
+         * 
+         * @param array $query_array An array containing the record of each user who will be updated. A record contains information about the neptun code, subject group, subject name and pending status.
          * 
          * @return bool Returns whether the teachers' pending status update was successful, or not.
          */
@@ -92,9 +96,7 @@
             }
             $query .= "COMMIT;";
 
-            var_dump($query);
-
-            $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabase($query, true);
         }
     }
 

@@ -136,12 +136,15 @@ function AddEventsToParagraphLabel(element){
                 cursor_actual_pos = window.getSelection().anchorOffset
                 focused_span = event.target
                 if(editing_span.parentElement !== edited_label_parent){
-                    editing_span.style["border-right"] = "0px"
+                    //editing_span.style["border-right"] = "0px"
                 }
             })
 
             editing_span.addEventListener("keyup", (event)=>{
                 cursor_actual_pos = window.getSelection().anchorOffset
+                if(editing_span.innerText === ""){
+                    editing_span.parentElement.removeChild(editing_span)
+                }
             })
         })
 
@@ -215,24 +218,25 @@ function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
 
 function SplitTextAreaIfNecessary(element){
     let focused_element_parent = focused_span.parentNode
-    if(cursor_actual_pos !== focused_span.innerText.length){
-        let new_span_first = CreateNewSpan([])
-        new_span_first.innerText = focused_span.innerText.substring(0,cursor_actual_pos)
 
-        let new_span_second= CreateNewSpan([])
-        new_span_second.innerText = focused_span.innerText.substring(cursor_actual_pos)
+    let new_span_first = CreateNewSpan([])
+    new_span_first.innerText = focused_span.innerText.substring(0,cursor_actual_pos)
+
+    let new_span_second= CreateNewSpan([])
+    new_span_second.innerText = focused_span.innerText.substring(cursor_actual_pos)
 
 
-        GetComputedStylesOfChild(focused_span, new_span_first)
-        GetComputedStylesOfChild(focused_span, new_span_second)
+    GetComputedStylesOfChild(focused_span, new_span_first)
+    GetComputedStylesOfChild(focused_span, new_span_second)
 
+    if(new_span_first.innerText !== ""){
         focused_element_parent.insertBefore(new_span_first,focused_span)
-        focused_element_parent.insertBefore(element,focused_span)
-        focused_element_parent.insertBefore(new_span_second,focused_span)
-        focused_element_parent.removeChild(focused_span)
-    }else{
-        focused_element_parent.appendChild(element)
     }
+    focused_element_parent.insertBefore(element,focused_span)
+    if(new_span_second.innerText !== ""){
+        focused_element_parent.insertBefore(new_span_second,focused_span)
+    }
+    focused_element_parent.removeChild(focused_span)
 }
 
 function CreateNewSpan(styles){
@@ -247,6 +251,10 @@ function CreateNewSpan(styles){
 
     new_span.addEventListener("keyup", (event)=>{
         cursor_actual_pos = window.getSelection().anchorOffset
+
+        if(new_span.innerText === "" && (!new_span.nextElementSibling || new_span.nextElementSibling && new_span.nextElementSibling.tagName !== "BUTTON")){
+            new_span.parentElement.removeChild(new_span)        
+        }
     })
 
     for(let key in styles){
@@ -303,6 +311,7 @@ let special_character_cells = document.querySelectorAll(".special_character_cell
 let sup_button = document.getElementById("exp_button")
 let sub_button = document.getElementById("bottom_button")
 let fraction_button = document.getElementById("fraction_button")
+let sub_sup_button = document.getElementById("sub_sup_button")
 let focused_span = NaN
 
 let all_highlighted = false
@@ -568,6 +577,27 @@ if(fraction_button){
             fraction_span.appendChild(denominator_span)
 
             SplitTextAreaIfNecessary(fraction_span)
+        }
+    })
+}
+
+if(sub_sup_button){
+    sub_sup_button.addEventListener("click", ()=>{
+        if(focused_span){
+            let upper_down_span = document.createElement("span")
+            upper_down_span.classList.add("upper_down_span")
+
+            let new_up_index_span = document.createElement("span")
+            new_up_index_span.classList.add("up_index")
+            AddTextAreaXButton(new_up_index_span, "grand_grand_parent")
+
+            let new_down_index_span = document.createElement("span")
+            new_down_index_span.classList.add("down_index", "grand_grand_parent")
+            AddTextAreaXButton(new_down_index_span)
+
+            upper_down_span.appendChild(new_up_index_span)
+            upper_down_span.appendChild(new_down_index_span)
+            SplitTextAreaIfNecessary(upper_down_span)
         }
     })
 }

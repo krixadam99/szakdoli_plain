@@ -1,7 +1,7 @@
 <?php
     /**
-     * 
-     */
+     * This model extends the MainModel class.
+    */
     class TaskGenerationModel extends MainModel {
         /**
          * 

@@ -1,7 +1,6 @@
 <?php
     /**
      * This is a helper class which contains task generator functions related to Discrete Mathematics I..
-     * 
     */
     class DimatiTasks extends Task{    
         private $dimati_subtask_generator;

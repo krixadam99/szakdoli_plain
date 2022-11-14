@@ -121,12 +121,22 @@
         public function SetGivenAnswers($given_answers){ $this->given_answers = $given_answers; }
 
         /**
+         * This virtual method will use if-else statements to evaluate the user's given answers for the practice tasks' questions.
          * 
+         * @param string $topic_number The number of the current topic.
          */
         protected abstract function CheckSolution($topic_number);
 
         /**
+         * This protected method sets the session's answers parameter.
          * 
+         * @param string $id The number of the current topic.
+         * @param array $given_answer The given answer's raw form.
+         * @param string $given_solution The given solution's printable version.
+         * @param string $real_solution The real solution's printable version.
+         * @param bool $was_correct Whether the given answer was correct,or not.
+         * 
+         * @return void
          */
         protected function SetSessionAnswer($id, $given_answer, $given_solution, $real_solution, $was_correct){
             $_SESSION["answers"]["answer_" . $id] = 

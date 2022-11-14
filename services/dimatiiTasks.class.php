@@ -1,7 +1,6 @@
 <?php
     /**
      * This is a helper class which contains task generator functions related to Discrete Mathematics II..
-     * 
     */
     class DimatiiTasks extends Task {        
         private $dimatii_subtasks_generator;
@@ -27,6 +26,12 @@
             mt_srand(time()); // Seeding the random number generator with the current time.
         }
 
+        /**
+         * 
+         * This method is responsible for creating a set of tasks based on the selected topic number.
+         *  
+         * @return void
+         */
         public function PracticePageTaskGeneration(){
             switch($this->topic){
                 case "0":{
@@ -71,7 +76,7 @@
 
         /**
          * 
-         * This function is responsible for creating the first set of tasks of Discrete Mathematics II. related to division, number of dividors and congruencies.
+         * This method is responsible for creating the first set of tasks of Discrete Mathematics II. related to division, number of dividors and congruencies.
          * 
          * 4 types of subtask will be generated here (2 subtasks per type). These are: dividing whole numbers among whole numbers, and getting the quotients and residues, prime factorization for positive whole numbers, number of positive divisors for positive whole numbers and one example for 2 congruences to get a valid statement.
          * 
@@ -209,7 +214,7 @@
 
         /**
          * 
-         * This function is responsible for creating the second set of tasks of Discrete Mathematics II. related to residue systems.
+         * This method is responsible for creating the second set of tasks of Discrete Mathematics II. related to residue systems.
          * 
          * 3 types of subtask will be generated here (1, 1 and 2 subtasks respectively). These are: residue classes with a representative element for a complete residue system modulo n, residue classes with a representative element for a reduced residue system modulo n, size of a reduced residue system modulo n (where n is considerably big).
          * 
@@ -299,7 +304,7 @@
 
         /**
          * 
-         * This function is responsible for creating the third set of tasks of Discrete Mathematics II. related to Eucleidan algorithm.
+         * This method is responsible for creating the third set of tasks of Discrete Mathematics II. related to Eucleidan algorithm.
          * 
          * 1 type of subtask will be generated here (3 subtasks). This is the Eucleidan algorithm.
          * 
@@ -433,7 +438,7 @@
 
         /**
          * 
-         * This function is responsible for creating the fourth set of tasks of Discrete Mathematics II. related to linear congruences.
+         * This method is responsible for creating the fourth set of tasks of Discrete Mathematics II. related to linear congruences.
          * 
          * 1 type of subtask will be generated here (3 subtasks). This is solving linear congruences.
          * 
@@ -514,7 +519,7 @@
 
         /**
          * 
-         * This function is responsible for creating the fifth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
+         * This method is responsible for creating the fifth set of tasks of Discrete Mathematics II. related to linear diophantine equations.
          * 
          * 2 types of subtask will be generated here (2 and 1 subtasks respectively). These are: diophantine equations and number division into two numbers with plus condition.
          * 
@@ -578,7 +583,7 @@
 
         /**
          * 
-         * This function is responsible for creating the sixth set of tasks of Discrete Mathematics II. related to chinese remainder theorem.
+         * This method is responsible for creating the sixth set of tasks of Discrete Mathematics II. related to chinese remainder theorem.
          * 
          * 2 types of subtask will be generated here (1-1 subtask). These are: CRT and searching for a number satisfying 2 congruences simultaneously.
          * 
@@ -687,7 +692,7 @@
 
         /**
          * 
-         * This function is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to horner table.
+         * This method is responsible for creating the seventh set of tasks of Discrete Mathematics II. related to horner table.
          * 
          * 2 types of subtask will be generated here (2 and 1 subtasks respectively). These are: Horner-schemes and polynomial dvision with Horner- scheme.
          *
@@ -759,7 +764,7 @@
 
         /**
          * 
-         * This function is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division and multiplication.
+         * This method is responsible for creating the eight set of tasks of Discrete Mathematics II. related to polinomial division and multiplication.
          * 
          * 2 types of subtask will be generated here (1 and 1 subtask respectively). These are: polynomial division and multiplication.
          * 
@@ -809,7 +814,7 @@
 
         /**
          * 
-         * This function is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to interpolations.
+         * This method is responsible for creating the ninth set of tasks of Discrete Mathematics II. related to interpolations.
          * 
          * 2 types of subtask will be generated here (1 and 1 subtask respectively). These are: Lagrange and Newton interpolation.
          * 

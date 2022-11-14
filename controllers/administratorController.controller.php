@@ -25,7 +25,7 @@
         
         /**
          *
-         * This method shows the notifications page.
+         * This method shows the demonstrator handling page.
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
@@ -35,7 +35,7 @@
         public function DemonstratorHandling(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
-                if($this->is_administrator){
+                if($this->is_administrator){ // Only the administrator(s) can see this page 
                     $administrator_model = new AdministratorModel();
                     $pending_teachers = $administrator_model->GetPendingTeachers();
 
@@ -53,7 +53,7 @@
          * This method finalizes teachers' pending requests.
          * 
          * Only the administrator can finalize a pending, anyone else sending a POST request with the right action will be redirected to the login page.
-         * For each record there can be 3 possibilities: deny, accept or nothing.
+         * For each record there can be 3 possibilities: deny, accept or do nothing.
          *  
          * @return void
         */
@@ -65,7 +65,6 @@
                     // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
-                        //Protection should be added here...
                         $parts = explode(":", $key);
                         $neptun = $parts[0]??"neptun";
                         $id = $parts[1]??"id";
@@ -80,7 +79,7 @@
                         $decision_array[$neptun][$id] = $decision;
                     }
                     
-                    // Comparing the new pending values to the older ones
+                    // Comparing the new pending values to the old ones
                     $original_user_information = $administrator_model->GetPendingTeachers();
                     $query_array = array();
                     foreach($original_user_information as $index => $pending_status){

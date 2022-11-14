@@ -358,6 +358,7 @@
                             <label class="insert_character_buttons" id="exp_button">x<sup>n</sup></label>
                             <label class="insert_character_buttons" id="bottom_button">x<sub>n</sub></label>
                             <label class="insert_character_buttons" id="fraction_button">&frac12;</label>
+                            <label class="insert_character_buttons" id="sub_sup_button">x<span class="upper_down_span"><span class="up_index">n</span><span class="down_index">i</span></span></label>
                         </div>
                     </div>
                     <div id="alignment_editor">

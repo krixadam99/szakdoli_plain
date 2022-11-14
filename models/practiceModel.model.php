@@ -19,7 +19,16 @@
         }
         
         /**
+         * This method updates the practice task points by the given parameters.
          * 
+         * Additionally, if the user's practice score is above (or equal to) 10, and the previous score is below 10, plus the practice task is not over the deadline, then the user's extra point will be incremented.
+         * 
+         * @param string $neptun_code The neptun code of the user.
+         * @param string $practice_number The id of the practice tasks.
+         * @param float $previous_point The previous point for the given pracice tasks.
+         * @param float $update_point The current point for the given pracice tasks.
+         * 
+         * @return bool Returns whether the database update was successful, or not.
          */
         public function UpdatePracticeScore($neptun_code, $practice_number, $previous_point, $update_point){
             $neptun_code = strtoupper($neptun_code);

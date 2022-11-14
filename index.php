@@ -115,7 +115,7 @@
     $controller_connection->PostMethodConnection("sendNewMessage", "MessagesController", "SendNewMessage");
     $controller_connection->PostMethodConnection("replyToMessage", "MessagesController", "ReplyToMessage");
     $controller_connection->PostMethodConnection("deleteMessages", "MessagesController", "DeleteMessages");
-    $controller_connection->PostMethodConnection("recoverDeletedMessages", "MessagesController", "RecoverDeleteddMessages");
+    $controller_connection->PostMethodConnection("recoverDeletedMessages", "MessagesController", "RecoverDeletedMessages");
 
     $controller_connection->PostMethodConnection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
 

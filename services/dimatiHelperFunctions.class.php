@@ -52,27 +52,37 @@
         public function SetMaximumNumber($maximum_number){ $this->maximum_number = $maximum_number;}
 
         /**
+         * This method returns all of the possible set names (capital letters from the english alphabet).
          * 
+         * @return array Returns all of the possible set names.
          */
         public function GetSetNames(){ return $this->set_names;}
 
         /**
+         * This method returns all of the possible complex number names (['v','w','x','y','z']).
          * 
+         * @return array Returns all of the possible complex number names.
          */
         public function GetComplexNumberNames(){ return $this->complex_number_names;}
 
         /**
+         * This method returns all of the possible alphabet characters (small letters from the english alphabet).
          * 
+         * @return array Returns all of the possible alphabet characters.
          */
         public function GetPossibleAbcCharacters(){ return $this->possible_abc_characters;}
 
         /**
+         * This method returns the minimum number that can be generated.
          * 
+         * @return array Returns the minimum number that can be generated.
          */
         public function GetMinimumNumber(){ return $this->minimum_number;}
-
+        
         /**
+         * This method returns the maximum number that can be generated.
          * 
+         * @return array Returns the maximum number that can be generated.
          */
         public function GetMaximumNumber(){ return $this->maximum_number;}
 
@@ -315,7 +325,16 @@
         }
 
         /**
+         * This method creates the requested graph.
          * 
+         * Additionally, there is a 40% of chance, that the graph will be creatable.
+         * 
+         * @param int $number_of_verteces The number of vertices. The default is 6.
+         * @param int $minimum_degree The minimum degree of a vertex. The default is 0.
+         * @param int $maximum_degree The maximum degree of a vertex. The default is 8.
+         * @param int $type The type of the graph. An element of the array: ['simple','tree','paired','directed'] The default is 'simple'.
+         *
+         * @return array Returns an array containing an array of the graph's degrees and whether that the graph can be created, or not.
          */
         public function CreateGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8, $type = "simple"){
             $can_be_created = mt_rand(0,100);
@@ -381,7 +400,14 @@
         }
 
         /**
+         * This private method creates a simple, or a tree graph.
          * 
+         * @param int $number_of_verteces The number of vertices. The default is 6.
+         * @param int $minimum_degree The minimum degree of a vertex. The default is 0.
+         * @param int $maximum_degree The maximum degree of a vertex. The default is 8.
+         * @param int $type The type of the graph. An element of the array: ['simple','tree'] The default is 'simple'.
+         *
+         * @return array Returns an array containing the graph's degrees.
          */
         private function CreateGraphWithOneSequence($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8,$type = "simple"){
             $verteces = [];
@@ -398,6 +424,18 @@
             return $verteces;
         }
 
+        /**
+         * This private method creates a paired graph.
+         * 
+         * The two classes won't necesseraly have the same amount of verteces, but the sum of the degrees will be the same.
+         * 
+         * @param int $number_of_verteces_first The number of vertices of the first class. The default is 6.
+         * @param int $number_of_verteces_second The number of vertices of the second class. The default is 6.
+         * @param int $minimum_degree The minimum degree of a vertex. The default is 0.
+         * @param int $maximum_degree The maximum degree of a vertex. The default is 8.
+         *
+         * @return array Returns an array containing the first and second class' degrees.
+         */
         public function CreatePairedGraph($number_of_verteces_first = 6, $number_of_verteces_second = 6, $minimum_degree = 0, $maximum_degree = 8){
             $verteces = [];
 
@@ -422,6 +460,15 @@
             return $verteces;
         }
 
+        /**
+         * This private method creates a directed graph.
+         * 
+         * @param int $number_of_verteces The number of vertices. The default is 6.
+         * @param int $minimum_degree The minimum degree of a vertex. The default is 0.
+         * @param int $maximum_degree The maximum degree of a vertex. The default is 8.
+         *
+         * @return array Returns an array containing a the number og the incoming and outcoming edges for each vertex.
+         */
         private function CreateDirectedGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8){
             $verteces = [];
 
@@ -507,7 +554,11 @@
         } 
 
         /**
+         * This method returns the first and second components of a relation's ordered pairs.
          * 
+         * @param array $relation A relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return array Returns an array containing the first and second components of a relation's ordered pairs.
          */
         public function GetRelationTwoArrayForm($relation){
             $first_components = [];
@@ -522,7 +573,12 @@
         }
 
         /**
+         * This method returns the image of a relation on a set.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * @param array $set The set of elements.
+         * 
+         * @return array Returns an array containing the image.
          */
         public function GetImageBySet($relation, $set){
             $result_image = [];
@@ -537,7 +593,12 @@
         }
 
         /**
+         * This method returns the domain of a relation on a set.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * @param array $set The set of elements.
+         * 
+         * @return array Returns an array containing the domain.
          */
         public function GetDomainBySet($relation, $set){
             $result_domain = [];
@@ -552,7 +613,11 @@
         }
 
         /**
+         * This method returns the domain of a relation.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return array Returns an array containing the domain.
          */
         public function GetDomainOfRelation($relation){
             $domain = [];
@@ -565,7 +630,11 @@
         }
 
         /**
+         * This method returns the image of a relation.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return array Returns an array containing the image.
          */
         public function GetImageOfRelation($relation){
             $image = [];
@@ -578,7 +647,12 @@
         }
 
         /**
+         * This method returns the restriction of a relation to a set.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * @param array $narrow_to_set The set of elements.
+         * 
+         * @return array Returns the restricted relation.
          */
         public function GetRestrictedRelation($relation, $narrow_to_set){
             $return_relation = [];
@@ -591,7 +665,11 @@
         }
 
         /**
+         * This method returns the inverse relation of a relation.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return array Returns the inverse relation.
          */
         public function GetInverseRelation($relation){
             $inverse_relation = [];
@@ -602,7 +680,12 @@
         }
 
         /**
+         * This method returns the composition of two relations.
          * 
+         * @param array $first_relation The left side of the composition. A relation containing the ordered pairs in [first element, second element] form.
+         * @param array $second_relation The right side of the composition. A relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return array Returns the ($first_relation ° $second_relation) composition relation.
          */
         public function CreateCompositionOfRelations($first_relation, $second_relation){
             $composition = [];
@@ -620,7 +703,12 @@
         }
 
         /**
+         * This method creates a relation from two arrays.
          * 
+         * @param array $first_array The array containing the new relation's ordered pairs' first components.
+         * @param array $second_array The array containing the new relation's ordered pairs' second components.
+         * 
+         * @return array Returns the relation in the form of [[first components],[second components]].
          */
         public function MakeRelationFromArrays($first_array, $second_array){
             $relation = [[],[]];
@@ -636,7 +724,9 @@
         }
 
         /**
+         * This method returns a possible set of relation characteristics.
          * 
+         * @return array Returns an array in the form of [[characteristic => should_satisfy_characteristic],...].
          */
         public function GetCharacteristics(){
             $is_reflexive = false;
@@ -745,7 +835,12 @@
         }
 
         /**
+         * This method returns if the given relation is reflexive, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is reflexive, or not.
          */
         public function IsReflexiveRelation($base_set, $relation){
             foreach($base_set as $base_index => $base_element){
@@ -757,7 +852,12 @@
         }
 
         /**
+         * This method returns if the given relation is irreflexive, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is irreflexive, or not.
          */
         public function IsIrreflexiveRelation($base_set, $relation){
             foreach($base_set as $base_index => $base_element){
@@ -769,7 +869,12 @@
         }
 
         /**
+         * This method returns if the given relation is symmetric, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is symmetric, or not.
          */
         public function IsSymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -783,7 +888,12 @@
         }
 
         /**
+         * This method returns if the given relation is antisymmetric, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is antisymmetric, or not.
          */
         public function IsAntiSymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -797,7 +907,12 @@
         }
 
         /**
+         * This method returns if the given relation is assymmetric, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is assymmetric, or not.
          */
         public function IsAssymmetricRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -811,7 +926,12 @@
         }
 
         /**
+         * This method returns if the given relation is transitive, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is transitive, or not.
          */
         public function IsTransitiveRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -827,7 +947,12 @@
         }
 
         /**
+         * This method returns if the given relation is dichotomous, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is dichotomous, or not.
          */
         public function IsDichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -843,7 +968,12 @@
         }
 
         /**
+         * This method returns if the given relation is trichotomous, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is trichotomous, or not.
          */
         public function IsTrichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
@@ -868,28 +998,51 @@
         }
 
         /**
+         * This method returns if the given relation is equivalence relation, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is equivalence relation, or not.
          */
         public function IsEquivalenceRelation($base_set, $relation){
             return $this->IsReflexiveRelation($base_set, $relation) && $this->IsSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
         /**
+         * This method returns if the given relation is partly ordered relation, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is partly ordered relation, or not.
          */
         public function IsPartlyOrderedRelation($base_set, $relation){
             return $this->IsReflexiveRelation($base_set, $relation) && $this->IsAntiSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
         /**
+         * This method returns if the given relation is strictly partly ordered relation, or not.
          * 
+         * @param array $base_set The base set of the relation.
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is strictly partly ordered relation, or not.
          */
         public function IsStrictlyPartlyOrderedRelation($base_set, $relation){
             return $this->IsIrreflexiveRelation($base_set, $relation) && $this->IsAntiSymmetricRelation($base_set, $relation) && $this->IsTransitiveRelation($base_set, $relation);
         }
 
         /**
+         * This method creates a function by the given domain, image and number of ordered paris.
          * 
+         * The number of pairs should be less then (or equal to) the number of elements in the domain.
+         * 
+         * @param array $domain The domain of the new function.
+         * @param array $image The image of the new function.
+         * @param int $number_of_pairs The number of ordered pairs in the new relation.
+         * 
+         * @return array Returns a relation containing the ordered pairs in [first element, second element] form. If the number of pairs is greater than the number of elements in the domain, then the function returns [].
          */
         public function MakeFunction($domain, $image, $number_of_pairs){
             if($number_of_pairs <= count($domain)){
@@ -914,7 +1067,11 @@
         }
 
         /**
+         * This method returns if the given relation is a function, or not.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is a function, or not.
          */
         public function IsFunction($relation){
             $relation_first_components = $this->GetRelationTwoArrayForm($relation)[0];
@@ -929,7 +1086,12 @@
         }
 
         /**
+         * This method returns if the given relation is surjective, or not.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * @param array $image The image from which the relation's ordered pairs' second elements are coming from.
+         * 
+         * @return bool Returns whether the relation is surjective, or not.
          */
         public function IsSurjective($relation, $image){
             if($this->IsFunction($relation)){
@@ -946,7 +1108,11 @@
         }
 
         /**
+         * This method returns if the given relation is injective, or not.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * 
+         * @return bool Returns whether the relation is injective, or not.
          */
         public function IsInjective($relation){
             if($this->IsFunction($relation)){
@@ -965,14 +1131,23 @@
         }
 
         /**
+         * This method returns if the given relation is bijective, or not.
          * 
+         * @param array $relation The relation containing the ordered pairs in [first element, second element] form.
+         * @param array $image The image from which the relation's ordered pairs' second elements are coming from.
+         * 
+         * @return bool Returns whether the relation is bijective, or not.
          */
         public function IsBijective($relation, $image){
             return $this->IsSurjective($relation, $image) && $this->IsInjective($relation);
         }
 
         /**
-         * This public method returns all of the possible relations for a given base set
+         * This public method returns all of the possible homogenous relations for a given base set.
+         * 
+         * @param array $base_set The base set from which the homogenous relation's ordered pairs' elements are coming from.
+         * 
+         * @return array Returns all of the possible relations for a given base set.
          */
         public function GetAllPossibleRelations($base_set){
             $all_relations = [[]];
@@ -1003,7 +1178,14 @@
         }
 
         /**
-         * This public method will filter the relations by the characteristics.
+         * This public method will filter the homogenous relations by the characteristics.
+         * 
+         * @param array $base_set The base set from which the homogenous relation's ordered pairs' elements are coming from.
+         * @param array $all_relations An array containing all of the relations on the base set.
+         * @param array $characteristics An array containing pairs of relation characteristic - should satisfy the characteristic boolean pairs.
+         * @param array $lower_bound The minimum number of ordered pairs a relation should contain.
+         * 
+         * @return array Returns all of the possible relations, that satisfy each characteristic - should satisfy the characteristic boolean pairs, and has minimum $lower_bound number of ordered pairs.
          */
         public function FilterRelationsWithCharacteristics($base_set, $all_relations, $characteristics, $lower_bound){
             foreach($characteristics as $characteristic_name => $satisfies){
@@ -1376,7 +1558,12 @@
         }
 
         /**
+         * This private method determines the binomial coefficient for the given upper and lower numbers.
          * 
+         * @param int $upper The upper part of the binomial coefficient.
+         * @param int $lower The lower part of the binomial coefficient.
+         * 
+         * @return int Returnsthe binomial coefficient for the given upper and lower numbers. If these are negative numbers, then the mehtod returns 0.
          */
         private function CalculateBinomialCoefficient($upper, $lower){
             if($upper > 0 && $lower >= 0){
@@ -1387,7 +1574,11 @@
         }
 
         /**
+         * This private method calculates the factorial for the given number.
          * 
+         * @param int $number The number for which the method will determine the factorial
+         * 
+         * @return int Returns the factorial for the given number, and 0 for non-integer, or negative expressions.
          */
         private function CalculateFactorial($number){
             if(is_int($number) && $number >= 0){
@@ -1402,7 +1593,16 @@
         }
 
         /**
+         * This private method returns a partitioning of the given number, where the partitioning sum has the given number of elements, and the numbers in the sum are all above the minimum, and below the maximum (inclusively).
          * 
+         * A partitioning consists of a sum of non-negative numbers adding up to the partitioned number.
+         * 
+         * @param int $number The number to be partitioned.
+         * @param int $number_of_parts The number of parts of the partitioning sum.
+         * @param int $min The minimum for each number in the partitioning sum.
+         * @param int $max The maximum for each number in the partitioning sum.
+         * 
+         * @return array Returns a partitioning of the given number.
          */
         private function PartitionNumber($number, $number_of_parts, $min, $max){
             if($max * $number_of_parts >= $number && $min * $number_of_parts <= $number){
@@ -1415,7 +1615,17 @@
         }
 
         /**
+         * This private method returns all of the partitioning of the a number, where the partitioning sum has the given number of elements, and the numbers in the sum are all above the minimum, and below the maximum (inclusively).
          * 
+         * A partitioning consists of a sum of non-negative numbers adding up to the partitioned number.
+         * 
+         * @param int $number_of_iterations The number of remained elements in the partitioning sum.
+         * @param int $min The minimum for each number in the partitioning sum.
+         * @param int $max The maximum for each number in the partitioning sum.
+         * @param int $number The number of parts of the partitioning sum.
+         * @param int $previous_elements The previous elements in the current partitioning sum.
+         * 
+         * @return array Returns all of the partitioning of the a number, where the partitioning sum has the given number of elements, and the numbers in the sum are all above the minimum, and below the maximum (inclusively)
          */
         private function CreatePartitions($number_of_iterations, $min, $max, $number, $previous_elements = []){
             if($number_of_iterations > 0){

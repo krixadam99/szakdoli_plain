@@ -761,21 +761,32 @@ ul {
     cursor: pointer;
 }
 
-.fraction {
+.fraction, .upper_down_span {
     display: inline-grid;
     width: auto;
     text-align: center;
 }
 
-.nominator {
+.nominator, .up_index {
     position: relative;
     top: -7px;
     border-bottom: 1px solid black;
 }
 
-.denominator {
+.up_index {
+    border: 0;
+    top: -8px;
+    font-size: smaller;
+}
+
+.denominator, .down_index {
     position: relative;
     top: -5px;
+}
+
+.down_index {
+    top: -7px;
+    font-size: smaller;
 }
 
 #new_prompt_container {
@@ -812,13 +823,20 @@ ul {
 
 .x_button {
     background-color: white;
-    border: 1px solid gray;
-    border-left: 0;
+    border: 1px solid rgb(183, 183, 247);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-size: inherit;
+}
+
+span {
+    width: auto;
 }
 
 .editing_span {
     border: 1px solid rgb(183, 183, 247);
-    padding-right: 30px;
+    padding: 1px 30px 1px 10px;
+    outline: none;
 }
 
 .prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {

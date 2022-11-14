@@ -1,5 +1,9 @@
 <?php
-
+    /**
+     * This is a model class which is responsible for updating the the user_status table. Additionally it updates the results and practice_task_points with rows for new approved students.
+     * 
+     * This model extends the MainModel class.
+    */
     class StudentHandlingModel extends MainModel {
         /**
          * 
@@ -27,7 +31,7 @@
         }
 
         /**
-         * This public method updates the user_groups table via queries formed by query data given in an array. Additionally, the pending status of the user becomes 0 (will be approved), then they will be added to the results and practice_task_points tables as well.
+         * This public method updates the user_status table via queries formed by query data given in an array. Additionally, the pending status of the user becomes 0 (will be approved), then they will be added to the results and practice_task_points tables as well.
          * 
          * @param array $query_array An array containing the record of each user who will be updated. A record contains information about the neptun code, user status, subject group, subject name and pending status (basically the attributes of the user_groups table).
          * 

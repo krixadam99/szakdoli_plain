@@ -10,8 +10,11 @@
         private $user_handler;
         
         /**
+         *
+         * This method shows the registration page.
          * 
-         */
+         * @return void
+        */
         public function Registration() {
             $registration_model = new RegistrationModel();
             
@@ -22,7 +25,11 @@
         }
 
         /**
+         * This method validates the user's registration request.
          * 
+         * If everything was correct, then their request will be approved, otherwise, they will be redirected to the registration page with the correct error parameters.
+         * 
+         * @return void
          */
         public function ValidateRegistration() {
             if( isset($_POST['neptun_code']) 

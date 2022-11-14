@@ -51,10 +51,12 @@
         }
 
         /**
+         * This method shows the page for printing the generated tasks
          * 
+         * @return void
          */
         public function PrintPage(){
-            if(isset($_SESSION["preview"])){ //TODO
+            if(isset($_SESSION["preview"])){
                 include(ROOT_DIRECTORY . "/views/printPage.view.php");
             }else{
                 header("Location: ./index.php?site=notifications");
@@ -65,6 +67,7 @@
          * This method creates the preview of the page containing the printable form of the requested amount of subtasks for a task-subtask pair and also the solutions for these tasks.
          * 
          * The method also handles malicious user activities, like overwriting form html tags' names.
+         * The mterhod will create a small, or big test, or a set of tasks for the seminar based on the session's exam type parameter.
          * 
          * @return void
          */
@@ -79,7 +82,7 @@
                     $_SESSION["preview"] = $_POST;
                     $_SESSION["preview_tasks"] = [];
     
-                    if($_SESSION["exam_type"] === "small"){
+                    if($_SESSION["exam_type"] === "small"){ // Generate small test tasks
                         $main_topic = $_POST["main_topic"]??"";
                         if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
                             $subtopic_index = $_POST["main_topic_$main_topic" . "_subtopic"]??"";
@@ -92,7 +95,7 @@
                                 array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
                             }   
                         }
-                    }else if($_SESSION["exam_type"] === "seminar"){
+                    }else if($_SESSION["exam_type"] === "seminar"){ // Generate set of tasks for a seminar
                         $main_topic = $_POST["main_topic"]??"";
                         if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
                             foreach($_POST as $key => $value){
@@ -109,7 +112,7 @@
                                 }
                             }
                         }                        
-                    }else if($_SESSION["exam_type"] === "big"){
+                    }else if($_SESSION["exam_type"] === "big"){ // Generate set of tasks for a big test
                         $subtask_count = $_POST["task_quantity"]??4;
 
                         foreach($_POST as $key => $value){

@@ -5,7 +5,6 @@
      * This controller extends the MainContentController, from which it inherits members that are related to a logged in user.
      * If someone navigates to the navigations page, although they are not logged in, then this controller redirects them to the login page.
      * On this page, essential informations are displayed.
-     * If the user is the administrator, then their pending teachers will be displayed on this page.
     */
     class NotificationsController extends MainContentController{
         /**
@@ -32,6 +31,7 @@
         public function Notifications(){
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
+                // The administrator should not see this page
                 if(!$this->is_administrator){
                     include(ROOT_DIRECTORY . "/views/notificationPage.view.php");
                 }else{

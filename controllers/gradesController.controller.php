@@ -26,7 +26,7 @@
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
-         * If a user is logged in, but is not a student, i.e., is not assigned to any group, then they will be redirected to the notifications page (every user has this, regardless their status).
+         * If a user is logged in, but is not a student, i.e., is not assigned to any group, then they will be redirected to the notifications page.
          * 
          * @return void
         */
@@ -51,7 +51,7 @@
                         }
                     }               
                     
-                    
+                    // Data related to results
                     $task_expectations = $model->GetExpectationRules($approved_subject_id, $approved_subject_group); 
                     $task_due_dates = $model->GetTaskDueDate($approved_subject_id, $approved_subject_group); 
                     $grade_table = $model->GetGradeLevels($approved_subject_id, $approved_subject_group)[0]??[]; 

@@ -55,12 +55,12 @@
          *
          * This method is responsible for handling students' requests.
          * 
-         * Only teachers can handle students.
+         * Only teachers can handle students. And they can only modify the data of their students.
          * Pending students can be either deined, accepted or ignored.
          * Denied students can be accepted and accepted students can be denied.
-         * Accepted students has "0" as their pending request.
-         * Denied students has "-1" as their pending request.
-         * Pending students has "1" as their pending request.
+         * Accepted students has "ACCEPTED" as their pending request.
+         * Denied students has "DENIED" as their pending request.
+         * Pending students has "PENDING" as their pending request.
          * 
          * @return void
         */
@@ -71,7 +71,7 @@
                 if(
                         isset($_SESSION["group"]) && isset($_SESSION["subject"])
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
-                ){
+                ){ // Only teachers can handle students
                     
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
@@ -80,7 +80,7 @@
                 
                     $decision_array = array();
                     foreach($_POST as $key => $value){
-                        $neptun = $key; // Check this!!!
+                        $neptun = $key;
                         $decision = "";
                         $id = $current_subject . "_" . $current_group;
                         if($value != "-"){
@@ -93,6 +93,7 @@
                         }
                     }
                     
+                    // Getting the students belonging to the user
                     $original_user_information = $student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_user_information as $index => $original_record){

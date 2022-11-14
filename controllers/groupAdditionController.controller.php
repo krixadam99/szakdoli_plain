@@ -10,7 +10,11 @@
         private $success_parameters;
 
         /**
+         * The contructor of the GroupAdditionController class.
          * 
+         * It will call the MainContentController class's constructor with which it will assign default values to the inherited members.
+         * 
+         * @return void
          */
         public function __construct(){
             parent::__construct();
@@ -31,6 +35,7 @@
             if(isset($_SESSION["neptun_code"])){
                 $group_addition_model = new GroupAdditionModel();
                 $this->SetMembers();
+                // The administrator cannot see this page
                 if(!$this->is_administrator){
                     $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
                     $can_apply_to_group = $group_addition_conditions[1];
@@ -49,7 +54,12 @@
         }
 
         /**
-         * !!!
+         * This method validates the group application request of a user.
+         * 
+         * This method validates the data sent by the user. 
+         * If everything (the group number - subject name pair exists, and the status is valid) was correct, then the data will be saved, otherwise, the user will be redirected to the group addition page with the appropriate error messages.
+         * 
+         * @return void
          */
         public function ValidateGroupAddition() {
             if(isset($_SESSION["neptun_code"])){
