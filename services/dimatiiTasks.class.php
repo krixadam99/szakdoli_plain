@@ -118,8 +118,8 @@
                         Osztás egészek körében maradék nélkül
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak a, b \u{2208} \u{2124} számok. Azt mondjuk, hogy az <b>a szám osztható b-vel</b>, vagy <b>b osztója a-nak</b>, vagy <b>b osztja az a</b>-t, ha létezik olyan <b>c \u{2208} \u{2124}</b> szám, hogy <b>b * c = a</b> (a többszöröse b-nek). 
                         Ha a osztható b-vel, akkor erre a <i>b</i> | <i>a</i> jelölést használjuk
                     </label>
@@ -165,8 +165,8 @@
                         Maradékos osztás egészek körében
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak az a, b \u{2208} \u{2124} számok. A feladat az, hogy osszuk el az a-t maradékosan a b-vel az egészek körében.
                         Ekkor egyértelműen tudunk adni olyan q és r számokat, hogy <b>a = q * b + r ((r \u{2208} \u{2124}): 0 \u{2264} r < |b| \u{2227} q \u{2208} \u{2124})</b>.
                         A q a kvóciens (hányados), az r a maradék.
@@ -193,8 +193,8 @@
                         Kanonikus alak, osztók száma és prímfelbontás
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Számelmélet alaptétele: bármely nem-nulla, nem egység egész szám felbontható prímszámok szorzatára, ahol a sorrendtől, az egységektől, valamint az asszociáltaktól eltekintve a felbontás egyértelmű (létezés és egyértelműség).
                     </label>
                 </div>
@@ -250,8 +250,8 @@
                         Teljes és redukált maradékrendszerek
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen \u{2124} \u{220B} n \u{2265} 2. Ekkor definiáljuk a ~ relációt a következő képpen: ~ \u{2286} \u{2124} \u{00D7} \u{2124}, ~ := { (a, b) \u{2208} \u{2124} \u{00D7} \u{2124} | n | a - b}, azaz pontosan akkor van (a, b) rendezett pár benne a ~ relációban, ha azonos maradékot adnak n-nel osztva (azaz kongruensek modulo n).
                         Ez a reláció ekvivalencia reláció (ezt a kongruenciák tulajdonságainál (4. téma) látjuk be), így meghatározhatunk egy osztályozást. 
                         Jelöljük a <span style=\"text-decoration: overline\">a</span>-val azt a halmazt, amely azokat az elemeket tartalmazza, melyek n-nel osztva a maradékot adnak, azaz <span style=\"text-decoration: overline\">a</span> = { b \u{2208} \u{2124} | n | a - b} = { ..., a - n, a, a + n, ...} = a + n * \u{2124} (az n * \u{2124} helyett használható az n * k (k \u{2208} \u{2124} jelölés is)). Ezt <b>maradékosztálynak</b> nevezzük.
@@ -277,8 +277,8 @@
                         Euler- féle \u{03C6} függvény és redukált maradékrendszerek mérete
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Az Euler- féle \u{03C6} függvény megadja egy pozitív egész szám esetén, hogy hány darab pozitív, hozzá relatív prím létezik, azaz, hány olyan pozitív szám van, amelynek az egységen kívül nincsen már közös osztója a számmal.
                         Ez a \u{2124} \u{220B} p prím esetén p - 1 (különben nem lenne prím). Az 1-hez a függvény 1-et rendel.
                         Ha az \u{2124} \u{220B} a = p<sup>\u{03B1}</sup> alakú, ahol p prím és alfa pedig nemnegatív egész, akkor bebizonyítható, hogy <b>\u{03C6}(a)</b> = a - p<sup>\u{03B1} - 1</sup> = <b>p<sup>\u{03B1} - 1</sup> * (p - 1)</b>.
@@ -342,10 +342,12 @@
                         Legnagyobb közös osztó és legkisebb közös többszörös
                     </label>
                 </div>
-                <div class=\"definition\">
+                <div class=\"definition first_definition\">
                     <label class=\"definition_label\">
                         Adottak \u{2124} \u{220B} a, b számok. Jelölje ekkor ennek a két számnak a legnagyobb közös osztóját az a d \u{2208} \u{2124} szám amelyre teljesül, hogy:
                     </label>
+                </div>
+                <div class=\"definition\">
                     <ul class=\"definition_list\">
                         <li><label>d \u{2265} 0 (egyértelmű);</label></li>
                         <li><label>d | a \u{2227} d | b (közös osztó);</label></li>
@@ -379,8 +381,8 @@
                         Eukleidészi- algoritmus
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak a \u{2124} \u{220B} a, b számok. Feltételezzük, hogy mind a kettő nemnegatív (ha negatívak, akkor vegyük az abszolútértéküket, ugyanis a legnagyobb közös osztó ugyanaz marad), valamint az a \u{2265} b.
                         Majd hajtsuk végre a következő maradékos osztásokat:<br>
                         a = q<sub>0</sub> * b + r<sub>0</sub>;<br>
@@ -409,8 +411,8 @@
                         Kibővített Eukleidészi- algoritmus
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         A gcd(a,b) meghatározásánál használt Eukleidészi- algoritmust felhasználva alkotjuk meg az itteni algoritmust. Azt szeretnénk elérni, hogy minden maradékot felírhassunk az a és b lineáris kombinációjaként.<br>
                         r<sub>-2</sub> := 1*a + 0*b = a (m<sub>-2</sub> := 1, n<sub>-2</sub> := 0);<br>
                         r<sub>-1</sub> := 0*a + 1*b = b (m<sub>-1</sub> := 0, n<sub>-1</sub> := 1);<br>
@@ -469,11 +471,13 @@
                         Kongruenciák tulajdonságai
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Korábban már vettünk kongruenciákat. Azt mondtuk, hogy az a és b számok kongruensek m modulussal, amennyiben azonos maradékot adnak m-mel osztva.
                         Azt is beláttuk, hogy (a, b \u{2208} \u{2124})(m \u{2208} \u{2124}<sup>\u{2265}2</sup>):a \u{2261} b (mod m) \u{2194} a = b + m * k (k \u{2208} \u{2124}) \u{2194} m | a - b. Jöjjön a kongruenciák néhány tulajdonsága.
                     </label>
+                </div>
+                <div class=\"definition\">
                     <ul class=\"definition_list\">
                         <li><label>(\u{2200} a \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} a (mod m) (ugyanis: m | 0 = a - a) (reflexivitás);</label></li>
                         <li><label>(\u{2200} a, b \u{2208} \u{2124})(\u{2200} m \u{2208} \u{2124}<sup>\u{2265}2</sup>): a \u{2261} b (mod m) \u{2194} b \u{2261} a (mod m) (ugyanis: m | a - b \u{2194} m | b - a) (szimmetria);</label></li>
@@ -488,8 +492,8 @@
                         Lineáris kongruenciák megoldhatósága és lehetséges megoldása
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak a, b \u{2208} \u{2124} és m \u{2208} \u{2124}<sup>\u{2265}2</sup> számok. Ekkor az a * x \u{2261} b (mod m) kongruenciát lineárisnak nevezzük.
                         A feladat az, hogy megkeressük azokat az x számokat, amellyel igaz állítást kapunk, azaz a * x és b azonos maradékot ad m-mel osztva.
                         Nem mindig lesz megoldható ez a feladat. Az ekvivalenciákat követve: a * x \u{2261} b (mod m) \u{2194} m | a * x - b \u{2194} a * x +  (-y) * m = b. Vegyük az a és m legnagyobb közös osztóját (jelöljük d-vel), ekkor az egyenlet a következő formát veszi fel: d * a<sub>d</sub> * x + d * m<sub>d</sub> * y = b. 
@@ -552,8 +556,8 @@
                     Diofantikus egyenlet megoldása
                 </label>
             </div>
-            <div class=\"definition\">
-                <label class=\"definition_label\">
+            <div class=\"definition first_definition\">
+                <label class=\"definition_label elliptical_definition\">
                     Adottak az a, b, c \u{2208} \u{2124} számok. Az a * x + b * y = c egyenletet lineáris diofantikus egyenletnek nevezzük. A feladat az, hogy megkeressük ennek az összes megoldását.
                     Ez az egyenlet pontosan akkor oldható meg, ha (a,b) | c.
                 </label>
@@ -617,8 +621,8 @@
                         Kínai maradéktétel
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen n, m \u{2264} 2 egészek úgy, hogy gcd(n,m) = 1. Ekkor az f: \u{2124}/<sub>n*m</sub>\u{2124} \u{2192} \u{2124}/<sub>n</sub>\u{2124} \u{00D7} \u{2124}/<sub>m</sub>\u{2124}, 
                         f(<span style=\"text-decoration: overline\">a</span>) = (<span style=\"text-decoration: overline\">a</span>,<span style=\"text-decoration: overline\">a</span>) egy bijektív függvény.
                     </label>
@@ -659,8 +663,8 @@
                         Kongruenciarendszer megoldása
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen az n \u{2264} 2:<br>
                         (a<sub>1</sub>, b<sub>1</sub> \u{2208} \u{2124} és m<sub>1</sub> \u{2208} \u{2124}<sup>\u{2265}2</sup>): a<sub>1</sub> * x \u{2261} b<sub>1</sub> (mod m<sub>1</sub>)<br>
                         (a<sub>2</sub>, b<sub>2</sub> \u{2208} \u{2124} és m<sub>2</sub> \u{2208} \u{2124}<sup>\u{2265}2</sup>): a<sub>2</sub> * x \u{2261} b<sub>2</sub> (mod m<sub>2</sub>)<br>
@@ -728,8 +732,8 @@
                         Polinomok
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> (x \u{2208} \u{2124}) kifejezést az egészek felett értelmezett polinomnak nevezzük.
                         Tulajdonképpen a polinomot felírhatjuk olyan végtelen hosszú számsorozatként, ahol véges számú nem-nulla tag van. Amennyiben az x helyére beírunk egy értelmezés tartomány béli elemet, akkor a polinomot a helyen kiértékelve megkapjuk a helyettesítési értéket.
                         A polinom legmagasabb fokú tagja melletti számot a polinom főegyütthatójának, a nullad rendű tag együtthatóját pedig konstans tagnak nevezzük. Amennyiben egy értelmezési tartomány béli helyen a polinomnak a helyettesítési értéke 0, akkor azt a polinom gyökének nevezzük.
@@ -741,8 +745,8 @@
                         Horner- rendezés
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> polinomot más alakban is fel tudjuk írni.
                         Horner- rendzés: P[x] = ((...(a<sub>n</sub> * x + a<sub>n-1</sub>)...) * x + a<sub>1</sub>) * x + a<sub>0</sub>.
                         Ebből rekurzívan megkapjuk a helyettesítési értéket:<br>
@@ -797,8 +801,8 @@
                         Polinomok osztása és szorzása
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak a P[x] és R[x] polinomok. Ekkor attól függően, hogy mi a polinomok értelmezési tartománya eltérő lehet a hányadospolinom és maradékpolinom foka. 
                         A valós számtest felett például deg(P[x]/R[x]) = deg(P[x]) - deg(Q[x]). De a \u{2124}/<sub>n</sub>\u{2124} (n \u{2265} 2) esetén már csak azt lehet mondani, hogy deg(P[x]) - deg(Q[x]) \u{2265} deg(P[x]/R[x]).
                     </label>
@@ -848,8 +852,8 @@
                         Lagrange- interpoláció
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adottak a (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), ..., (x<sub>n + 1</sub>, y<sub>n + 1</sub>) pontok. Ekkor szeretnénk meghatározni azt az n-ed fokú görbét, amelyre illeszkednek a pontok.
                         Az első módszer a Lagrange- interpoláció lesz. Bevezetjük a Lagrange- alappolinomokat. Az i.-ik (i \u{2208} {1,..,n}) alappolinom olyan, hogy az i.-ik pontnál 1-et, a többi helyen pedig 0-t vesz fel. Sorra megszorozzuk az alappolinomokat a helyhez tartozó értékkel. Végül összeadjuk őket.<br>
                         (i \u{2208} {1,..,n}): l<sub>(x<sub>i</sub>,y<sub>i</sub>)</sub>[x] := l<sub>i</sub>[x] = (\u{220F}<sup>n</sup><sub>j=1, j \u{2260} i</sub>(x - x<sub>j</sub>))/(\u{220F}<sup>n</sup><sub>j=1, j \u{2260} i</sub>(x<sub>i</sub> - x<sub>j</sub>)). Valóban l<sub>i</sub>[x<sub>i</sub>] = 1 és (i \u{2260} j): l<sub>i</sub>[x<sub>j</sub>] = 0 a számláló miatt.
@@ -863,8 +867,8 @@
                         Newton- interpoláció
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>"
             ];

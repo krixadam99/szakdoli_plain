@@ -16,7 +16,7 @@
         $practice_topics = $this->dimat_ii_topics;
         $topic_descriptions = $this->dimat_ii_topics_descriptions;
     }
-
+    
     function ProgressCalculator($point){
         $counter = 1;
         $level = 1;

@@ -180,7 +180,16 @@ if(show_buttons){
             let definition_holder = show_button.closest(".definition_holder")  
             let definitions = definition_holder.querySelectorAll(".definition")
             if(is_shown[counter]){
-                definitions.forEach((element)=>{element.style["display"] = "none"})
+                definitions.forEach((element, index)=>{
+                    if(index !== 0){
+                        element.style["display"] = "none"
+                    }else{
+                        let labels = element.querySelectorAll("label")
+                        labels.forEach((label)=>{
+                            label.classList.add("elliptical_definition")
+                        })
+                    }
+                })
                 is_shown[counter] = false
     
                 let bottom_triangle = show_button.querySelector(".bottom_triangle")
@@ -190,7 +199,15 @@ if(show_buttons){
                 top_triangle.classList.add("top_triangle")
                 show_button.appendChild(top_triangle)
             }else{
-                definitions.forEach((element)=>{element.style["display"] = "block"})
+                definitions.forEach((element, index)=>{
+                    if(index !== 0){
+                        element.style["display"] = "block"
+                    }else{
+                        let elliptical_definitions = element.querySelectorAll(".elliptical_definition")
+                        elliptical_definitions.forEach((elliptical_definition)=>{elliptical_definition.classList.remove("elliptical_definition")})
+                    }
+                })
+                    
                 is_shown[counter] = true
                 let top_triangle = show_button.querySelector(".top_triangle")
                 show_button.removeChild(top_triangle)

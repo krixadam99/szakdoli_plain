@@ -115,7 +115,6 @@ hr {
 }
 
 .big_card, .small_card {
-    border: 1px solid black;
     box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
     transition: 0.4s;
     border-radius: 5px;
@@ -297,6 +296,7 @@ select#group_selector {
     box-shadow: 0 5px 5px 0 rgba(94, 85, 73, 0.5);
 }
 
+
 .defined {
     margin: 5% auto auto 4%;
     padding-top: 5%;
@@ -329,14 +329,14 @@ select#group_selector {
 
 .bottom_triangle {
     border-bottom: 15px solid rgba(94, 85, 73, 0.5); 
-    border-left: 8px solid white; 
-    border-right: 8px solid white; 
+    border-left: 10px solid white; 
+    border-right: 10px solid white; 
 }
 
 .top_triangle {
     border-top: 15px solid rgba(94, 85, 73, 0.5); 
-    border-left: 8px solid white; 
-    border-right: 8px solid white; 
+    border-left: 10px solid white; 
+    border-right: 10px solid white; 
 }
 
 .definition_label::selection {
@@ -355,6 +355,18 @@ select#group_selector {
 .definition_list label {
     color: black;
 }
+
+.first_definition {
+    display: block;
+}
+
+.elliptical_definition {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
 
 .task_container {
     width: 60%;

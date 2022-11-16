@@ -102,12 +102,12 @@
                         Halmazok
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Alapfogalom, így nem lehet definiálni. Körülírva: jól meghatározható dolgok összessége. Minden elemet egyszer tartalmazhat (minden eleme egyértelműen hivatkozható), az elemek sorrendje nem számít.
                     </label>
                     <br>
-                    <label class=\"definition_label\">
+                    <label class=\"definition_label elliptical_definition\">
                         Egy halmazt megadhatunk az elemeinek felsorolásával, vagy az elemek egy jól meghatározható tulajdonságával. A halmazokat konvenció szerint nagy betűvel jelöljük, az üres halmazt pedig a {}, vagy a \u{2205} jelekkel.
                     </label>
                     <br>
@@ -130,8 +130,8 @@
                         Halmazok közötti műveletek
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         A \u{222A} B (unió) : Olyan elemek összessége, melyek benne vannak az A, vagy a B halmazban (megengedő vagy, OR). Formálisan: A \u{222A} B = { x: x \u{2208} A \u{2228} x \u{2208} B }. Tulajdonságai: kommutatív, asszociatív, idempotens (A \u{222A} A = A).
                     </label>
                 </div>
@@ -188,8 +188,8 @@
                         Relációk
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Az (a,b) rendezett pár alatt a {{a}, {a,b}} halmazt értjük (számít a sorrend). Az A és B halmazok Descartes (direkt, vagy cartesian) szorzata egy olyan halmaz, amely olyan rendezett párokat tartalmaz, melyek első eleme az A, második eleme pedig a B halmazban van benne. Formálisan: A \u{2A2F} B = { (a,b): a \u{2208} A \u{2227} b \u{2208} B}.
                     </label>
                 </div>
@@ -208,8 +208,8 @@
                         Bináris relációk alapvető definíciói
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B. Ekkor Dom<sub>R</sub> = { a \u{2208} A | \u{2203} b \u{2208} B: (a,b) \u{2208} R}. Ezt nevezzük az <b>R reláció értelmezési tartományának</b>. Informálisan: készítünk egy halmazt az R relációt alkotó rendezett párok első elemeiből.
                     </label>
                 </div>
@@ -285,8 +285,8 @@
                         Relációk kompozíciója
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} B és \u{2205} \u{2260} S \u{2286} C \u{2A2F} D relációk, ahol az A, B, C és D halmazok nem feltétlen különbözőek. Az S \u{2218} R kompozíció alatt a következő relációt értjük: S \u{2218} R = { (a,d) \u{2208} A \u{2A2F} D | \u{2203} b \u{2208} B: (a,b) \u{2208} R \u{2227} (b,d) \u{2208} S }. Például a nagybácsija reláció a testvére és szülője relációk kompozíciója. Informálisan: a jobb oldali tag rendezett párjainak második elemeit \"összekötjük\" a bal oldali reláció rendezett párjainak azonos első elemeivel. Majd az összekötés során kapott hármasok 1. és 3. elemeiből képzett rendezett párjai alkotják a kompozíciót. Tulajdonságok: asszociatív, valamint: (R \u{2218} S)<sup>-1</sup> = S<sup>-1</sup> \u{2218} R<sup>-1</sup>.
                     </label>
                 </div>",
@@ -295,8 +295,8 @@
                         Homogén relációk tulajdonságai
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott \u{2205} \u{2260} R \u{2286} A \u{2A2F} A. Ekkor az R relációt <b>reflexívnek</b> nevezzük, ha (\u{2200} a \u{2208} A): (a,a) \u{2208} R.
                     </label>
                 </div>
@@ -392,8 +392,8 @@
                         Függvények
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott az f \u{2286} D \u{2A2F} R reláció. Azt mondjuk, hogy az f reláció függvény, ha bármely két rendezett pár első eleme különböző (azaz egyértelmű, vagyis bármely rendezett pár meghatározható egyértelműen az első eleme alapján). 
                         Formálisan: (x,y) \u{2208} f \u{2227} (x,z) \u{2208} f \u{2194} y = z. A rendezett párok első elemei a helyek, a második elemek pedig az értékek.
                         Ha f függvény és (a,b) \u{2208} f, akkor az <i>a f b</i> helyett az <i>f(a) = b</i> jelölést használjuk. Ekkor azt mondjuk, hogy az f függvény a b értéket veszi fel az a helyen.
@@ -420,8 +420,8 @@
                         Függvények alapvető tulajdonságai
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Az f \u{2208} D \u{2192} R függvény <b>szürjektív</b>, ha Ran<sub>f</sub> = R. Formálisan: (\u{2200} b \u{2208} R)(\u{2203} a \u{2208} D): f(a) = b. Ha f és g szürjektív függvények, akkor kompozíciójuk is szürjektív függvény.
                     </label>
                 </div>
@@ -468,8 +468,8 @@
                         Komplex számok
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Pongyolán fogalmazva, minden számhalmaz esetén egy újabbat akkor vezettünk be, amikor valamilyen művelet korlátozva lett a számhalmazon (nem zárt már a számhalmazon).
                         A természetes számok körében az összeadás és szorzás zárt, de a kivonás kivezetett az egészek körébe (inverz hiánya a nem nulla természetes számoknál az összeadásra nézve). Az egészek zártak a hozzáadásra nézve, viszont az osztás nem mindig eredményezett egész számot (inverz hiánya nem nulla egészeknél a szorzásra nézve).
                         Így jutottunk el a racionális számokhoz, ahol pedig már az alapműveletek elvégezhetők voltak, viszont a hatványozásnál csak a egész kitevőt lehetett venni. Így pedig a nem egész kitevős hatványozás során jutunk el a valós számokhoz, melyek a racionális és irracionális számok uniója.
@@ -495,8 +495,8 @@
                         Komplex számok közötti műveletek
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         A komplex számok közötti műveleteket úgy kellett definiálni, hogy azok a valós számok esetén (tehát, amikor a képzetes rész 0) megtartsák a tulajdonságaikat.
                     </label>
                 </div>
@@ -550,8 +550,8 @@
                         Komplex számok trigonometrikus alakja
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Gauss- számsík: ha a derékszögű koordináta-rendszerben az x- tengelyen a valós számokat, az y- tengelyen pedig a képzetes egység számsorosait ábrázoljuk, akkor minden egyes pontnak a koordináta- rendszerben megfeleltethető egy komplex szám. Így a komplex számok valójában olyan síkvektorok, amelyek egyben helyvektorok is.
                         A komplex számokat ezután már jelölhetjük a két koordinátájukkal is. Például: \u{2102} \u{220B} w = a + b * i = (a, b) (a, b \u{2208} \u{211D}). Ez a komplex szám geometrikus alakja.
                     </label>
@@ -576,8 +576,8 @@
                         Műveletek trigonometrikus alakkal
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}<sub>1</sub>) + i * sin(\u{03C6}<sub>1</sub>)) és \u{2102} \u{220B} z = |z| * (cos(\u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>2</sub>)).
                         Ekkor <b>w * z = |w| * |z| * (cos(\u{03C6}<sub>1</sub> + \u{03C6}<sub>2</sub>) + i * sin(\u{03C6}<sub>1</sub> + \u{03C6}<sub>2</sub>))</b>.
                     </label>
@@ -621,8 +621,8 @@
                         Komplex számok hatványozása trigonometrikus alak segítségével
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
                         Ekkor <b>(\u{2200} m \u{2208} \u{2124}): w<sup>m</sup> = |w|<sup>m</sup> * (cos(m * \u{03C6}) + i * sin(m * \u{03C6}))</b>.
                     </label>
@@ -632,8 +632,8 @@
                         Komplex számok gyökvonása trigonometrikus alak segítségével
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
                         Ekkor <b>(\u{2200} m \u{2208} \u{2124}): <sup>m</sup>\u{221A}w = <sup>m</sup>\u{221A}|w| (cos((\u{03C6} + 2 * k * \u{03C0}) / m) + i * sin((\u{03C6} + 2 * k * \u{03C0}) / m))</b> (k = 0,1,..,m-1).
                     </label>
@@ -643,8 +643,8 @@
                         Komplex szám rendje és egységgyökök
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Legyen \u{2102} \u{220B} w = |w| * (cos(\u{03C6}) + i * sin(\u{03C6})).
                         Ekkor a komplex szám rendjének azt a legkisebb pozitív egészet nevezzük, amelyre a számot emelve önmagát kapjuk. Ha nincsen ilyen szám, akkor végtelen a rend.
                         Mivel egy komplex szám hatványozás geometriai értelemben a forgatva nyújtás, így ahhoz, hogy a rend véges legyen, szükséges az, hogy a komplex szám hossza 1 legyen.
@@ -693,8 +693,8 @@
                         Binomiális tétel
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott az \u{2124} \u{220B} k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = \u{220F}<sup>k</sup><sub>i=1</sub>i (ha k > 0) és 1, ha k = 0.
                         Adottak az n, m \u{220B} \u{2124} egészek, ahol n \u{2265} m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az \u{276C} n alatt m \u{276D} jelölést használjuk az oldalon. 
                         Tulajdonságok: \u{276C} n alatt m \u{276D} = \u{276C} n alatt (m-n) \u{276D}; \u{276C} (n-1) alatt m \u{276D} + \u{276C} (n-1) alatt (m-1) \u{276D} = \u{276C} n alatt m \u{276D}.
@@ -718,8 +718,8 @@
                         Általánosított Viéte- formula
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                         Adott egy n-ed fokú polinom az a<sub>n</sub> * (x - x<sub>1</sub>) * (x - x<sub>2</sub>) * ... * (x - x<sub>n</sub>) szorzatalakban.
                         Ekkor megszeretnénk kapni a polinom a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> összegalakját, azaz az a<sub>i</sub>-ket (i \u{2208} {0,1,...,n}). 
                         Az a<sub>i</sub> esetén ehhez i darab zárójelben kell x-et választani, a többiben pedig a konstans tagot. Ez persze azt jelenti, hogy n - i darab konstans tagot választunk és ebből \u{276C} n alatt i \u{276D} van.
@@ -765,8 +765,8 @@
                         Gráfok
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>
                 <div class=\"definition\">
@@ -779,8 +779,8 @@
                         Egyszerű gráf megszerkeszthetősége:
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -788,8 +788,8 @@
                         Páros gráf megszerkeszthetősége:
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -797,8 +797,8 @@
                         Fagráf megszerkeszthetősége:
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>",
                 "<div class=\"defined\">
@@ -806,8 +806,8 @@
                         Irányított gráf megszerkeszthetősége:
                     </label>
                 </div>
-                <div class=\"definition\">
-                    <label class=\"definition_label\">
+                <div class=\"definition first_definition\">
+                    <label class=\"definition_label elliptical_definition\">
                     </label>
                 </div>"
             ];

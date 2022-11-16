@@ -3,10 +3,10 @@ body{
     margin: 0%;
     min-height: 100vh;
 
-    background-image: url("./pics/moving_background.png");
+    background-image: url("./pics/moving_background_alt.png");
     background-position: relative;
     background-attachment: fixed;
-    background-size: calc(600px + 0.6vw) calc(600px + 0.6vw);
+    background-size: calc(1380px + 0.6vw) calc(640px + 0.6vw);
     background-repeat: repeat;
     animation: moving_symbols 20s;
     animation-timing-function: linear;
