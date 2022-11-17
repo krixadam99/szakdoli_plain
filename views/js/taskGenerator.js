@@ -228,15 +228,28 @@ function SplitTextAreaIfNecessary(element){
 
     GetComputedStylesOfChild(focused_span, new_span_first)
     GetComputedStylesOfChild(focused_span, new_span_second)
-
+    
     if(new_span_first.innerText !== ""){
         focused_element_parent.insertBefore(new_span_first,focused_span)
     }
-    focused_element_parent.insertBefore(element,focused_span)
+
     if(new_span_second.innerText !== ""){
+        focused_element_parent.insertBefore(element,focused_span)
         focused_element_parent.insertBefore(new_span_second,focused_span)
+        focused_element_parent.removeChild(focused_span)
+    }else{
+        if(focused_span.nextElementSibling){
+            if(focused_span.nextElementSibling.nextElementSibling){
+                focused_element_parent.insertBefore(element,focused_span.nextElementSibling.nextElementSibling)
+                focused_element_parent.removeChild(focused_span)
+            }else{
+                focused_element_parent.appendChild(element)
+            }
+        }else{
+            focused_element_parent.appendChild(element)
+            focused_element_parent.removeChild(focused_span)
+        }
     }
-    focused_element_parent.removeChild(focused_span)
 }
 
 function CreateNewSpan(styles){
