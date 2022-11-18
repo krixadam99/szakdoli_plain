@@ -1,5 +1,5 @@
-<label class="pdf_page_task_choice_label" style="margin: 0% 0% 0% 5%">Altéma:</label>
-<div class="subtopic_box" style="width:19%;margin:0% 0% 0% 1%">
+<label class="pdf_page_task_choice_label" style="margin: auto 0% auto 5%">Altéma:</label>
+<div class="subtopic_box" style="width:19%;margin: auto 0% auto 1%">
     <?php for($topic_counter = 0; $topic_counter < 9; $topic_counter++):?>
         <?php if(count($sub_topics[$topic_counter]) === 1):?>
             <input value="<?=$sub_topics[$topic_counter][0]?>" style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" class="subtopic_select" name="main_topic_<?=$topic_counter?>_subtopic_0" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>

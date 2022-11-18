@@ -25,9 +25,9 @@
             <input type="text" id="user_input" name="neptun_code" value="<?=$correct_parameters['neptun_code']??"Neptun kód"?>" placeholder="Neptun kód">
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array("wrong_1_no_data",$incorrect_parameters)):?>
-                    <label id="error_label">Adjon meg neptun kódot!</label>
+                    <label class="error_label">Adjon meg neptun kódot!</label>
                 <?php elseif(in_array("wrong_1_no_neptun_code",$incorrect_parameters)):?>
-                    <label id="error_label">Adjon meg létező neptun kódot!</label>
+                    <label class="error_label">Adjon meg létező neptun kódot!</label>
                 <?php endif?>
             <?php endif?>
 
@@ -38,9 +38,9 @@
             </div>
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array("wrong_2_no_password", $incorrect_parameters)):?>
-                    <label id="error_label">Adjon meg jelszót!</label>
+                    <label class="error_label">Adjon meg jelszót!</label>
                 <?php elseif(in_array("wrong_2_not_same", $incorrect_parameters)):?>
-                    <label id="error_label">A jelszó nem megfelelő!</label>
+                    <label class="error_label">A jelszó nem megfelelő!</label>
                 <?php endif?>
             <?php endif?>
 
@@ -63,9 +63,9 @@
             <input type="text" id="user_input" name="neptun_code" value="<?=$correct_parameters['neptun_code']??"Neptun kód"?>" placeholder="Neptun kód">
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array("wrong_1_no_data",$incorrect_parameters)):?>
-                    <label id="error_label">Adjon meg neptun kódot!</label>
+                    <label class="error_label">Adjon meg neptun kódot!</label>
                 <?php elseif(in_array("wrong_1_no_neptun_code",$incorrect_parameters)):?>
-                    <label id="error_label">Adjon meg létező neptun kódot!</label>
+                    <label class="error_label">Adjon meg létező neptun kódot!</label>
                 <?php endif?>
             <?php endif?>
 

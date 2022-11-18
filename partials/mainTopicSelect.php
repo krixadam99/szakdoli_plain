@@ -1,5 +1,5 @@
-<label class="pdf_page_task_choice_label" style="margin: 0%;width:auto">Főtéma kiválasztása:</label>
-<select class="topic_select" style="width:19%; margin:0% auto 0% 2%" name="main_topic">
+<label class="pdf_page_task_choice_label" style="margin: auto 0%;width:auto">Főtéma kiválasztása:</label>
+<select class="topic_select" style="width:19%; margin-left: 1%" name="main_topic">
     <?php for($topic_counter = 0; $topic_counter < 9; $topic_counter++):?>
         <?php 
             $previous_chosen_topic = 0;

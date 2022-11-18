@@ -134,6 +134,7 @@ function AddEventsToParagraphLabel(element){
             editing_span.addEventListener("click", (event)=>{
                 editing_span.style.height = "auto";
                 cursor_actual_pos = window.getSelection().anchorOffset
+                console.log(cursor_actual_pos, window.getSelection(),  window)
                 focused_span = event.target
                 if(editing_span.parentElement !== edited_label_parent){
                     //editing_span.style["border-right"] = "0px"
@@ -142,7 +143,7 @@ function AddEventsToParagraphLabel(element){
 
             editing_span.addEventListener("keyup", (event)=>{
                 cursor_actual_pos = window.getSelection().anchorOffset
-                if(editing_span.innerText === ""){
+                if(editing_span.innerHTML === ""){
                     editing_span.parentElement.removeChild(editing_span)
                 }
             })
@@ -176,7 +177,7 @@ function removeHighlights(){
 
 function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
     let new_x_button = document.createElement("button")
-    new_x_button.innerText = "x" 
+    new_x_button.innerHTML = "x" 
     new_x_button.classList.add("x_button")
     new_x_button.addEventListener("click",()=>{
         let parent = new_x_button.parentElement
@@ -196,7 +197,7 @@ function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
             && Array.from(next_element.classList).includes("editing_span")
             && Array.from(previous_element.classList).includes("editing_span")
         ){
-            previous_element.innerText += next_element.innerText
+            previous_element.innerHTML += next_element.innerHTML
             next_element.parentElement.removeChild(next_element)
 
         }
@@ -220,20 +221,20 @@ function SplitTextAreaIfNecessary(element){
     let focused_element_parent = focused_span.parentNode
 
     let new_span_first = CreateNewSpan([])
-    new_span_first.innerText = focused_span.innerText.substring(0,cursor_actual_pos)
+    new_span_first.innerHTML = focused_span.innerHTML.substring(0,cursor_actual_pos)
 
     let new_span_second= CreateNewSpan([])
-    new_span_second.innerText = focused_span.innerText.substring(cursor_actual_pos)
+    new_span_second.innerHTML = focused_span.innerHTML.substring(cursor_actual_pos)
 
 
     GetComputedStylesOfChild(focused_span, new_span_first)
     GetComputedStylesOfChild(focused_span, new_span_second)
     
-    if(new_span_first.innerText !== ""){
+    if(new_span_first.innerHTML !== ""){
         focused_element_parent.insertBefore(new_span_first,focused_span)
     }
 
-    if(new_span_second.innerText !== ""){
+    if(new_span_second.innerHTML !== ""){
         focused_element_parent.insertBefore(element,focused_span)
         focused_element_parent.insertBefore(new_span_second,focused_span)
         focused_element_parent.removeChild(focused_span)
@@ -265,7 +266,7 @@ function CreateNewSpan(styles){
     new_span.addEventListener("keyup", (event)=>{
         cursor_actual_pos = window.getSelection().anchorOffset
 
-        if(new_span.innerText === "" && (!new_span.nextElementSibling || new_span.nextElementSibling && new_span.nextElementSibling.tagName !== "BUTTON")){
+        if(new_span.innerHTML === "" && (!new_span.nextElementSibling || new_span.nextElementSibling && new_span.nextElementSibling.tagName !== "BUTTON")){
             new_span.parentElement.removeChild(new_span)        
         }
     })
@@ -547,7 +548,7 @@ if(special_character_cells){
                 let character_span = special_character_cell.querySelector("span")
                 let html_entity = character_span.getAttribute("entity")
 
-                focused_span.innerText = focused_span.innerText.substring(0,cursor_actual_pos) + html_entity + focused_span.innerText.substring(cursor_actual_pos) 
+                focused_span.innerHTML = focused_span.innerHTML.substring(0,cursor_actual_pos) + html_entity + focused_span.innerHTML.substring(cursor_actual_pos) 
             }
         })
     })

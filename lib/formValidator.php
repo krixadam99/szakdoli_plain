@@ -54,6 +54,7 @@
          */
         protected function ValidateInputs($validation_array){            
             $input_counter = 1;
+            $incorrect_parameters = [];
             foreach($validation_array as $input => $validation_rules){
                 if(is_string($input)){
                     foreach($validation_rules as $attribute => $condition){

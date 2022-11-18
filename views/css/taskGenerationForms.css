@@ -1,0 +1,119 @@
+#pdf_page_title_container {
+    margin: 2% auto;
+}
+
+#pdf_page_title {
+    font-size: calc(17px + 0.3vw);
+}
+
+.pdf_page_section {
+    margin-bottom: 6%;
+}
+
+.pdf_page_section_label{
+    font-size: calc(15px + 0.3vw);
+}
+
+.pdf_page_styling_label, .pdf_page_task_choice_label{
+    font-size: calc(10px + 0.3vw);
+    margin: 0%;
+    width: 10%
+}
+
+.pdf_page_style_container, .pdf_page_task_choice_container{
+    margin: 2% 0% 0% 0%;
+    display: flex;
+    width: 95%;
+}
+
+.pdf_page_style_container input, 
+.pdf_page_style_container select, 
+.pdf_page_task_choice_container select,
+.pdf_page_task_choice_container input {
+    border-radius:5px;
+    border: 1px solid rgb(150, 147, 147)
+}
+
+.task_generation_textarea {
+    width: 40%;
+    margin-top: 2%;
+    border-radius: 5px;
+    border: 1px solid rgb(150, 147, 147);
+    resize: none;
+}
+
+.big_exam_button {
+    width:2%; 
+    margin:0% 0% 0% auto;
+    border-radius: 50px;
+    background-color: rgb(255, 254, 254);
+    border: 1px solid rgb(207, 206, 206);
+}
+
+#generator_button, #new_task_generator_button, #save_pdf_button {
+    width: 20%;
+    margin-left: 40%;
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: rgb(254, 255, 255);
+}
+
+#new_task_generator_button, #save_pdf_button {
+    margin: 2% 40% 5% 40%;
+}
+
+@media only screen and (max-width: 576px) {
+    .pdf_page_section_label{
+        font-size: calc(12px + 0.3vw);
+    }
+
+    .task_generation_textarea {
+        font-size: calc(10px + 0.3vw);
+    }
+
+    .pdf_page_style_container input, 
+    .pdf_page_style_container select, 
+    .pdf_page_section input,
+    .pdf_page_task_choice_container select,
+    .pdf_page_task_choice_container input,
+    .pdf_page_task_choice_container label {
+        font-size: calc(9px + 0.3vw);
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .remove_task_buttons {
+        padding: 2px 7px;
+    }
+
+    .big_exam_button {
+        width: auto;
+    }
+
+    #generator_button,
+    #new_task_generator_button,
+    #save_pdf_button {
+        width: 40%;
+        margin-left: 30%;
+        font-size: calc(10px + 0.3vw);
+    }
+}
+
+
+@media only screen and (min-width: 576px) and (max-width: 1224px) {
+    .big_exam_button {
+        width: auto;
+    }
+
+    .remove_task_buttons {
+        padding: 1px 12px;
+    }
+    
+    #generator_button,
+    #new_task_generator_button,
+    #save_pdf_button {
+        width: 30%;
+        margin-left: 35%;
+        font-size: calc(12px + 0.3vw);
+    }
+}

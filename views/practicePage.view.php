@@ -43,7 +43,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
     <link href="./views/css/body.css" rel="stylesheet" type="text/css">
-    <title>Gyakorlás</title>
+    <link href="./views/css/practicePage.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/cards.css" rel="stylesheet" type="text/css">
+    <title><?=$subject_id?> gyakorlás</title>
 </head>
 <body>
     <?php include("./partials/header.php")?>

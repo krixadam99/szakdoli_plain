@@ -24,6 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
     <link href="./views/css/body.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/groupAddition.css" rel="stylesheet" type="text/css">
     <title>Csoport hozzáadása</title>
 </head>
 <body>
@@ -37,7 +38,7 @@
         
         <div>
             <div>
-                <label id="title_label">
+                <label class="title_label">
                     Válassz sátuszt!
                 </label>
             </div>
@@ -60,7 +61,7 @@
 
         <div>
             <div>
-                <label id="title_label">
+                <label class="title_label">
                     Válassz tárgyat!
                 </label>
             </div>
@@ -82,8 +83,8 @@
         </div>
 
         <div id="subject_group_div">
-            <div id="label_div">
-                <label id="title_label">Válassz csoportot!</label>
+            <div class="label_div">
+                <label class="title_label">Válassz csoportot!</label>
             </div>
             <div id="student_groups" <?=(isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]==="Demonstrátor" || !$can_apply_to_group)?"hidden":""?>>
                 <div id="subject_1" <?=(isset($correct_parameters['subject_id']) && $correct_parameters['subject_id']=="1")?"hidden":""?>>

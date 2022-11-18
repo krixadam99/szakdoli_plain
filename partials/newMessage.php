@@ -22,7 +22,7 @@
             <label class="message_label" style="margin: auto 2% auto auto; ">
                 Add meg az üzenet címét!
             </label>
-            <textarea class="message_topic_textarea" placeholder="Üzenet témája..." value="Üzenet témája..." name="message_topic" row="1"></textarea>
+            <textarea class="message_topic_textarea" placeholder="Üzenet témája..." value="Üzenet témája..." name="message_topic" rows="1"></textarea>
         </div>
     </div>
     <div class="message__div">

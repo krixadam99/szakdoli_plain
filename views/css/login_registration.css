@@ -31,19 +31,18 @@ body{
 form {
     margin: 10% auto 1% auto;
     width:60%;
+    padding-top: 2%;
+
     background-color: #f1e6d8f2; 
     border-radius: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
-form > input:first-of-type,
-form > div#label_div:first-of-type{
-    margin-top: 4%;
-}
-
-form > input,
-form > select{
-    margin: 2% 10%;
-    width: 78%;
+form input,
+form select{
+    margin: 1% auto;
+    width: 82%;
     height: 2%;
     text-align: left;
     color:rgb(134, 132, 132);
@@ -61,8 +60,8 @@ form select {
     color: black;
 }
 
-form > input:last-of-type{
-    margin: 2% 40% 4% 40%;
+form input:last-of-type{
+    margin: 2% auto 4% auto;
     width: 20%;
     height: 2%;
     text-align: center;
@@ -71,14 +70,14 @@ form > input:last-of-type{
     color:black;
 }
 
-form > input:last-of-type:hover{
+form input:last-of-type:hover{
     border-color:rgba(116, 240, 122, 0.774);
 }
 
 .password_row{
-    width: 80%;
+    width: 82%;
     display: flex;
-    margin: 2% 10%;
+    margin: 2% auto;
 }
 
 #user_password,
@@ -120,7 +119,7 @@ form > input:last-of-type:hover{
 #forgotten_password{
     color: rgba(1, 94, 148, 0.822); 
     width: 20%;
-    margin: 0% 30% 2% 0%;
+    margin: 0% auto 2% 0%;
     padding:0%;
     height: 2%;
 }
@@ -128,7 +127,7 @@ form > input:last-of-type:hover{
 #new_account{
     color: rgba(1, 94, 148, 0.822); 
     width: 20%;
-    margin: 0% 0% 2% 30%;
+    margin: 0% 0% 2% auto;
     padding:0%;
     height: 2%;
     text-align: right;
@@ -137,6 +136,7 @@ form > input:last-of-type:hover{
 #misc_holder{
     width: 80%;
     margin: 1% 10%;
+    display: flex;
 }
 
 a{
@@ -146,34 +146,33 @@ a{
     text-decoration: none;
 }
 
-#error_label {
+.error_label {
     color: red;
-    margin: 2% 9% 2% 9%;
+    margin: 0% auto 2% auto;
     width: 82%;
-    height: 2%;
     text-align: left;
 }
 
-
-
 .label_div{
     width: 82%;
-    margin: 5% 9% 0% 9%;
+    margin: 5% auto 0% auto;
 }
 
-.label_div:first-child{
-    margin-top: 5%
+#student_groups,
+#teacher_groups {
+    margin: 1% auto 1% 9%;
+    width: 100%;
 }
 
-#subject_group_div{
-    margin-top: 5%;
-}
-
-
-#title_label{
+.title_label{
     color: black;
     text-align: justify;
-    margin: 0%;
+    width: 78%;
+    height: 2%;
+}
+
+#user_input {
+    width: 80%;
 }
 
 @keyframes moving_symbols {
@@ -221,5 +220,48 @@ a{
     }
     100% {
         background-color: rgba(233, 255, 195, 0.35)
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    form {
+        margin: 40% auto 1% auto;
+        width: 80%;
+        padding-top: 5%;
+    }
+    
+    #forgotten_password,
+    #new_account {
+        width: 40%;
+        font-size: calc(11px + 0.3vw);
+    }
+
+    #show_password_image,
+    #show_password_image_first, 
+    #show_password_image_second {
+        margin: auto;
+        width: 10%;
+    }
+
+    form > input:last-of-type,
+    #register_button{
+        width: 25%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    #back_button{
+        width: 14%;
+        margin: 1% 43%;
+    }
+
+    .title_label{
+        font-size: calc(11px + 0.3vw);
+    }
+
+    #register_button{
+        width: 30%;
+        margin-top: 5%;
+        margin-bottom: 5%;
     }
 }

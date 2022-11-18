@@ -1,0 +1,265 @@
+/*Task generator page styles*/
+
+.task_generator_container {
+    margin: 2% 4% auto 4%;
+    display: flex;
+}
+
+#task_generation_settings, .pdf_page_button_container {
+    margin: 2% 9% auto 6%;
+    width: 85%;
+}
+
+#preview {
+    margin: 2% 9% auto auto;
+    border: 1px solid rgb(156, 156, 156);
+    height: 600px;
+    width: 200px;
+    overflow: scroll;
+    width: 85%;
+}
+
+.full_hr {
+    margin-top: 1%;
+    margin-left: 0%;
+    margin-right: 5%;
+    border: 0px;
+    border-top: 2px solid rgb(232, 196, 154);
+}
+
+
+#editor_panel {
+    background-color: rgba(244, 242, 242,1);
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    position: sticky;
+    top: 0;
+}
+
+#editor_panel label,
+#text_decoration span {
+    cursor: pointer;
+}
+
+#text_editor {
+    width: 60%;
+    margin: auto;
+    display: flex;
+}
+
+#font_styles {
+    width: 40%;
+    display: flex;
+}
+
+#font_styles input,
+#font_styles select {
+    width: 25%;
+    margin: auto;
+}
+
+#font_styles select {
+    width: 40%;
+}
+
+#text_decoration_insert_character_box {
+    display: flex;
+    width: 60%;
+}
+
+#insert_character {
+    display: flex;
+    margin: auto;
+    width: 40%;
+}
+
+#text_decoration {
+    display: flex;
+    width: 30%;
+    margin: auto;
+}
+
+#text_decoration span {
+    width: 15%;
+    margin: auto
+}
+
+.text_decoration_buttons,
+.insert_character_buttons  {
+    margin: 0% auto;
+    width: 15%;
+}
+
+#alignment_editor {
+    width: 20%;
+    display: flex;
+    margin: auto;
+    border-left: 1px solid black;
+    border-right: 1px solid black
+}
+
+#alignment_editor img{
+    margin: auto;
+    width: 13%;
+    height: 65%;
+    box-shadow: 0px 6px 10px 0px rgba(174, 171, 168, 0.5);
+}
+
+#linebreak_editor {
+    width: 30%;
+    margin: auto;
+}
+
+#linebreak_editor div {
+    width: 80%;
+    display: flex;
+    margin: 1% auto;
+}
+
+.special_characters {
+    display: none;
+    position: absolute;
+    right: 45%;
+    top:65%;
+
+    width: 17%;
+    height: 140px;
+    overflow-y: scroll;
+    border: 1px solid rgb(88, 87, 87);
+    background-color: rgb(252, 252, 252);
+}
+
+.special_character_row {
+    display: flex;
+    width: 100%;
+    padding: 2% 0%;
+    border-bottom: 1px solid rgb(203, 202, 202);
+}
+
+.special_character_row:last-child {
+    border-bottom: 0;
+}
+
+.special_character_cell {
+    width: 25%;
+    padding: 2%;
+    border-right: 1px solid rgb(203, 202, 202);
+    text-align: center;
+}
+
+.special_character_cell:last-child {
+    border-right: 0;
+}
+
+.special_character_cell span {
+    cursor: pointer;
+}
+
+.fraction, .upper_down_span {
+    display: inline-grid;
+    width: auto;
+    text-align: center;
+}
+
+.nominator, .up_index {
+    position: relative;
+    top: -7px;
+    border-bottom: 1px solid black;
+}
+
+.up_index {
+    border: 0;
+    top: -8px;
+    font-size: smaller;
+}
+
+.denominator, .down_index {
+    position: relative;
+    top: -5px;
+}
+
+.down_index {
+    top: -7px;
+    font-size: smaller;
+}
+
+#page_container {
+    margin: 5% 5% 5% 5%;
+    height: 90%;
+    width: 90%;
+}
+
+.editable_box {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.x_button {
+    background-color: white;
+    border: 1px solid rgb(183, 183, 247);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-size: inherit;
+}
+
+span {
+    width: auto;
+}
+
+.editing_span {
+    border: 1px solid rgb(183, 183, 247);
+    padding: 1px 30px 1px 10px;
+    outline: none;
+}
+
+.paragraph{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+@media only screen and (max-width: 1124px) { 
+    #preview {
+        width: 90%;
+        margin: 2% auto auto auto;
+    }
+    
+    #text_editor {
+        flex-direction: column;
+    }
+
+    #font_styles, #text_decoration_insert_character_box {
+        width: 90%;
+    }
+
+    #text_decoration, #insert_character {
+        width: 45%;
+    }
+
+    #text_editor {
+        width: 55%;
+    }    
+
+    #alignment_editor {
+        width: 20%;
+    }
+
+    #linebreak_editor {
+        width: 25%;
+    }
+
+    #alignment_editor img{
+        width: 20%;
+    }
+
+    #linebreak_before, #linebreak_after {
+        font-size: calc(8px + 0.3vw);
+    }
+
+    .special_characters {
+        right: 45%;
+        top: 70%; 
+        width: 30%;
+    }
+    
+}

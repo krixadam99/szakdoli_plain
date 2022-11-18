@@ -1,0 +1,203 @@
+/*Cards*/
+.card_row {
+    display: flex;
+    width: 96%;
+    margin: 2% 2%;
+}
+
+.big_card, .small_card {
+    box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+    transition: 0.4s;
+    border-radius: 5px;
+    margin: 2% auto;
+    padding-top: 10%;
+    padding-bottom: 11%;
+
+    text-align: center;
+    cursor: pointer;
+}
+
+.big_card {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.small_card {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+    padding-bottom: 2%;
+}
+
+.place_holder_card {
+    width: 15%;
+    box-shadow: 0;
+    border: 0px;
+    margin: 2% auto;
+}
+
+.title {
+    font-size: calc(15px + 0.3vw);
+}
+
+.small_card .title, .big_card .title {
+    cursor: pointer;
+    margin: 0% 5% 15% 5%;
+    width: 90%;
+}
+
+.small_card .description {
+    cursor: pointer;
+    margin: auto 3% auto 3%;
+    width: 90%;
+}
+
+.small_card .level_container {
+    cursor: default;
+    display: flex;
+    width: 100%;
+    margin-top: 25%;
+    margin-bottom: 0%;
+}
+
+.small_card {
+    background-position: relative;
+    background-attachment:fixed;
+    background-size:calc(350px + 0.6vw) calc(600px + 0.6vw);;
+    background-repeat: repeat;
+    animation: moving_symbols 200s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.small_card.sets.light {
+    background-image: url("./pics/set_shapes_light.png");
+}
+
+.small_card.complex_numbers.light {
+    background-image: url("./pics/complex_numbers_light.png");
+}
+
+.small_card.binomial_theorem.light {
+    background-image: url("./pics/binomial_theorem_light.png");
+}
+
+.small_card.graphs.light {
+    background-image: url("./pics/graphs_light.png");
+}
+
+.small_card.number_theory.light {
+    background-image: url("./pics/number_theory_light.png");
+}
+
+.small_card.polynomials.light {
+    background-image: url("./pics/polynomials_light.png");
+}
+
+.small_card.sets.dark {
+    background-image: url("./pics/set_shapes_dark.png");
+}
+
+.small_card.complex_numbers.dark {
+    background-image: url("./pics/complex_numbers_dark.png");
+}
+
+.small_card.binomial_theorem.dark {
+    background-image: url("./pics/binomial_theorem_dark.png");
+}
+
+.small_card.graphs.dark {
+    background-image: url("./pics/graphs_dark.png");
+}
+
+.small_card.number_theory.dark {
+    background-image: url("./pics/number_theory_dark.png");
+}
+
+.small_card.polynomials.dark {
+    background-image: url("./pics/polynomials_dark.png");
+}
+
+
+/*Level bar on cards*/
+
+.level_container .level_bar{
+    width: 30%;
+    margin: 0% 5% 0% 0%;
+    height: 100%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.level_container .level_counter{
+    width: 15%;
+    margin: 0% 0% 0% 50%;
+}
+
+.progress_line {
+    background-color: rgb(78, 203, 78);
+    height: 100%;
+    margin: auto auto auto 0%;
+    border-radius: 5px;
+
+}
+
+.big_card:hover, .small_card:hover {
+    box-shadow: 0 12px 17px 0 rgba(61, 54, 46, 0.5);
+    transform: scale(1.25);
+    transition: 1s;
+}
+
+@media only screen and (max-width: 576px) {
+    .card_row {
+        display: flex;
+        flex-direction: column;
+        width: 96%;
+        margin: 2% 2%;
+    }
+
+    .big_card, .small_card {
+        width: 50%;
+        border: 1px solid black;
+        box-shadow: 0 5px 10px 0 rgba(94, 85, 73, 0.5);
+        transition: 0.4s;
+        border-radius: 5px;
+        margin: 2% auto;
+        padding-top: 25%;
+        padding-bottom: 30%;
+    
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .big_card:hover {
+        background-color: white;
+    }
+
+    .small_card {
+        padding-top: 15%;
+        padding-bottom: 20%;
+    }
+
+    .progress_line {
+        padding: 10px 0px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 1124px) {
+    .card_row {
+        display: flex;
+        width: 96%;
+        margin: 2% 2%;
+    }
+
+    .small_card {
+        padding-top: 5%;
+        padding-bottom: 5%;
+
+        width: 22%;
+    }
+}
