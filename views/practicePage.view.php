@@ -44,7 +44,9 @@
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
     <link href="./views/css/body.css" rel="stylesheet" type="text/css">
     <link href="./views/css/practicePage.css" rel="stylesheet" type="text/css">
-    <link href="./views/css/cards.css" rel="stylesheet" type="text/css">
+    <?php if(!isset($_SESSION["topic"]) || (isset($_SESSION["topic"]) && $_SESSION["topic"] == "")):?>
+        <link href="./views/css/cards.css" rel="stylesheet" type="text/css">
+    <?php endif?>
     <title><?=$subject_id?> gyakorlás</title>
 </head>
 <body>

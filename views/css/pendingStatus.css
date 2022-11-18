@@ -1,0 +1,49 @@
+/*Pending table styles for administrator*/
+
+#pending_form table, #student_handling_form table {
+    border-collapse: collapse;
+    width: 92%;
+    margin: 2% 4% auto 4%;
+}
+
+th, td {
+    text-align: left;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+}
+
+th:last-of-type, td:last-of-type{
+    text-align: right;
+    padding-right: 2%;
+}
+
+tr:nth-child(even) {
+    background-color:rgba(227, 227, 227, 0.73);
+}
+
+.finalize_button {
+    border: 1px solid black;
+    border-radius: 50px;
+    min-width: 12%;
+    margin-top: 2%;
+    right: 4%;
+    position: absolute;
+    background-color: white;
+}
+
+.finalize_button:hover {
+    border-color: rgb(153, 218, 149);
+}
+
+@media only screen and (max-width: 836px) {
+    .finalize_button {
+        width: 25%;
+    }
+}
+
+@media only screen and (min-width: 836px) and (max-width: 1024px) {
+    .finalize_button {
+        width: 18%;
+    }
+}

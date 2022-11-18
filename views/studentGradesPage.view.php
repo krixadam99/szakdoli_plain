@@ -43,6 +43,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
     <link href="./views/css/body.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/notifications.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/studentGrades.css" rel="stylesheet" type="text/css">
     <title>Diákok eredményeinek kezelése</title>
 </head>
 <body>

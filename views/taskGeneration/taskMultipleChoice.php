@@ -9,7 +9,7 @@
                     <label class="pdf_page_task_choice_label" style="width: 12%; margin: auto 2% auto 0%">Altéma:</label>
                     <input value="<?=$sub_topics[$topic_counter][0]?>" style="width:20%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" class="subtopic_input" name="main_topic_<?=$topic_counter?>_subtopic_0" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>
                     <label class="pdf_page_task_choice_label" style="width: 20%; margin: 0% 0% 0% 2%">Hány feladat legyen generálva:</label>
-                    <input type="number" min="1" max="20" step="1" placeholder="4" style="width:9%; margin:0% auto 0% 1%" name="main_topic_<?=$topic_counter?>_subtopic_0_task_quantity" value="<?=isset($_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"])?$_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"]:"4"?>">
+                    <input type="number" min="1" max="20" class="task_quantity_input" step="1" placeholder="4" style="width:9%; margin:0% auto 0% 1%" name="main_topic_<?=$topic_counter?>_subtopic_0_task_quantity" value="<?=isset($_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"])?$_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"]:"4"?>">
                 <?php elseif(count($sub_topics[$topic_counter]) > 1):?>
                     <?php for($subtopic_counter = 0; $subtopic_counter < count($sub_topics[$topic_counter]); $subtopic_counter++):?>
                         <div style="display:flex; margin: 1% 0%">
@@ -21,7 +21,7 @@
                             <label style="width: auto;margin: auto auto auto 1%" for="checkbox_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>"><?=$sub_topics[$topic_counter][$subtopic_counter]?></label>
                             <label class="pdf_page_task_choice_label" style="width: 20%; margin: auto 0% auto auto">Hány feladat legyen generálva:</label>
                             
-                            <input type="number" min="1" max="20" step="1" placeholder="4" style="width:9%; margin: auto 0% auto 1%" name="main_topic_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>_task_quantity" 
+                            <input type="number" min="1" max="20" step="1" placeholder="4" class="task_quantity_input" style="width:9%; margin: auto 0% auto 1%" name="main_topic_<?=$topic_counter?>_subtopic_<?=$subtopic_counter?>_task_quantity" 
                             value="<?=isset($_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_$subtopic_counter" . "_task_quantity"]) && $topic_counter == $_SESSION["preview"]["main_topic"]??""?$_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_$subtopic_counter" . "_task_quantity"]:"4"?>">
                         </div>
                     <?php endfor?>

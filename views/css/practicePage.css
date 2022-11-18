@@ -55,15 +55,15 @@
 }
 
 .bottom_triangle {
-    border-bottom: 15px solid rgba(94, 85, 73, 0.5); 
-    border-left: 10px solid white; 
-    border-right: 10px solid white; 
+    border-bottom: calc(10px + 0.4vw) solid rgba(94, 85, 73, 0.5); 
+    border-left: calc(7px + 0.01vw) solid white; 
+    border-right: calc(7px + 0.05vw) solid white; 
 }
 
 .top_triangle {
-    border-top: 15px solid rgba(94, 85, 73, 0.5); 
-    border-left: 10px solid white; 
-    border-right: 10px solid white; 
+    border-top: calc(10px + 0.4vw) solid rgba(94, 85, 73, 0.5); 
+    border-left: calc(7px + 0.05vw) solid white;
+    border-right: calc(7px + 0.05vw) solid white; 
 }
 
 .definition_label::selection {
@@ -285,6 +285,28 @@ ul {
     font-size:smaller;
 }
 
+.level_container .level_bar{
+    width: 30%;
+    margin: 0% 5% 0% 0%;
+    height: 100%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.level_container .level_counter{
+    width: 15%;
+    margin: 0% 0% 0% 50%;
+}
+
+.progress_line {
+    background-color: rgb(78, 203, 78);
+    height: 100%;
+    margin: auto auto auto 0%;
+    border-radius: 5px;
+
+}
+
 @media only screen and (max-width: 576px) {
     .practice_container {
         flex-direction: column;
@@ -301,5 +323,11 @@ ul {
 
     .definition_holder:last-of-type{
         margin-bottom: 10%;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .show_button{
+        width: auto;
     }
 }

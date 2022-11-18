@@ -3,42 +3,8 @@
     font-size: calc(12px + 0.3vw);
 }
 
-/*Pending table styles for administrator*/
-
-#pending_form table, #student_handling_form table {
-    border-collapse: collapse;
-    width: 92%;
-    margin: 2% 4% auto 4%;
-}
-
-th, td {
-    text-align: left;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 1%;
-}
-
-th:last-of-type, td:last-of-type{
-    text-align: right;
-    padding-right: 2%;
-}
-
-tr:nth-child(even) {
-    background-color:rgba(227, 227, 227, 0.73);
-}
-
-.finalize_button {
-    border: 1px solid black;
-    border-radius: 50px;
-    width: auto;
-    margin-top: 2%;
-    right: 4%;
-    position: absolute;
-    background-color: white;
-}
-
-.finalize_button:hover {
-    border-color: rgb(153, 218, 149);
+input, select {
+    outline: none;
 }
 
 /*Main content styles*/
@@ -65,102 +31,7 @@ select#group_selector {
     margin: 0% auto 0% 4%;
 }
 
-/*Practice page content*/
-
-.prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
-    border-collapse: collapse;
-}
-
-.prime_factorization_table td:first-of-type, .eucleidan_solution_table td:first-of-type{
-    border-right: 1px solid black;
-    padding-right: 10px;
-}
-
-.prime_factorization_table td:last-of-type{
-    padding-left: 2px;
-    
-}
-
-.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th, .stair_table td {
-    width: 2%;
-    white-space: nowrap;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    text-align: center;
-}
-
-
-.eucleidan_solution_table tr:first-of-type {
-    border-bottom: 1px solid black;
-}
-
-/* Students' grades page */
-
-.student_grades_form {
-    width: 92%;
-    margin: 3% 4% 1% 4%
-}
-
-.student_grades_form hr {
-    margin: 1% 0% 0% 0%
-}
-
-.student_grades_form table {
-    border-collapse: collapse;
-    width: 80%;
-}
-
-#grades_form table {
-    width: 180%;
-}
-
-.student_grades_form table tr {
-    border-top: 1px solid black;
-}
-
-.student_grades_form tr:first-of-type {
-    border-top: 0px;
-}
-
-.student_grades_form table td,
-.student_grades_form table th  {
-    text-align: left;
-    padding: 10px;
-    white-space: nowrap;
-}
-.student_grades_form table th {
-    border-left: 1px dashed black;   
-}
-
-.student_grades_form table th:first-of-type  {
-    border-left: 0px;
-}
-
-.student_grades_form input,
-.student_grades_form select,
-.student_grades_form td.empty_td {
-    width: 90%;
-    padding: 10px 5%;
-    border: 0px;
-    border-left: 1px dashed black;
-    background-color: rgba(251, 249, 249, 0);
-}
-
-.student_grades_form select {
-    width: 100%;
-}
-
-.student_grades_form input:focus{
-    outline: none;
-}
-
-.student_grades_form .finalize_button {
-    width: 10%;
-    margin: 2% 45%;
-    right: 0%;
-    position: relative;
-    background-color: white;
-}
+/* Non-header navigation row */
 
 #non_header_navigation_row {
     display: flex;
@@ -190,46 +61,32 @@ select#group_selector {
     background-color: #f5d3aacc;
 }
 
-/* Grades styles */
+/*Practice page content*/
 
-.grades_div {
-    width: 92%;
-    margin: 3% 4% 1% 4%;
-}
-
-.grades_div hr {
-    margin: 1% 0% 0% 0%
-}
-
-.grades_tables_div {
-    display: flex;
-}
-
-.grades_tables_div table {
+.prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
     border-collapse: collapse;
-    width: 40%;
-    margin: 3% auto auto auto;
 }
 
-.grades_tables_div table tr {
-    border-top: 1px solid black;
+.prime_factorization_table td:first-of-type, .eucleidan_solution_table td:first-of-type{
+    border-right: 1px solid black;
+    padding-right: 10px;
 }
 
-.grades_tables_div tr:first-of-type {
-    border-top: 0px;
+.prime_factorization_table td:last-of-type{
+    padding-left: 2px;
+    
 }
 
-.grades_tables_div table td,
-.grades_tables_div table th  {
-    text-align: left;
-    padding: 10px;
+.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th, .stair_table td {
+    width: 2%;
     white-space: nowrap;
-    border-left: 1px dashed black;   
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: center;
 }
 
-.grades_tables_div table th:first-of-type,
-.grades_tables_div table td:first-of-type  {
-    border-left: 0px;
+.eucleidan_solution_table tr:first-of-type {
+    border-bottom: 1px solid black;
 }
 
 @keyframes moving_symbols {

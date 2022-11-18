@@ -62,6 +62,22 @@
     margin: 2% 40% 5% 40%;
 }
 
+#generator_button:hover,
+#new_task_generator_button:hover,
+#save_pdf_button:hover,
+.big_exam_button:hover{
+    border-color:rgba(116, 240, 122, 0.774);
+}
+
+.remove_task_buttons:hover{
+    border-color:rgba(240, 116, 116, 0.774);
+}
+
+.task_quantity_input {
+    border-radius:5px;
+    border: 1px solid rgb(150, 147, 147)
+}
+
 @media only screen and (max-width: 576px) {
     .pdf_page_section_label{
         font-size: calc(12px + 0.3vw);
@@ -98,7 +114,6 @@
         font-size: calc(10px + 0.3vw);
     }
 }
-
 
 @media only screen and (min-width: 576px) and (max-width: 1224px) {
     .big_exam_button {

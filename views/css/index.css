@@ -26,10 +26,10 @@ header {
 #sign_in_button {
     position: absolute;
     top: 50%;
-    left: 45%;
-    width: 10%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    left: 43%;
+    width: 14%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     border-radius: 50px;
     border: 2px solid rgb(234, 175, 98);
     text-align: center;

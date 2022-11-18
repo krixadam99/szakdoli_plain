@@ -469,7 +469,7 @@
                     </div>
                     <div class="pdf_page_section" style="margin-top:5%">
                         <label style="width: 12%; margin: auto 2% auto 0%">Generálandó mennyiség (egységesen):</label>
-                        <input type="number" min="1" max="20" step="1" placeholder="4" style="width:9%; margin:0% auto 0% 1%" name="task_quantity" value="<?=isset($_SESSION["preview"]["task_quantity"])?$_SESSION["preview"]["task_quantity"]:"4"?>">
+                        <input type="number" min="1" max="20" step="1" placeholder="4" class="task_quantity_input" style="width:9%; margin:0% auto 0% 1%" name="task_quantity" value="<?=isset($_SESSION["preview"]["task_quantity"])?$_SESSION["preview"]["task_quantity"]:"4"?>">
                     </div>
                 <?php elseif($_SESSION["exam_type"] === "small"):?>
                     <div class="pdf_page_section">
