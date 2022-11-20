@@ -7,7 +7,6 @@
      * If someone navigates to the practice page, however they are not a student, then this controller redirects them to the notifications page.
     */
     class PracticeController extends MainContentController{
-        private $task_evaluator;
         private $practice_model;
 
         /**

@@ -7,6 +7,8 @@
      * If someone navigates to the students' grades' page, however they are not a teacher, then this controller redirects them to the notifications page.
     */
     class StudentGradesController extends MainContentController{        
+        private $student_grades_model;
+
         /**
          * 
          * The contructor of the StudentGradesController class.
@@ -17,6 +19,7 @@
          */
         public function __construct(){
             parent::__construct();
+            $this->student_grades_model = new StudentGradesModel();
         }
         
         /**
@@ -38,12 +41,10 @@
                     &&  isset($_SESSION["group"])
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
-                    $model = new StudentGradesModel();
-                
-                    $students_grades = $model->GetResults($_SESSION["subject"], $_SESSION["group"]);
-                    $expectation_rules = $model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
-                    $task_due_dates = $model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
-                    $grade_levels = $model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
+                    $students_grades = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
+                    $expectation_rules = $this->student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
+                    $task_due_dates = $this->student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
+                    $grade_levels = $this->student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
 
                     $expectation_rules_tmp = [];
                     foreach($expectation_rules as $expectation_rule){
@@ -88,9 +89,8 @@
                             $new_results[$neptun] = array($key => $value);
                         }
                     }
-                
-                    $student_grades_model = new StudentGradesModel();
-                    $original_user_results = $student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
+            
+                    $original_user_results = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_user_results as $index => $original_record){
                         if(isset($new_results[$original_record["neptun_code"]])){
@@ -120,7 +120,7 @@
                         }
                     }
 
-                    $student_grades_model->UpdateResults($query_array);
+                    $this->student_grades_model->UpdateResults($query_array);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -174,8 +174,7 @@
                         }
                     }
                 
-                    $student_grades_model = new StudentGradesModel();
-                    $original_expectation_rules = $student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
+                    $original_expectation_rules = $this->student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_expectation_rules as $index => $original_expectation_rule){
                         $task_type = $original_expectation_rule["task_type"];
@@ -221,7 +220,7 @@
                         }
                     }
 
-                    $student_grades_model->UpdateExpectationRules($query_array);
+                    $this->student_grades_model->UpdateExpectationRules($query_array);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
 
@@ -263,8 +262,7 @@
                         }
                     }
                 
-                    $student_grades_model = new StudentGradesModel();
-                    $original_due_dates = $student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
+                    $original_due_dates = $this->student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_due_dates as $index => $original_due_date){
                         $task_type = $original_due_date["task_type"];
@@ -287,7 +285,7 @@
                         }
                     }
 
-                    $student_grades_model->UpdateTaskDueDates($query_array);
+                    $this->student_grades_model->UpdateTaskDueDates($query_array);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
 
@@ -317,8 +315,7 @@
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
                 
-                    $student_grades_model = new StudentGradesModel();
-                    $original_grade_points = $student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
+                    $original_grade_points = $this->student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
                     
                     $pass_level_point = $_POST["pass_level_point"]??$original_grade_points["pass_level_point"];
                     $satisfactory_level_point = $_POST["satisfactory_level_point"]??$original_grade_points["satisfactory_level_point"];
@@ -361,7 +358,7 @@
                     WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$current_subject\"
                     AND group_number = \"$current_group\");";
 
-                    $student_grades_model->UpdataDatabase($query);
+                    $this->student_grades_model->UpdataDatabase($query);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
 

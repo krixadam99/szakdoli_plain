@@ -7,6 +7,8 @@
      * If someone navigates to the grades page, however they are not a student, then this controller redirects them to the notifications page.
     */
     class GradesController extends MainContentController{        
+        private $grades_model;
+        
         /**
          * 
          * The contructor of the GradesController class.
@@ -17,7 +19,7 @@
          */
         public function __construct(){
             parent::__construct();
-            
+            $this->grades_model = new GradesModel();
         }
         
         /**
@@ -37,14 +39,13 @@
 
                 //Only students can see this page, otherwise, the user will be redirected to the notifications page
                 if($this->GetApprovedStudentSubject() != ""){
-                    $model = new GradesModel();
                     $approved_subject_group = $this->approved_student_group;
                     $approved_subject_id = $this->approved_student_subject;
 
-                    $results = $model->GetResults($_SESSION["neptun_code"])[0]??[];
+                    $results = $this->grades_model->GetResults($_SESSION["neptun_code"])[0]??[];
                     
                     $practice_points = [];
-                    $practice_results = $model->GetPracticeResults($this->neptun_code)[0]??[];
+                    $practice_results = $this->grades_model->GetPracticeResults($this->neptun_code)[0]??[];
                     foreach($practice_results as $key => $value){
                         if(is_int(strpos($key, "practice_task"))){
                             $practice_points[$key] = $value;
@@ -52,9 +53,9 @@
                     }               
                     
                     // Data related to results
-                    $task_expectations = $model->GetExpectationRules($approved_subject_id, $approved_subject_group); 
-                    $task_due_dates = $model->GetTaskDueDate($approved_subject_id, $approved_subject_group); 
-                    $grade_table = $model->GetGradeLevels($approved_subject_id, $approved_subject_group)[0]??[]; 
+                    $task_expectations = $this->grades_model->GetExpectationRules($approved_subject_id, $approved_subject_group); 
+                    $task_due_dates = $this->grades_model->GetTaskDueDate($approved_subject_id, $approved_subject_group); 
+                    $grade_table = $this->grades_model->GetGradeLevels($approved_subject_id, $approved_subject_group)[0]??[]; 
 
                     include(ROOT_DIRECTORY . "/views/gradesPage.view.php");
                 }else{

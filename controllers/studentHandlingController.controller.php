@@ -7,6 +7,8 @@
      * If someone navigates to the student handling page, however they are not a teacher, then this controller redirects them to the notifications page.
     */
     class StudentHandlingController extends MainContentController{
+        private $student_handler_model;
+        
         /**
          * 
          * The contructor of the StudentHandlingController class.
@@ -17,6 +19,7 @@
         */
         public function __construct(){
             parent::__construct();
+            $this->student_handler_model = new StudentHandlingModel();
         }
         
         /**
@@ -34,11 +37,9 @@
                 $this->SetMembers();
                 //Only teachers can see this page, others will be redirected to the notifications page
                 if(count($this->approved_teacher_groups) != 0){
-                    $student_handler_model = new StudentHandlingModel();
-
                     $all_students = [];
                     foreach($this->approved_teacher_groups as $group_counter => $group_id_pair){
-                        $pending_students_per_subject_group = $student_handler_model->GetStudents($group_id_pair["subject_id"], $group_id_pair["subject_group"]);
+                        $pending_students_per_subject_group = $this->student_handler_model->GetStudents($group_id_pair["subject_id"], $group_id_pair["subject_group"]);
                         array_push($all_students, array("subject_id" => $group_id_pair["subject_id"], "subject_group" => $group_id_pair["subject_group"], "users" => array_values($pending_students_per_subject_group)));
                     }
 
@@ -76,8 +77,7 @@
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
                 
-                    $student_handler_model = new StudentHandlingModel();
-                
+                    
                     $decision_array = array();
                     foreach($_POST as $key => $value){
                         $neptun = $key;
@@ -94,7 +94,7 @@
                     }
                     
                     // Getting the students belonging to the user
-                    $original_user_information = $student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
+                    $original_user_information = $this->student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_user_information as $index => $original_record){
                         $neptun = $original_record["neptun_code"];
@@ -109,7 +109,7 @@
                         }
                     }
     
-                    $student_handler_model->UpdatePendingStudents($query_array);
+                    $this->student_handler_model->UpdatePendingStudents($query_array);
                     
                     header("Location: ./index.php?site=studentHandling&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{

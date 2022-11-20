@@ -7,7 +7,6 @@
     class RegistrationController extends FormValidator{        
         private $dimat_i_groups;
         private $dimat_ii_groups;
-        private $user_handler;
         private $registration_model;
 
         /**
