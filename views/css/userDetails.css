@@ -1,0 +1,81 @@
+#group_addition_form select{
+    margin: 1% auto 2% 0%;
+    width: 40%;
+    height: 2%;
+    text-align: left;
+    color:black;
+    outline: none;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    padding-left: 2%;
+    border: 1px solid rgb(134, 132, 132);
+}
+
+.label_div {
+    margin: 2% auto 1% auto;
+}
+
+.apply_button {
+    margin: 3% 85% 4% 0%;
+    width: 15%;
+    height: 2%;
+    text-align: center;
+    border: 1px solid black;
+    background-color:white;
+    outline: none;
+    color:black;
+    border-radius: 10px;
+}
+
+.apply_button:hover{
+    border-color:rgba(116, 240, 122, 0.774);
+}
+
+
+#user_details_editing_form {
+    margin: 2% 4%;
+    width: 92%;
+}
+
+.password_row{
+    width: 40%;
+    display: flex;
+    margin: 0% auto 0% 0%;
+}
+
+#user_password,
+#user_password_again,
+#user_email {
+    width: 40%;
+    margin: 0%;
+    height: 2%;
+    text-align: left;
+    color:rgb(134, 132, 132);
+    outline: none;
+    border-radius: 50px;
+    padding: 1px 1px 1px 15px;
+    border: 1px solid rgb(134, 132, 132);
+}
+
+#user_password_again,
+#user_password {
+    width: 90%;
+}
+
+#show_password_image_first, #show_password_image_second{
+    width: calc(5% + 0.3vw);
+    margin: auto;
+    background-color:rgba(255, 255, 255, 0);
+    border: 0px;
+}
+
+@media only screen and (max-width: 876px) {
+    .apply_button {
+        width: 20%;
+        margin: 3% 80% 4% 0%;
+    }
+
+    .password_row, #user_email{
+        width: 80%;
+    }
+}

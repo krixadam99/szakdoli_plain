@@ -1,10 +1,10 @@
 <?php
-
     $messages_belonging_to_message_id = [];
     if(isset($_SESSION["message_id"])){
         $message_id = $_SESSION["message_id"];
         
         $is_altered = false;
+        // Find a message, that belongs to the message with the given message id
         foreach($incame_messages as $message_counter => $message){
             if($message["message_id"] === $message_id && $message["belongs_to"] != 0){
                 $message_id = $message["belongs_to"];
@@ -69,7 +69,6 @@
                         $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
                     }else{
                         if(intval($message["thread_count"]) > $final_messages[$message["belongs_to"]]["thread"]){
-                            
                             $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
                         }
                     }
@@ -82,6 +81,8 @@
                 $message = $thread_message["message"];
                 $thread_count = $thread_message["thread"];
                 if($message["neptun_code_from"] == $_SESSION["neptun_code"]){
+                    
+
                     array_push($sent_messages, ["message" => $message, "thread_count" =>$thread_count]);
                 }else{
                     array_push($incame_messages, ["message" => $message, "thread_count" =>$thread_count]);
@@ -90,6 +91,9 @@
         }
     }
 
+    $incorrect_parameters = $this->GetIncorrectParameters();
+    $correct_parameters = $this->GetCorrectParameters();
+    $error_params = array_keys($incorrect_parameters);
 ?>
 
 <!DOCTYPE html>
@@ -272,10 +276,16 @@
                     </div>
                 </div>
             <?php endforeach?>
-            <div id="reply_div" style="display:none">
-                <?php include("./partials/newMessage.php")?>
-            </div>
-            <button id="reply_button">Válasz</button>
+            <?php if($messages_belonging_to_message_id[0]["is_removed_by_receiver"] !== "1" && $messages_belonging_to_message_id[0]["is_removed_by_sender"] !== "1"):?>
+                <div id="reply_div" style="display:none">
+                    <?php include("./partials/newMessage.php")?>
+                </div>
+                <button id="reply_button">Válasz</button>
+            <?php else:?>
+                <div class="notification_box">
+                    <label>Nem tud válaszolni az üzenetre!</label>
+                </div>
+            <?php endif?>
         <?php endif?>
     <?php else:?>
         <?php include("./partials/newMessage.php")?>

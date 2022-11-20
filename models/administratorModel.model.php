@@ -46,6 +46,9 @@
                 $subject_id = $record["subject_id"];
                 $pending_status = $record["application_request_status"];
 
+                $query .= "UPDATE user_status SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" 
+                AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); "; 
+
                 // Whithdraw from subjects if approved
                 if($pending_status === "APPROVED"){
                     if($subject_id === "i"){
@@ -55,8 +58,6 @@
                     }
 
                     $query .= "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
-                    $query .= "UPDATE user_status SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" 
-                    AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); "; 
                     
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"practice_count\") ON DUPLICATE KEY UPDATE task_type = \"practice_count\";"; 
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"extra\") ON DUPLICATE KEY UPDATE task_type = \"extra\";"; 
@@ -92,6 +93,11 @@
                     $query .= "INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"practice_task_10\") ON DUPLICATE KEY UPDATE task_type = \"practice_task_10\";";
                     
                     $query .= "INSERT INTO grade_table(subject_group_id) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\");";
+                }else if($pending_status === "DENIED"){
+                    $approved_teacher_for_subject_group = $this->database->LoadDataFromDatabase("SELECT neptun_code FROM user_status WHERE application_request_status = \"APPROVED\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")");
+                    if(count($approved_teacher_for_subject_group) === 0){
+                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE is_teacher = \"0\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\");";
+                    }
                 }
             }
             $query .= "COMMIT;";

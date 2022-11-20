@@ -21,7 +21,7 @@ function change_eyes(element){
 // Variables
 let back_button = document.querySelector("#back_button")
 let user_status = document.querySelector("#user_status")
-let subject_name = document.querySelector("#subject_name")
+let subject_name = document.querySelector("#subject_id")
 let inputs = document.querySelectorAll("input")
 let show_password_image_first = document.querySelector("#show_password_image_first")
 let show_password_image_second = document.querySelector("#show_password_image_second")

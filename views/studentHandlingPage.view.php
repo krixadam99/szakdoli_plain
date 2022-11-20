@@ -1,10 +1,4 @@
 <?php    
-    $approved_teacher_groups = $this->GetApprovedTeacherGroups();
-    $approved_teacher_groups_per_subject = [];
-    if(!isset($_SESSION["subject"]) && !isset($_SESSION["group"])){
-        header("Location: ./index.php");
-    }
-
     $students = [];
     foreach($all_students as $index => $students_per_subjects_per_group){
         if($students_per_subjects_per_group["subject_id"] === $_SESSION["subject"] && $students_per_subjects_per_group["subject_group"] === $_SESSION["group"]){

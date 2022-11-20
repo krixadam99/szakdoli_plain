@@ -2,14 +2,14 @@
     /**
      * This is a model class which is responsible for adding a new user to the users table. Additionally it should add them to the user_status table as well.
      * 
-     * This model extends the MainModel class.
+     * This model extends the AuthenticationModel class.
     */
-    class RegistrationModel extends MainModel{
+    class RegistrationModel extends AuthenticationModel{
         /**
          * 
          * The contructor of the RegistrationModel class.
          * 
-         * It will call the MainModel class's constructor with which it will assign default values to the inherited members.
+         * It will call the AuthenticationModel class's constructor with which it will assign default values to the inherited members.
          * 
          * @return void
          */
@@ -47,15 +47,16 @@
                 $user_status = 0;
             }
 
-            if($subject_group === "-"){
-                $subject_group = 0;
+            if($subject_group !== "0"){
+                $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
+                $this->database->UpdateDatabase($query);
+    
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
+                , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
+            }else{
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\")
+                , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
             }
-
-            $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
-            $this->database->UpdateDatabase($query);
-
-            $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
-            , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
             
             return $this->database->UpdateDatabase($query);
         }

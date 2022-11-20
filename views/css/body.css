@@ -7,6 +7,15 @@ input, select {
     outline: none;
 }
 
+/*Form general data */
+
+.error_label {
+    color: red;
+    margin: 0% auto 2% auto;
+    width: 82%;
+    text-align: left;
+}
+
 /*Main content styles*/
 h1 {
     font-weight: normal;
@@ -21,6 +30,22 @@ hr {
     margin-right: 4%;
     border: 0px;
     border-top: 2px solid rgb(223, 200, 172);
+}
+
+/*Notifications style*/
+.notification_box{
+    border-radius: 25px;
+    border: 1px solid black;
+    padding-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 1% 4%;
+    background-color:#f6f2ed5b;
+}
+
+.notification_box label{
+    color:rgb(84, 84, 84);
+    font-size: calc(12px + 0.3vw);
 }
 
 /*Group selector for student handling, student grades etc.*/

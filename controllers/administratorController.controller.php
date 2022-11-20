@@ -9,6 +9,7 @@
     */
     class AdministratorController extends MainContentController{
         private $pending_teachers;
+        private $administrator_model;
         
         /**
          * 
@@ -21,6 +22,7 @@
         public function __construct(){
             parent::__construct();
             $this->pending_teachers = [];
+            $this->administrator_model = new AdministratorModel();
         }
         
         /**
@@ -36,8 +38,7 @@
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 if($this->is_administrator){ // Only the administrator(s) can see this page 
-                    $administrator_model = new AdministratorModel();
-                    $pending_teachers = $administrator_model->GetPendingTeachers();
+                    $this->pending_teachers = $this->administrator_model->GetPendingTeachers();
 
                     include(ROOT_DIRECTORY . "/views/demonstratorHandlingPage.view.php");
                 }else{
@@ -59,9 +60,7 @@
         */
         public function FinalizePending(){    
             if(isset($_SESSION["neptun_code"])){                
-                if($_SESSION["neptun_code"] == "admin"){
-                    $administrator_model = new AdministratorModel();
-                
+                if($_SESSION["neptun_code"] == "ADMIN"){
                     // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
@@ -80,7 +79,7 @@
                     }
                     
                     // Comparing the new pending values to the old ones
-                    $original_user_information = $administrator_model->GetPendingTeachers();
+                    $original_user_information = $this->administrator_model->GetPendingTeachers();
                     $query_array = array();
                     foreach($original_user_information as $index => $pending_status){
                         $neptun = $pending_status["neptun_code"];
@@ -94,12 +93,12 @@
                             array_push($query_array, array("neptun_code" => $neptun, "group_number" => $pending_status["group_number"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
                         }
                     }
-                
-                    $administrator_model->UpdatePendingTeachers($query_array);
+
+                    $this->administrator_model->UpdatePendingTeachers($query_array);
     
                     header("Location: ./index.php?site=demonstratorHandling");
                 }else{
-                    header("Location: ./index.php?site=notifications"); 
+                    header("Location: ./index.php?site=login"); 
                 }
             }else{
                 header("Location: ./index.php?site=login");

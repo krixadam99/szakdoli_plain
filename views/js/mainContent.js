@@ -28,8 +28,10 @@ function ChangeAttributeInURL(parameter, new_value){
 // Variables
 let logout_button = document.querySelector("#sign_out_button")
 let notifications_button =  document.getElementById("notifications_button")
+let demonstrator_handling_button = document.getElementById("demonstrator_handling_button")
 let messages_button =  document.getElementById("messages_button")
 let group_addition_button =  document.getElementById("group_addition_button")
+let user_setting_button =  document.getElementById("user_setting_button")
 let nav_buttons = document.querySelectorAll("nav")
 let nav_button_number = nav_buttons.length
 let solution_inputs = document.querySelectorAll(".solution_input")
@@ -50,6 +52,12 @@ if(notifications_button){
     })
 }
 
+if(demonstrator_handling_button){
+    demonstrator_handling_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=demonstratorHandling"
+    })
+}
+
 if(messages_button){
     messages_button.addEventListener("click", ()=>{
         window.location = "./index.php?site=messages"
@@ -59,6 +67,12 @@ if(messages_button){
 if(group_addition_button){
     group_addition_button.addEventListener("click", ()=>{
         window.location = "./index.php?site=groupAddition"
+    })
+}
+
+if(user_setting_button){
+    user_setting_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=personalInformation"
     })
 }
 
@@ -133,7 +147,7 @@ if(body){
     for(let small_card of small_cards){
         small_card.addEventListener("mouseenter", ()=>{
             body.style["background-color"] = "#96979a"
-            body.style.transition = "0.5s"
+            body.style.transition = "0.2s"
            
             small_cards.forEach((element)=>{
                 if(element != small_card){
@@ -154,7 +168,7 @@ if(body){
 
         small_card.addEventListener("mouseleave", ()=>{
             body.style["background-color"] = "white"
-            body.style.transition = "0.5s"
+            body.style.transition = "0.2s"
 
             small_card.style["background-color"] = "inherit"
             

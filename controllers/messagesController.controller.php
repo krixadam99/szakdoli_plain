@@ -88,36 +88,30 @@
 
                 $this->ValidateInputs(
                     [
-                        $_POST["message_to"]??-1 => [
+                        "message_to:címzett" => array($_POST["message_to"]??-1 => [
                             "in_array" => $neptun_codes
-                        ],
-                        $_POST["message_topic"]??-2 => [
+                        ]),
+                        "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
                             "not_placeholder" => ["","Üzenet témája..."],
                             "length" => ["<=","255"]
-                        ],
-                        $_POST["message_text"]??-3 => [
+                        ]),
+                        "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
                             "not_placeholder" => ["","Üzenet szövege..."],
                             "length" => ["<=","2024"]
-                        ]
+                        ])
                     ]
                 );
                 
                 if(count($this->incorrect_parameters) !== 0){
-                    $_SESSION["incorrect_parameters"] = $this->incorrect_parameters;
-                    $_SESSION["correct_parameters"] = $this->correct_parameters;
-                    header("Location: ./index.php?site=writeMessage");
+                    $this->WriteMessage();
                 }else{
                     $new_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, message_topic, message_text) VALUES(
-                        \"" . $_SESSION["neptun_code"] . "\", 
-                        \"" . $_POST["message_to"] . "\", 
+                        \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
+                        \"" . strtoupper($_POST["message_to"]) . "\", 
                         \"" . $_POST["message_topic"] . "\", 
                         \"" . $_POST["message_text"] . "\"
                     )";
-
-                    var_dump($new_message_query);
-
                     $this->message_model->UpdataDatabase($new_message_query);
-
                     header("Location: ./index.php?site=messages");
                 }
             }else{
@@ -139,33 +133,48 @@
                 if(isset($_SESSION["message_id"]) && $_SESSION["thread_count_new"] && $_SESSION["neptun_code_to"]){
                     $this->ValidateInputs(
                         [
-                            $_POST["message_topic"]??-2 => [
+                            "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
                                 "not_placeholder" => ["","Üzenet témája..."],
                                 "length" => ["<=","255"]
-                            ],
-                            $_POST["message_text"]??-3 => [
+                            ]),
+                            "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
                                 "not_placeholder" => ["","Üzenet szövege..."],
                                 "length" => ["<=","2024"]
-                            ]
+                            ])
                         ]
                     );
                     
                     if(count($this->incorrect_parameters) !== 0){
-                        $_SESSION["incorrect_parameters"] = $this->incorrect_parameters;
-                        $_SESSION["correct_parameters"] = $this->correct_parameters;
-                        header("Location: ./index.php?site=messages&messageId=" . $_SESSION["message_id"]);
+                        $this->Messages();
                     }else{
-                        $reply_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count) VALUES(
-                            \"" . $_SESSION["neptun_code"] . "\", 
-                            \"" . $_SESSION["neptun_code_to"] . "\", 
-                            \"" . $_SESSION["message_id"] . "\", 
-                            \"" . $_POST["message_topic"] . "\",
-                            \"" . $_POST["message_text"] . "\",
-                            \"" . $_SESSION["thread_count_new"] . "\"
-                        )";
+                        $message_with_id = $this->message_model->GetMessagesWithId($_SESSION["message_id"]);
+                        if($message_with_id["belongs_to"] >= 0){
+                            $is_removed_by_receiver = "0";
+                            $is_removed_by_sender = "0";
+                            if($message_with_id["belongs_to"] == "0"){
+                                $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
+                                $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
+                            }else{
+                                $message_with_id = $this->message_model->GetMessagesWithId($message_with_id["belongs_to"]);
+                                $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
+                                $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
+                            }
     
-                        $this->message_model->UpdataDatabase($reply_message_query);
-    
+                            if($is_removed_by_receiver === "0" && $is_removed_by_sender === "0"){
+                                $reply_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count, is_removed_by_receiver) VALUES(
+                                    \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
+                                    \"" . strtoupper($_SESSION["neptun_code_to"]) . "\", 
+                                    \"" . $_SESSION["message_id"] . "\", 
+                                    \"" . $_POST["message_topic"] . "\",
+                                    \"" . $_POST["message_text"] . "\",
+                                    \"" . $_SESSION["thread_count_new"] . "\",
+                                    \"" . $is_removed_by_receiver . "\"
+                                )";
+            
+                                $this->message_model->UpdataDatabase($reply_message_query);
+                            }
+                        } 
+
                         header("Location: ./index.php?site=messages");
                     }
                 }else{

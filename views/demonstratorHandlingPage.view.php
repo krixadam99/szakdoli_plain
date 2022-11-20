@@ -1,3 +1,9 @@
+<?php
+
+    $pending_teachers = $this->pending_teachers;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./views/css/header.css" rel="stylesheet" type="text/css">
     <link href="./views/css/body.css" rel="stylesheet" type="text/css">
+    <link href="./views/css/pendingStatus.css" rel="stylesheet" type="text/css">
     <title>Demonstrátorok kezelése</title>
 </head>
 <body>
@@ -40,7 +47,7 @@
                 <button type="submit" class="finalize_button">VÉGLEGESÍTÉS</button>
             </form>
         <?php else:?>
-            <div id="notification_box">
+            <div class="notification_box">
                 <label>Nincsen elbírálás allatt álló tanár!</label>
             </div>
         <?php endif?>

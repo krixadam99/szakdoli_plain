@@ -91,7 +91,8 @@
     $controller_connection->GetMethodConnection("messages", "MessagesController", "Messages");
     $controller_connection->GetMethodConnection("writeMessage", "MessagesController", "WriteMessage");
 
-    $controller_connection->GetMethodConnection("groupAddition", "GroupAdditionController", "GroupAddition");
+    $controller_connection->GetMethodConnection("groupAddition", "UserDetailsController", "GroupAddition");
+    $controller_connection->GetMethodConnection("personalInformation", "UserDetailsController", "PersonalInformation");
 
     $controller_connection->GetMethodConnection("taskGeneration", "TaskGenerationController", "TaskGeneration");
     $controller_connection->GetMethodConnection("printPage", "TaskGenerationController", "PrintPage");
@@ -117,7 +118,8 @@
     $controller_connection->PostMethodConnection("deleteMessages", "MessagesController", "DeleteMessages");
     $controller_connection->PostMethodConnection("recoverDeletedMessages", "MessagesController", "RecoverDeletedMessages");
 
-    $controller_connection->PostMethodConnection("validateGroupAddition", "GroupAdditionController", "ValidateGroupAddition");
+    $controller_connection->PostMethodConnection("validateGroupAddition", "UserDetailsController", "ValidateGroupAddition");
+    $controller_connection->PostMethodConnection("validateNewUserInformation", "UserDetailsController", "ValidateNewPersonalInformation");
 
     $controller_connection->PostMethodConnection("studentHandling", "StudentHandlingController", "HandleStudents");
 

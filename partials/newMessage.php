@@ -12,6 +12,11 @@
                         </option>
                     <?php endforeach?>
                 </select>
+                <?php if(isset($incorrect_parameters)):?>
+                    <?php if(in_array('message_to',$error_params)):?>
+                        <label class="error_label"><?=$incorrect_parameters["message_to"]?></label>
+                    <?php endif?>
+                <?php endif?>
             <?php else:?>
                 <label class="message_label" style="margin: auto 2% auto 0%; ">
                     Címzett: <?=$message["neptun_code_from"]===$_SESSION["neptun_code"]?$message["neptun_code_to"]:$message["neptun_code_from"]?>
@@ -22,14 +27,24 @@
             <label class="message_label" style="margin: auto 2% auto auto; ">
                 Add meg az üzenet címét!
             </label>
-            <textarea class="message_topic_textarea" placeholder="Üzenet témája..." value="Üzenet témája..." name="message_topic" rows="1"></textarea>
+            <textarea class="message_topic_textarea" placeholder="Üzenet témája..." value="<?=$correct_parameters["message_topic"]??"Üzenet témája..."?>" name="message_topic" rows="1"><?=$correct_parameters["message_topic"]??""?></textarea>
+            <?php if(isset($incorrect_parameters)):?>
+                <?php if(in_array('message_topic',$error_params)):?>
+                    <label class="error_label"><?=$incorrect_parameters["message_topic"]?></label>
+                <?php endif?>
+            <?php endif?>
         </div>
     </div>
     <div class="message__div">
         <label class="message_label" style="margin: auto auto auto 0%; ">
             Add meg az üzenet szövegét!
         </label>
-        <textarea class="message_text_textarea" placeholder="Üzenet szövege..." value="Üzenet szövege..." rows="10" name="message_text"></textarea>
+        <textarea class="message_text_textarea" placeholder="Üzenet szövege..." value="<?=$correct_parameters["message_text"]??"Üzenet szövege..."?>" rows="10" name="message_text"><?=$correct_parameters["message_text"]??""?></textarea>
+        <?php if(isset($incorrect_parameters)):?>
+            <?php if(in_array('message_text',$error_params)):?>
+                <label class="error_label"><?=$incorrect_parameters["message_text"]?></label>
+            <?php endif?>
+        <?php endif?>
     </div>
     <button type="submit" class="finalize_button">Küldés</button>
 </form>

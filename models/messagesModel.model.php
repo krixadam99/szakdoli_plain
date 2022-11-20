@@ -60,6 +60,19 @@
         }
 
         /**
+         * This public method returns the message given by an id.
+         * 
+         * @param string $message_id The id of the selected message.
+         * 
+         * @return array Returns a message given by the id.
+         */
+        public function GetMessagesWithId($message_id){
+            $query = "SELECT * FROM messages WHERE ";
+            $query .= "messages.message_id = \"$message_id\"";
+            return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];
+        }
+
+        /**
          * This public method returns all of the messages of the user from the messages table.
          * 
          * @param string $neptun_code The neptun code of the user.

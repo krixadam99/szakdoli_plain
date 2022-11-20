@@ -110,7 +110,8 @@
                     }
     
                     $student_handler_model->UpdatePendingStudents($query_array);
-                    $this->StudentHandling();
+                    
+                    header("Location: ./index.php?site=studentHandling&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
                     header("Location: ./index.php?site=notifications");
                 }

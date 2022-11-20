@@ -17,7 +17,15 @@
                     Visszanavigálás az értesítések oldalára
                 </span>
             </div>
+        <?php else:?>
+            <div class="small_navigation_button" id="demonstrator_handling_button">
+                <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
+                <span class="text_of_tooltip">
+                    Visszanavigálás a demonstrátorkezelő oldalra
+                </span>
+            </div>
         <?php endif?>
+
         <div class="small_navigation_button" id="messages_button">
             <img src="./views/css/pics/messages.png" alt="messages_shape" id="messages_shape">
             <span class="text_of_tooltip">

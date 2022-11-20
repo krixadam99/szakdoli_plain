@@ -340,36 +340,43 @@
         static function GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects){
             $show_group_addition_menu = true;
             $can_apply_to_group = true;
-            $can_add_group = true;
+            $can_add_group_for_dimat_i = true;
+            $can_add_group_for_dimat_ii = true;
         
             $pending_student_subject_ids = [];
-            $pending_st_groups = [];
+            $no_group = false;
+
             foreach($pending_student_groups as $group_counter => $group_id_pair){
-                if(!in_array($group_id_pair["subject_id"], $pending_student_subject_ids)){
+                if(!in_array($group_id_pair["subject_id"], $pending_student_subject_ids) && $group_id_pair["subject_id"] !== ""){
                     array_push($pending_student_subject_ids,$group_id_pair["subject_id"]);
-                    array_push($pending_st_groups,$group_id_pair["subject_group"]);
+                }
+                if($group_id_pair["subject_id"] === ""){
+                    $no_group = true;
                 }
             }
 
+            // If the user's student/teacher status is approved for Discrete mathematics II. (or this status is pending), then don't let them to apply to a group as a student
             if(    in_array("ii", $approved_teacher_subjects) 
                 || "ii" === $approved_student_subject
                 || in_array("ii", $pending_student_subject_ids)){
                 $can_apply_to_group = false;
+                if(in_array("ii", $pending_student_subject_ids)){
+                    $can_add_group_for_dimat_ii = false;
+                }
             }
 
+            // If the user's student status is approved for Discrete mathematics I. (or this status is pending), then don't show the group addition page
             if("i" === $approved_student_subject || in_array("i", $pending_student_subject_ids)){
                 $show_group_addition_menu = false;
             }
 
-            $i_pos = array_search("i", $pending_student_subject_ids);
-            $ii_pos = array_search("i", $pending_student_subject_ids);
-            if(    is_numeric($i_pos) && $pending_st_groups[$i_pos] === "0" 
-                || is_numeric($ii_pos) && $pending_st_groups[$ii_pos] === "0"){
+            // Those, who couldn't apply to a desired group, should be able to do so later
+            if($no_group){
                 $show_group_addition_menu = true;
                 $can_apply_to_group = true;
             }
 
-            return [$show_group_addition_menu, $can_apply_to_group, $can_add_group];
+            return [$show_group_addition_menu, $can_apply_to_group, $can_add_group_for_dimat_i, $can_add_group_for_dimat_ii];
         }
     }
 
