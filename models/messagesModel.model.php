@@ -66,7 +66,7 @@
          * 
          * @return array Returns a message given by the id.
          */
-        public function GetMessagesWithId($message_id){
+        public function GetMessageWithId($message_id){
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.message_id = \"$message_id\"";
             return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];
@@ -106,10 +106,11 @@
             $teachers_query .= "AND is_teacher=\"1\" ";
             $teachers_query .= "AND application_request_status = \"APPROVED\"";
 
+            $administrators = array_values($this->database->LoadDataFromDatabase("SELECT neptun_code FROM users WHERE is_administrator = \"1\""));
             $associated_array = array_values($this->database->LoadDataFromDatabase($associated_query));
             $teachers_array = array_values($this->database->LoadDataFromDatabase($teachers_query));
 
-            return [$associated_array,$teachers_array];
+            return [$administrators, $associated_array,$teachers_array];
         }
 
         /**

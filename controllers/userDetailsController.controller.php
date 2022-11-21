@@ -95,6 +95,7 @@
                 $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
                 $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
                 
+                // Setting the subject id based on the selected subject
                 if(isset($_POST["subject_id"])){
                     if($_POST["subject_id"] == "Diszkrét matematika I."){
                         $subject_id = "i";
@@ -105,6 +106,7 @@
                     $subject_id = "INVALID NAME ATTRIBUTE";
                 }
     
+                // Setting the subject group based on the selected group
                 $group = "INVALID NAME ATTRIBUTE";
                 $group_name_attribute = "";
                 $possible_group_numbers = [];
@@ -115,6 +117,8 @@
                         $group = $_POST["teacher_group"];
                         if(isset($_POST["teacher_group"])){
                             $group_name_attribute = "teacher_group";
+                            
+                            // Teacher's group can be a number between 1 and 30 (inclusively)
                             for($counter = 1; $counter < 30; $counter++) array_push($possible_group_numbers, $counter);
                         }
                     }else if($_POST["user_status"] == "Diák"){
@@ -123,7 +127,8 @@
                             if(isset($_POST["student_group_i"])){
                                 $group = $_POST["student_group_i"]??"0";
                                 if($group === "-") $group  = "0";
-                                
+
+                                // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "i" id
                                 $dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
                                 foreach($dimat_i_groups as $key=>$group_number){
                                    array_push($possible_group_numbers, $group_number[0]);
@@ -136,6 +141,7 @@
                                 $group = $_POST["student_group_ii"]??"0";
                                 if($group === "-") $group  = "0";
     
+                                // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "ii" id
                                 $dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
                                 foreach($dimat_ii_groups as $key=>$group_number){
                                    array_push($possible_group_numbers, $group_number[0]);
@@ -145,6 +151,7 @@
                         }
                     }
 
+                    // Checking if the user is elligible to apply to the given subject with the given status 
                     $cannot_advance = false;
                     if($can_apply_to_group){
                         if(!$can_add_group_for_dimat_i){
@@ -183,6 +190,10 @@
                     }
                 }
     
+                // Validating the form
+                // The subject id should be a string, and either "i" (Discrete mathematics II.), or "ii" (Discrete mathematics II.)
+                // The user status a string, and it should be either "Diák", or "Demonstrátor"
+                // The group number a string, and it should be a valid number
                 $this->ValidateInputs(
                     [
                         "subject_id:tárgy" => array($subject_id => [
@@ -209,7 +220,7 @@
                     }
                     
                     header("Location: ./index.php?site=notifications");
-                }else{ // There were errors 
+                }else{ // There is at least one incorrect input
                     $this->GroupAddition();
                 }
             }else{
@@ -227,11 +238,23 @@
          */
         public function ValidateNewPersonalInformation() {
             if(isset($_SESSION["neptun_code"])){
+                // Fetch all of the email addresses from the users table
+                $email_addresses_array = $this->registration_model->GetEmailAddresses();
+                $email_addresses = [];
+                foreach($email_addresses_array as $email_address_counter => $email_address_array){
+                    array_push($email_addresses, $email_address_array["email_address"]);
+                }
+
+                // Validating the form
+                // The email address should be a string, not the placeholder, or the empty string, it should be of email format, finally it should be unique
+                // The password should be a string, not the placeholder, or the empty string, the length should be greater than 7, it should contain at leaset 1 number, 1 small and capital english alphabet character, and at least 1 of the ",", "-", ".", "?", "!" characters
+                // The reassuring password should be a string, not the placeholder, or the empty string, and it should be the same as the original password
                 $this->ValidateInputs(
                     [
                         "user_email" => array($_POST["user_email"]??"INVALID" => [
                             "not_placeholder" => "",
-                            "filter_var" => FILTER_VALIDATE_EMAIL
+                            "filter_var" => FILTER_VALIDATE_EMAIL,
+                            "unique" => $email_addresses
                         ]),
                         "user_password:jelszó" => array($_POST["user_password"]??"INVALID NAME ATTRIBUTE" => [
                             "not_placeholder" => ["","Jelszó..."],
@@ -248,7 +271,7 @@
                 if(count($this->incorrect_parameters) === 0){ // Everything was correct 
                     $this->user_detail_model->UpdateUserDetails($_SESSION["neptun_code"], $_POST["user_email"], $_POST["user_password"]);
                     header("Location: ./index.php?site=notifications");
-                }else{ // There were errors 
+                }else{ // There is at least one incorrect input
                     $this->PersonalInformation();
                 }  
             }else{

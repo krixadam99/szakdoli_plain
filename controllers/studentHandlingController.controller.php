@@ -32,11 +32,14 @@
          * @return void
          */
         public function StudentHandling(){
-            //Users, who are not logged in won't see this page, they will be redirected to the login page
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
-                //Only teachers can see this page, others will be redirected to the notifications page
+
+                // Only teachers can see this page, others will be redirected to the notifications page
                 if(count($this->approved_teacher_groups) != 0){
+                    
+                    // Fetching all the students belonging to the subject id - group number pair
                     $all_students = [];
                     foreach($this->approved_teacher_groups as $group_counter => $group_id_pair){
                         $pending_students_per_subject_group = $this->student_handler_model->GetStudents($group_id_pair["subject_id"], $group_id_pair["subject_group"]);
@@ -77,7 +80,7 @@
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
                 
-                    
+                    // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
                         $neptun = $key;
@@ -96,14 +99,19 @@
                     // Getting the students belonging to the user
                     $original_user_information = $this->student_handler_model->GetStudents($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
+
+                    // Iterate through the user's students' array
                     foreach($original_user_information as $index => $original_record){
                         $neptun = $original_record["neptun_code"];
                         
+                        // Can edit only those students, who belong to one of their groups
                         if(isset($decision_array[$neptun])){
                             $id = $current_subject . "_" . $current_group; 
                             $decision = "APPROVED";
                             if(isset($decision_array[$neptun][$id])){
                                 $decision = $decision_array[$neptun][$id];
+
+                                // Create the query array, which contains no external (i.e., user given) information
                                 array_push($query_array, array("neptun_code" => $neptun, "user_status" => "student", "group_number" => $current_group, "subject_id" => $current_subject, "application_request_status" => $decision));
                             }
                         }

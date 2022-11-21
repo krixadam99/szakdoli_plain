@@ -30,11 +30,11 @@
          * @return void
         */
         public function TaskGeneration(){
-            //Users, who are not logged in won't see this page, they will be redirected to the login page
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
 
-                //Only teachers can see this page,others will be redirected to the notifications page
+                // Only teachers can see this page, others will be redirected to the notifications page
                 if(count($this->approved_teacher_groups) != 0){
                     // Setting the preview to default, if not set
                     if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
@@ -67,7 +67,7 @@
          * This method creates the preview of the page containing the printable form of the requested amount of subtasks for a task-subtask pair and also the solutions for these tasks.
          * 
          * The method also handles malicious user activities, like overwriting form html tags' names.
-         * The mterhod will create a small, or big test, or a set of tasks for the seminar based on the session's exam type parameter.
+         * The method will create a small, or big test, or a set of tasks for the seminar based on the session's exam type parameter.
          * 
          * @return void
          */
@@ -82,7 +82,7 @@
                     $_SESSION["preview"] = $_POST;
                     $_SESSION["preview_tasks"] = [];
     
-                    if($_SESSION["exam_type"] === "small"){ // Generate small test tasks
+                    if($_SESSION["exam_type"] === "small"){ // Generate small test tasks based on the selected amount, selected main topic and subtopic index
                         $main_topic = $_POST["main_topic"]??"";
                         if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
                             $subtopic_index = $_POST["main_topic_$main_topic" . "_subtopic"]??"";
@@ -95,7 +95,7 @@
                                 array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
                             }   
                         }
-                    }else if($_SESSION["exam_type"] === "seminar"){ // Generate set of tasks for a seminar
+                    }else if($_SESSION["exam_type"] === "seminar"){ // Generate set of tasks for a seminar based on the selected main topic index, subtopic indices, and amounts/ subtopic
                         $main_topic = $_POST["main_topic"]??"";
                         if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
                             foreach($_POST as $key => $value){
@@ -112,7 +112,7 @@
                                 }
                             }
                         }                        
-                    }else if($_SESSION["exam_type"] === "big"){ // Generate set of tasks for a big test
+                    }else if($_SESSION["exam_type"] === "big"){ // Generate set of tasks for a big test based on the selected main topic - subtopic indeices pairs, and overall amounts
                         $subtask_count = $_POST["task_quantity"]??4;
 
                         foreach($_POST as $key => $value){

@@ -34,8 +34,11 @@
          * @return void
         */
         public function Practice(){
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
+
+                // If the user is not a student, then the method redirects them to the notifications page
                 if($this->approved_student_subject != ""){
                     $_SESSION["is_new_task"] = true;
                     
@@ -44,7 +47,8 @@
                     unset($_SESSION["definitions"]);
                     unset($_SESSION["task"]);
                     
-                    if(isset($_SESSION["topic"]) 
+                    // The practice task's topic must be an integer and between 0 and 8
+                    if(    isset($_SESSION["topic"]) 
                         && intval($_SESSION["topic"]) <= 8
                         && 0 <= intval($_SESSION["topic"])
                     ){
@@ -53,6 +57,7 @@
                         header("Location: ./index.php?site=notifications");
                     }
                     
+                    // Fetching the practice task points of the user
                     $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"]);
 
                     include(ROOT_DIRECTORY . "/views/practicePage.view.php");
@@ -75,10 +80,15 @@
          * @return void
         */
         public function PracticeAnswers(){
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
+
+                // If the user is not a student, then the method redirects them to the notifications page
                 if($this->approved_student_subject != ""){
+                    // Fetching the practice task points of the user
                     $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"]);
+                    
                     include(ROOT_DIRECTORY . "/views/practicePage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");
@@ -97,10 +107,12 @@
         public function HandInSolution(){
             if(isset($_SESSION["neptun_code"])){
                 if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]){
+                    // The task is not a new one
                     $_SESSION["is_new_task"] = false;
                     if(count($_POST) != 0){
                         $this->SetMembers();
                         
+                        // Evaluating the user's answers, and updating the actual practice task point
                         $practice_number = intval($_SESSION["topic"]) + 1;
                         $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"]);
                         $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
@@ -123,7 +135,7 @@
                     header("Location: ./index.php?site=notifications");
                 }
             }else{
-                header("Location: ./index.php");
+                header("Location: ./index.php?site=login");
             }
         }
 
@@ -136,15 +148,17 @@
          * @return void
         */
         private function GenerateTask($subject, $topic_number){
-            if($subject == "i"){
+            if($subject == "i"){ // The user is a student of Discrete mathematics I. 
                 $dimat_i_tasks = new DimatiTasks($topic_number);
                 $dimat_i_tasks->PracticePageTaskGeneration();
+
                 $_SESSION["task"] = $dimat_i_tasks->GetTaskDescriptions();
                 $_SESSION["solution"] = $dimat_i_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_i_tasks->GetDefinitions();
-            }else if($subject == "ii"){
+            }else if($subject == "ii"){ // The user is a student of Discrete mathematics II. 
                 $dimat_ii_tasks = new DimatiiTasks($topic_number);
                 $dimat_ii_tasks->PracticePageTaskGeneration();
+
                 $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescriptions();
                 $_SESSION["solution"] = $dimat_ii_tasks->GetTaskSolutions();
                 $_SESSION["definitions"] = $dimat_ii_tasks->GetDefinitions();

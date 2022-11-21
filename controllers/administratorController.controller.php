@@ -3,7 +3,8 @@
      * This is a controller class which is responsible for showing the administrator's page.
      * 
      * This controller extends the MainContentController, from which it inherits members that are related to a logged in user.
-     * If someone navigates to the navigations page, although they are not logged in, then this controller redirects them to the login page.
+     * If someone navigates to this page, although they are not logged in, then this controller redirects them to the login page. 
+     * Non-administrator, authenticated users will be redirected to the notifications page.
      * On this page, essential informations are displayed.
      * If the user is the administrator, then their pending teachers will be displayed on this page.
     */
@@ -31,6 +32,7 @@
          * 
          * It also sets the members, which it inherited from the MainContentController, and are related to a logged in user.
          * If a client types the page name in the searchbar of the browser, but not logged in, then they will be redirected to the login page.
+         * Non-administrator, authenticated users will be redirected to the notifications page.
          *  
          * @return void
         */
@@ -53,26 +55,27 @@
          *
          * This method finalizes teachers' pending requests.
          * 
-         * Only the administrator can finalize a pending, anyone else sending a POST request with the right action will be redirected to the login page.
+         * Only the administrator can finalize a pending teacher, anyone else sending a POST request with the right action will be redirected to the login page.
          * For each record there can be 3 possibilities: deny, accept or do nothing.
          *  
          * @return void
         */
         public function FinalizePending(){    
-            if(isset($_SESSION["neptun_code"])){                
-                if($_SESSION["neptun_code"] == "ADMIN"){
+            if(isset($_SESSION["neptun_code"])){  
+                $this->SetMembers();              
+                if($this->is_administrator){
                     // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
                         $parts = explode(":", $key);
                         $neptun = $parts[0]??"neptun";
                         $id = $parts[1]??"id";
-                        if($value === "-"){
-                            $decision = "PENDING";
+                        if($value === "ELUTASÍTÁS"){
+                            $decision = "DENIED";
                         }elseif($value === "ELFOGADÁS"){
                             $decision = "APPROVED";
                         }else{
-                            $decision = "DENIED";
+                            $decision = "PENDING";
                         }
                         
                         $decision_array[$neptun][$id] = $decision;
@@ -81,15 +84,20 @@
                     // Comparing the new pending values to the old ones
                     $original_user_information = $this->administrator_model->GetPendingTeachers();
                     $query_array = array();
+
+                    // Iterate through the pending teachers' array
                     foreach($original_user_information as $index => $pending_status){
                         $neptun = $pending_status["neptun_code"];
                         
+                        // Can edit only those teachers, that have pending status
                         if(isset($decision_array[$neptun])){
                             $id = $pending_status["subject_id"] . "_" . $pending_status["group_number"]; 
-                            $decision = "1";   
+                            $decision = "PENDING";
                             if(isset($decision_array[$neptun][$id])){
                                 $decision = $decision_array[$neptun][$id];
-                            }   
+                            }
+
+                            // Create the query array, which contains no external (i.e., user given) information
                             array_push($query_array, array("neptun_code" => $neptun, "group_number" => $pending_status["group_number"], "subject_id" => $pending_status["subject_id"], "application_request_status" => $decision));
                         }
                     }

@@ -32,15 +32,16 @@
          * @return void
         */
         public function StudentGrades(){
-            //Users, who are not logged in won't see this page, they will be redirected to the login page
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 
-                //Only teachers can see this page, others will be redirected to the notifications page
+                // Only teachers can see this page, others will be redirected to the notifications page
                 if(     isset($_SESSION["subject"])
                     &&  isset($_SESSION["group"])
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
+                    // Fetching the grades, expectation rules, due dates and lower bound of the grades that belong to the subject - group pair
                     $students_grades = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
                     $expectation_rules = $this->student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                     $task_due_dates = $this->student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
@@ -68,7 +69,7 @@
          * @return void
         */
         public function UpdateResults(){
-            //Neptun code, subject group and subject name must be set in the session, otherwise we cannot move forward
+            // Neptun code, subject group and subject name must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 if(
@@ -78,6 +79,7 @@
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
 
+                    // Processing the points
                     $new_results = array();
                     foreach($_POST as $key => $value){
                         $neptun = substr($key,0,6);
@@ -90,33 +92,24 @@
                         }
                     }
             
+                    // Getting the results of the students who belong to the group determined by the subject - group pair
                     $original_user_results = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_user_results as $index => $original_record){
+                        // Only those students' points can be edited, who belong to the group determined by the subject - group pair
                         if(isset($new_results[$original_record["neptun_code"]])){
                             $results = $new_results[$original_record["neptun_code"]];
-                            
-                            array_push($query_array, array(
-                                "neptun_code" => $original_record["neptun_code"], 
-                                "group_number" => $current_group, 
-                                "subject_id" => $current_subject, 
-                                "practice_count" => $results["grade_input_practice"]??$original_record["practice_count"],
-                                "extra" => $results["grade_input_extra"]??$original_record["extra"],
-                                "middle_term_exam" => $results["grade_input_middle_term"]??$original_record["middle_term_exam"],
-                                "middle_term_exam_correction" => $results["grade_input_middle_term_corr"]??$original_record["middle_term_exam"],
-                                "final_term_exam" => $results["grade_input_final_term"]??$original_record["final_term_exam"],
-                                "final_term_exam_correction" => $results["grade_input_final_term_corr"]??$original_record["final_term_exam_correction"],
-                                "small_test_1" => $results["grade_input_small_test_1"]??$original_record["small_test_1"],
-                                "small_test_2" => $results["grade_input_small_test_2"]??$original_record["small_test_2"],
-                                "small_test_3" => $results["grade_input_small_test_3"]??$original_record["small_test_3"],
-                                "small_test_4" => $results["grade_input_small_test_4"]??$original_record["small_test_4"],
-                                "small_test_5" => $results["grade_input_small_test_5"]??$original_record["small_test_5"],
-                                "small_test_6" => $results["grade_input_small_test_6"]??$original_record["small_test_6"],
-                                "small_test_7" => $results["grade_input_small_test_7"]??$original_record["small_test_7"],
-                                "small_test_8" => $results["grade_input_small_test_8"]??$original_record["small_test_8"],
-                                "small_test_9" => $results["grade_input_small_test_9"]??$original_record["small_test_9"],
-                                "small_test_10" => $results["grade_input_small_test_10"]??$original_record["small_test_10"],
-                            ));
+
+                            // Only numeric values can be passed through
+                            $student_array = ["neptun_code" => $original_record["neptun_code"], "group_number" => $current_group, "subject_id" => $current_subject];
+                            foreach($results as $index => $result){
+                               if(is_numeric($result) && isset($original_record[$index])){
+                                    $student_array[$index ] = $result;
+                                }else if(!is_numeric($result) && isset($original_record[$index])){
+                                    $student_array[$index] = $original_record[$index];
+                                }
+                            }      
+                            array_push($query_array, $student_array);
                         }
                     }
 
@@ -174,16 +167,19 @@
                         }
                     }
                 
+                    // Getting the expectation rules of the group determined by the subject - group pair
                     $original_expectation_rules = $this->student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_expectation_rules as $index => $original_expectation_rule){
                         $task_type = $original_expectation_rule["task_type"];
                         
+                        // Only those task types can be edited, which are in the expectation_rules table, and belong to the group determined by the subject - group pair
                         if(isset($new_expectation_rules[$task_type])){
                             $is_better = $new_expectation_rules[$task_type]["is_better"]??$original_expectation_rule["is_better"];
                             $minimum_for_pass = $new_expectation_rules[$task_type]["minimum_for_pass"]??$original_expectation_rule["minimum_for_pass"];
                             $maximum_value = $new_expectation_rules[$task_type]["maximum_value"]??$original_expectation_rule["maximum_value"];
 
+                            // Validating the inputs
                             if($is_better === "NEM"){
                                 $is_better = "0";
                             }elseif($is_better === "IGEN"){
@@ -262,6 +258,7 @@
                         }
                     }
                 
+                    // Getting the task due dates of those task that belong to the subject - group pair
                     $original_due_dates = $this->student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
                     foreach($original_due_dates as $index => $original_due_date){
@@ -269,6 +266,7 @@
                         if(isset($new_due_dates[$task_type])){
                             $due_date = $new_due_dates[$task_type];
                             
+                            // Validating the date
                             $new_date = DateTime::createFromFormat("Y-m-d", $due_date);
                             if($new_date){
                                 $due_date = $new_date->format("Y-m-d");
@@ -315,13 +313,14 @@
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
                 
+                    // Getting the lower bound of the grades belinging to the group determined by the subject - group pair
                     $original_grade_points = $this->student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
                     
+                    // Processing the data of the form
                     $pass_level_point = $_POST["pass_level_point"]??$original_grade_points["pass_level_point"];
                     $satisfactory_level_point = $_POST["satisfactory_level_point"]??$original_grade_points["satisfactory_level_point"];
                     $good_level_point = $_POST["good_level_point"]??$original_grade_points["good_level_point"];
                     $excellent_level_point = $_POST["excellent_level_point"]??$original_grade_points["excellent_level_point"];
-                    
                     if(!is_numeric($excellent_level_point)){
                         $excellent_level_point = $original_grade_points["excellent_level_point"];
                     }
@@ -335,6 +334,7 @@
                         $pass_level_point = $original_grade_points["pass_level_point"];
                     }
 
+                    // Validating the points (excellent > good > satisfactory > pass)
                     $original_points = [$original_grade_points["pass_level_point"], $original_grade_points["satisfactory_level_point"], $original_grade_points["good_level_point"], $original_grade_points["excellent_level_point"]];
                     $points = [$pass_level_point, $satisfactory_level_point, $good_level_point, $excellent_level_point];
                     for($point_counter = 3; $point_counter > 0; $point_counter--){

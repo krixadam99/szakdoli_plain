@@ -4,7 +4,7 @@
      * 
      * This controller extends the MainContentController, from which it inherits members that are related to a logged in user.
      * If someone navigates to the navigations page, although they are not logged in, then this controller redirects them to the login page.
-     * On this page, messages (sent, incame and deleted) are displayed.
+     * On this page, messages (sent, incame and temporarily deleted) are displayed.
     */
     class MessagesController extends MainContentController{
         private $message_model;
@@ -32,17 +32,21 @@
          * @return void
         */
         public function Messages(){
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 
+                // This page is not the "write message" page
                 if(isset($_SESSION["write_message"])){
                     unset($_SESSION["write_message"]);
                 }
 
+                // If the user clicked on an incame message, then the system should update the is_seen_by_receiver flag
                 if(isset($_SESSION["message_id"])){
                     $this->message_model->UpdataDatabase("UPDATE messages SET is_seen_by_receiver = \"1\" WHERE neptun_code_to = \"" . $_SESSION["neptun_code"] . "\" AND message_id = \""  . $_SESSION["message_id"] . "\"");
                 }
 
+                // Fetch the sent, incame and (temporarily) removed messages
                 $sent_messages = $this->message_model->GetSentMessages($_SESSION["neptun_code"]);
                 $incame_messages = $this->message_model->GetRecievedMessages($_SESSION["neptun_code"]);
                 $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"]);
@@ -63,6 +67,7 @@
          * @return void
         */
         public function WriteMessage(){
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 
@@ -86,10 +91,15 @@
             if(isset($_SESSION["neptun_code"])){
                 $neptun_codes = $this->GetAssociteNeptunCodes();
 
+                // Validate the message
+                // The message_to should be a string, must not be the logged in user's neptun code, and must be in the possible neptun codes' list
+                // The topic must be a string, and the length must be less than, or equal to 255 characters, additionally it should not be the place holder (Üzenet témája...), or the empty string
+                // The text must be a string, and the length must be less than, or equal to 2024 characters, additionally it should not be the place holder (Üzenet szövege...), or the empty string
                 $this->ValidateInputs(
                     [
                         "message_to:címzett" => array($_POST["message_to"]??-1 => [
-                            "in_array" => $neptun_codes
+                            "in_array" => $neptun_codes,
+                            "not_is_same" => $_SESSION["neptun_code"],
                         ]),
                         "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
                             "not_placeholder" => ["","Üzenet témája..."],
@@ -102,9 +112,11 @@
                     ]
                 );
                 
+                // If any of the sent data was incorrect
                 if(count($this->incorrect_parameters) !== 0){
                     $this->WriteMessage();
-                }else{
+                }else{ // If all of the sent data was valid
+                    // Creating the message
                     $new_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, message_topic, message_text) VALUES(
                         \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
                         \"" . strtoupper($_POST["message_to"]) . "\", 
@@ -131,6 +143,9 @@
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
                 if(isset($_SESSION["message_id"]) && $_SESSION["thread_count_new"] && $_SESSION["neptun_code_to"]){
+                    // Validate the reply message
+                    // The topic must be a string, and the length must be less than, or equal to 255 characters, additionally it should not be the place holder (Üzenet témája...), or the empty string
+                    // The text must be a string, and the length must be less than, or equal to 2024 characters, additionally it should not be the place holder (Üzenet szövege...), or the empty string
                     $this->ValidateInputs(
                         [
                             "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
@@ -144,23 +159,27 @@
                         ]
                     );
                     
+                    // If any of the sent data was incorrect
                     if(count($this->incorrect_parameters) !== 0){
                         $this->Messages();
-                    }else{
-                        $message_with_id = $this->message_model->GetMessagesWithId($_SESSION["message_id"]);
+                    }else{ // If all of the sent data was valid
+                        // Get the message with the actual id
+                        $message_with_id = $this->message_model->GetMessageWithId($_SESSION["message_id"]);
                         if($message_with_id["belongs_to"] >= 0){
+                            // Send a reply only when the message (more precisely, the first message in the thread) is not removed by neither the sender, nor the receiver
                             $is_removed_by_receiver = "0";
                             $is_removed_by_sender = "0";
                             if($message_with_id["belongs_to"] == "0"){
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
                             }else{
-                                $message_with_id = $this->message_model->GetMessagesWithId($message_with_id["belongs_to"]);
+                                $message_with_id = $this->message_model->GetMessageWithId($message_with_id["belongs_to"]);
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
                             }
     
                             if($is_removed_by_receiver === "0" && $is_removed_by_sender === "0"){
+                                // Creating the reply message
                                 $reply_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count, is_removed_by_receiver) VALUES(
                                     \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
                                     \"" . strtoupper($_SESSION["neptun_code_to"]) . "\", 
@@ -196,9 +215,13 @@
         public function DeleteMessages(){
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
+                // The ids of the messages, the user wish to remove
                 $message_ids = array_keys($_POST);
                 
+                // Get the actual messages belonging to the user
                 $merged_messages = $this->message_model->GetMessages($_SESSION["neptun_code"]);
+                
+                // Filter those messages which id is in the array containing the ids the user wish to remove
                 $message_id_indexed = [];
                 foreach($merged_messages as $message_counter => $message){
                     $message_id_indexed[$message["message_id"]] = $message;
@@ -218,10 +241,12 @@
                         }
 
                         foreach($merged_messages as $message_counter => $message){
+                            // From the messages that belong to the user, remove the ones, which have their ids in the array containing the ids the user wish to remove
+                            // Also, remove all of the messages which are in the same thread as this message
                             if($message["message_id"] == $belongs_to || $message["belongs_to"] == $belongs_to){
-                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){ // Remove for the sender
+                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){ // Remove the message for the sender
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_sender" => "1"));
-                                }else{ // Remove for the receiver
+                                }else{ // Remove the message for the receiver
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_receiver" => "1")); 
                                 }
                             }
@@ -248,9 +273,13 @@
         public function RecoverDeletedMessages(){
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
+                // The ids of the messages, the user wish to recover
                 $message_ids = array_keys($_POST);
 
+                // Get the actual messages belonging to the user
                 $merged_messages =  $this->message_model->GetMessages($_SESSION["neptun_code"]);
+
+                // Filter those messages which id is in the array containing the ids the user wish to recover
                 $message_id_indexed = [];
                 foreach($merged_messages as $message_counter => $message){
                     $message_id_indexed[$message["message_id"]] = $message;
@@ -269,10 +298,12 @@
                             $belongs_to = $message_id;
                         }
                         foreach($merged_messages as $message_counter => $message){
+                            // From the messages that belong to the user, recover the ones, which have their ids in the array containing the ids the user wish to recover
+                            // Also, recover all of the messages which are in the same thread as this message
                             if($message["message_id"] == $belongs_to || $message["belongs_to"] == $belongs_to){
-                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){
+                                if($_SESSION["neptun_code"] == $message["neptun_code_from"]){ // Recover the message for the sender
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_sender" => "0"));
-                                }else{
+                                }else{ // Recover the message for the receiver
                                     array_push($query_array,array("message_id" => $merged_messages[$message_counter]["message_id"], "is_removed_by_receiver" => "0")); 
                                 }
                             }
@@ -297,15 +328,25 @@
          * @return array Returns an array containing neptun codes.
          */
         private function GetAssociteNeptunCodes(){
+            // Get all of the neptun codes
             $all_neptun_codes_associated = $this->message_model->GetNeptunCodes($_SESSION["neptun_code"]);
-            $neptun_codes = ["ADMIN"];
+            $neptun_codes = [];
+            
+            // The neptun codes of the administrators
+            $administrators = $all_neptun_codes_associated[0];
+            foreach($administrators as $counter => $administrator_neptun_code){
+                array_push($neptun_codes, strtoupper(array_values($administrator_neptun_code)[0]));
+            }
 
-            $accosiated = $all_neptun_codes_associated[0];
+            // The neptun codes of the users, that has approved status, and belongs to the same group as the logged in user
+            // If the user is a teacher, then the neptun codes of all of their approved students
+            $accosiated = $all_neptun_codes_associated[1];
             foreach($accosiated as $counter => $accosiated_neptun_code){
                 array_push($neptun_codes,array_values($accosiated_neptun_code)[0]);
             }
 
-            $teachers = $all_neptun_codes_associated[1];
+            // The neptun codes of the teachers
+            $teachers = $all_neptun_codes_associated[2];
             foreach($teachers as $counter => $teacher_neptun_code){
                 $teacher_neptun_code = array_values($teacher_neptun_code)[0];
                 if(!in_array($teacher_neptun_code,$neptun_codes)){

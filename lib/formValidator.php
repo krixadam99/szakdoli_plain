@@ -143,7 +143,7 @@
                                             }
                                         }
                                     };break;
-                                    case "already_exists":{
+                                    case "unique":{
                                         $left_side = $input;
                                         $array = $condition;
             
@@ -180,6 +180,14 @@
     
                                         if($left_side !== $condition){
                                             $this->incorrect_parameters[$key] = "A(z) $attribute_name nem azonos a(z) \"$condition\" szöveggel!"; 
+                                            $was_valid = false;
+                                        }
+                                    };break;
+                                    case "not_is_same": {
+                                        $left_side = $input;
+    
+                                        if($left_side === $condition){
+                                            $this->incorrect_parameters[$key] = "A(z) $attribute_name azonos a(z) \"$condition\" szöveggel!";
                                             $was_valid = false;
                                         }
                                     };break;

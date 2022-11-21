@@ -33,17 +33,19 @@
          * @return void
         */
         public function Grades(){
-            //Users, who are not logged in won't see this page, they will be redirected to the login page
+            // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
 
-                //Only students can see this page, otherwise, the user will be redirected to the notifications page
+                // Only students can see this page, otherwise, the user will be redirected to the notifications page
                 if($this->GetApprovedStudentSubject() != ""){
                     $approved_subject_group = $this->approved_student_group;
                     $approved_subject_id = $this->approved_student_subject;
 
+                    // Fetching the results of the user
                     $results = $this->grades_model->GetResults($_SESSION["neptun_code"])[0]??[];
                     
+                    // Fetching the practice task points of the user
                     $practice_points = [];
                     $practice_results = $this->grades_model->GetPracticeResults($this->neptun_code)[0]??[];
                     foreach($practice_results as $key => $value){
@@ -52,7 +54,7 @@
                         }
                     }               
                     
-                    // Data related to results
+                    // Data related to results like expectation rules, due dates and the lower bound for grades
                     $task_expectations = $this->grades_model->GetExpectationRules($approved_subject_id, $approved_subject_group); 
                     $task_due_dates = $this->grades_model->GetTaskDueDate($approved_subject_id, $approved_subject_group); 
                     $grade_table = $this->grades_model->GetGradeLevels($approved_subject_id, $approved_subject_group)[0]??[]; 

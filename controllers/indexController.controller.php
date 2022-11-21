@@ -2,7 +2,7 @@
     /**
      * This is a controller class which is responsible for showing the index (home) page.
     */
-    class IndexController{
+    class IndexController {
         /**
          *
          * This method is responsible for showing the index (home) page.
