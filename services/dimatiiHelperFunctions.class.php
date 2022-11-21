@@ -1371,7 +1371,6 @@
          * @param array $first_polynomial_expression An indexed array containing the second addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
          * 
          * @return array An indexed array containing the summed polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
-         
          */
         private function AddPolynomialExpressions($first_polynomial_expression, $second_polynomial_expression){
             $sum_polynomial_expression = [];

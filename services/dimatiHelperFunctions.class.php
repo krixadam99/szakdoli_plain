@@ -196,7 +196,13 @@
         }
 
         /**
+         * This method picks a new pair of complex numbers.
          * 
+         * @param array $array An array containing the previously picked pairs of complex numbers.
+         * @param string $first_number The first newly picked complex number.
+         * @param string $second_numbers The second newly picked complex number.
+         * 
+         * @return array Returns the names of the newly picked complex numbers.
          */
         public function CreateNewPairOfNumbers($array, $first_number, $second_number){
             $is_new_pair = !in_array([$first_number, $second_number], $array);
@@ -1228,7 +1234,14 @@
         }
 
         /**
+         * This method uses the Moivre identities to calculate the multiplication, or division of 2 complex numbers, or the power, or n-th root of a complex number.
          * 
+         * @param string $operation The operation the method will execute. Can be multiplication, division, power, root.
+         * @param array $first_number The first complex number's real and imaginary parts. Left side of the operation.
+         * @param array $second_number The second complex number's real and imaginary parts. Right side of the operation.
+         * @param array $power The power to which the method will raise the first complex number (either power, or root). The default is 0.
+         * 
+         * @return array Returns an array containing the length and argument upon multiplication, division, power, and the length and arguments upon taking the n-th root.
          */
         public function UseMoivre($operation, $first_number, $second_number, $power=0){
             $return_values = [];
@@ -1272,7 +1285,11 @@
         }
 
         /**
+         * This public method returns the trigonometric form of a complex number.
          * 
+         * @param array $algebraic_form An array containing the real and imaginary part of the complex number.
+         * 
+         * @return array Returns an array containing the length and argument of the complex number.
          */
         public function GetTrigonometricForm($algebraic_form = [0,0]){
             $length = sqrt($algebraic_form[0]**2 + $algebraic_form[1]**2);
@@ -1287,7 +1304,13 @@
         }
 
         /**
+         * This public method determines the binomial theorem for the coefficients and exponents.
          * 
+         * @param array $coefficients The coefficients of the theorem.
+         * @param array $exponents The exponents of the variables next to the coefficients and the exponent of the sum.
+         * @param bool $variables_are_same This parameter decides whether the variables in the binomial theorem are the same, or not. The default is true.
+         * 
+         * @return array Returns an array containing expanded form of the binomial theorem's sum.
          */
         public function GetBinomialTheorem($coefficients, $exponents, $variables_are_same = true){
             $first_number = $coefficients[0];
