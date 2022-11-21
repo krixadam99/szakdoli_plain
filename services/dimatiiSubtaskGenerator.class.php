@@ -1,5 +1,9 @@
 <?php
-
+    /**
+     * This is a helper class which will generate a subtask related to Discrete mathematics II. given by the main topic, subtopic indices and the number of subtasks.
+     * 
+     * This class will be used by the DimatiiTasks and TaskGenerationController classes.
+     */
     class DimatiiSubtaskGenerator {
         private $dimat_helper_functions;
         
@@ -13,6 +17,15 @@
             $this->dimat_helper_functions = new DimatiiHelperFunctions();
         }
 
+        /**
+         * This method is responsible for creating a set of appropriate subtasks related to Discrete mathematics II..
+         * 
+         * @param string $main_topic_number The main topic's number.
+         * @param string $subtopic_number The subtopic's number.
+         * @param int $number_of_subtasks The number of subtasks to be generated.
+         * 
+         * @return array Returns an array containing the subtasks' data, the subtasks' descriptions, subtasks' solutions and the printable solution for each subtask.
+         */
         public function CreateSubtask($main_topic_number, $subtopic_number, $number_of_subtasks){
             $subtask = [];
             switch($main_topic_number){
@@ -94,7 +107,12 @@
         }
         
         /**
-         * This private method will create division pairs for for the first subtask of the first task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the first main topic - first subtopic of Discrete Mathematics II.
+         * 
+         * Per subtask:
+         * 
+         * Create dividand, divisor pair. These are whole numbers from the [-1000,1000] interval.
+         * The method also determines the quotient and residue.
          * 
          * @param int $number_of_pairs The number of pairs which is a positive whole number.
          * 
@@ -117,7 +135,12 @@
         }
 
         /**
-         * This private method will create distinct numbers for the second subtask of the first task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the first main topic - second subtopic of Discrete Mathematics II.
+         * 
+         * Per subtask:
+         * 
+         * Pick the given amount of distinct whole numbers from the [100,1000] interval.
+         * Determine the prime factorizations for these numbers.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -150,7 +173,12 @@
         }
 
         /**
-         * This private method will create distinct numbers for the third subtask of the first task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the first main topic - third subtopic of Discrete Mathematics II.
+         * 
+         * Per subtask:
+         * 
+         * Pick the given amount of distinct whole numbers from the [100,1000] interval.
+         * Determine the number of divisors for these numbers.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -198,7 +226,12 @@
         }
 
         /**
-         * This private method will create distinct pair of numbers for the fourth subtask of the first task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the first main topic - fourth subtopic of Discrete Mathematics II.
+         * 
+         * Per subtask:
+         * 
+         * Pick a pair of whole numbers from the [-1000, 1000] interval, where the second number must be positive.
+         * For each subtask the student has to find a number being congruent with the first number modulo second number.
          * 
          * @param int $number_of_numbers The number of pairs which is a positive whole number.
          * 
@@ -221,7 +254,12 @@
         }
 
         /**
-         * This private method will create distinct numbers for the first subtask of the second task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the second main topic - first subtopic of Discrete Mathematics II.
+         * 
+         * Per subtask:
+         * 
+         * Picks the given amount of whole numbers from the [2,15] interval.
+         * Determines the complete residue system modulo the picked numbers.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -257,9 +295,14 @@
         }
 
         /**
-         * This private method will create distinct numbers for the second subtask of the second task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the second main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the residue classes by representative elements of the created reduced residue systems.
+         * 
+         * Per subtask:
+         * 
+         * Picks the given amount of whole numbers from the [2,25] interval.
+         * Determines the reduced residue system modulo the picked numbers.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -295,9 +338,14 @@
         }
 
         /**
-         * This private method will create distinct numbers for the third subtask of the second task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the second main topic - third subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the size of a reduced residue systems by the Euler's phi function.
+         * 
+         * Per subtask:
+         * 
+         * Picks the given amount of whole numbers from the [1000, 5000] interval.
+         * Determines the size of the reduced residue system modulo the picked numbers.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -341,9 +389,14 @@
         }
 
         /**
-         * This private method will create pairs of numbers for the first subtask of the third task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the third main topic - first subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the gcd for each pair with the Eucleidan algorithm. Additionally, the lcm for these pairs will also be determined.
+         * 
+         * Per subtask:
+         * 
+         * Creates the given amount of distinct pairs, where the elements of the pairs are from the [30, 200] interval and are whole numbers.
+         * Determines the GCD with the Eucleidan algorithm.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -396,9 +449,14 @@
         }
 
         /**
-         * This private method will create triplets of numbers for the first subtask of the fourth task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the fourth main topic - first subtopic of Discrete Mathematics II.
          * 
-         * The subtask is about giving the solution of a linear congruence.
+         * The subtask is about giving the solution for a linear congruences.
+         * 
+         * Per subtask:
+         * 
+         * Creates the given number of triplets (each representing a linear congruence). Each triplet has non-zero, whole numbers from the [-30, 30] interval.
+         * Determines the solution for each linear congruence.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -427,67 +485,7 @@
                 $third_number = $triplets[$linear_congruence_counter][2];
 
                 $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Old meg a " . $first_number . "*x \u{2261} " . $second_number . " mod(" . $third_number . ") lineáris kongruenciát!</label></div>";
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div>";
-                
-                /*for($step_counter = 0; $step_counter < count($actual_steps) - 1; $step_counter++){
-                    $previous_step = $actual_steps[$step_counter];
-                    $next_step = $actual_steps[$step_counter + 1];
-                    
-                    $previous_a = $previous_step[0];
-                    $previous_b = $previous_step[1];
-                    $previous_mod = $previous_step[2];
-                    $helper_previous_a = $previous_step[3];
-                    $helper_previous_b = $previous_step[4];
-                    $helper_previous_mod = $previous_step[2];
-                    $new_a = $next_step[0];
-                    $new_b = $next_step[1];
-                    $new_mod = $next_step[2];
-                    $helper_new_a = $next_step[3];
-                    $helper_new_b = $next_step[4];
-                    $helper_new_mod = $next_step[2];
-
-                    if($previous_a >= $helper_previous_a){
-                        $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . $previous_a . "*x \u{2261} " . $previous_b . " mod(" . $previous_mod . ") - " . 
-                            $helper_previous_a . "*x \u{2261} " . $helper_previous_b . " mod(" . $helper_previous_mod . ") \u{2192} " . 
-                            $new_a . "*x \u{2261} " . $new_b . " mod(" . $new_mod . ");   " . 
-                            $helper_new_a . "*x \u{2261} " . $helper_new_b . " mod(" . $helper_new_mod . ")</label></div><br>";
-                    }else{
-                        $printable_solution = $printable_solution . 
-                            "<div class=\"editable_box\"><label class=\"editable_label\">" . $helper_previous_a . "*x \u{2261} " . $helper_previous_b . " mod(" . $helper_previous_mod . ") - " . 
-                            $previous_a . "*x \u{2261} " . $previous_b . " mod(" . $previous_mod . ") \u{2192} " . 
-                            $helper_new_a . "*x \u{2261} " . $helper_new_b . " mod(" . $helper_new_mod . ");   " . 
-                            $new_a . "*x \u{2261} " . $new_b . " mod(" . $new_mod . ")</label></div>";
-                    }
-
-                    if($new_a == 1 || $new_a == 0 || $helper_new_a == 1 || $helper_new_a == 0){
-                        break;
-                    }
-                }
-                
-                $final_step = $actual_steps[count($actual_steps) - 1];
-                if($final_step[0] === 0){
-                    $final_a = $final_step[3];
-                    $final_b = $final_step[4];
-
-                }else{
-                    $final_a = $final_step[0];
-                    $final_b = $final_step[1];
-                }
-                $final_modulo = $final_step[2];
-                $final_modulo = $final_modulo / $this->dimat_helper_functions->DetermineGCDWithIteration([$final_modulo, $final_a]);
-                $final_b /= $final_a;
-                if($final_b < 0){
-                    while($final_b <= 0){
-                        $final_b += $final_modulo;
-                    }
-                }else{
-                    while($final_b - $final_modulo >= 0){
-                        $final_b -= $final_modulo;
-                    }
-                }
-                $printable_solution =  $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableModuloEquivalence("x", $final_b, $final_modulo, "Végeredmény:") . "</label></div>";
-                */
-                
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $linear_congruence_counter + 1 . ". csoport: </label></div>";            
                 $printable_solution =  $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" . PrintServices::CreatePrintableCongruenceSolution("x", $actual_steps) . "</label></div>";
 
 
@@ -499,9 +497,14 @@
         }
 
         /**
-         * This private method will create triplets of numbers, solution, task and solution texts for the first subtask of the fifth task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the fifth main topic - first subtopic of Discrete Mathematics II.
          * 
-         * The subtask is about giving the solution of diophantine equations.
+         * The subtask is about giving the solution for diophantine equations.
+         * 
+         * Per subtask:
+         * 
+         * Creates a triplet (representing a diophantine equation). The triplet has non-zero, whole numbers from the [-50, 50] interval.
+         * Determines the solution for The diophantine equation.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -543,9 +546,14 @@
         }
 
         /**
-         * This private method will create triplets of numbers, solution, task and solution texts for the second subtask of the fifth task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the first main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for a number division, where the numbers have conditions dividorwise.
+         * 
+         * Per subtask:
+         * 
+         * Creates a triplet (representing a diophantine equation). The triplet has a congr. b (mod c) form, where a, b, c whole numbers, the left side and the modulo are from [2, 100] interval and the right side is from the [200, 1000] interval.
+         * Determines the solution for the diophantine equation.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
@@ -599,9 +607,14 @@
         }
 
         /**
-         * This private method will create linear congruence systems, solution, task and solution texts for the first subtask of the sixth task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the sixth main topic - first subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the solution for congruence systems.
+         * 
+         * Per subtask:
+         * 
+         * Creates a congruence system of triplets (each triplet represents a linear congruence). Each linear congruence is solvable, the numbers in them are from the [-50, 50] interval.
+         * Determines the solution for the congruence system.
          * 
          * @param int $number_of_congruence_systems The number of congruence systems which is a positive whole number. The default value is 1.
          * 
@@ -638,9 +651,14 @@
         }
 
         /**
-         * This private method will create linear congruence systems, solution, task and solution texts for the second subtask of the sixth task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the sixth main topic - second subtopic of Discrete Mathematics II.
          * 
-         * The subtask is about giving the solution for congruence systems ....
+         * The subtask is about finding a number which gives different residues upon divising them with different numbers. 
+         * 
+         * Per subtask:
+         * 
+         * Create a congruence system of 2 linear congruences. Each linear congruence is solvable, the numbers in them are from the [2, 100] interval.
+         * Determines the solution for the congruence system.
          * 
          * @param int $number_of_congruence_systems The number of congruence systems which is a positive whole number. The default value is 1.
          * 
@@ -686,9 +704,15 @@
         }
 
         /**
-         * This private method will create polynomials and places, solution, task and solution texts for the first subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the seventh main topic - first subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the Horner-scheme for polynomials with places.
+         * 
+         * Per subtask:
+         * 
+         * Creates a polynomial expression with degree of 2 - 5 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Picks polynomial degree number of places (polynomial degree - 2 number of roots), where the Horner- scheme will be executed.
+         * Determines the Horner- shceme for these places.
          * 
          * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
          * 
@@ -732,9 +756,15 @@
         }
 
         /**
-         * This private method will create polynomials and a place, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the seventh main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is determining the polynomial division (where the divisor is a first degree polynomial expression) with the help of the Horner- scheme.
+         * 
+         * Per subtask:
+         * 
+         * Creates a polynomial expression with degree of 2 - 5 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Picks 1 place where the Horner- scheme will be executed.
+         * Determines the Horner- shceme for this place.
          * 
          * @param int $number_of_polynomials The number of polynomials which is a positive whole number. The default value is 3.
          * 
@@ -802,9 +832,15 @@
         }
 
         /**
-         * This private method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the eight main topic - first subtopic of Discrete Mathematics II.
          * 
          * The subtask is about determining the polynomial division (the first polynomial expressions will be divided with the second expressions).
+         * 
+         * Per subtask:
+         * 
+         * Creates a polynomial expression with degree of 2 - 5 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Creates a polynomial expression with degree of previous polynomial expression's degree - 1 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Determines the quotients and residue of the first polynomial expression / second polynomial expression division.
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
          * 
@@ -892,9 +928,16 @@
         }
 
         /**
-         * This private method will create pairs of polynomials, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the eight main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is about determining the polynomial multiplication.
+         * 
+         * Per subtask:
+         * 
+         * Creates a polynomial expression with degree of 3 - 5 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Creates a polynomial expression with degree of 1 - 5 and of coefficients (whole numbers) from the [-10,10] interval.
+         * Picks the modulo (whole number) from the [2, 80] interval.
+         * Determines product of first polynomial and second polynomial expressions, then takes the modulo for each coefficient.
          * 
          * @param int $number_of_pairs The number of pairs of polynomials which is a positive whole number. The default value is 1.
          * 
@@ -947,9 +990,10 @@
         }
 
         /**
-         * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the nineth main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the Lagrange interpolation for the generated points.
+         * 
          * Importantly, the polynomial expressions (which happen to be the solutions for the subtasks) are generated first, then the points will be created for each of them. The number of points are greater, or eqaul than the degree of the respective polinomial expression + 1, and all of them will lie on their corresponding polynomial expression.
          * This alternative approach (this reverse method) is used, because this way the coefficients of the interpolation polynomial expressions will be inherently whole numbers (since the created polynomial expressions' coefficients are whole numbers all the time), that is, "will be nice".
          * 
@@ -1005,9 +1049,10 @@
         }
 
         /**
-         * This private method will create points, solution, task and solution texts for the second subtask of the seventh task of Discrete Mathematics II.
+         * This private method will generate a set of tasks related to the nineth main topic - second subtopic of Discrete Mathematics II.
          * 
          * The subtask is about giving the Newton interpolation for the generated points.
+         * 
          * Importantly, the polynomial expressions (which happen to be the solutions for the subtasks) are generated first, then the points will be created for each of them. The number of points are greater, or eqaul than the degree of the respective polinomial expression + 1, and all of them will lie on their corresponding polynomial expression.
          * This alternative approach (this reverse method) is used, because this way the coefficients of the interpolation polynomial expressions will be inherently whole numbers (since the created polynomial expressions' coefficients are whole numbers all the time), that is, "will be nice".
          * Other than this, this function will use the Newton interpolation to create the final polynomial expressions (the ones generated above).
@@ -1119,7 +1164,13 @@
         }
 
         /**
-         * This private method creates the solution text for diophantine equations.
+         * This private method creates a printable version for a diophantine equation.
+         * 
+         * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
+         * @param string $second_variable_name The second parameter's name in the equation. The default is "y".
+         * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
+         * 
+         * @return string Returns a printable version of the diophantine equation.
          */
         private function CreateDiophantineSolutionText($first_variable_name = "x", $second_variable_name = "y", $diophantine_equation, $steps, $solution){
             $task_solution = "";
@@ -1139,7 +1190,12 @@
         }
 
         /**
-         * This private method creates the solution text for diophantine equations.
+         * This private method creates a printable version for the solution of the given CRT.
+         * 
+         * @param array $new_congruence_system An array containing the linear congruences in the CRT.
+         * @param array $actual_solution An array containing the solution and solution steps of the CRT.
+         * 
+         * @return string Returns a printable version of the solution of the given CRT.
          */
         private function CreateCRTSolutionText($new_congruence_system, $actual_solution){
             $number_of_congruences_per_system = count($new_congruence_system);
@@ -1203,7 +1259,13 @@
         }
 
         /**
+         * This private method creates a printable version (table) of the given Horner- sheme.
          * 
+         * @param array $polynomial_expression An array containing the coefficients of the polynomial expression.
+         * @param array $places An array containing the places where the Horner- scheme will be determined.
+         * @param array $horner_schemes The steps of the Horner- scheme.
+         * 
+         * @return string Returns a printable version of the diophantine equation.
          */
         private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
             $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a ";

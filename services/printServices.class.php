@@ -1,10 +1,17 @@
 <?php
     /**
+     * This helper class contains only static methods. 
      * 
+     * These methods will create printable forms of different mathematical structures (like relation, point, polynomial expression). 
+     * These will be used by the views and subtask generator classes.
      */
     class PrintServices {
         /**
+         * This method returns the correct hungarian suffix for a number.
          * 
+         * @param int $number The number for which the method returns the correct suffix.
+         * 
+         * @return string Returns the correct suffix for the given number. 
          */
         static function UseCorrectAdverb($number){
             $suffix = "";
@@ -37,7 +44,11 @@
         }
     
         /**
+         * This method returns the correct hungarian object suffix for a number.
          * 
+         * @param int $number The number for which the method returns the correct object suffix.
+         * 
+         * @return string Returns the correct object suffix for the given number. 
          */
         static function UseCorrectObjectSuffix($number){
             $suffix = "";
@@ -70,7 +81,12 @@
         }
 
         /**
+         * This method prints out a polynomial expression.
          * 
+         * @param int $polynomial_degree The degree of the polynomial expression.
+         * @param array $polynomial_expression_coefficients The coefficients of the polynomial expression.
+         * 
+         * @return void
          */
         static function PrintPolynomialExpression($polynomial_degree, $polynomial_expression_coefficients){
             foreach($polynomial_expression_coefficients as $coefficient_index => $coefficient){
@@ -92,7 +108,11 @@
         }
 
         /**
+         * This method returns the printable version of the given points.
          * 
+         * @param array $points An array containing the points to be printed. Each point is of the form of [first coordinate, second coordinate].
+         * 
+         * @return string Returns a printable version of the given points.
          */
         static function PrintPoints($points){
             $return_string = "";
@@ -106,7 +126,11 @@
         }
     
         /**
+         * This method returns the printable version of the given places.
          * 
+         * @param array $places The places to be printed.
+         * 
+         * @return string Returns a printable version of the given places.
          */
         static function CreatePrintablePlaces($places){
             $return_string = "";
@@ -119,7 +143,16 @@
         }
 
         /**
+         * This method returns the printable version of the given graph.
          * 
+         * The simple and tree graphs will be represented by a number sequence.
+         * The paired graph will be represented by 2 number sequences.
+         * The directed graph will be represented as the relations (an array of ordered pairs).
+         * 
+         * @param array $degrees The degrees of the graph. This is either an array of numbers, or an array of 2 arrays (containing numbers).
+         * @param string $type The type of the graph. The default is "simple".
+         * 
+         * @return string Returns a printable version of the graph.
          */
         static function CreatePrintableGraph($degrees, $type = "simple"){
             $return_string = "[";
@@ -156,13 +189,13 @@
         }
 
         /**
-         * This method creates the string format of the given set.
+         * This method creates the printable version of the given set.
          * 
          * @param string $set_name The name of the set.
          * @param array $set_elements An array containing the elements of a set.
          * @param bool $with_name This parameter determines whether the returned string should also contain the name of the set, on not. The default value is true.
          * 
-         * @return string Returns the printable form of the set.
+         * @return string Returns the printable version of the set.
          */
         static function CreatePrintableSet($set_name, $set_elements, $with_name = true){
             $text = "";
@@ -184,13 +217,13 @@
         }
 
         /**
-         * This method creates the string format of the given relation.
+         * This method creates the printable version of the given relation.
          * 
-         * @param string $relation_name The name of the relation.
-         * @param array $relation_elements An array containing the ordered pairs of the relation in the form of [first element, second element].
+         * @param string  $relation_name The name of the relation.
+         * @param array   $relation_elements An array containing the ordered pairs of the relation in the form of [first element, second element].
          * @param boolean $with_name This parameter determines whether the returned string should also contain the name of the relation, on not. The default value is true.
          * 
-         * @return string Returns the printable form of the relation.
+         * @return string Returns the printable version of the relation.
          */
         static function CreatePrintableRelation($relation_name, $relation_elements, $with_name = true){
             $text = "";
@@ -211,13 +244,13 @@
         }
 
         /**
-         * This method creates the string format of the complex number given by its algebraic form.
+         * This method creates the printable version of the complex number given by its algebraic form.
          * 
-         * @param string $complex_number_name The name of the complex number.
-         * @param array $complex_number An array containing the real and imaginary parts of the complex number.
+         * @param string  $complex_number_name The name of the complex number.
+         * @param array   $complex_number An array containing the real and imaginary parts of the complex number.
          * @param boolean $with_name This parameter determines whether the returned string should also contain the name of the complex number, on not. The default value is true.
          * 
-         * @return string Returns the printable form of the complex number.
+         * @return string Returns the printable version of the complex number.
          */
         static function CreatePrintableComplexNumberAlgebraic($complex_number_name, $complex_number, $with_name = true){
             $text = "";
@@ -231,15 +264,15 @@
         }
 
         /**
-         * This method creates the string format of the complex number given by its trigonometric form.
+         * This method creates the printable version of the complex number given by its trigonometric form.
          * 
-         * @param string $complex_number_name The name of the complex number.
-         * @param array $complex_number An array containing the length and argument of the complex number.
+         * @param string  $complex_number_name The name of the complex number.
+         * @param array   $complex_number An array containing the length and argument of the complex number.
          * @param boolean $pi_form This parameter determines whether the string should contain pi in the cosinus and sinus parts.
          * @param boolean $with_name This parameter determines whether the returned string should also contain the name of the complex number, on not. The default value is true.
          * @param boolean $with_degree This parameter determines whether the string should contain ° in the cosinus and sinus parts.
          * 
-         * @return string Returns the printable form of the complex number.
+         * @return string Returns the printable version of the complex number.
          */
         static function CreatePrintableComplexNumberTrigonometric($complex_number_name, $complex_number, $pi_form = true, $with_name = true, $with_degree = false){
             $text = "";
@@ -259,7 +292,11 @@
         }
 
         /**
+         * This method creates the printable version of a prime factorization.
          * 
+         * @param array $relation An array containing the prime factorization as ordered pairs in the form of [base, power].
+         * 
+         * @return string Returns the printable version of the complex number.
          */
         static function CreatePrintablePrimeFactorization($relation){
             $text = "";
@@ -279,7 +316,7 @@
          * @param string $final_b The right side of the congruence.
          * @param string $final_modulo The modulo of the congruence.
          * 
-         * @return string Returns the printable form of the complex number.
+         * @return string Returns the printable version of the complex number.
          */
         static function CreatePrintableModuloEquivalence($variable_name, $final_b, $final_modulo){
             return "$variable_name \u{2261} " . $final_b . " (mod " . $final_modulo . ") \u{2194} " 
@@ -299,30 +336,45 @@
         }
 
         /**
-         * This method creates the printable form of a congruence.
+         * This method creates the printable version of a congruence.
          * 
          * @param string $variable_name The name of the variable. The default is "x".
          * @param array $congruence The parts (left and right side, and the modulo of the congruence).
          * 
-         * @return string Returns the printable form of the congruence.
+         * @return string Returns the printable version of the congruence.
          */
         static function CreatePrintableCongruence($variable_name = "x", $congruence){
             return  $congruence[0] . "*$variable_name \u{2261} " . $congruence[1] . " (mod " .  $congruence[2] . ")";
         }
 
         /**
+         * This method creates the printable version of the steps of a linear congruence solution.
          * 
+         * @param string $variable_name The name of the variable. The default is "x".
+         * @param array $congruence_steps The steps for solving the the linear congruence.
+         * 
+         * @return string Returns the printable version of the steps of a linear congruence solution.
          */
         static function CreatePrintableCongruenceSolution($variable_name = "x", $congruence_steps){
             $task_solution = "";
             foreach($congruence_steps as $step_counter => $step){
-                $task_solution = $task_solution . "<label class=\"task_solution\">" . $step[0] . "*$variable_name \u{2261} " . $step[1] . " (mod " .  $step[2] . ")</label><br>";
+                if($step_counter !== 0){
+                    $task_solution .= " \u{2194} ";
+                }
+                $task_solution .= $step[0] . "*$variable_name \u{2261} " . $step[1] . " (mod " .  $step[2] . ")";
             }
             return $task_solution;
         }
 
         /**
+         * This method creates the printable version of a polynomial coefficient.
          * 
+         * @param int $coefficient The coefficient.
+         * @param int $coefficient_counter The actual coefficient's index.
+         * @param int $degree The degree of the original polynomial expression.
+         * @param bool $zero_coefficient Whether to include the zero coefficient in the prinatble text, or not. The default is false.
+         * 
+         * @return string Returns the printable version of a polynomial coefficient.
          */
         static function CreatePrintablePolynomialCoefficient($coefficient, $coefficient_counter, $degree, $zero_coefficient = false){
             $text = "";
@@ -343,7 +395,11 @@
         }
 
         /**
+         * This method creates the printable version of a polynomial expression.
          * 
+         * @param array $polynomial_expression The coefficients of the polynomial expression. 
+         * 
+         * @return string Returns the printable version of a polynomial expression.
          */
         static function CreatePrintablePolynomial($polynomial_expression){
             $task_description = "";
@@ -361,7 +417,11 @@
         }
 
         /**
+         * This method creates the printable version of a polynomial expression by pairs.
          * 
+         * @param array $pairs An array containing [coefficient, power] pairs. 
+         * 
+         * @return string Returns the printable version of a polynomial expression.
          */
         static function CreatePrintablePolynomialByPairs($pairs){
             $text = "";
@@ -386,9 +446,16 @@
         }
 
         /**
+         * This method returns a printable version of a row containing a polynomial expression.
          * 
+         * @param array $polynomial_expression The polynomial expression wich will be present in the row.
+         * @param int $degree The degree of the previously mentioned polynomial expression.
+         * @param string $open_tag The opening tag for each coefficient. The default is "<td>".
+         * @param string $close_tag The closing tag for each coefficient. The default is "</td>".
+         * 
+         * @return string Returns the printable version of a row containing a polynomial expression.
          */
-        static function CreatePrintableTableRowWithPolynomial($polynomial_expression, $degree, $open_tag, $close_tag){
+        static function CreatePrintableTableRowWithPolynomial($polynomial_expression, $degree, $open_tag = "<td>", $close_tag = "</td>"){
             $text = "";
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
                 if($coefficient_counter !== 0){
@@ -401,7 +468,11 @@
         }
 
         /**
+         * This method creates the printable version of a points.
          * 
+         * @param array $points An array containing the points to be printed. Each point is of the form of [first coordinate, second coordinate].
+         * 
+         * @return string Returns the printable version of the complex number.
          */
         static function CreatePrintablePoints($points){
             $text = "";

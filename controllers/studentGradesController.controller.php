@@ -341,10 +341,10 @@
                         $lower = $points[$point_counter - 1];
                         $upper = $points[$point_counter];
 
-                        if($lower > $upper){
+                        if($lower >= $upper){
                             $points[$point_counter] = $original_points[$point_counter];
                             $upper = $points[$point_counter];
-                            if($lower > $upper){
+                            if($lower >= $upper){
                                 $points[$point_counter - 1] = $original_points[$point_counter - 1];
                             }
                         }

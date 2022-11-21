@@ -1,5 +1,9 @@
 <?php
-
+    /**
+     * This is a helper class which will generate a subtask related to Discrete mathematics I. given by the main topic, subtopic indices and the number of subtasks.
+     * 
+     * This class will be used by the DimatiTasks and TaskGenerationController classes.
+     */
     class DimatiSubtaskGenerator {
         private $dimat_helper_functions;
         
@@ -14,7 +18,14 @@
         }
 
         /**
+         * This method is responsible for creating a set of appropriate subtasks related to Discrete mathematics I..
          * 
+         * @param string $main_topic_number The main topic's number.
+         * @param string $subtopic_number The subtopic's number.
+         * @param int $number_of_subtasks The number of subtasks to be generated.
+         * @param bool $full_task Whether to generate a full task, or not. For some subtasks it is possible to generate just a part of the subtask. The default is false.
+         * 
+         * @return array Returns an array containing the subtasks' data, the subtasks' descriptions, subtasks' solutions and the printable solution for each subtask.
          */
         public function CreateSubtask($main_topic_number, $subtopic_number, $number_of_subtasks, $full_task = false){
             $subtask = [];
@@ -84,9 +95,15 @@
         }
         
         /**
-         * This private method will create ... for the first subtask of the first task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the first main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Not full task - Randomly generates 3, or 4 sets, pick two operations from ["union", "intersection", "substraction", "complementer", "symmetric difference"] and the operands for these operations.
+         * Full task - Randomly generates 4 sets, then pick operands for each of the operation ["union", "intersection", "substraction", "complementer", "symmetric difference"]. 
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * @param bool $full_task Whether to generate a full task, or not. The default is false.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -105,14 +122,16 @@
 
                 //Make the operations and the solutions
                 if($full_task){
+                    //Create 4 sets of 3 - 10 numbers, each of them is associative
                     $sets = $this->dimat_helper_functions->CreateSets(4, 3, 10, true);
                     array_push($set_of_sets, $sets);
+
+                    // Create the complete set task
                     [$actual_operation_dictionary, $actual_solutions] = $this->CreateFullSetTask($sets, $subtask_counter);
                     array_push($operation_dictionary,$actual_operation_dictionary);
                     $solutions = array_merge($solutions,$actual_solutions);
                 }else{
-                    //Create 3-4 sets
-                    //Each set has maximum 10 elements
+                    //Create 3-4 sets of 3 - 10 numbers, each of them is associative
                     $set_size = mt_rand(3,5);
                     $sets = $this->dimat_helper_functions->CreateSets($set_size, 3, 10, true);
                     
@@ -164,9 +183,17 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the second task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the second main topic - first subtopic Discrete Mathematics I.
+         * 
+         * Per subtask:
+         *
+         * Creates 2 sets of 3 - [8,12] elements each.
+         * Generates a relation of 6 - 12 elements from these 2 relations and 3 other sets of 4 elements each.
+         * Full task - ask for all of the basic definitions of the created relation.
+         * Not full task - ask for random 2 of the basic definitions of the created relation.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * @param bool $full_task Whether to generate a full task, or not. The default is false.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -276,7 +303,13 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the third task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the third main topic - first subtopic Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 3 sets of 4 - [8,12] elements each.
+         * Creates two relations of 6 elements each. The first relation is created by the second and third set. The second relation is created by the first and second set. 
+         * Makes the composition of the two relations.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -315,7 +348,13 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the third task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the third main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates a set of 3 - 4 elements.
+         * Creates a homogenious relation of 8 - 16 elements from the set. 
+         * Determines the characteristics of this relation.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -339,7 +378,6 @@
                 $task_text = $task_text . "R \u{2286} A \u{00D7} A, " . PrintServices::CreatePrintableRelation("R", $relation) . " reláció.</label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg, hogy a következő tulajdonságok közül mellyeket teljesíti a fenti reláció: reflexív, irreflexív, szimmetrikus, antisszimmetrikus, asszimmetrikus, tranzitivitív, dichotóm, trichotóm, ekvivalencia reláció.</label></div>";
                 
-                // + What is missing...
                 $characteristics = array(
                     $this->dimat_helper_functions->IsReflexiveRelation($base_set, $relation),
                     $this->dimat_helper_functions->IsIrreflexiveRelation($base_set, $relation),
@@ -375,7 +413,12 @@
         }
 
         /**
-         * This private method will create ... for the third subtask of the third task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the third main topic - third subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates a set of 3 - 4 elements, then a list of characteristic - is satisfied pairs.
+         * Finally, it determines all of the possible relations that satisfy all of the conditions in the list.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -432,7 +475,12 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the fourth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the fourth main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 2 sets of 3-7 elements each, then a relation of 2-4 elements from these sets.
+         * Determines if the relation is a function, or not.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -475,7 +523,12 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the fourth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the fourth main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 2 sets of 6-12 elements each, then a a function of 4-6 elements from these sets.
+         * Determines if the function is surjective, injective and bijective.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -533,9 +586,16 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the fifth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the fifth main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates a complex number.
+         * Full task - determines the basic traits of the created complex number.
+         * Not full task - picks 2 from the basic traits and determines these for the created number.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * @param bool $full_task Whether to generate a full task, or not. The default is false.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -620,9 +680,16 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the fifth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the fifth main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 4 complex numbers.
+         * Full task - picks operands for each operation from the ["addition", "multiplication", "substraction", "division"] array.
+         * Not full task - picks 2 operations from the ["addition", "multiplication", "substraction", "division"] array then picks the operands from the created complex numbers.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * @param bool $full_task Whether to generate a full task, or not. The default is false.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -691,7 +758,12 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the sixth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the sixth main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 2 complex numbers.
+         * Then detemines the trigonometric forms for these.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -736,7 +808,12 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the sixth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the sixth main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 2 complex numbers.
+         * Then detemines the product and quotient of the complex numbers by their trigonometric forms.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -781,7 +858,12 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the seventh task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the seventh main topic - first subtopic of Discrete Mathematics I.
+         *
+         * Per subtask:
+         * 
+         * Creates 1 complex number and 2 powers (natural numbers). The first power is between 3 and 4 (inclusively), the second is between 5 and 6 (inclusively).
+         * Then detemines the powers of the complex number by its trigonometric form.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -829,7 +911,12 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the seventh task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the seventh main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates 1 complex number and 2 powers for the nth roots (natural numbers). The first power is between 3 and 4 (inclusively), the second is between 5 and 6 (inclusively).
+         * Then detemines the nth roots of the complex number by its trigonometric form.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -885,7 +972,10 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the eigth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the eight main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Creates 2 whole numbers (with variables x and y), then 3 exponents, 2 for the variables and 1 for the sum (positive whole numbers). It also creates the result variable's exponent (between 5 and 15 (inclusively)).
+         * Determines the coefficient for the result expression by the binomial theorem.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -960,7 +1050,12 @@
         }
 
         /**
-         * This private method will create ... for the second subtask of the eigth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the eight main topic - second subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates a polynomial expression with degree between 3 and 5 (inclusively).
+         * Determines the polynomial expression from its roots by the general Viéte- formula.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
          * 
@@ -1065,9 +1160,15 @@
         }
 
         /**
-         * This private method will create ... for the first subtask of the nineth task of Discrete Mathematics I.
+         * This private method will generate a set of tasks related to the nineth main topic - first subtopic of Discrete Mathematics I.
+         * 
+         * Per subtask:
+         * 
+         * Creates a graph with 6 degrees. Each of theme is minimum 0.
+         * While creating these, it also determines if the graph can be created, or not.
          * 
          * @param int $number_of_subtasks The number of subtasks which is a positive whole number.
+         * @param string $graph_type The type of the graph. The default is "simple".
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
@@ -1120,7 +1221,14 @@
         }
 
         /**
+         * This private method creates the complete set task. 
          * 
+         * It will create a subtask for each operation in the ["union", "intersection", "substraction", "complementer", "symmetric difference"] array.
+         * 
+         * @param array $sets The created sets from which the operands will be picked.
+         * @param array $subtask_counter The index of the actual subtask.
+         * 
+         * @return array Returns an array containing the operations and the results of these operations.
          */
         private function CreateFullSetTask($sets, $subtask_counter){            
             $operation_names = ["union", "intersection", "substraction", "complementer", "symmetric difference"];
@@ -1137,22 +1245,31 @@
         }
 
         /**
+         * This private method picks new operand(s) for the actual operation and returns the result of this operation.
          * 
+         * @param array $sets The created sets from which the operands will be picked.
+         * @param int $number_of_sets The number of created sets.
+         * @param int $operation_index The index of the actual operation.
+         * @param array $set_indices The indices pairs/ indices of the sets that were previously chosen for the actual operation.
+         * 
+         * @return array Returns an array containing the new operand(s) for the actual operation, and the result of the operation.
          */
         private function CreateOperandsAndOperationForSets($sets, $number_of_sets, $operation_index, $set_indices){
+            // The names of the sets
             $actual_set_names = array_keys($sets);
             
+            // Pick a new pair of indices from the [0, $number_of_sets] interval
             $new_indices = $this->dimat_helper_functions->PickNewPairOfIndices($set_indices, $number_of_sets);
             $new_element = [$actual_set_names[$new_indices[0]??""],$actual_set_names[$new_indices[1]]??""];
             
             $operands = [[],[]];
-            if($operation_index === 3){
+            if($operation_index === 3){ // Complementer, here we need only one operand
                 $new_index = $this->dimat_helper_functions->PickNewElement($set_indices, $number_of_sets);
                 $picked_set_name = $actual_set_names[$new_index];
                 $universe = $this->dimat_helper_functions->GetUniverse($sets[$picked_set_name]);
                 $new_element =  [$picked_set_name, $universe];
                 $operands = [$sets[$picked_set_name]??[], $universe];
-            }else{
+            }else{ // Union/ Intersection/ Substraction/ Symmetric difference, here we need 2 operands
                 $operands = [$sets[$new_element[0]]??[],$sets[$new_element[1]]??[]];
             }
 
@@ -1161,7 +1278,12 @@
         }
 
         /**
+         * This private method returns the result of the actual operation executed on the operands.
          * 
+         * @param int $operation_index The index of the actual operation.
+         * @param array $operands An array containing the operand(s).
+         * 
+         * @return array Returns an array containing the result of the actual operation executed on the operands.
          */
         private function GetOperationSolutionForSets($operation_index, $operands){
             $first_operand = $operands[0];
@@ -1169,7 +1291,7 @@
             $solution = [];
 
             switch($operation_index){
-                case "0":{
+                case "0":{ // Union
                     $solution = $first_operand;
                     foreach($second_operand as $index => $element){
                         if(!in_array($element,$solution)){
@@ -1177,7 +1299,7 @@
                         }
                     }
                 };break;
-                case "1":{
+                case "1":{ // Intersection
                     $solution = [];
                     foreach($second_operand as $index => $element){
                         if(in_array($element, $first_operand)){
@@ -1185,7 +1307,7 @@
                         }
                     }
                 };break;
-                case "2":{
+                case "2":{ // Substraction
                     $solution = [];
                     foreach($first_operand as $index => $element){
                         if(!in_array($element,$second_operand)){
@@ -1193,7 +1315,7 @@
                         }
                     }
                 };break;
-                case "3":{
+                case "3":{ // Complementer
                     $solution = [];
                     $universe = $second_operand;
                     foreach($universe as $index => $element){
@@ -1202,7 +1324,7 @@
                         }
                     }
                 };break;
-                case "4":{
+                case "4":{ // Symmetric difference
                     $solution = [];
                     
                     foreach($first_operand as $index => $element){
@@ -1223,7 +1345,14 @@
         }
 
         /**
+         * This private method creates the complete complex operations task. 
          * 
+         * It will create a subtask for each operation in the ["addition", "multiplication", "substraction", "division"] array.
+         * 
+         * @param array $set_of_complex_numbers The created complex numbers from which the operands will be picked.
+         * @param array $subtask_counter The index of the actual subtask.
+         * 
+         * @return array Returns an array containing the operations and the results of these operations.
          */
         private function CreateFullComplexOperationsTask($set_of_complex_numbers, $subtask_counter){            
             $operation_names = ["addition", "multiplication", "substraction", "division"];
@@ -1240,15 +1369,25 @@
         }
 
         /**
+         * This private method picks new operands for the actual operation and returns the result of this operation.
          * 
+         * @param array $set_of_complex_numbers The created complex numbers from which the operands will be picked.
+         * @param int $number_of_complex_numbers The number of created complex numbers.
+         * @param int $operation_index The index of the actual operation.
+         * @param array $complex_numbers_indices The indices pairs of the complex numbers that were previously chosen for the actual operation.
+         * 
+         * @return array Returns an array containing the new operands for the actual operation, and the result of the operation.
          */
         private function CreateOperandsAndOperationForComplexNumbers($set_of_complex_numbers, $number_of_complex_numbers, $operation_index, $complex_numbers_indices){
+            // The name of the complex numbers
             $actual_complex_numbers_names = array_keys($set_of_complex_numbers);
             
+            // Pick a new pair of indices from the [0, $number_of_complex_numbers] interval
             $new_indices = $this->dimat_helper_functions->PickNewPairOfIndices($complex_numbers_indices, $number_of_complex_numbers);
             $new_element = [$actual_complex_numbers_names[$new_indices[0]??""],$actual_complex_numbers_names[$new_indices[1]]??""];
             $operands = [$set_of_complex_numbers[$new_element[0]]??[],$set_of_complex_numbers[$new_element[1]]??[]];
 
+            // The operands real and imaginary parts
             $first_number_real_part = $operands[0][0];
             $first_number_imaginary_part = $operands[0][1];
             $second_number_real_part = $operands[1][0];
@@ -1257,19 +1396,19 @@
             $result_imaginary_part = 0;
 
             switch($operation_index){
-                case 0:{
+                case 0:{ // Addition
                     $result_real_part = $first_number_real_part + $second_number_real_part;
                     $result_imaginary_part = $first_number_imaginary_part + $second_number_imaginary_part;
-                };break;
-                case 1:{
+                };break; 
+                case 1:{ // Multiplication
                     $result_real_part = $first_number_real_part * $second_number_real_part - $first_number_imaginary_part * $second_number_imaginary_part;
                     $result_imaginary_part = $first_number_real_part * $second_number_imaginary_part + $first_number_imaginary_part * $second_number_real_part;
                 };break;
-                case 2:{
+                case 2:{ // Substraction
                     $result_real_part = $first_number_real_part - $second_number_real_part;
                     $result_imaginary_part = $first_number_imaginary_part - $second_number_imaginary_part;
                 };break;
-                case 3:{
+                case 3:{ // Division
                     $length_of_second_number = $second_number_real_part**2 + $second_number_imaginary_part**2;
                     $result_real_part = (1/$length_of_second_number)*($first_number_real_part * $second_number_real_part + $first_number_imaginary_part * $second_number_imaginary_part);
                     $result_imaginary_part = (1/$length_of_second_number)*($first_number_imaginary_part * $second_number_real_part - $first_number_real_part * $second_number_imaginary_part);
