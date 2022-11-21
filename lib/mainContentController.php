@@ -4,7 +4,7 @@
      * This is a controller class which defines the basic data that will be used on almost every page (except index, login and registration pages).
      * 
      * The controllers throughout the project (except those that belong to the index, login, or registration pages) will inherit the protected members, and the protected and public methods.
-     * Since we need to know the neptun code, whether the user is an administrator, the students whose status is pending and approved belonging to this user, the groups and subjects for which the user's teacher and student status is pending and approved, so we will set these members here for each controller class. 
+     * Since we need to know in the main part the neptun code, whether the user is an administrator, the students whose status is pending and approved belonging to this user, the groups and subjects for which the user's teacher and student status is pending and approved, so we will set these members here for each controller class. 
     */
     class MainContentController extends FormValidator {
         protected $is_administrator;
@@ -32,7 +32,7 @@
          * The contructor of the MainContentController class.
          * 
          * It will check the URI parameters if the group, topic or subject value is incorrect, then the user will be automatically rediected to the notifications page.
-         * This contructor also aissgns the members to default values.
+         * This contructor also assigns the members to default values.
          * 
          * @return void
         */
@@ -40,7 +40,7 @@
             $this->CheckURIParameters();
             
             $this->is_administrator = false; // Whether the user is the administrator, or not
-            $this->user_data = []; // User data
+            $this->user_data = []; // General user data
             $this->pending_teacher_groups = []; // The group numbers for which the user's teacher status is pending
             $this->pending_student_groups = []; // The group numbers and subject pairs for which the user's student status is pending
             $this->approved_teacher_groups = []; // The group numbers for which the user's teacher status is approved
@@ -50,10 +50,11 @@
             $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
             $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
 
+            // Discrete mathematics I. main topics
             $this->dimat_i_topics = [
                 "Halmazok és műveletek", 
                 "Relációk alapvető definíciói",
-                "Relációk kompozíciója és relációk tulajdonságai",
+                "Relációk kompozíciója és homogén relációk tulajdonságai",
                 "Függvény, mint reláció",
                 "Komplex számok alapvető tulajdonságai",
                 "Komplex számok trigonometrikus alakja",
@@ -62,10 +63,11 @@
                 "Gráfok megszerkeszthetősége"
             ];
 
+            // Discrete mathematics I. subtopics
             $this->dimat_i_subtopics = array(
                 0 => ["Műveletek halmazok között"],
                 1 => ["Relációk alapvető tulajdonságai"],
-                2 => ["Relációk kompozíciója", "Relációk tulajdonságai", "Reláció készítése"],
+                2 => ["Relációk kompozíciója", "Homogén relációk tulajdonságai", "Reláció készítése"],
                 3 => ["Függvény-e a reláció", "Szürjektív, injektív és bijektív függvények"],
                 4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek"],
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
@@ -74,10 +76,11 @@
                 8 => ["Egyszerű gráf megszerkeszthetősége", "páros gráf megszerkeszthetősége", "fagráf megszerkeszthetősége", "irányított gráf megszerkeszthetősége"]
             );
 
+            // Discrete mathematics I. topics explanation
             $this->dimat_i_topics_descriptions = [
                 "Unió, metszet, különbség, komplementer, szimmetrikus differencia", 
                 "Értelmezési tartomány, értékkészlet, megszorítás halmazra, inverz, kép és őskép",
-                "Kompozíció, reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
+                "Relációk ompozíciója; homogén reláció tulajdonságai: reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
                 "Függvények, injekció, szürjekció, bijekció",
                 "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
                 "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
@@ -86,6 +89,7 @@
                 "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
             ];
 
+            // Discrete mathematics II. main topics
             $this->dimat_ii_topics =  [
                 "Maradékos osztás és osztók száma", 
                 "Redukált és teljes maradékrendszerek",
@@ -98,6 +102,7 @@
                 "Lagrange- és Newton-féle interpolációs polinomok"
             ];
 
+            // Discrete mathematics II. subtopics
             $this->dimat_ii_subtopics = array(
                 0 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése"],
                 1 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
@@ -110,6 +115,7 @@
                 8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"]
             );
 
+            // Discrete mathematics II. topics explanation
             $this->dimat_ii_topics_descriptions = [
                 "Maradékos osztások, pozitív szám prímfelbontása, pozitív osztók számának meghatározása, kongruens szám keresése", 
                 "Teljes maradékrendszer megadása reprezentatív elemekkel, redukált maradékrendszer megadása reprezentatív elemekkel, Euler-féle fí függvény",
@@ -217,7 +223,7 @@
 
         /**
          * 
-         * This method sets the class's members.
+         * This method sets the class's members previously introduced in the constructor.
          * 
          * @return void
         */
@@ -249,9 +255,9 @@
                                     $this->approved_student_subject = $user_record["subject_id"];
                                 }else if($user_record["application_request_status"] == "PENDING"){  // The user's pending student rows
                                     array_push($this->pending_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
-                                }else if($user_record["application_request_status"] == "WITHDRAWN"){
+                                }else if($user_record["application_request_status"] == "WITHDRAWN"){ // The user's withdrawn student rows
                                     array_push($this->withdrawn_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
-                                }else if($user_record["application_request_status"] == "DENIED"){
+                                }else if($user_record["application_request_status"] == "DENIED"){ // The user's denied student rows
                                     array_push($this->denied_student_groups, array("subject_id" => $user_record["subject_id"], "subject_group" => $user_record["group_number"]));
                                 }
                             }

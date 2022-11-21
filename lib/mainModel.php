@@ -33,7 +33,7 @@
         /**
          * This public method fetches all of the rows from the users table, or users and user_groups joined tables that belongs to the user with the given neptun code.
          * 
-         * The administrator will only be present in the users table, so for them data should be fetched from the users table.
+         * The administrator will only be present in the users table, so for them data should be fetched only from the users table.
          * Every other user's data will be fetched from the users, user_status and subject_group joined table (the first two will be joined on the neptun_code, the last two on the subject_group_id attribute).
          * 
          * @param string $neptun_code The neptun code of the user.

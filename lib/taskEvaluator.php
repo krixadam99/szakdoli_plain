@@ -301,7 +301,7 @@
                         array_push($return_values, $value);
                     }
                 }else{
-                    if(is_int(strpos($value,"-"))){//It was negative
+                    if(is_int(strpos($value,"-"))){ // It was negative
                         if(is_numeric(str_replace("-", "", $value))){
                             array_push($return_values, "-" . str_replace("-", "", $value));
                         }
@@ -331,7 +331,7 @@
                 if(is_numeric($value)){
                     array_push($return_values, $value);
                 }else{
-                    if(is_int(strpos($value,"-"))){//It was negative
+                    if(is_int(strpos($value,"-"))){ // It was negative
                         if(is_numeric(str_replace("-", "", $value))){
                             array_push($return_values, "-" . str_replace("-", "", $value));
                         }

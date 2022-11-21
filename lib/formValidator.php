@@ -48,6 +48,10 @@
         /**
          * This method validates user inputs based on validation rules.
          * 
+         * The first key is of the form of "<html element name>:<attribute name>", where the earlier is the name of the form element, the latter is the name of the attribute, which will be in the error message.
+         * The key of the first value is the actual user input.
+         * The value for this is an array containing the validation rules, where the keys are the name of the rule, and the value is the condition/ the value with which the methode will compare the user's input (either a string, an integer or an array).
+         * 
          * @param array $validation_array This is an array where the keys are the given inputs. The values are associative arrays, containing the attribute of the given answer (the key), and the rules for this attribute (the value).
          */
         protected function ValidateInputs($validation_array){            
@@ -66,7 +70,7 @@
                         foreach($validation_rules as $attribute => $condition){
                             if($was_valid_before){
                                 switch($attribute){
-                                    case "length":{
+                                    case "length":{ // Validation rules for length
                                         $left_side = strlen($input);
                                         $relation = $condition[0]??">";
                                         $right_side = $condition[1]??0;
@@ -116,7 +120,7 @@
                                             default:break;
                                         }
                                     };break;
-                                    case "not_placeholder":{
+                                    case "not_placeholder":{ // Validation rules for placeholders
                                         $left_side = $input;
                                         $place_holder = $condition;
         
@@ -132,7 +136,7 @@
                                             }
                                         }
                                     };break;
-                                    case "in_array":{
+                                    case "in_array":{ // Validation rule for being in an array 
                                         $left_side = $input;
                                         $array = $condition;
             
@@ -143,7 +147,7 @@
                                             }
                                         }
                                     };break;
-                                    case "unique":{
+                                    case "unique":{ // Validation rule for the data being unique
                                         $left_side = $input;
                                         $array = $condition;
             
@@ -154,7 +158,7 @@
                                             }
                                         }
                                     };break;
-                                    case "filter_var": {
+                                    case "filter_var": { // Validation rule for the data being of right format
                                         $left_side = $input;
             
                                         if(!filter_var($left_side, $condition)){
@@ -162,7 +166,7 @@
                                             $was_valid = false;
                                         }
                                     };break;
-                                    case "preg_match": {
+                                    case "preg_match": { // Validation rule for the data matching a regexp
                                         $left_side = $input;
                                         $array = $condition;
                                         $all_true = true;
@@ -175,7 +179,7 @@
                                             $was_valid = false;
                                         }
                                     };break;
-                                    case "is_same": {
+                                    case "is_same": { // Validation rule for the data being similar to another one
                                         $left_side = $input;
     
                                         if($left_side !== $condition){
@@ -183,7 +187,7 @@
                                             $was_valid = false;
                                         }
                                     };break;
-                                    case "not_is_same": {
+                                    case "not_is_same": { // Validation rule for the data being different from another one
                                         $left_side = $input;
     
                                         if($left_side === $condition){
@@ -191,7 +195,7 @@
                                             $was_valid = false;
                                         }
                                     };break;
-                                    case "is_same_password": {
+                                    case "is_same_password": { // Validation rule for 2 passwords being equal to each other
                                         $left_side = $input;
 
                                         if(!password_verify($left_side, $condition)){
