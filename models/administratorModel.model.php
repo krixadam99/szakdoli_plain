@@ -57,8 +57,10 @@
                         $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = \"0\"; ";
                     }
 
+                    // INSERT INTO/ UPDATE the subject_group table with the id - group pair
                     $query .= "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
                     
+                    // INSERT INTO/ UPDATE the expectation_rules table
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"practice_count\") ON DUPLICATE KEY UPDATE task_type = \"practice_count\";"; 
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"extra\") ON DUPLICATE KEY UPDATE task_type = \"extra\";"; 
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"middle_term_exam\") ON DUPLICATE KEY UPDATE task_type = \"middle_term_exam\";"; 
@@ -67,6 +69,7 @@
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"final_term_exam_correction\") ON DUPLICATE KEY UPDATE task_type = \"final_term_exam_correction\";"; 
                     $query .= "INSERT INTO expectation_rules(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"small_tests\") ON DUPLICATE KEY UPDATE task_type = \"small_tests\";"; 
                     
+                    // INSERT INTO/ UPDATE the task_due_to_date table
                     $query .= "INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"middle_term_exam\") ON DUPLICATE KEY UPDATE task_type = \"middle_term_exam\";"; 
                     $query .= "INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"final_term_exam\") ON DUPLICATE KEY UPDATE task_type = \"final_term_exam\";";
                     $query .= "INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"middle_term_exam_correction\") ON DUPLICATE KEY UPDATE task_type = \"middle_term_exam_correction\";"; 

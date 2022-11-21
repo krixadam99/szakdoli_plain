@@ -1,6 +1,6 @@
 <?php
     /**
-     * This is a model class which is responsible for updating the password of a user, and fetching their neptun code.
+     * This is a model class which is responsible for updating the password of a user, and fetching their password and administrator status.
      * 
      * This model extends the AuthenticationModel class.
     */

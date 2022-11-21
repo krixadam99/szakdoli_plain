@@ -46,12 +46,14 @@
                 $subject_id = $record["subject_id"];
                 $pending_status = $record["application_request_status"];
                 
+                // Set the status of the user to the new status only if the previous status is not "WITHDRAWN"
                 $query .= "UPDATE user_status SET application_request_status = \"$pending_status\" WHERE neptun_code = \"$neptun_code\" 
                 AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\") 
                 AND is_teacher = \"0\" AND application_request_status != \"WITHDRAWN\"; "; 
                 
-                
+                // If the new status is "APPROVED"
                 if($pending_status === "APPROVED"){
+                    // Set the user's status to "WITHDRAWN" where the user is a teacher, or the user is a student, and their actual status is not "APPROVED"
                     if($subject_id === "i"){
                         $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
                     }else{
@@ -59,9 +61,11 @@
                     }
                     $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
                 
+                    // INSERT INTO/ UPDATE the results table with the new user
                     $query .= "INSERT INTO results(neptun_code, subject_group_id) VALUES(\"$neptun_code\", (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) 
                     ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
 
+                    // INSERT INTO/ UPDATE the practice_task_points table with the new user
                     $query .= "INSERT INTO practice_task_points(neptun_code, subject_group_id) VALUES(\"$neptun_code\", (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) 
                     ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
                 }

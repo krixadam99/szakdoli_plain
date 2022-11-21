@@ -1,6 +1,6 @@
 <?php
     /**
-     * This is a model class which is responsible for the authentication. It has basic methods like the one which fetches all of the neptun codes.
+     * This is a model class which is responsible for the authentication.
      * 
      * This model extends the MainModel class.
     */

@@ -38,6 +38,7 @@
             $query .= "subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")";
             $query .= " AND neptun_code = \"$neptun_code\"; ";
 
+            // If the user's practice score is above (or equal to) 10, and the previous score is below 10, plus the practice task is not over the deadline, then the user's extra point will be incremented.
             if($previous_point < 10 && $new_point >= 10){
                 $extra_points = $this->database->LoadDataFromDatabase("SELECT extra FROM results WHERE subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
                 $extra_points = $extra_points[0]??array("extra" => 0);

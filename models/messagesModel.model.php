@@ -87,11 +87,11 @@
         }
 
         /**
-         * This public method returns the neptun codes of the users from the user_groups table who has some connection to the given user.
+         * This public method returns the neptun codes of the users from the user_groups table who has connection with the given user.
          * 
          * @param string $neptun_code The neptun code of the user.
          * 
-         * @return array Returns an array containing the neptun codes of the users from the user_groups table who either has some connection to the given user, or a teacher, or the administrator.
+         * @return array Returns an array containing the neptun codes of the users from the user_groups table who either has some connection with the given user, or a teacher, or the administrator.
          */
         public function GetNeptunCodes($neptun_code){
             $neptun_code = strtoupper($neptun_code);
