@@ -172,6 +172,26 @@
          * @return bool Returns whether the two sets are the same, i.e., contains the same elements with multiplicity, or not.
         */
         protected function AreSetsEqual($first_set,$second_set){
+            $tmp_first_set = [];
+            foreach($first_set as $element){
+                if(is_int($element) || is_float($element)){
+                    $element = round($element, 2);
+                }
+                array_push($tmp_first_set, $element);
+            }
+            $first_set = $tmp_first_set;
+
+            $tmp_second_set = [];
+            foreach($second_set as $element){
+                if(is_int($element) || is_float($element)){
+                    $element = round($element, 2);
+                }
+                array_push($tmp_second_set, $element);
+            }
+            $second_set = $tmp_second_set;
+
+
+
             return count(array_merge(array_diff($first_set,$second_set), array_diff($second_set,$first_set))) == 0;
         }
 
