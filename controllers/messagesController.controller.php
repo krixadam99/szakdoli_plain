@@ -164,7 +164,7 @@
                         $this->Messages();
                     }else{ // If all of the sent data was valid
                         // Get the message with the actual id
-                        $message_with_id = $this->message_model->GetMessageWithId($_SESSION["message_id"]);
+                        $message_with_id = $this->message_model->GetMessageById($_SESSION["message_id"]);
                         if($message_with_id["belongs_to"] >= 0){
                             // Send a reply only when the message (more precisely, the first message in the thread) is not removed by neither the sender, nor the receiver
                             $is_removed_by_receiver = "0";
@@ -173,7 +173,7 @@
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
                             }else{
-                                $message_with_id = $this->message_model->GetMessageWithId($message_with_id["belongs_to"]);
+                                $message_with_id = $this->message_model->GetMessageById($message_with_id["belongs_to"]);
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
                             }

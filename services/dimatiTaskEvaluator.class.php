@@ -294,9 +294,9 @@
 
                 $id = "0_" . $task_counter . "_" . $subtask_counter;
                 if($subtask_counter < 3){
-                    $this->EvaluateInputsWithNumbers($real_solution, $solution_array_key, $id, false);
+                    $this->EvaluateInputsWithNumbers($real_solution, $solution_array_key, $id);
                 }else{
-                    $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                    $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, true, "algebraic");
                 }
                 $this->solution_counter++;
                 $subtask_counter++;
@@ -311,7 +311,7 @@
                 }
 
                 $id = "1_" . $task_counter . "_" . $subtask_counter;
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, true, "algebraic");
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -336,7 +336,7 @@
 
                 $id = "0_" . $task_counter . "_" . $subtask_counter;
                 
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false, "trigonometric");
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -350,7 +350,7 @@
                 }
 
                 $id = "1_" . $task_counter . "_" . $subtask_counter;
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false, "trigonometric");
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -373,7 +373,7 @@
 
                 $id = "0_" . $task_counter . "_" . $subtask_counter;
                 
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false, "trigonometric");
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -387,7 +387,7 @@
                 }
 
                 $id = "1_" . $task_counter . "_" . $subtask_counter;
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, false, "trigonometric");
                 $this->solution_counter++;
                 $subtask_counter++;
             }
@@ -417,7 +417,7 @@
                     array_push($relation_form,[$real_solution[$coefficient_counter], count($real_solution) - 1 - $coefficient_counter]);
                 }
 
-                $this->EvaluateInputsWithRelations($relation_form, $solution_array_key, $id, false);
+                $this->EvaluateInputsWithRelations($relation_form, $solution_array_key, $id, false, false, "", "polynomial");
                 $this->solution_counter++;
                 $subtask_counter++;
             }

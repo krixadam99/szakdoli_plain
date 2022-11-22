@@ -4,7 +4,7 @@
         <label class="task_label">
             1.<?= $complex_number_counter + 1 ?>. részfeladat: Add meg a
                 <?= PrintServices::CreatePrintableComplexNumberAlgebraic("v<sub>$bottom_index</sub>", $complex_number)?>
-            komplex szám tulajdonságait!
+            komplex szám tulajdonságait! A tizedesvesszőt a .-tal jelöld!
         </label>
         <?php 
             $solution_label = "<label>Re(v<sub>$bottom_index</sub>) = </label>";

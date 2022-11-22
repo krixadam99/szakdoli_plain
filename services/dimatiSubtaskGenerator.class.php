@@ -122,7 +122,7 @@
 
                 //Make the operations and the solutions
                 if($full_task){
-                    //Create 4 sets of 3 - 10 numbers, each of them is associative
+                    //Create 4 sets of 3 - 10 elements, each of them is associative (has a name)
                     $sets = $this->dimat_helper_functions->CreateSets(4, 3, 10, true);
                     array_push($set_of_sets, $sets);
 
@@ -131,7 +131,7 @@
                     array_push($operation_dictionary,$actual_operation_dictionary);
                     $solutions = array_merge($solutions,$actual_solutions);
                 }else{
-                    //Create 3-4 sets of 3 - 10 numbers, each of them is associative
+                    //Create 3-4 sets of 3 - 10 elements, each of them is associative (has a name)
                     $set_size = mt_rand(3,5);
                     $sets = $this->dimat_helper_functions->CreateSets($set_size, 3, 10, true);
                     
@@ -153,6 +153,8 @@
                     $actual_operation_dictionary = array("union" => [], "intersection" => [], "substraction" => [], "complementer" => [], "symmetric difference" => []);
                     for($counter = 0; $counter < 2; $counter++){
                         $operation_counter = mt_rand(0,4);
+
+                        // The solution for the task
                         [$new_element, $solution_for_new_element] = $this->CreateOperandsAndOperationForSets($sets, $set_size, $operation_counter, $actual_operation_dictionary[$operation_names[$operation_counter]]);
                         array_push($actual_operation_dictionary[$operation_names[$operation_counter]], $new_element);
 
@@ -206,6 +208,7 @@
             
             $task_data = array("relations" => [], "sets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                // Create 2 sets of 3 - [8,12] elements, non of them is associative
                 [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, 3, mt_rand(8,12), false, false);
                 $number_of_pairs = mt_rand(6, 12);
                 $same = mt_rand(0, 1)==0?false:true;
@@ -218,6 +221,7 @@
                     }
                 }
 
+                // Create relation
                 $relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, $number_of_pairs);
                 $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
                 $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
@@ -229,6 +233,7 @@
 
                 //Make the operations and the solutions
                 if($full_task){
+                    // The solution for the task
                     $solutions = array_merge($solutions,[
                         "solution_" . $subtask_counter . "_0" => $this->dimat_helper_functions->GetDomainOfRelation($relation),
                         "solution_" . $subtask_counter . "_1" => $this->dimat_helper_functions->GetImageOfRelation($relation),
@@ -238,7 +243,10 @@
                         "solution_" . $subtask_counter . "_5" => $this->dimat_helper_functions->GetDomainBySet($relation, $make_domain_to_set)
                     ]);
                 }else{
+                    // Task description for the task generation page
                     $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
+                    
+                    // Task solution for the task generation page
                     $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                     $set_counter = 0;
                     if($same){
@@ -253,13 +261,15 @@
                     $task_text = $task_text . PrintServices::CreatePrintableRelation("R", $relation) . "</label></div>";
                     $printable_solution = $printable_solution . PrintServices::CreatePrintableRelation("R", $relation) . "</label></div>";
 
-                    $previous_task = "";
+                    $previous_task = -1;
                     for($counter = 0; $counter < 2; $counter++){
                         $new_task = mt_rand(0,5);
+                        // Chose a new task
                         while($new_task === $previous_task){
                             $new_task = mt_rand(0,5);
                         }
                         
+                        // The solution for the task
                         $task_text_part = "";
                         switch($new_task){
                             case 0:{
@@ -322,18 +332,26 @@
             
             $task_data = array("relation_pairs" => [], "set_triplets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
+                // Create 3 sets of 4 - [8,12] elements, non of them is associative
                 [$first_set, $second_set, $third_set] = $this->dimat_helper_functions->CreateSets(3, 4, mt_rand(8,12), false, false);
+                
+                // Create 2 relations, each of them is 6 elements
+                // The first relation is created by the second and third set. The second relation is created by the first and second set. 
                 $first_relation = $this->dimat_helper_functions->CreateDescartesProduct($second_set, $third_set, 6);
                 $second_relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, 6);
                 array_push($task_data["relation_pairs"], [$first_relation, $second_relation]);
                 array_push($task_data["set_triplets"], array("A" => $first_set, "B" => $second_set, "C" => $third_set));
                 
+                // Updating the task description for the task generation page
                 $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Adottak az " .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . " és " . PrintServices::CreatePrintableSet("C", $third_set) .  " halmazok, valamint az ";
                 $task_text = $task_text . "R \u{2286} B \u{00D7} C, " . PrintServices::CreatePrintableRelation("R", $first_relation) . " és az  S \u{2286} A \u{00D7} B, " .PrintServices::CreatePrintableRelation("S", $second_relation) . " relációk.</label></div>";
                 $task_text = $task_text . "<div class=\"editable_box\"><label class=\"editable_label\">Add meg az R \u{00B7} S kompozíció eredményét!</label></div>";
                 
+                // The solution for the task
                 $composition = $this->dimat_helper_functions->CreateCompositionOfRelations($first_relation, $second_relation);
+                
+                // Updating the task solution for the task generation page
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $subtask_counter + 1 . ". csoport: </label></div>";
                 $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">" .  PrintServices::CreatePrintableSet("A", $first_set)  . ", " . PrintServices::CreatePrintableSet("B", $second_set) . " és " . PrintServices::CreatePrintableSet("C", $third_set) .  ";</label></div>";
                 $printable_solution = $printable_solution . "<div class=\"editable_box\"><label class=\"editable_label\">R \u{2286} B \u{00D7} C, " . PrintServices::CreatePrintableRelation("R", $first_relation) . " és S \u{2286} A \u{00D7} B, " .PrintServices::CreatePrintableRelation("S", $second_relation) . ".</label></div>";
@@ -1226,7 +1244,7 @@
          * It will create a subtask for each operation in the ["union", "intersection", "substraction", "complementer", "symmetric difference"] array.
          * 
          * @param array $sets The created sets from which the operands will be picked.
-         * @param array $subtask_counter The index of the actual subtask.
+         * @param string $subtask_counter The index of the actual subtask.
          * 
          * @return array Returns an array containing the operations and the results of these operations.
          */
@@ -1350,7 +1368,7 @@
          * It will create a subtask for each operation in the ["addition", "multiplication", "substraction", "division"] array.
          * 
          * @param array $set_of_complex_numbers The created complex numbers from which the operands will be picked.
-         * @param array $subtask_counter The index of the actual subtask.
+         * @param int $subtask_counter The index of the actual subtask.
          * 
          * @return array Returns an array containing the operations and the results of these operations.
          */

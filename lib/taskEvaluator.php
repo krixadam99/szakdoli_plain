@@ -324,17 +324,17 @@
          * @return array Returns an indexed array with the extracted elements.
         */
         protected function ExtractSolutionFromInputOnlyNumbers($input){
-            $input = preg_replace("/[^0-9-]/", "|", $input);
+            $input = preg_replace("/-[ ]*/", "-", $input);
+            $input = preg_replace("/[^0-9.-]/", "|", $input);
             $values = explode("|", $input);
             $return_values = [];
+            
             foreach($values as $index => $value){
                 if(is_numeric($value)){
-                    array_push($return_values, $value);
+                    array_push($return_values, floatval($value));
                 }else{
-                    if(is_int(strpos($value,"-"))){ // It was negative
-                        if(is_numeric(str_replace("-", "", $value))){
-                            array_push($return_values, "-" . str_replace("-", "", $value));
-                        }
+                    if(is_numeric(str_replace("-", "", $value))){ // It was a negative sign
+                        array_push($return_values, -1*floatval(str_replace("-", "", $value)));
                     }
                 }
             }
@@ -377,7 +377,7 @@
             $given_answer_raw = $this->given_answers[$input_name]??"";
             $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw)[0]??"";
             
-            $was_correct =  $given_answer == $real_value;
+            $was_correct =  $given_answer == round($real_value,2);
             if($was_correct){
                 $this->correct_answer_counter += 1;
             }
@@ -395,20 +395,34 @@
          * @param array $real_value An indexed array containing the set's elements.
          * @param string $input_name A string, the key of the element in the user's given answers' array.
          * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
-         * @param bool $only_numbers Let only numbers to be evaluated.
+         * @param bool $only_numbers Let only numbers to be evaluated. The default is true.
+         * @param string $print_config The default is "".
          * 
          * @return void
          */
-        protected function EvaluateInputsWithSets($real_value, $input_name, $answer_id, $only_numbers = true){
+        protected function EvaluateInputsWithSets($real_value, $input_name, $answer_id, $only_numbers = true, $print_config = ""){
             $given_answer_raw = $this->given_answers[$input_name]??"";
             if($only_numbers){
                 $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw);
             }else{
                 $given_answer = $this->ExtractSolutionFromInput($given_answer_raw);
             }
-            
-            $answer_text = PrintServices::CreatePrintableSet("", $given_answer, false);
-            $solution_text = PrintServices::CreatePrintableSet("", $real_value, false);
+
+
+            switch($print_config){
+                case "algebraic":{
+                    $answer_text = PrintServices::CreatePrintableComplexNumberAlgebraic("", $given_answer, false);
+                    $solution_text = PrintServices::CreatePrintableComplexNumberAlgebraic("", $real_value, false);
+                };break;
+                case "trigonometric":{
+                    $answer_text = PrintServices::CreatePrintableComplexNumberTrigonometric("", $given_answer, true, false);
+                    $solution_text = PrintServices::CreatePrintableComplexNumberTrigonometric("", $real_value, true, false);
+                };break;
+                default:{
+                    $answer_text = PrintServices::CreatePrintableSet("", $given_answer, false);
+                    $solution_text = PrintServices::CreatePrintableSet("", $real_value, false);
+                }break;
+            }
             $was_correct = $this->AreSetsEqual($given_answer, $real_value) && $given_answer_raw !== "Megoldásom...";
             if($was_correct){
                 $this->correct_answer_counter += 1;
@@ -430,20 +444,31 @@
          * @param bool $only_numbers Let only numbers to be evaluated. The default is true.
          * @param bool $use_own_text Send back an alternative solution text. The default is false.
          * @param string $answer_text The orinigally made printable text. The default is "".
+         * @param string $print_config The default is "".
          * 
          * @return void
          */
-        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id, $only_numbers = true, $use_own_text = false, $solution_text = ""){
+        protected function EvaluateInputsWithRelations($real_value, $answer_counter, $answer_id, $only_numbers = true, $use_own_text = false, $solution_text = "", $print_config = ""){
             $given_answer_raw = $this->given_answers[$answer_counter]??"";
             if($only_numbers){
                 $given_answer = $this->CreateRelation($this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw));
             }else{
                 $given_answer = $this->CreateRelation($this->ExtractSolutionFromInput($given_answer_raw));
             }
-            
-            $answer_text = PrintServices::CreatePrintableRelation("", $given_answer, false);
-            if(!$use_own_text){
-                $solution_text = PrintServices::CreatePrintableRelation("", $real_value, false);
+
+            switch($print_config){
+                case "polynomial":{
+                    $answer_text = PrintServices::CreatePrintablePolynomialByPairs($given_answer);
+                    if(!$use_own_text){
+                        $solution_text = PrintServices::CreatePrintablePolynomialByPairs($real_value);
+                    }
+                };break;
+                default:{
+                    $answer_text = PrintServices::CreatePrintableRelation("", $given_answer, false);
+                    if(!$use_own_text){
+                        $solution_text = PrintServices::CreatePrintableRelation("", $real_value, false);
+                    }
+                }break;
             }
             
             $was_correct = $this->AreRelationsEqual($given_answer, $real_value);

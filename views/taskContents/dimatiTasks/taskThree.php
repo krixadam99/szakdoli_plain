@@ -94,7 +94,7 @@
         </label>
         <?php 
             $task_counter = "2_$base_set_counter";
-            $answer_label = "Néhány lehetséges megoldás:";
+            $answer_label = "R = ";
         ?>
         <?php $solution_label = "R = "?>
         <?php include("./views/taskContents/solutionInput.php")?>

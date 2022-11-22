@@ -66,7 +66,7 @@
          * 
          * @return array Returns a message given by the id.
          */
-        public function GetMessageWithId($message_id){
+        public function GetMessageById($message_id){
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.message_id = \"$message_id\"";
             return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];

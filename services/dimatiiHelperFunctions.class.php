@@ -581,18 +581,22 @@
             $second_number = abs($pair[1]);
             $smaller = min($first_number, $second_number);
             $bigger = max($first_number, $second_number);
-            $quotient = floor($bigger/$smaller);
-            $residue = $bigger - $quotient*$smaller;
-            array_push($return_array["steps"], [$bigger, $quotient, $smaller, $residue]);
-            while($residue > 0){
-                $bigger = $smaller;
-                $smaller = $residue;
+            if($smaller === 0){
+                return $bigger;
+            }else{
                 $quotient = floor($bigger/$smaller);
                 $residue = $bigger - $quotient*$smaller;
                 array_push($return_array["steps"], [$bigger, $quotient, $smaller, $residue]);
+                while($residue > 0){
+                    $bigger = $smaller;
+                    $smaller = $residue;
+                    $quotient = floor($bigger/$smaller);
+                    $residue = $bigger - $quotient*$smaller;
+                    array_push($return_array["steps"], [$bigger, $quotient, $smaller, $residue]);
+                }
+                $return_array["solution"] = $smaller;
+                return $return_array;
             }
-            $return_array["solution"] = $smaller;
-            return $return_array;
         }
 
         /**
@@ -801,7 +805,7 @@
         public function DetermineDiophantineEquationSolution($triplet){
             $return_array = array("steps" => [], "solution" => []);
             $a = $triplet[0];
-            $b = $triplet[1];
+            $b = $triplet[1]; // "modulo" > 0
             $c = $triplet[2];
             
             // $a * x + $b * y = $c | - ($b * y)
@@ -915,6 +919,7 @@
                     // 1. 3; -3;
                     // 2. 3/2; 3/2; 3/2
                     // 3. 3                    
+
                     $actual_quotient_coefficient = $actual_coefficient/$divisor_polynomial_expression[0]; // $divisor_polynomial_expression[0] cannot be 0
                     array_push($quotient, [$actual_quotient_coefficient, count($dividend_polynomial_expression) - count($divisor_polynomial_expression) - $coefficient_counter]);
                     array_push($quotient_coefficients, $actual_quotient_coefficient);

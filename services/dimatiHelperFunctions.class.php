@@ -199,8 +199,8 @@
          * This method picks a new pair of complex numbers.
          * 
          * @param array $array An array containing the previously picked pairs of complex numbers.
-         * @param string $first_number The first newly picked complex number.
-         * @param string $second_numbers The second newly picked complex number.
+         * @param int $first_number The first newly picked complex number.
+         * @param int $second_numbers The second newly picked complex number.
          * 
          * @return array Returns the names of the newly picked complex numbers.
          */
@@ -963,8 +963,7 @@
         public function IsDichotomousRelation($base_set, $relation){
             foreach($base_set as $first_counter => $first_element){
                 foreach($base_set as $second_counter => $second_element){
-                    if( !in_array([$first_element,$second_element], $relation) && !in_array([$second_element,$first_element], $relation)
-                        || in_array([$first_element,$second_element], $relation) && in_array([$second_element,$first_element], $relation) && $first_element !== $second_element
+                    if( $first_element !== $second_element && !in_array([$first_element,$second_element], $relation) && !in_array([$second_element,$first_element], $relation)
                     ){
                         return false;
                     }
@@ -1189,7 +1188,7 @@
          * @param array $base_set The base set from which the homogenous relation's ordered pairs' elements are coming from.
          * @param array $all_relations An array containing all of the relations on the base set.
          * @param array $characteristics An array containing pairs of relation characteristic - should satisfy the characteristic boolean pairs.
-         * @param array $lower_bound The minimum number of ordered pairs a relation should contain.
+         * @param int $lower_bound The minimum number of ordered pairs a relation should contain.
          * 
          * @return array Returns all of the possible relations, that satisfy each characteristic - should satisfy the characteristic boolean pairs, and has minimum $lower_bound number of ordered pairs.
          */
@@ -1239,7 +1238,7 @@
          * @param string $operation The operation the method will execute. Can be multiplication, division, power, root.
          * @param array $first_number The first complex number's real and imaginary parts. Left side of the operation.
          * @param array $second_number The second complex number's real and imaginary parts. Right side of the operation.
-         * @param array $power The power to which the method will raise the first complex number (either power, or root). The default is 0.
+         * @param int $power The power to which the method will raise the first complex number (either power, or root). The default is 0.
          * 
          * @return array Returns an array containing the length and argument upon multiplication, division, power, and the length and arguments upon taking the n-th root.
          */
@@ -1646,7 +1645,7 @@
          * @param int $min The minimum for each number in the partitioning sum.
          * @param int $max The maximum for each number in the partitioning sum.
          * @param int $number The number of parts of the partitioning sum.
-         * @param int $previous_elements The previous elements in the current partitioning sum.
+         * @param array $previous_elements The previous elements in the current partitioning sum.
          * 
          * @return array Returns all of the partitioning of the a number, where the partitioning sum has the given number of elements, and the numbers in the sum are all above the minimum, and below the maximum (inclusively)
          */

@@ -110,24 +110,36 @@
                     // The task is not a new one
                     $_SESSION["is_new_task"] = false;
                     if(count($_POST) != 0){
-                        $this->SetMembers();
+                        $illegal_format_for_input = false;
+                        foreach($_POST as $key => $value){
+                            if(!is_string($value)){
+                                $illegal_format_for_input = true;
+                                break;
+                            }
+                        }
+
+                        if(!$illegal_format_for_input){
+                            $this->SetMembers();
                         
-                        // Evaluating the user's answers, and updating the actual practice task point
-                        $practice_number = intval($_SESSION["topic"]) + 1;
-                        $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"]);
-                        $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
-                        if($this->approved_student_subject === "i"){
-                            $task_evaluator = new DimatiTaskEvaluator($_POST);
-                        }else if($this->approved_student_subject === "ii"){
-                            $task_evaluator = new DimatiiTaskEvaluator($_POST);
+                            // Evaluating the user's answers, and updating the actual practice task point
+                            $practice_number = intval($_SESSION["topic"]) + 1;
+                            $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"]);
+                            $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
+                            if($this->approved_student_subject === "i"){
+                                $task_evaluator = new DimatiTaskEvaluator($_POST);
+                            }else if($this->approved_student_subject === "ii"){
+                                $task_evaluator = new DimatiiTaskEvaluator($_POST);
+                            }else{
+                                header("Location: ./index.php?site=practiceShowAnswers");
+                            }
+                            $task_evaluator->CheckSolution($_SESSION["topic"]);
+                            $update_point = round($task_evaluator->GetUpdatePoint(),2);
+                            $this->practice_model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
+        
+                            header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
                         }else{
                             header("Location: ./index.php?site=practiceShowAnswers");
                         }
-                        $task_evaluator->CheckSolution($_SESSION["topic"]);
-                        $update_point = round($task_evaluator->GetUpdatePoint(),2);
-                        $this->practice_model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
-    
-                        header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
                     }else{
                         header("Location: ./index.php?site=practiceShowAnswers");
                     }

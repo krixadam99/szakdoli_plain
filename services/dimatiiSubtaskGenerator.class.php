@@ -1169,6 +1169,9 @@
          * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
          * @param string $second_variable_name The second parameter's name in the equation. The default is "y".
          * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
+         * @param array $diophantine_equation An array containing the numbers of the diophantine equation.
+         * @param array $steps An array containing the solution steps.
+         * @param array $solution An array containing the final solution of the equation.
          * 
          * @return string Returns a printable version of the diophantine equation.
          */
@@ -1190,12 +1193,12 @@
         }
 
         /**
-         * This private method creates a printable version for the solution of the given CRT.
+         * This private method...
          * 
          * @param array $new_congruence_system An array containing the linear congruences in the CRT.
          * @param array $actual_solution An array containing the solution and solution steps of the CRT.
          * 
-         * @return string Returns a printable version of the solution of the given CRT.
+         * @return string Returns a...
          */
         private function CreateCRTSolutionText($new_congruence_system, $actual_solution){
             $number_of_congruences_per_system = count($new_congruence_system);
@@ -1259,13 +1262,13 @@
         }
 
         /**
-         * This private method creates a printable version (table) of the given Horner- sheme.
+         * This private method...
          * 
          * @param array $polynomial_expression An array containing the coefficients of the polynomial expression.
          * @param array $places An array containing the places where the Horner- scheme will be determined.
          * @param array $horner_schemes The steps of the Horner- scheme.
          * 
-         * @return string Returns a printable version of the diophantine equation.
+         * @return string Returns an array containing the...
          */
         private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
             $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a ";

@@ -2,7 +2,7 @@
     <?php if(isset($_SESSION["answers"]["answer_" . $task_counter])):?>
             <?php $current_answer= $_SESSION["answers"]["answer_" . $task_counter]?>
             <div class="solution_container">
-                <?=$solution_label??"<label>Megoldásom: </label>"?>
+                <label><?=$solution_label??"Megoldásom:"?></label>
                 <input type="text" name=<?="solution_" . $task_counter?> value="<?= $current_answer["answer"]?>" class=<?= $current_answer["correct"]?"correct":"wrong"?> readonly>
             </div>
             <div class="solution_label_container">
@@ -10,7 +10,7 @@
                     <?php if($current_answer["answer"] !== "Megoldásom..."):?>
                         <?=$current_answer["answer_text"]??""?>
                     <?php else:?>
-                        "Megoldásom..."
+                            "Megoldásom..."
                     <?php endif?>
                 </label>
                 <label class="task_label">
@@ -28,7 +28,7 @@
         <div class="solution_container">
             <?php 
                 if(isset($solution_label)){
-                    echo($solution_label);
+                    echo("<label>" . $solution_label . "</label>");
                 }else{
                     echo("<label>Megoldásom: </label>");
                 }
@@ -38,7 +38,9 @@
     <?php endif?>
 <?php else:?>
     <div class="solution_container">
-        <?=$solution_label??"Megoldásom: "?>
+        <label>
+            <?=$solution_label??"Megoldásom: "?>
+        </label>
         <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
     </div>
 <?php endif?>

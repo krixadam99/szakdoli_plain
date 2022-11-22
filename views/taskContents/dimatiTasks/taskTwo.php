@@ -23,22 +23,22 @@
             <label class="task_label">
                 <?=$counter + 1?>.<?=$subtask_counter + 1?>. részfeladat:
                 <?php if($subtask_counter == 0):?>
-                    <?php $solution_label = "Dom<span class=\"bottom\">R</span> = "?>
+                    <?php $solution_label = "Dom<sub>R</sub> = "?>
                     Az R reláció értelmezési tartománya:
                 <?php elseif($subtask_counter == 1):?>
-                    <?php $solution_label = "Ran<span class=\"bottom\">R</span> = "?>
+                    <?php $solution_label = "Ran<sub>R</sub> = "?>
                     Az R reláció értékkészlete:
                 <?php elseif($subtask_counter == 2):?>
-                    <?php $solution_label = "R<span class=\"bottom\">" . PrintServices::CreatePrintableSet("", $_SESSION["task"]["sets"][$counter]["N"], false) . "</span> = "?>
+                    <?php $solution_label = "R<sub>" . PrintServices::CreatePrintableSet("", $_SESSION["task"]["sets"][$counter]["N"], false) . "</sub> = "?>
                     Az R reláció leszűkítése az N halmazra (itt (elem,elem) (pl.: (1,1), (1,2), ...) felsorolást írj):
                 <?php elseif($subtask_counter == 3):?>
-                    <?php $solution_label = "R<span class=\"exp\">-1</span> = "?>
+                    <?php $solution_label = "R<sup>-1</sup> = "?>
                     Az R reláció inverze (itt is (elem,elem) (pl.: (1,1), (1,2), ...) felsorolást írj):
                 <?php elseif($subtask_counter == 4):?>
                     <?php $solution_label = "R(I) = "?>
                     Az R reláció I halmazon felvett képe:
                 <?php elseif($subtask_counter == 5):?>
-                    <?php $solution_label = "R<span class=\"exp\">-1</span>(D) = "?>
+                    <?php $solution_label = "R<sup>-1</sup>(D) = "?>
                     Az R reláció D halmazon felvett ősképe:
                 <?php endif?>
             </label>

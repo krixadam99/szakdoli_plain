@@ -23,7 +23,7 @@
 ?>
 <div class="solution_container">
     <label><?=$select_label?></label>
-    <select name=<?="solution_" . $task_counter . "_" . $select_counter?> <?=$class_name!=""?"class=\"$class_name\"":""?>> <?=$isset_answer?"disabled":""?>>
+    <select name=<?="solution_" . $task_counter . "_" . $select_counter?> <?=$class_name!=""?"class=\"$class_name\"":""?> <?=$isset_answer?"disabled":""?>>
         <option <?=!$isset_answer?"":"selected"?>>-</option>
         <option <?=$isset_answer && $answer == "Igen"?"selected":""?>>Igen</option>
         <option <?=$isset_answer && $answer == "Nem"?"selected":""?>>Nem</option>
