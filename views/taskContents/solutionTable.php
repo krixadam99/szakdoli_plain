@@ -14,6 +14,9 @@
                     <td style="width:<?=$width?>%">
                         <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_" . $row_counter . "_" . $column_counter-2]??"";?>
                         <input type="text" name=<?="solution_" . $task_counter . "_" . $row_counter . "_" . $column_counter-2 ?> value="<?=$current_answer["answer"]??"..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+                        <?php if(isset($current_answer["answer"])):?>
+                            <label style="color: grey"><?= $current_answer["solution_text"]?></label>
+                        <?php endif?>
                     </td>
                 <?php elseif($column_counter == 0):?>
                     <td style="width:10%">
@@ -22,6 +25,9 @@
                         <?php else:?>
                             <?php $current_answer = $_SESSION["answers"]["answer_" . $task_counter . "_0"]??"";?>
                             <input type="text" name=<?="solution_" . $task_counter . "_0" ?> value="<?=$current_answer["answer"]??"x = ..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+                            <?php if(isset($current_answer["answer"])):?>
+                                <label style="color: grey"><?= $current_answer["solution_text"]?></label>
+                            <?php endif?>
                         <?php endif?>
                     </td>
                 <?php elseif($column_counter == 1):?>

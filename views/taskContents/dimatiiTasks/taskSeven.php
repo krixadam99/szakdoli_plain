@@ -20,6 +20,7 @@
                 array_push($table_header_cells, "p<sub>" .  $polynomial_task_details[0] - $column_counter + 1 . "</sub> = " . $polynomial_task_details[1][$column_counter - 1]);
             }
             array_push($table_header_cells, $polynomial_names[$task_index]);
+            $cell_with_solution = true;
         ?>
         <?php include("./views/taskContents/solutionTable.php")?>
     </div>
@@ -29,7 +30,7 @@
 <?php $task_counter = 2?>
 <label class="task_label">
     <?=3?>. részfeladat: Add meg a <?=$polynomial_names[2]?> = 
-    <?php PrintServices::CreatePrintablePolynomialByPairs($divide_polynomials[0],$divide_polynomials[1])?> polinom hányadospolinomát és maradékát az (x <?=$divide_polynomials[2][0] > 0 ?" - ":" + "?> <?=abs($divide_polynomials[2][0])?>) 
+    <?= PrintServices::CreatePrintablePolynomial($divide_polynomials[1])?> polinom hányadospolinomát és maradékát az (x <?=$divide_polynomials[2][0] > 0 ?" - ":" + "?> <?=abs($divide_polynomials[2][0])?>) 
     polinommal osztva! Az osztáshoz használd a Horner-táblázatot!
 </label>
 <div class="small_task_container">
@@ -47,11 +48,13 @@
     <?php 
         $solution_label = "A hányadospolinom (együttható, fokszám) párosokkal megadva:";
         $task_counter = "2_1";
+        $cell_with_solution = true;
         include("./views/taskContents/solutionInput.php")
     ?>
     <?php 
         $solution_label = "A maradékpolinom (együttható, fokszám) párosokkal megadva:";
         $task_counter = "2_2";
+        $cell_with_solution = true;
         include("./views/taskContents/solutionInput.php")
     ?>
 </div>

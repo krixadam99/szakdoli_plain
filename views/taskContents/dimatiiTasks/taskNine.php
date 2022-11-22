@@ -23,7 +23,7 @@
 <?php $newton_points = $_SESSION["task"]["newton_points"]?>
 <?php $task_counter = 1?>
 <label class="task_label">
-    2. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval! A cellákban a számlálót és nevezőt '/' jellel elválasztva add meg! 
+    2. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval!
     Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
@@ -68,6 +68,11 @@
                                         $current_answer = $_SESSION["answers"]["answer_" . $id]??"";
                                     ?>
                                     <input type="text" name="<?="solution_" . $id?>" value="<?=$current_answer["answer"]??"..."?>" class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>>
+                                    
+                                    <?php if(isset($current_answer["answer"])):?>
+                                        <label style="color: grey"><?= $current_answer["solution_text"]?></label>
+                                    <?php endif?>
+                                    
                                     <?php $input_counter++?>
                                 </td>
                             <?php else:?>

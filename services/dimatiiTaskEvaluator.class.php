@@ -88,6 +88,7 @@
             for($first_subtask_counter = 0; $first_subtask_counter < 2; $first_subtask_counter++){
                 $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][0], "solution_" . "0_" . $first_subtask_counter . "_0", "0_" . $first_subtask_counter . "_0");
                 $this->EvaluateInputsWithNumbers($this->real_solutions["divide_pairs_solution"][$first_subtask_counter][1], "solution_" . "0_" . $first_subtask_counter . "_1", "0_" . $first_subtask_counter . "_1");
+                $this->solution_counter += 2;
             }
 
             // Check second subtask
@@ -109,8 +110,6 @@
                 $this->EvaluateNumberAndCongruence($congruence[0], $congruence[1], "solution_" . "3_" . $fourth_subtask_counter, "3_" . $fourth_subtask_counter);
                 $this->solution_counter += 1;
             }
-
-            // Check fifth subtask
         }
 
         /**
@@ -186,7 +185,7 @@
                             $this->solution_counter += 1;
                         }
                     }
-                    $this->solution_counter += 4;
+                    //$this->solution_counter += 4;
                 }
 
                 for($step_counter = 0; $step_counter < 2; $step_counter++){
@@ -289,7 +288,7 @@
             $this->EvaluateNumberAndCongruence($first_solution[1], $first_solution[2], "solution_0", "0");
             $this->solution_counter += 1;
 
-            // Check second and third subtasks:
+            // Check second subtasks:
             $real_solution_steps = $this->real_solutions["second_crt_solution"]["steps"];
             for($step_counter = 0; $step_counter < count($real_solution_steps); $step_counter++){
                 $real_solution_congruences = $real_solution_steps[$step_counter];
@@ -336,8 +335,8 @@
                 }
             }
 
-            $this->EvaluateInputsWithRelations($quotient_relation, "solution_2_1", "2_1");  
-            $this->EvaluateInputsWithRelations($residue_relation, "solution_2_2", "2_2");  
+            $this->EvaluateInputsWithRelations($quotient_relation, "solution_2_1", "2_1", true, false, "", "polynomial");  
+            $this->EvaluateInputsWithRelations($residue_relation, "solution_2_2", "2_2", true, false, "", "polynomial");  
         }
 
         /**
@@ -349,9 +348,9 @@
         private function CheckEigthTaskSolution(){
             $real_solutions = array_values($this->real_solutions);
 
-            $this->EvaluateInputsWithRelations($real_solutions[0][0], "solution_0_0", "0_0");
-            $this->EvaluateInputsWithRelations($real_solutions[0][1], "solution_0_1", "0_1");
-            $this->EvaluateInputsWithRelations($real_solutions[1], "solution_3_0", "3_0");  
+            $this->EvaluateInputsWithRelations($real_solutions[0][0], "solution_0_0", "0_0", true, false, "", "polynomial");
+            $this->EvaluateInputsWithRelations($real_solutions[0][1], "solution_0_1", "0_1", true, false, "", "polynomial");
+            $this->EvaluateInputsWithRelations($real_solutions[1], "solution_1_0", "1_0", true, false, "", "polynomial");  
             $this->solution_counter += 3;
         }
 
@@ -367,11 +366,11 @@
 
             $answer_counter = 0;
             foreach($base_polynomial_expressions as $point_counter => $base_polynomial_expression){
-                $this->EvaluateInputsWithRelations($base_polynomial_expression, "solution_0_$answer_counter", "0_" . $answer_counter);
+                $this->EvaluateInputsWithRelations($base_polynomial_expression, "solution_0_$answer_counter", "0_" . $answer_counter, true, false, "", "polynomial");
                 $this->solution_counter += 1;
                 $answer_counter++;
             }
-            $this->EvaluateInputsWithRelations($lagrange_interpolation_polynomial, "solution_0_$answer_counter", "0_" . $answer_counter);
+            $this->EvaluateInputsWithRelations($lagrange_interpolation_polynomial, "solution_0_$answer_counter", "0_" . $answer_counter, true, false, "", "polynomial");
             $this->solution_counter += 1;
 
             
@@ -386,7 +385,7 @@
 
             $newton_interpolation_polynomial = $this->real_solutions["Newton_interpolation"]["polynomial_expression"];
             $id = "1_" . count($table_data);
-            $this->EvaluateInputsWithRelations($newton_interpolation_polynomial, "solution_" . $id, $id);
+            $this->EvaluateInputsWithRelations($newton_interpolation_polynomial, "solution_" . $id, $id, true, false, "", "polynomial");
             $this->solution_counter += 1;
         }
     }

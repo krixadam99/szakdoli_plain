@@ -257,7 +257,7 @@ ul {
 
 .solution_table input, .stair_table input, .residue_system_table input{
     width: 60%;
-    margin: 2% 38% 2% 2%;
+    margin: 2% auto 2% 2%;
 }
 
 .stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr, .polynomial_division_table tr {

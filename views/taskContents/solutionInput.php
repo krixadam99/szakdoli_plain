@@ -1,9 +1,13 @@
 <?php if(isset($_SESSION["answers"])):?>
     <?php if(isset($_SESSION["answers"]["answer_" . $task_counter])):?>
-            <?php $current_answer= $_SESSION["answers"]["answer_" . $task_counter]?>
+            <?php $current_answer= $_SESSION["answers"]["answer_" . $task_counter] ?>
             <div class="solution_container">
                 <label><?=$solution_label??"Megoldásom:"?></label>
-                <input type="text" name=<?="solution_" . $task_counter?> value="<?= $current_answer["answer"]?>" class=<?= $current_answer["correct"]?"correct":"wrong"?> readonly>
+                <input type="text" 
+                    name=<?="solution_" . $task_counter?> 
+                    value="<?= $current_answer["answer"]?>" 
+                    class=<?= $current_answer["correct"]?"correct":"wrong"?> readonly
+                >
             </div>
             <div class="solution_label_container">
                 <label class="task_label">Válaszod az átalakítást követően: 

@@ -1,9 +1,9 @@
 <div class="multiple_solution_input_container">
     <?=$variable_name?> = <?php $current_answer_0 = $_SESSION["answers"]["answer_" . $first_operand]??"";?>
-    <input type="text" name=<?="solution_" . $first_operand?> value=<?=$current_answer_0["answer"]??"b..."?> class="<?=IsCorrect($current_answer_0)?>" <?=$current_answer_0 !== ""?"readonly":""?>>
+    <input type="text" name=<?="solution_" . $first_operand?> value="<?=$current_answer_0["answer"]??"b..."?>" class="<?=IsCorrect($current_answer_0)?>" <?=$current_answer_0 !== ""?"readonly":""?>>
     +
     <?php $current_answer_1 = $_SESSION["answers"]["answer_" . $second_operand]??"";?>
-    <input type="text" name=<?="solution_" . $second_operand?> value=<?=$current_answer_1["answer"]??"modulo..."?> class="<?=IsCorrect($current_answer_1)?>" <?=$current_answer_1 !== ""?"readonly":""?>>
+    <input type="text" name=<?="solution_" . $second_operand?> value="<?=$current_answer_1["answer"]??"modulo..."?>" class="<?=IsCorrect($current_answer_1)?>" <?=$current_answer_1 !== ""?"readonly":""?>>
     <?php if(isset($with_multiplier) && $with_multiplier):?>
         * k <?="(k \u{2208} \u{2124})"?>
     <?php endif?>
