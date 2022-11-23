@@ -33,6 +33,11 @@
         public function Login($with_success_bar = false, $email_address = "") {
             session_unset();
             session_destroy();
+            session_start();
+            
+            $_SESSION["previous_controller"] = "LoginController";
+            $_SESSION["form_generated_token"] = bin2hex(random_bytes(24));
+            $this->form_token = $_SESSION["form_generated_token"];
 
             $forgotten_password_page = false;
 
@@ -47,9 +52,14 @@
          * 
          * @return void
         */
-        public function ForgottenPassword() {
+        public function ForgottenPassword() {            
             session_unset();
             session_destroy();
+            session_start();
+
+            $_SESSION["previous_controller"] = "LoginController";
+            $_SESSION["form_generated_token"] = bin2hex(random_bytes(24));
+            $this->form_token = $_SESSION["form_generated_token"];
 
             $forgotten_password_page = true;
 

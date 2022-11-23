@@ -1,6 +1,7 @@
 <?php
     $approved_student_subject = $this->GetApprovedStudentSubject();
     
+    $form_token = $this->GetFormToken();
     $subject_id = "";
     $column_number = 4;
     $practice_topics = [];
@@ -155,6 +156,8 @@
                             <?php endif?>
                             <?php if(isset($_SESSION["is_new_task"]) && $_SESSION["is_new_task"]):?>
                                 <form class="solution_form" method="POST" action="./index.php?site=handInSolution">
+                                    <input type="hidden" name="token" value="<?=$form_token?>">    
+
                                     <?php include("./views/taskContents/taskContent.php")?>
                                     <button type="submit" class="solution_button">Beküldés</button>
                                 </form>

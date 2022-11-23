@@ -1,4 +1,5 @@
 <?php
+    $form_token = $this->GetFormToken();
     $approved_teacher_groups = $this->GetApprovedTeacherGroups();
     $approved_teacher_groups_per_subject = [];
     if(!isset($_SESSION["subject"]) && !isset($_SESSION["group"])){
@@ -71,6 +72,8 @@
         <div class="non_header_navigation_div">
             <?php if(count($students_grades) != 0):?>
                 <form id="grades_form" class="student_grades_form" action="./index.php?site=upgradeStudentGrades" method="POST">
+                    <input type="hidden" name="token" value="<?=$form_token?>">
+
                     <label style="font-size: calc(15px + 0.3vw)">
                         <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport eredményeinek kezelése
                     </label>
@@ -223,6 +226,8 @@
         <div class="non_header_navigation_div"  style="display:none">
             <!-- Task expectation form -->
             <form id="expectation_rules_form" class="student_grades_form" action="./index.php?site=upgradeExpectationRules" method="POST">
+                <input type="hidden" name="token" value="<?=$form_token?>"> 
+            
                 <label style="font-size: calc(15px + 0.3vw)">
                 <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport követelmények módosítása
                 </label>
@@ -281,6 +286,8 @@
         <div class="non_header_navigation_div"  style="display:none">
             <!-- Task due date form -->
             <form id="task_due_date_form" class="student_grades_form" action="./index.php?site=upgradeTaskDueDates" method="POST">
+                <input type="hidden" name="token" value="<?=$form_token?>">
+            
                 <label style="font-size: calc(15px + 0.3vw)">
                 <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport feladatok időpontjainak módosítása
                 </label>
@@ -341,6 +348,8 @@
         <div class="non_header_navigation_div"  style="display:none">
             <!-- Grade levels form -->
             <form id="grade_levels_form" class="student_grades_form" action="./index.php?site=upgradeGradeLevels" method="POST">
+                <input type="hidden" name="token" value="<?=$form_token?>">
+            
                 <label style="font-size: calc(15px + 0.3vw)">
                 <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport jegyek alsó ponthatárjainak módosítása
                 </label>

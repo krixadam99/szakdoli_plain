@@ -1,6 +1,6 @@
-<?php
+<?php    
     session_start();
-    
+
     //The path of the root directory
     define('ROOT_DIRECTORY', __DIR__);   
 
@@ -131,7 +131,6 @@
     $controller_connection->PostMethodConnection("handInSolution", "PracticeController", "HandInSolution");
 
     $controller_connection->PostMethodConnection("createPreview", "TaskGenerationController", "CreatePreview");
-    
     
     //Starting the connection
     $controller_connection->StartConnection();

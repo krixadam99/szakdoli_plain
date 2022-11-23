@@ -1,4 +1,6 @@
 <?php
+    $form_token = $this->GetFormToken();
+
     $messages_belonging_to_message_id = [];
     if(isset($_SESSION["message_id"])){
         $message_id = $_SESSION["message_id"];
@@ -125,6 +127,8 @@
 
             <div class="non_header_navigation_div">
                 <form id="delete_incame_messages" action="./index.php?site=deleteMessages" method="POST">
+                    <input type="hidden" name="token" value="<?=$form_token?>">
+
                     <?php foreach($incame_messages as $message_counter => $message_thread_pair):?>
                         <?php
                             $message = $message_thread_pair["message"];
@@ -160,6 +164,8 @@
             </div>
             <div class="non_header_navigation_div" style="display:none">
                 <form id="delete_sent_messages" action="./index.php?site=deleteMessages" method="POST">
+                    <input type="hidden" name="token" value="<?=$form_token?>">
+
                     <?php foreach($sent_messages as $message_counter => $message_thread_pair):?>
                         <?php
                             $message = $message_thread_pair["message"];
@@ -195,6 +201,8 @@
             </div>
             <div class="non_header_navigation_div" style="display:none">
                 <form id="recover__deleted_messages" action="./index.php?site=recoverDeletedMessages" method="POST">    
+                    <input type="hidden" name="token" value="<?=$form_token?>">
+
                     <?php foreach($removed_messages as $message_counter => $message):?>
                         <?php if($message["thread_count"] == "0"):?>
                             <div class="message_and_bubble_holder">

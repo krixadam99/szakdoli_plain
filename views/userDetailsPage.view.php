@@ -1,4 +1,5 @@
 <?php
+    $form_token = $this->GetFormToken();
 
     $incorrect_parameters = $this->incorrect_parameters;
     $error_params = array_keys($incorrect_parameters);
@@ -42,6 +43,8 @@
         </main>
 
         <form id="group_addition_form" action="./index.php?site=validateGroupAddition" method="POST" style="margin: 2% 4%;width: 92%">
+            <input type="hidden" name="token" value="<?=$form_token?>">
+        
             <div>
                 <div>
                     <label class="title_label">
@@ -141,6 +144,8 @@
         </main>
         
         <form id="user_details_editing_form" action="./index.php?site=validateNewUserInformation" method="POST">
+            <input type="hidden" name="token" value="<?=$form_token?>">
+        
             <div class="label_div">
                 <label class="title_label">Add meg az új email-címet!</label>
             </div>    

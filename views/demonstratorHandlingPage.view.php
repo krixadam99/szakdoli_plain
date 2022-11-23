@@ -1,5 +1,5 @@
 <?php
-
+    $form_token = $this->GetFormToken();
     $pending_teachers = $this->pending_teachers;
 
 ?>
@@ -22,6 +22,8 @@
         <hr>
         <?php if(count($pending_teachers) != 0):?>
             <form id="pending_form" action="./index.php?site=finalizePending" method="POST">
+                <input type="hidden" name="token" value="<?=$form_token?>">
+            
                 <table>
                     <tr>
                         <th>NEPTUN</th>

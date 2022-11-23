@@ -1,5 +1,5 @@
 <?php
-
+    $form_token = $this->GetFormToken();
     $incorrect_parameters = $this->GetIncorrectParameters();
     $correct_parameters = $this->GetCorrectParameters();
     $error_params = array_keys($incorrect_parameters);
@@ -27,6 +27,8 @@
 </head>
 <body>
     <form id="registration_form" action="./index.php?site=validateRegistration" method="POST">
+        <input type="hidden" name="token" value="<?=$form_token?>">
+    
         <div class="label_div">
             <label class="title_label">ADJON MEG NEPTUN KÓDOT!</label>
             <br>

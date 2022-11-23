@@ -32,6 +32,8 @@
             $this->dimat_i_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
             $this->dimat_ii_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
             
+            $_SESSION["form_generated_token"] = bin2hex(random_bytes(24));
+            $this->form_token = $_SESSION["form_generated_token"];
             include(ROOT_DIRECTORY . "/views/registrationForm.view.php");
         }
 

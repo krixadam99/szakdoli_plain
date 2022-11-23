@@ -4,7 +4,7 @@
      * 
      * This model extends the MainModel class.
     */
-    class UserDetailsModel extends MainModel{
+    class UserDetailsModel extends AuthenticationModel{
         /**
          * 
          * The contructor of the UserDetailsModel class.

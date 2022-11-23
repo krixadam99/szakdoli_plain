@@ -10,6 +10,7 @@
     abstract class FormValidator {
         protected $incorrect_parameters = array();
         protected $correct_parameters = array();
+        protected $form_token = "";
 
         /**
          *
@@ -44,6 +45,23 @@
          * @return void
         */
         public function SetCorrectParameter($key, $value) { $this->correct_parameters[$key] = $value; }
+
+        /**
+         *
+         * This method gives back the generated token. The token is used to validate a form origin.
+         *  
+         * @return string The form's token.
+        */
+        public function GetFormToken() : string { return $this->form_token; }
+        
+        /**
+         *
+         * This method sets a value of the form token by the given token.
+         *  
+         * @param string $form_token The value we want to assign to the form's token.
+         * @return void
+        */
+        public function SetFormToken($form_token) { $this->token = $form_token; }
 
         /**
          * This method validates user inputs based on validation rules.

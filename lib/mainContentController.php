@@ -49,6 +49,8 @@
             $this->approved_student_subject = ""; // The subject id for which the user's student status is approved
             $this->withdrawn_student_groups = []; // The group numbers and subject pairs for which the user's student status is withdrawn
             $this->denied_student_groups = []; // The group numbers and subject pairs for which the user's student status is denied
+            
+            $this->form_token = $_SESSION["form_generated_token"]??"";
 
             // Discrete mathematics I. main topics
             $this->dimat_i_topics = [

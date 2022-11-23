@@ -1,4 +1,5 @@
 <?php
+    $form_token = $this->GetFormToken();
     $incorrect_parameters = $this->GetIncorrectParameters();
     $correct_parameters = $this->GetCorrectParameters();
     $error_params = array_keys($incorrect_parameters);
@@ -23,6 +24,8 @@
 
     <?php if(!isset($forgotten_password_page) || isset($forgotten_password_page) && !$forgotten_password_page):?>
         <form id="login_form" action="./index.php?site=validateLogin" method="POST">
+            <input type="hidden" name="token" value="<?=$form_token?>" style="display:none">
+
             <input type="text" id="user_input" name="neptun_code" value="<?=$correct_parameters['neptun_code']??"Neptun kód..."?>" placeholder="Neptun kód...">
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array('neptun_code',$error_params)):?>
@@ -51,6 +54,8 @@
         </form>
     <?php else:?>
         <form id="forgotten_password_form" action="./index.php?site=validateForgottenPassword" method="POST">
+            <input type="hidden" name="token" value="<?=$form_token?>">    
+
             <div class="label_div">
                 <label>
                     A jelszó kiküldéséhez adja meg a neptun kódját!

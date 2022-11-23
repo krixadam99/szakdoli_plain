@@ -23,9 +23,32 @@
                     $controller_name = $path["controller"];
                     $controller_method = $path["controller_method"];
 
+                    if($method === "GET"){
+                        $_SESSION["form_generated_token"] = bin2hex(random_bytes(24));
+                    }
+
+                    if(     $method !== "POST" 
+                        ||  ($method === "POST" 
+                        &&  isset($_SESSION["form_generated_token"]) 
+                        &&  isset($_POST["token"]) 
+                        &&  $_POST["token"] === $_SESSION["form_generated_token"]
+                        &&  isset($_SESSION["previous_controller"])
+                        &&  $_SESSION["previous_controller"] === $controller_name)
+                    ){
+                        $_SESSION["previous_controller"] = $controller_name;
+
+                        $controller = new $controller_name();
+                        $controller->$controller_method();
+                        return;
+                    }
+
+                    
+                    /*var_dump($method, $_SESSION["form_generated_token"]);
+
                     $controller = new $controller_name();
                     $controller->$controller_method();
-                    return;
+                    return;*/
+                    
                 }
             }
 

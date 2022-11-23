@@ -1,4 +1,6 @@
 <form id="new_message_form" action="./index.php?site=<?=isset($_SESSION["message_id"])?"replyToMessage":"sendNewMessage"?>" method="POST">
+    <input type="hidden" name="token" value="<?=$form_token?>">
+
     <div class="message_first_line">
         <div class="message_receiver_div">
             <?php if(!isset($_SESSION["message_id"])):?>

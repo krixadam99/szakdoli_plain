@@ -1,4 +1,6 @@
 <?php
+    $form_token = $this->GetFormToken();
+
     // Approved teacher subjects
     $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
 
@@ -393,7 +395,11 @@
                         <?php if($_SESSION["exam_type"] !== "big"):?>
                             <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
                                 <?php if($_SESSION["exam_type"] !== "small"):?>
-                                    <?= $main_task_counter + 1?>. feladatcsoport:
+                                    <div class="editable_box" style="margin-top:3%">    
+                                        <label class="editable_label">    
+                                            <?= $main_task_counter + 1?>. feladatcsoport:
+                                        </label>
+                                    </div>
                                 <?php endif?>
                                 
                                 <?php 
@@ -450,6 +456,8 @@
                 <hr>    
             <?php endif?>
             <form method="POST" id="task_generation_settings" action="./index.php?site=createPreview">                    
+                <input type="hidden" name="token" value="<?=$form_token?>">
+            
                 <div class="pdf_page_section">
                     <label class="pdf_page_section_label">Feladatsor címe</label>
                     <hr class="full_hr">

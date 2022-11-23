@@ -1,4 +1,6 @@
 <?php
+    $form_token = $this->GetFormToken();
+
     $pending_teacher_groups = $this->pending_teacher_groups;
     $pending_student_groups = $this->pending_student_groups;
     $approved_teacher_groups = $this->approved_teacher_groups;

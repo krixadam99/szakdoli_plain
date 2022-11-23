@@ -1,4 +1,5 @@
 <?php    
+    $form_token = $this->GetFormToken();
     $students = [];
     foreach($all_students as $index => $students_per_subjects_per_group){
         if($students_per_subjects_per_group["subject_id"] === $_SESSION["subject"] && $students_per_subjects_per_group["subject_group"] === $_SESSION["group"]){
@@ -36,6 +37,8 @@
         <?php include("./partials/groupSelection.php")?>
         <?php if(count($not_withdrawn_students) != 0):?>
             <form id="student_handling_form" action="./index.php?site=studentHandling" method="POST">
+                <input type="hidden" name="token" value="<?=$form_token?>">
+            
                 <table>
                     <tr id="header_row">
                         <th>NEPTUN</th>

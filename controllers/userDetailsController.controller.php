@@ -239,7 +239,7 @@
         public function ValidateNewPersonalInformation() {
             if(isset($_SESSION["neptun_code"])){
                 // Fetch all of the email addresses from the users table
-                $email_addresses_array = $this->registration_model->GetEmailAddresses();
+                $email_addresses_array = $this->user_detail_model->GetEmailAddresses();
                 $email_addresses = [];
                 foreach($email_addresses_array as $email_address_counter => $email_address_array){
                     array_push($email_addresses, $email_address_array["email_address"]);
@@ -251,7 +251,7 @@
                 // The reassuring password should be a string, not the placeholder, or the empty string, and it should be the same as the original password
                 $this->ValidateInputs(
                     [
-                        "user_email" => array($_POST["user_email"]??"INVALID" => [
+                        "user_email:email cím" => array($_POST["user_email"]??"INVALID" => [
                             "not_placeholder" => "",
                             "filter_var" => FILTER_VALIDATE_EMAIL,
                             "unique" => $email_addresses

@@ -376,7 +376,7 @@ if(page_container){
         }
     }  
 
-    page_container.addEventListener("click", (event)=>{
+    preview.addEventListener("click", (event)=>{
         if(event.ctrlKey){
             if(all_highlighted){
                 removeHighlights();

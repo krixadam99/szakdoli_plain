@@ -1,4 +1,5 @@
 <?php
+    $form_token = $this->GetFormToken();
     $actual_page = "grades";
 
     $task_expectations_associative = [];
