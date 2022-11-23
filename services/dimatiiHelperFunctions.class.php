@@ -53,6 +53,8 @@
          */
         public function CreateDistinctNumbers($number_of_numbers, $lower_bound = -1000, $upper_bound = 1000){
             [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
+            
+            // Creating the given number of distinct numbers
             if($number_of_numbers <= max($upper_bound, $lower_bound) - min($upper_bound, $lower_bound) + 1){
                 $return_numbers = [];
                 for($counter = 0; $counter < $number_of_numbers; $counter++){
@@ -64,7 +66,7 @@
                     array_push($return_numbers, $element);
                 }
                 return $return_numbers;
-            }else{
+            }else{ // Returning all the possible numbers between the lower and upper bound
                 $return_numbers = [];
                 for($counter = min($upper_bound, $lower_bound); $counter <= max($upper_bound, $lower_bound); $counter++){
                     array_push($return_numbers, $counter);
@@ -88,6 +90,8 @@
         public function CreatePairsOfNumbers($number_of_pairs, $lower_bound = -1000, $upper_bound = 1000, $is_first_positive = false, $is_second_positive = false){
             [$lower_bound,$upper_bound] = $this->EnsureCorrectRange($lower_bound, $upper_bound);
             $range = $upper_bound - $lower_bound + 1;
+            
+            // Creating the given amount of distinct pairs of numbers.
             $return_pairs = [];
             if($number_of_pairs <= $range*($range-1)){
                 for($counter = 0; $counter < $number_of_pairs; $counter++){
@@ -112,7 +116,7 @@
                     }
                     array_push($return_pairs, [$first_element, $second_element]);
                 }
-            }else{
+            }else{ // Returning all the possible pairs of whole numbers from the [lower bound, upper bound] interval
                 for($outer_counter = $lower_bound; $outer_counter < $upper_bound; $outer_counter++){
                     for($inner_counter = $lower_bound; $inner_counter < $upper_bound; $inner_counter++){
                         if($outer_counter !== $inner_counter){
@@ -125,7 +129,9 @@
         }
 
         /**
+         * This method is responsible for picking 2 modulos (whole numbers) of a reduced residue system from the [7,20] interval.
          * 
+         * @return array Returns an array of 2 arrays. Both of them contains the modulo of the reduced residue system, and an array containing the residue classes for the (Z/moduloZ)* reduced residue system with a representative per residue class
          */
         public function CreateReducedResidueSystemPair(){
             $primes_between_7_and_20 = [7, 11, 13, 17, 19];
@@ -1180,7 +1186,12 @@
         }
 
         /**
+         * This private method ensures the correct range.
          * 
+         * @param int $lower_bound The alleged lower bound of the range. 
+         * @param int $upper_bound The alleged upper bound of the range. 
+         * 
+         * @return array Returns the minimum and maximum of the range.
          */
         private function EnsureCorrectRange($lower_bound, $upper_bound){
             $min = min($lower_bound,$upper_bound);
@@ -1207,7 +1218,15 @@
         }
 
         /**
+         * This private method simplifies a linear congruence. 
          * 
+         * The simplification means, that the method divides the linear congruence with gcd(left side, right side), or with left side, if the right side is 0.
+         * 
+         * @param int $a The left side of the linear congruence. This is the coefficient of the variable.
+         * @param int $b The right side of the linear congruence.
+         * @param int $modulo The modulo of the linear congruence.
+         * 
+         * @return array Returns an array containing the coefficients of the simplified linear congruence.
          */
         private function SimplifyLinearCongruence($a, $b, $modulo){
             $new_a = $a;
@@ -1228,7 +1247,14 @@
         }
 
         /**
+         * This private method minimizes the congruence residue for a congruence.
          * 
+         * A minimized residue is a non-negative whole number. Additionally, it is smaller than the modulo.
+         * 
+         * @param int $residue The residue to be minimized.
+         * @param int $modulo The modulo of the congruence.
+         * 
+         * @return int Returns the minimized residue for a congruence.
          */
         private function MinimizeCongruenceResidue($residue, $modulo){
             if($modulo > 0){

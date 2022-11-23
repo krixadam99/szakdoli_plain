@@ -107,6 +107,8 @@
 
             for($set_counter = 0; $set_counter < $number_of_sets; $set_counter++){
                 $new_set = [];
+                
+                // Pick a new name for the possible set names
                 if($is_associative){
                     $picked_name = $this->set_names[mt_rand(0,count($this->set_names) - 1)];
                     while(in_array($picked_name,$picked_names) && $number_of_sets < count($this->set_names)){
@@ -123,7 +125,8 @@
                     }else{
                         $new_element = $this->CreateRandomElement();
                     }
-                    if($new_element != "%FULL%"){
+
+                    if($new_element != "CANNOT PICK A NEW ELEMENT"){ // Cannot pick a new element
                         array_push($new_set, $new_element);
                     }
                 }
@@ -150,6 +153,7 @@
         */
         public function GetPartOfSet($set, $number_of_elements){ 
             if(is_int($number_of_elements) && $number_of_elements >= 0){
+                // Pick the given number of elements randomly from the given set
                 if($number_of_elements < count($set)){
                     $return_set = [];
                     for($element_counter = 0; $element_counter < $number_of_elements; $element_counter++){
@@ -161,7 +165,7 @@
                         array_push($return_set, $random_element);
                     }
                     return $return_set;
-                }else{
+                }else{ // If the given number of elements is greater than, or equal to the number of elements in the set, then return the whole set
                     return $set;
                 }
             }else{
@@ -262,9 +266,12 @@
          * @return array A relation containing ordered pairs consisting elements of the two given sets, the form of this array is: [[element, element],[element, elemen]]
         */
         public function CreateDescartesProduct($first_set, $second_set, $number_of_elements){
-            if($number_of_elements < count($first_set)*count($second_set)){
+            if($number_of_elements < count($first_set)*count($second_set)){ // Each Descartes-product will contain maximum count($first_set)*count($second_set) elements
                 $relation = [];
     
+                // Randomly choose a pair of numbers (first number from the first set, second number from the second set)
+                // If this is not in the product, then put it in
+                // Otherwise, create a new pair till it is unique
                 for($counter = 0; $counter < $number_of_elements; $counter++){
                     $first_set_random_element = $first_set[mt_rand(0,count($first_set)-1)];
                     $second_set_random_element = $second_set[mt_rand(0,count($second_set)-1)];
@@ -276,7 +283,7 @@
                 }
     
                 return $relation;
-            }else{
+            }else{ // It is the complete Descartes-product
                 $relation = [];
     
                 for($first_set_counter = 0; $first_set_counter < count($first_set); $first_set_counter++){
@@ -345,6 +352,7 @@
         public function CreateGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8, $type = "simple"){
             $can_be_created = mt_rand(0,100);
 
+            // Create a graph
             switch($type){
                 case "simple":{
                     $graph = $this->CreateGraphWithOneSequence($number_of_verteces, $minimum_degree, $maximum_degree);
@@ -361,7 +369,9 @@
             }
 
 
+            // There is a 40% chance that the graph can be created for sure
             if($can_be_created < 40){
+                // Create the desired type of graph until it is creatable
                 switch($type){
                     case "simple":{
                         while(!$this->DetermineIfSimpleGraphCanBeCreated($graph)){
@@ -385,7 +395,7 @@
                     }break;
                 }
                 $is_creatable = true;
-            }else{
+            }else{ // There is a 60% chance that the graph might not be creatable
                 switch($type){
                     case "simple":{
                         $is_creatable = $this->DetermineIfSimpleGraphCanBeCreated($graph);
@@ -420,6 +430,7 @@
 
             switch($type){
                 case "simple": case "tree":{
+                    // The degrees will be randomly chosen from the [$minimum_degree, min($maximum_degree, $number_of_verteces_first - 1)] interval
                     for($vertex_counter = 0; $vertex_counter < $number_of_verteces; $vertex_counter++){
                         array_push($verteces, mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces - 1)));
                     }
@@ -447,6 +458,7 @@
 
             $first_class = [];
                     
+            // The first class' degrees will be randomly chosen from the [$minimum_degree, min($maximum_degree, $number_of_verteces_first - 1)] interval
             $sum_of_degree = 0;
             for($vertex_counter = 0; $vertex_counter < $number_of_verteces_first; $vertex_counter++){
                 $new_degree = mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces_first - 1));
@@ -454,10 +466,12 @@
                 $sum_of_degree += $new_degree;
             }
 
+            // The second class' degrees will be a partitioning of the $sum_of_degree
+            // The partitioning sum will contain $number_of_verteces_second members each of them is a whole number from the [$minimum_degree, min($maximum_degree, $number_of_verteces_second - 1)] interval
             $partitioned_array = $this->PartitionNumber($sum_of_degree, $number_of_verteces_second, $minimum_degree, min($maximum_degree, $number_of_verteces_second - 1));
             if($partitioned_array !== []){
                 $second_class = $partitioned_array;
-            }else{
+            }else{ // The partitioning couldn't have been done
                 $second_class = $first_class;
             }
             
@@ -473,30 +487,29 @@
          * @param int $minimum_degree The minimum degree of a vertex. The default is 0.
          * @param int $maximum_degree The maximum degree of a vertex. The default is 8.
          *
-         * @return array Returns an array containing a the number og the incoming and outcoming edges for each vertex.
+         * @return array Returns an array containing a the number og the incoming and outgoing edges for each vertex.
          */
         private function CreateDirectedGraph($number_of_verteces = 6, $minimum_degree = 0, $maximum_degree = 8){
             $verteces = [];
 
             $first_class = [];
             
-            $sum_of_degree = 0;
+            // The incoming degrees will be randomly chosen from the [$minimum_degree, min($maximum_degree, $number_of_verteces - 1)] interval
             for($vertex_counter = 0; $vertex_counter < $number_of_verteces; $vertex_counter++){
                 $new_degree = mt_rand($minimum_degree,min($maximum_degree, $number_of_verteces - 1));
                 array_push($first_class, $new_degree);
-                $sum_of_degree = $new_degree;
             }
             
+            // The incoming degrees will be randomly chosen from the [$minimum_degree, min($maximum_degree, $number_of_verteces - 1)] interval
             $second_class = [];
             $chosen_indices_in_second_part = [];
-            for($substract_index = 0; $substract_index < floor($number_of_verteces / 2); $substract_index++){
+            for($substract_index = 0; $substract_index < ceil($number_of_verteces / 2); $substract_index++){
+                // Substract a whole number which is from the [0, $first_class[$substract_index]] interval from the actual $first_class[$substract_index] degree
                 $minus_part = mt_rand(0,$first_class[$substract_index]);
                 array_push($second_class, $first_class[$substract_index] - $minus_part);
                 
+                // Choose an index from the second half of the array and add the substracted part to the $first_class[$choosen_index] degree
                 $choosen_index = mt_rand(ceil($number_of_verteces / 2), $number_of_verteces - 1);
-                while(in_array($choosen_index, $chosen_indices_in_second_part)){
-                    $choosen_index = mt_rand(ceil($number_of_verteces / 2), $number_of_verteces - 1);
-                }
                 array_push($chosen_indices_in_second_part, $choosen_index);
                 array_push($second_class, $first_class[$choosen_index] + $minus_part);
             }
@@ -523,7 +536,7 @@
             $minimum_number = $this->maximum_number;
             $maximum_number = $this->minimum_number;
             $minimum_alphabetic = "z";
-            $maximum_alpabetic = "a";
+            $maximum_alphabetic = "a";
             foreach($set as $index => $element){
                 if(is_int($element)){
                     if($element < $minimum_number){
@@ -536,18 +549,22 @@
                     if($element < $minimum_alphabetic){
                         $minimum_alphabetic = $element;
                     }
-                    if($element > $maximum_alpabetic){
+                    if($element > $maximum_alphabetic){
                         $maximum_alpabetic = $element;
                     }
                 }
             }
             
+            // Picking a whole number from [smallest number, greates number] interval with a 20% chance
+            // Also picking the number, if it is already in the set
             for($numeric_counter = $minimum_number; $numeric_counter <= $maximum_number; ++$numeric_counter ){
                 if(mt_rand(0,10) < 2 || in_array($numeric_counter,$set)){
                     array_push($universe, $numeric_counter);
                 }
             }
 
+            // Picking an alphabet character from the ["smallest" alphabet character, "greatest" alphabet character] interval with a 20% chance
+            // Also picking the alphabet character, if it is already in the set
             foreach($this->possible_abc_characters as $index => $possible_abc_character){
                 if($possible_abc_character <= $maximum_alpabetic && $possible_abc_character >= $minimum_alphabetic){
                     if(mt_rand(0,10) < 2 || in_array($possible_abc_character,$set)){
@@ -750,26 +767,26 @@
                 if(mt_rand(0,1)==1){
                     $is_symmetric = true;
                     if(mt_rand(0,1)==1){
-                        $is_antisymmetric = true; //(1,1), (2,2)
+                        $is_antisymmetric = true; // (1,1), (2,2)
                         $is_transitive = true;
                     }else{
-                        $is_antisymmetric = false; //(1,1), (1,2), (2,1)
+                        $is_antisymmetric = false; // (1,1), (1,2), (2,1)
                     }
                 }else{
                     $is_symmetric = false;
                     if(mt_rand(0,1)==1){
-                        $is_antisymmetric = true; //(1,1), (1,2), (2,2)
+                        $is_antisymmetric = true; // (1,1), (1,2), (2,2)
                         if(mt_rand(0,1)==1){
-                            $is_transitive = true; //(1,1), (1,2), (2,2)
+                            $is_transitive = true; // (1,1), (1,2), (2,2)
                         }else{
-                            $is_transitive = false; //(1,1), (1,2), (2,2), (3,1), (3,3)
+                            $is_transitive = false; // (1,1), (1,2), (2,2), (3,1), (3,3)
                         }
                     }else{
                         $is_antisymmetric = false;
                         if(mt_rand(0,1)==1){
-                            $is_transitive = true; //(1,1), (1,2), (2,1), (2,2), (2,3), (1,3), (3,3)
+                            $is_transitive = true; // (1,1), (1,2), (2,1), (2,2), (2,3), (1,3), (3,3)
                         }else{
-                            $is_transitive = false; //(1,1), (1,2), (2,1), (2,2), (1,3), (3,3)
+                            $is_transitive = false; // (1,1), (1,2), (2,1), (2,2), (1,3), (3,3)
                         }
                     }
                 }
@@ -784,7 +801,7 @@
                             $is_assymetric = true;
                             $is_transitive = true; // üres
                         }else{
-                            $is_transitive = false; //(1,2), (2,1)
+                            $is_transitive = false; // (1,2), (2,1)
                             $is_antisymmetric = false;
                             $is_assymetric = false;
                         }
@@ -794,7 +811,7 @@
                             $is_antisymmetric = true;
                             $is_assymetric = true;
                             if(mt_rand(0,1)==1){
-                                $is_transitive = true; //(1,2)
+                                $is_transitive = true; // (1,2)
                             }
                         }else{
                             $is_assymetric = false;
@@ -807,11 +824,11 @@
                         $is_symmetric = true;
                         if(mt_rand(0,1)==1){
                             $is_antisymmetric = true;
-                            $is_transitive = true; //(1,1) (base=1,2,3)
+                            $is_transitive = true; // (1,1) (base=1,2,3)
                         }else{
                             $is_antisymmetric = false;
                             if(mt_rand(0,1)==1){
-                                $is_transitive = true; //(1,1), (1,2), (2,1), (2,2) (base=1,2,3)
+                                $is_transitive = true; // (1,1), (1,2), (2,1), (2,2) (base=1,2,3)
                             }else{
                                 $is_transitive = false; //
                             }
@@ -821,14 +838,14 @@
                         if(mt_rand(0,1)==1){
                             $is_antisymmetric = true;
                             if(mt_rand(0,1)==1){
-                                $is_transitive = true; //(1,1), (1,2) (base=1,2,3)
+                                $is_transitive = true; // (1,1), (1,2) (base=1,2,3)
                             }else{
                                 $is_transitive = false; //
                             }
                         }else{
                             $is_antisymmetric = false;
                             if(mt_rand(0,1)==1){
-                                $is_transitive = true; //(1,2), (2,1), (1,1), (2,2), (1,3), (2,3) (base=1,2,3)
+                                $is_transitive = true; // (1,2), (2,1), (1,1), (2,2), (1,3), (2,3) (base=1,2,3)
                             }else{
                                 $is_transitive = false; //
                             }
@@ -1050,25 +1067,27 @@
          * @return array Returns a relation containing the ordered pairs in [first element, second element] form. If the number of pairs is greater than the number of elements in the domain, then the function returns [].
          */
         public function MakeFunction($domain, $image, $number_of_pairs){
-            if($number_of_pairs <= count($domain)){
-                $relation = [];
-                $first_components = [];
+            // If the desired number of pairs is smaller than, or equal to the number of elements in the domain
+            // Otherwise, the number of elements will be the number of elements in the domain
+            if($number_of_pairs > count($domain)){
+                $number_of_pairs = count($domain);
+            }
+            
+            $relation = [];
+            $first_components = [];
 
-                for($counter = 0; $counter < $number_of_pairs; $counter++){
+            for($counter = 0; $counter < $number_of_pairs; $counter++){
+                $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
+                $random_element_image = $image[mt_rand(0,count($image)-1)];
+                while(in_array($random_element_domain, $first_components)){
                     $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
                     $random_element_image = $image[mt_rand(0,count($image)-1)];
-                    while(in_array($random_element_domain, $first_components)){
-                        $random_element_domain = $domain[mt_rand(0,count($domain)-1)];
-                        $random_element_image = $image[mt_rand(0,count($image)-1)];
-                    }
-                    array_push($relation, [$random_element_domain,$random_element_image]);
-                    array_push($first_components, $random_element_domain);
                 }
-    
-                return $relation;
-            }else{
-                return [];
+                array_push($relation, [$random_element_domain,$random_element_image]);
+                array_push($first_components, $random_element_domain);
             }
+
+            return $relation;
         }
 
         /**
@@ -1099,6 +1118,7 @@
          * @return bool Returns whether the relation is surjective, or not.
          */
         public function IsSurjective($relation, $image){
+            // Only funtions will be evaluated here
             if($this->IsFunction($relation)){
                 $relation_second_components = $this->GetRelationTwoArrayForm($relation)[1];
                 foreach($image as $index => $element){
@@ -1120,6 +1140,7 @@
          * @return bool Returns whether the relation is injective, or not.
          */
         public function IsInjective($relation){
+            // Only funtions will be evaluated here
             if($this->IsFunction($relation)){
                 $relation_second_components = $this->GetRelationTwoArrayForm($relation)[1];
                 $found_elements = [];
@@ -1199,6 +1220,7 @@
                     if($lower_bound <= count($relation)){
                         $missed = false;
                         
+                        // Filtering the array containing all the possible relations (first iteration), or the array containing previously filtered relations (other iterations)s
                         switch($characteristic_name){
                             case "Reflexív":{
                                 $missed = $this->IsReflexiveRelation($base_set, $relation) != $satisfies;
@@ -1221,11 +1243,14 @@
                             default:;break;
                         }
 
+                        // If the current relation satisfy the actual condition, then add it to the array containing filtered relations 
                         if(!$missed){
                             array_push($filtered_array, $relation);
                         }
                     }
                 }
+
+                // Narrowing the possible relations to the array containing the filtered relations
                 $all_relations = $filtered_array;
             }
 
@@ -1233,7 +1258,7 @@
         }
 
         /**
-         * This method uses the Moivre identities to calculate the multiplication, or division of 2 complex numbers, or the power, or n-th root of a complex number.
+         * This method uses the Moivre identities to calculate the multiplication, division of 2 complex numbers, the power, or n-th root of a complex number.
          * 
          * @param string $operation The operation the method will execute. Can be multiplication, division, power, root.
          * @param array $first_number The first complex number's real and imaginary parts. Left side of the operation.
@@ -1245,19 +1270,19 @@
         public function UseMoivre($operation, $first_number, $second_number, $power=0){
             $return_values = [];
             switch($operation){
-                case "multiplication":{
+                case "multiplication":{ // Moivre identity for multiplication (adding the arguments, multiplying the lengths)
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     $second_trigonometric_form = $this->GetTrigonometricForm($second_number);
                     array_push($return_values, $first_trigonometric_form[0]*$second_trigonometric_form[0]);
                     array_push($return_values, $first_trigonometric_form[1]+$second_trigonometric_form[1]);
                 }break;
-                case "division":{
+                case "division":{ // Moivre identity for multiplication (substracting the arguments, dividing the lengths)
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     $second_trigonometric_form = $this->GetTrigonometricForm($second_number);
                     array_push($return_values, $first_trigonometric_form[0]/$second_trigonometric_form[0]);
                     array_push($return_values, $first_trigonometric_form[1]-$second_trigonometric_form[1]);
                 }break;
-                case "power":{
+                case "power":{ // Moivre identity for raising to power (multiplying the arguments, raising the length to the power)
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     if($power != 0){
                         array_push($return_values, $first_trigonometric_form[0]**$power);
@@ -1266,7 +1291,7 @@
                         array_push($return_values, 1, 0);
                     }
                 }break;
-                case "root":{
+                case "root":{ // Moivre identity for taking nth root (taking the (argument + 2*k*pi)/n (k in {0,1,2,...,n-1}), taking the nth root of the length)
                     $return_values = array("size" => [], "arguments"=> []);
                     $first_trigonometric_form = $this->GetTrigonometricForm($first_number);
                     if($power != 0){
@@ -1323,7 +1348,7 @@
                 if($variables_are_same){
                     // ($first_number*x**$first_exponent + $second_number*x**$second_exponent)**$third_exponent =
                     // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x**$first_exponent)**($third_exponent-i)) * ($second_number*x**$second_exponent)**i
-                    //(i=0..$third_exponent) (($third_exponent i) * $first_number**($third_exponent-i) * $second_number**i) * x**($first_exponent*$third_exponent + i * ($second_exponent - $first_exponent))
+                    // (i=0..$third_exponent) (($third_exponent i) * $first_number**($third_exponent-i) * $second_number**i) * x**($first_exponent*$third_exponent + i * ($second_exponent - $first_exponent))
                     for($counter = 0; $counter <= $third_exponent; $counter++){
                         $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
                         $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
@@ -1333,7 +1358,7 @@
                 }else{
                     // ($first_number*x**$first_exponent + $second_number*y**$second_exponent)**$third_exponent =
                     // (i=0..$third_exponent) ($third_exponent i) * ($first_number*x)**($first_exponent*($third_exponent-i)) * ($second_number*y)**($second_exponent*i)
-                    //(i=0..$third_exponent) (($third_exponent i) * $first_number**($first_exponent*($third_exponent-i)) * $second_number**($second_exponent*i)) * x**($first_exponent*($third_exponent-i)) * y**($second_exponent*i))
+                    // (i=0..$third_exponent) (($third_exponent i) * $first_number**($first_exponent*($third_exponent-i)) * $second_number**($second_exponent*i)) * x**($first_exponent*($third_exponent-i)) * y**($second_exponent*i))
                     for($counter = 0; $counter <= $third_exponent; $counter++){
                         $binomial_part = $this->CalculateBinomialCoefficient($third_exponent, $counter);
                         $coefficient_part = $binomial_part * $first_number**($third_exponent-$counter) * $second_number**$counter;
@@ -1394,9 +1419,18 @@
         }
 
         /**
+         * This method determines whether the given simple graph can be created, or not.
          * 
+         * Sorts the degrees in descending manner.
+         * Checks whether the sum of degrees is even, or not.
+         * Checks the other condition for simple graphs to be creatable.
+         * 
+         * @param array $graph An array containing the degrees of graph.
+         * 
+         * @return bool Returns whether the simple graph can be created, or not.
          */
         public function DetermineIfSimpleGraphCanBeCreated($graph){
+            // Sorting the degrees in descending manner
             rsort($graph);
 
             $sum_of_degrees = 0;
@@ -1404,8 +1438,11 @@
                 $sum_of_degrees += $degree;
             }
 
+            // Checking whether the sum is even, or not
             if($sum_of_degrees % 2 === 0){
                 $number_of_verteces = count($graph);
+
+                // Checking the other condition for creatable simple graphs
                 for($outer_index = 0; $outer_index < $number_of_verteces; ++$outer_index){
                     $left_sum = 0;
                     for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
@@ -1428,9 +1465,17 @@
         }
 
         /**
+         * This method determines whether the given tree graph can be created, or not.
          * 
+         * Sorts the degrees in descending manner.
+         * Checks whether the sum is equal to 2*(number of verteces - 1), and that the degrees are between 1 and number of verteces - 1. 
+         * 
+         * @param array $graph An array containing the degrees of tree graph.
+         * 
+         * @return bool Returns whether the tree graph can be created, or not.
          */
         public function DetermineIfTreeGraphCanBeCreated($graph){
+            // Sorting the degrees in descending manner
             rsort($graph);
 
             $sum_of_degrees = 0;
@@ -1438,6 +1483,7 @@
                 $sum_of_degrees += $degree;
             }
 
+            // Checking whether the sum is equal to 2*(number of verteces - 1), and that the degrees are between 1 and number of verteces - 1
             $number_of_verteces = count($graph);
             if($sum_of_degrees === 2*($number_of_verteces - 1) && $graph[0] <= $number_of_verteces - 1 && $graph[$number_of_verteces - 1] > 0){
                 return true;
@@ -1447,9 +1493,18 @@
         }
 
         /**
+         * This method determines whether the given paired graph can be created, or not.
          * 
+         * Sorts the first and second class' degrees in descending manner.
+         * Checks whether the sum of the first class' and second class' degrees are the same.
+         * Checks the other condition for paired graphs to be creatable.
+         * 
+         * @param array $graph An array containing the degrees of the first and second class.
+         * 
+         * @return bool Returns whether the paired graph can be created, or not.
          */
         public function DetermineIfPairedGraphCanBeCreated($graph){
+            // Sorting the first and second class' degrees in descending manner
             $first_class = $graph[0];
             $second_class = $graph[1];
             rsort($first_class);
@@ -1457,6 +1512,7 @@
             $number_of_verteces_of_first_class = count($first_class);
             $number_of_verteces_of_second_class = count($second_class);
             
+            // Checking the sum
             $first_sum = 0;
             for($element_counter = 0; $element_counter < $number_of_verteces_of_first_class; $element_counter++){
                 $first_sum += $first_class[$element_counter];
@@ -1470,6 +1526,7 @@
                 &&  $first_class[$number_of_verteces_of_first_class - 1] > 0
                 &&  $second_class[$number_of_verteces_of_second_class - 1] > 0
             ){
+                // Checking the other condition for creatable paired graphs
                 for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
                     $left_sum = 0;
                     for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
@@ -1492,16 +1549,32 @@
         }
 
         /**
+         * This method determines whether the given directed graph can be created, or not.
          * 
+         * Sorts the incoming degrees in descending manner (where the degree pairs should remain the same).
+         * Checks whether the sum of the incoming and outgoing degrees are the same.
+         * Checks the other condition for directed graphs to be creatable.
+         * 
+         * @param array $graph An array containing the degree pairs of the incoming and outgoing edges for each vertex.
+         * 
+         * @return bool Returns whether the directed graph can be created, or not.
          */
         public function DetermineIfDirectedGraphCanBeCreated($graph){
+            // Sorting the incoming degrees in descending manner
             $first_class = $graph[0];
             $second_class = $graph[1];
-            rsort($first_class);
-            rsort($second_class);
+            $new_associative_array = [];
+            foreach($first_class as $counter => $element){
+                $new_associative_array[$element] = $second_class[$counter];
+            }
+            krsort($new_associative_array);
+
+            $first_class = array_keys($new_associative_array);
+            $second_class = array_values($new_associative_array);
             $number_of_verteces_of_first_class = count($first_class);
             $number_of_verteces_of_second_class = count($second_class);
             
+            // Checking the sum
             $first_sum = 0;
             for($element_counter = 0; $element_counter < $number_of_verteces_of_first_class; $element_counter++){
                 $first_sum += $first_class[$element_counter];
@@ -1512,6 +1585,7 @@
             }
 
             if($first_sum === $second_sum){
+                // Checking the other condition for creatable directed graphs
                 for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
                     $left_sum = 0;
                     for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
@@ -1543,13 +1617,13 @@
          * 
          * @param array $set An indexed array containing the elements of a set.
          * 
-         * @return int|string Returns either a whole number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character. Or it returns the "%FULL%" string which means, that no more element could be picked. 
+         * @return int|string Returns either a whole number which is in the range of the class's minimum and maximum numbers (inclusive) or a random (English) lowercase alphabetic character. Or it returns the "CANNOT PICK A NEW ELEMENT" string which means, that no more element could be picked. 
          */
         private function CreateNewRandomElement($set){
             $number_range = $this->maximum_number - $this->minimum_number + 1;
             $alphabet_range = count($this->possible_abc_characters);
 
-            // Check the size of the set (it should be smaller than the number of possible set elements).
+            // Check the size of the set (it should be smaller than the number of possible set elements)
             if(count($set) < $number_range + $alphabet_range){
                 $random_element = $this->CreateRandomElement();
 
@@ -1558,7 +1632,7 @@
                 }
                 return $random_element;
             }else{
-                return "%FULL%";
+                return "CANNOT PICK A NEW ELEMENT";
             }
         }
 
@@ -1570,9 +1644,9 @@
         private function CreateRandomElement(){
             $element_type = mt_rand(0, 1);
             $random_element = 0;
-            if($element_type == 0){//We will pick a number
+            if($element_type == 0){ // We will pick a number
                 $random_element = mt_rand($this->minimum_number, $this->maximum_number);
-            }else{//We will pick an (English) alphabet character
+            }else{ // We will pick an (English) alphabet character
                 $random_element = $this->possible_abc_characters[mt_rand(0, count($this->possible_abc_characters)-1)];
             }
 
@@ -1585,10 +1659,14 @@
          * @param int $upper The upper part of the binomial coefficient.
          * @param int $lower The lower part of the binomial coefficient.
          * 
-         * @return int Returnsthe binomial coefficient for the given upper and lower numbers. If these are negative numbers, then the mehtod returns 0.
+         * @return int Returns the binomial coefficient for the given upper and lower numbers. If these are negative numbers, then the mehtod returns 0.
          */
         private function CalculateBinomialCoefficient($upper, $lower){
-            if($upper > 0 && $lower >= 0){
+            // The binomial coefficient exists, if the upper number is a positive integer, and the lower is a non-negative integer
+            if(    is_int($upper) 
+                && is_int($lower)
+                && $upper > 0 
+                && $lower >= 0){
                 return $this->CalculateFactorial($upper)/($this->CalculateFactorial($lower)*$this->CalculateFactorial($upper-$lower));
             }else{
                 return 0;
@@ -1603,6 +1681,7 @@
          * @return int Returns the factorial for the given number, and 0 for non-integer, or negative expressions.
          */
         private function CalculateFactorial($number){
+            // Only integers and non-negative numbers should have factorial
             if(is_int($number) && $number >= 0){
                 $factorial = 1;
                 for($index = 2; $index <= $number;$index++){
@@ -1627,11 +1706,13 @@
          * @return array Returns a partitioning of the given number.
          */
         private function PartitionNumber($number, $number_of_parts, $min, $max){
+            // A partition sum is made up with $number_of_parts members, where each of them is a whole number between the $min and $max (inclusively)
+            // Obviously, if the $min * $number_of_parts > $number (the minimum of the sum is smaller than the number), or $max * $number_of_parts < $number (the maximum of the sum is greater than the number), then there will be no partitioning
             if($max * $number_of_parts >= $number && $min * $number_of_parts <= $number){
                 $return_array = $this->CreatePartitions($number_of_parts, $min, $max, $number);
                 
                 return $return_array[mt_rand(0,count($return_array)-1)];
-            }else{
+            }else{ // No partitioning
                 return [];
             }
         }
@@ -1652,11 +1733,14 @@
         private function CreatePartitions($number_of_iterations, $min, $max, $number, $previous_elements = []){
             if($number_of_iterations > 0){
                 $return_list = [];
+
+                // In each iteration the for loop starts with the previous iteration's current index, and will go up till the $max
                 for($counter = $min; $counter <= $max; $counter++){
                     $tmp_array = $previous_elements;
                     array_push($tmp_array, $counter);
                     $new_element = $this->CreatePartitions($number_of_iterations - 1, $counter, $max, $number, $tmp_array);
 
+                    // Append the array of previous elements to the end of the returned list, if the array's elements' sum is the number
                     if($new_element !== []){
                         if($return_list === []){
                             if($number_of_iterations - 1 > 0){
@@ -1672,12 +1756,13 @@
                 }
 
                 return $return_list;
-            }else{
+            }else{ // The array previous elements has the correct number of elements (the number of members in the partitioning sum)
                 $sum_of_elemenets = 0;
                 for($counter = 0; $counter < count($previous_elements); $counter++){
                     $sum_of_elemenets += $previous_elements[$counter];
                 }
                 
+                // Return the array previous elements, if their sum is the number
                 if($sum_of_elemenets === $number){
                     return $previous_elements;
                 }else{

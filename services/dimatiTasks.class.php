@@ -290,7 +290,7 @@
 
         /**
          * 
-         * This method is used to create the ninth set of tasks for Discrete mathematics I. related to...
+         * This method is used to create the ninth set of tasks for Discrete mathematics I. related to graph creation.
          * 
          * 4 types of subtask will be generated here (2 subtasks per type). These are: can we create the simple, paired, tree and directed graphs given by their degrees.
          * 
