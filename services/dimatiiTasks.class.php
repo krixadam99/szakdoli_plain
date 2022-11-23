@@ -19,7 +19,6 @@
         public function __construct($topic){
             $this->task_descriptions = [];
             $this->task_solutions = [];
-            $this->definitions = "";
             $this->solution_texts = [];
             $this->topic = $topic;
             $this->dimatii_subtasks_generator = new DimatiiSubtaskGenerator();

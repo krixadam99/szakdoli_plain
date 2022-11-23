@@ -416,7 +416,7 @@
          * @param string $input_name A string, the key of the element in the user's given answers' array.
          * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
          * @param bool $only_numbers Let only numbers to be evaluated. The default is true.
-         * @param string $print_config The default is "".
+         * @param string $print_config Configuring the printing. The default is "".
          * 
          * @return void
          */
@@ -464,7 +464,7 @@
          * @param bool $only_numbers Let only numbers to be evaluated. The default is true.
          * @param bool $use_own_text Send back an alternative solution text. The default is false.
          * @param string $answer_text The orinigally made printable text. The default is "".
-         * @param string $print_config The default is "".
+         * @param string $print_config Configuring the printing. The default is "".
          * 
          * @return void
          */

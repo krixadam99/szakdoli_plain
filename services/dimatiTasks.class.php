@@ -20,7 +20,6 @@
         public function __construct($topic){
             $this->task_descriptions = [];
             $this->task_solutions= [];
-            $this->definitions = "";
             $this->topic = $topic;
             $this->dimati_subtask_generator = new DimatiSubtaskGenerator();
             mt_srand(time()); // Seeding the random number generator with the current time (we may change this overtime...).
@@ -257,10 +256,6 @@
             
             // Task solutions
             $this->task_solutions = [$complex_numbers_powers_subtask["solutions"],$complex_numbers_roots_subtask["solutions"]];
-
-            // The definitions related to complex numbers' trigonometric forms, and multiplication and division with these forms
-            $this->definitions = [
-            ];
         }
 
         /**
