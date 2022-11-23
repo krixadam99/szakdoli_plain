@@ -252,8 +252,10 @@
             $given_number_first = $this->ExtractSolutionFromInputOnlyNumbers($given_number_first_raw)[0]??"";
             $given_number_second = $this->ExtractSolutionFromInputOnlyNumbers($given_number_second_raw)[0]??"";
 
-            $real_solution_first_number = $this->real_solutions["diophantine_equations"][2][0];
-            $real_solution_second_number = $this->real_solutions["diophantine_equations"][2][1];
+            $real_solution_first_number = $this->real_solutions["diophantine_equations"][2][0]; // a,b,c
+            $real_solution_second_number = $this->real_solutions["diophantine_equations"][2][1]; // d,e,f
+
+            //!!!!
 
             $first_number = $real_solution_first_number[1]*$real_solution_second_number[1];
             $second_number = $real_solution_second_number[0]*$real_solution_first_number[2];
@@ -272,8 +274,8 @@
             }
 
             $this->solution_counter += 1;
-            $this->SetSessionAnswer("2_0", $given_number_first_raw, $given_number_first, $first_number . " + " . $real_solution_second_number[1] .  "k (k \u{2208} \u{2124})", $was_correct);
-            $this->SetSessionAnswer("2_1", $given_number_second_raw, $given_number_second, $second_number . " + " . $real_solution_first_number[2] .  "k (k \u{2208} \u{2124})", $was_correct);
+            $this->SetSessionAnswer("2_0", $given_number_first_raw, $given_number_first, $first_number . PrintServices::PlusMinus( $real_solution_second_number[0]) . abs($real_solution_second_number[0]) .  "k", $was_correct);
+            $this->SetSessionAnswer("2_1", $given_number_second_raw, $given_number_second, $second_number . PrintServices::PlusMinus( $real_solution_second_number[1]) . abs($real_solution_first_number[1]) .  "k (k \u{2208} \u{2124})", $was_correct);
         }
 
         /**

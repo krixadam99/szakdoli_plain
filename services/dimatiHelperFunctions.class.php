@@ -1298,7 +1298,7 @@
                         $return_values["size"] =  pow($first_trigonometric_form[0],1/$power);
                         for($k=0; $k<abs($power); $k++){
                             array_push($return_values["arguments"], ($first_trigonometric_form[1]+2*$k*pi())/$power);
-                        }
+                        }                        
                     }else{
                         array_push($return_values, 1, 0);
                     }

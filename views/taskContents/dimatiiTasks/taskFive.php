@@ -44,7 +44,7 @@
             $second_operand = $subtask_counter . "_1";
             $variable_name = $triplet[2];
             $with_multiplier = false;
-
+            $not_with_in_Z = true;
         ?>
         <?php include("./views/taskContents/additionInputs.php")?>
     </div>

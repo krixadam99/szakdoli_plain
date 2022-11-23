@@ -387,7 +387,7 @@
             $task_data = array("relations" => [], "base_sets" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
                 [$base_set] = $this->dimat_helper_functions->CreateSets(1, 3, 4, false, false);
-                $relation = $this->dimat_helper_functions->CreateDescartesProduct($base_set, $base_set, mt_rand(8, 16));
+                $relation = $this->dimat_helper_functions->CreateDescartesProduct($base_set, $base_set, mt_rand(6, count($base_set)**2));
                 array_push($task_data["relations"], $relation);
                 array_push($task_data["base_sets"], $base_set);
                 
@@ -560,10 +560,15 @@
             
             $task_data = array("pairs_of_sets" => [], "functions" => []);
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
-                [$first_set, $second_set] = $this->dimat_helper_functions->CreateSets(2, 6, 12, false);
+                [$first_set] = $this->dimat_helper_functions->CreateSets(1, 6, 12, false);
+                [$second_set] = $this->dimat_helper_functions->CreateSets(1, 6, max(6,count($first_set)-6), false);
                 
-                $function = $this->dimat_helper_functions->MakeFunction($first_set, $second_set, mt_rand(4, 6));
-                // Make injective with 50% possibility, make surjective with 50% similarly
+                $function = $this->dimat_helper_functions->MakeFunction($first_set, $second_set, mt_rand(4, 6)); 
+                if(mt_rand(0,100) < 50){
+                    while(!$this->dimat_helper_functions->IsSurjective($function, $second_set)){
+                        $function = $this->dimat_helper_functions->MakeFunction($first_set, $second_set, mt_rand(4, 6));
+                    }
+                }
                 
                 array_push($task_data["functions"], $function);
                 array_push($task_data["pairs_of_sets"], array("A" => $first_set, "B" => $second_set));

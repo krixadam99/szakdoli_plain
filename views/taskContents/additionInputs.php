@@ -12,7 +12,7 @@
     <label class="solution_label">
         <?=$variable_name?> = <?=$current_answer_0["solution_text"]?> + <?=$current_answer_1["solution_text"]?>
         <?php if(isset($with_multiplier) && $with_multiplier):?>
-            * k <?="(k \u{2208} \u{2124})"?>
+            *k <?="(k \u{2208} \u{2124})"?>
         <?php endif?>
     </label>
 <?php endif?>

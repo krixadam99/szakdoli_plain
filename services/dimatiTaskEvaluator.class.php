@@ -386,8 +386,12 @@
                     $task_counter += 1;
                 }
 
+                $real_solution_set = [];
+                array_push($real_solution_set, $real_solution["size"]??"");
+                $real_solution_set = array_merge($real_solution_set, $real_solution["arguments"]??[]);
+
                 $id = "1_" . $task_counter . "_" . $subtask_counter;
-                $this->EvaluateInputsWithSets($real_solution, $solution_array_key, $id, true, "trigonometric");
+                $this->EvaluateInputsWithSets($real_solution_set, $solution_array_key, $id, true, "trigonometric_multiple_arguments");
                 $this->solution_counter++;
                 $subtask_counter++;
             }

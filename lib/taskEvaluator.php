@@ -438,6 +438,19 @@
                     $answer_text = PrintServices::CreatePrintableComplexNumberTrigonometric("", $given_answer, true, false);
                     $solution_text = PrintServices::CreatePrintableComplexNumberTrigonometric("", $real_value, true, false);
                 };break;
+                case "trigonometric_multiple_arguments":{
+                    $answer_text = "";
+                    $given_answer_size = $given_answer[0];
+                    for($argument_counter = 1; $argument_counter < count($given_answer); ++$argument_counter){
+                        $answer_text .= "<br>" . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$given_answer_size,  $given_answer[$argument_counter]], true, false);
+                    }
+
+                    $solution_text = "";
+                    $real_value_size = $real_value[0];
+                    for($argument_counter = 1; $argument_counter < count($real_value); ++$argument_counter){
+                        $solution_text .= "<br>" . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$real_value_size,  $real_value[$argument_counter]], true, false);
+                    }
+                };break;
                 default:{
                     $answer_text = PrintServices::CreatePrintableSet("", $given_answer, false);
                     $solution_text = PrintServices::CreatePrintableSet("", $real_value, false);

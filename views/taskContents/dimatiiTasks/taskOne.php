@@ -66,6 +66,9 @@
         <div class="single_solution_input_container">
             <?=$pair[0] . " \u{2261}"?> <input type="text" name="<?="solution_" . $task_counter?>" value=<?=$current_answer["answer"]??"b..."?> class="<?=IsCorrect($current_answer)?>" <?=$current_answer !== ""?"readonly":""?>> (mod <?= $pair[1]?>)
         </div>
+        <?php if(isset($current_answer["answer"])):?>
+            <label>Megoldás: <?= $current_answer["solution_text"]?></label>
+        <?php endif?>
     </div>
 <?php endforeach?>
 <br>
