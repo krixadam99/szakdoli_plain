@@ -104,7 +104,7 @@
                             $student_array = ["neptun_code" => $original_record["neptun_code"], "group_number" => $current_group, "subject_id" => $current_subject];
                             foreach($results as $index => $result){
                                if(is_numeric($result) && isset($original_record[$index])){
-                                    $student_array[$index ] = $result;
+                                    $student_array[$index] = $result;
                                 }else if(!is_numeric($result) && isset($original_record[$index])){
                                     $student_array[$index] = $original_record[$index];
                                 }
@@ -351,14 +351,16 @@
                     }
 
                     $query = "UPDATE grade_table 
-                    SET pass_level_point = \"" . $points[0] . "\",
-                    satisfactory_level_point = \"" . $points[1] . "\",
-                    good_level_point = \"" . $points[2] . "\",
-                    excellent_level_point = \"" . $points[3] . "\"
-                    WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$current_subject\"
-                    AND group_number = \"$current_group\");";
+                    SET pass_level_point = :point_0,
+                    satisfactory_level_point = :point_1,
+                    good_level_point = :point_2,
+                    excellent_level_point = :point_3
+                    WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = :current_subject
+                    AND group_number = :current_group);";
 
-                    $this->student_grades_model->UpdataDatabase($query);
+                    $this->student_grades_model->UpdateDatabase($query, [":point_0"=>$points[0],":point_1"=>$points[1],":point_2"=>$points[2],":point_3"=>$points[3],":current_subject"=>$current_subject,":current_group"=>$current_group]);
+                    //$this->student_grades_model->UpdataDatabase($query);
+                    
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
 

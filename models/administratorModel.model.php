@@ -26,7 +26,9 @@
             $query = "SELECT neptun_code, group_number, subject_id 
             FROM users JOIN user_status USING(neptun_code) JOIN subject_group USING(subject_group_id)
             WHERE neptun_code != \"admin\" AND is_teacher = 1 AND application_request_status = \"PENDING\"";
-            return $this->database->LoadDataFromDatabase($query);
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -97,7 +99,8 @@
                     
                     $query .= "INSERT INTO grade_table(subject_group_id) VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")) ON DUPLICATE KEY UPDATE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\");";
                 }else if($pending_status === "DENIED"){
-                    $approved_teacher_for_subject_group = $this->database->LoadDataFromDatabase("SELECT neptun_code FROM user_status WHERE application_request_status = \"APPROVED\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")");
+                    //$approved_teacher_for_subject_group = $this->database->LoadDataFromDatabase("SELECT neptun_code FROM user_status WHERE application_request_status = \"APPROVED\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")");
+                    $approved_teacher_for_subject_group = $this->database->LoadDataFromDatabaseWithPDO("SELECT neptun_code FROM user_status WHERE application_request_status = \"APPROVED\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")");
                     if(count($approved_teacher_for_subject_group) === 0){
                         $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE is_teacher = \"0\" AND subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\");";
                     }
@@ -105,7 +108,8 @@
             }
             $query .= "COMMIT;";
 
-            return $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
     }
 

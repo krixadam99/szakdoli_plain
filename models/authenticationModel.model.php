@@ -23,7 +23,8 @@
          * @return array Returns an array containing all of the neptun codes.
          */
         public function GetNeptunCodes() {  
-            return $this->database->LoadDataFromDatabase("SELECT neptun_code FROM users");
+            return $this->database->LoadDataFromDatabaseWithPDO("SELECT neptun_code FROM users");
+            //return $this->database->LoadDataFromDatabase("SELECT neptun_code FROM users");
         }
 
         /**
@@ -32,7 +33,8 @@
          * @return array Returns an array containing all of the email addresses.
          */
         public function GetEmailAddresses() {  
-            return $this->database->LoadDataFromDatabase("SELECT email_address FROM users");
+            return $this->database->LoadDataFromDatabaseWithPDO("SELECT email_address FROM users");
+            //return $this->database->LoadDataFromDatabase("SELECT email_address FROM users");
         }
 
         /**
@@ -46,8 +48,12 @@
          */
         public function GetEmailAddressOfUser($neptun_code = "") {  
             $neptun_code = strtoupper($neptun_code); 
-            $query = "SELECT email_address FROM users WHERE neptun_code = \"$neptun_code\"";
-            return $this->database->LoadDataFromDatabase($query)[0]??["email_address" => ""];
+            
+            $query = "SELECT email_address FROM users WHERE neptun_code = :neptun_code";
+            return $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code"=>$neptun_code])[0]??["email_address" => ""];
+            
+            //$query = "SELECT email_address FROM users WHERE neptun_code = \"$neptun_code\"";
+            //return $this->database->LoadDataFromDatabase($query)[0]??["email_address" => ""];
         }
     }
 

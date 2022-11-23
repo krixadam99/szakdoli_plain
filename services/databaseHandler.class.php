@@ -8,6 +8,7 @@
         private $database_user_name = "kadam99";
         private $database_user_password = "H6-1aOs(71-a";
         private $database_name = "szakdoli";
+        private $pdo_connection;
         
         /**
          * 
@@ -16,6 +17,7 @@
          * @return void
          */
         public function __construct(){
+            $this->pdo_connection = new PDO("mysql:host=" . $this->server_name . ";dbname=" . $this->database_name . "", $this->database_user_name, $this->database_user_password);
         }
         
         /**
@@ -29,7 +31,7 @@
          * 
          * @return array The data stored in an array.
         */
-        public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) {
+        /*public function LoadDataFromDatabase($query, $data_type = MYSQLI_ASSOC) {
             $connection = mysqli_connect($this->server_name, $this->database_user_name, $this->database_user_password,  $this->database_name);
             //$connection = mysql_connect_caesar();
             if(!$connection){
@@ -53,7 +55,7 @@
             mysqli_close($connection);
             
             return $data;
-        }
+        }*/
 
         /**
          *
@@ -64,7 +66,7 @@
          * 
          * @return bool A boolean value that determines whether updating the database was sucessful, or not.
         */
-        public function UpdateDatabase($query, $multi = false) {
+        /*public function UpdateDatabase($query, $multi = false) {
             $connection = mysqli_connect($this->server_name, $this->database_user_name, $this->database_user_password,  $this->database_name);
             if(!$connection){
                 exit("Connection wasn't successful: " . mysqli_connect_error());
@@ -82,7 +84,34 @@
             mysqli_close($connection);
 
             return $result;
-        }
-    }
+        }*/
 
+        /**
+         * This method is responsible for loading data from the database.
+         * 
+         * @param string $query The query to send to the database.
+         * @param array $bind_params An array containing the binding parameters.
+         * 
+         * @return array The data stored in an array.
+         */
+        public function LoadDataFromDatabaseWithPDO($query, $bind_params = []){
+            $prepared_statement = $this->pdo_connection->prepare($query);
+            $prepared_statement->execute($bind_params);
+            return $prepared_statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        /**
+         * This method is responsible for loading data from the database.
+         * 
+         * @param string $query The query to send to the database.
+         * @param array $bind_params An array containing the binding parameters.
+         * 
+         * @return bool A boolean value that determines whether updating the database was sucessful, or not.
+         */
+        public function UpdateDatabaseWithPDO($query, $bind_params = []){
+            $prepared_statement = $this->pdo_connection->prepare($query);
+            return $prepared_statement->execute($bind_params);
+        }
+
+    }
 ?>

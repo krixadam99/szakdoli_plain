@@ -28,9 +28,11 @@
          * @return array Returns an array containing each task's details (minimum to pass, type of task, maximum points and whether the better counts, or not, if there is a correction from this type of task) belonging to the subject name - subject group pair.
          */
         public function GetExpectationRules($subject_id, $subject_group){
+            
             $query = "SELECT * FROM expectation_rules 
             WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -44,7 +46,8 @@
         public function GetTaskDueDate($subject_id, $subject_group){
             $query = "SELECT * FROM task_due_to_date 
             WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -58,7 +61,8 @@
         public function GetGradeLevels($subject_id, $subject_group){
             $query = "SELECT * FROM grade_table JOIN subject_group USING(subject_group_id)
             WHERE group_number = \"$subject_group\" AND subject_id= \"$subject_id\"";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -72,7 +76,8 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM user_status JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
             $query .= "practice_task_points.neptun_code = \"$neptun_code\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
     }
 

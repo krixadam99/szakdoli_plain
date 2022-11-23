@@ -27,7 +27,8 @@
          */
         public function GetStudents($subject_id, $subject_group){
             $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) WHERE neptun_code != \"admin\" AND is_teacher = 0 AND subject_id = \"$subject_id\" AND group_number = \"$subject_group\"";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -72,7 +73,8 @@
             }
             $query .= "COMMIT;";
 
-            return $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
     }
 

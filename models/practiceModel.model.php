@@ -40,12 +40,14 @@
 
             // If the user's practice score is above (or equal to) 10, and the previous score is below 10, plus the practice task is not over the deadline, then the user's extra point will be incremented.
             if($previous_point < 10 && $new_point >= 10){
-                $extra_points = $this->database->LoadDataFromDatabase("SELECT extra FROM results WHERE subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
+                //$extra_points = $this->database->LoadDataFromDatabase("SELECT extra FROM results WHERE subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
+                $extra_points = $this->database->LoadDataFromDatabaseWithPDO("SELECT extra FROM results WHERE subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
                 $extra_points = $extra_points[0]??array("extra" => 0);
                 $extra_points = $extra_points["extra"];
 
                 $current_date = date("Y-m-d");
-                $practice_task_due_date = $this->database->LoadDataFromDatabase("SELECT due_to FROM task_due_to_date WHERE task_type = \"practice_task_$practice_number\" AND subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
+                //$practice_task_due_date = $this->database->LoadDataFromDatabase("SELECT due_to FROM task_due_to_date WHERE task_type = \"practice_task_$practice_number\" AND subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
+                $practice_task_due_date = $this->database->LoadDataFromDatabaseWithPDO("SELECT due_to FROM task_due_to_date WHERE task_type = \"practice_task_$practice_number\" AND subject_group_id = (SELECT subject_group_id FROM user_status JOIN subject_group USING(subject_group_id) WHERE user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\" AND user_status.neptun_code = \"$neptun_code\")");
                 $practice_task_due_date = $practice_task_due_date[0]??array("due_to" => "");
                 $practice_task_due_date = $practice_task_due_date["due_to"];
 
@@ -56,7 +58,8 @@
                 }
             }
             $query .= "COMMIT";
-            return $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
     }
 

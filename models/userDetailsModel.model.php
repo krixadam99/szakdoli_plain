@@ -25,7 +25,8 @@
          * @return array Returns an array containing the user's email address and password.
          */
         public function GetUserDetails($neptun_code = ""){
-            return $this->database->LoadDataFromDatabase("SELECT email_address, user_password FROM users WHERE neptun_code = \"$neptun_code\"")[0]??array("email_address"=>"","user_password"=>"");
+            return $this->database->LoadDataFromDatabaseWithPDO("SELECT email_address, user_password FROM users WHERE neptun_code = \"$neptun_code\"")[0]??array("email_address"=>"","user_password"=>"");
+            //return $this->database->LoadDataFromDatabase("SELECT email_address, user_password FROM users WHERE neptun_code = \"$neptun_code\"")[0]??array("email_address"=>"","user_password"=>"");
         }
         
         /**
@@ -72,9 +73,8 @@
             }
             $query .= "COMMIT; ";
 
-            var_dump($query);
-
-            return $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabaseWithPDO($query, true);
+            //return $this->database->UpdateDatabase($query, true);
         }
 
         /**
@@ -87,7 +87,8 @@
          * @return bool Returns whether updating the database was successful, or not.
          */
         public function UpdateUserDetails($neptun_code = "", $user_email, $user_passord){
-            return $this->database->UpdateDatabase("UPDATE users SET email_address = \"$user_email\", user_password =  \"" . password_hash($user_passord, PASSWORD_BCRYPT) . "\" WHERE neptun_code = \"$neptun_code\"");
+            return $this->database->UpdateDatabaseWithPDO("UPDATE users SET email_address = :user_email, user_password = :user_password WHERE neptun_code = :neptun_code", [":neptun_code" => $neptun_code, ":user_email" => $user_email, ":user_password" => password_hash($user_passord, PASSWORD_BCRYPT)]);
+            //return $this->database->UpdateDatabase("UPDATE users SET email_address = \"$user_email\", user_password =  \"" . password_hash($user_passord, PASSWORD_BCRYPT) . "\" WHERE neptun_code = \"$neptun_code\"");
         }
     }
 

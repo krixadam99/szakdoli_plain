@@ -28,7 +28,9 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\"";
-            return $this->database->LoadDataFromDatabase($query);
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -42,7 +44,9 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"0\"";
-            return $this->database->LoadDataFromDatabase($query);
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -56,7 +60,9 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"0\"";
-            return $this->database->LoadDataFromDatabase($query);
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -69,7 +75,9 @@
         public function GetMessageById($message_id){
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.message_id = \"$message_id\"";
-            return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];
         }
 
         /**
@@ -83,7 +91,9 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"";
-            return $this->database->LoadDataFromDatabase($query);
+            
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -106,9 +116,13 @@
             $teachers_query .= "AND is_teacher=\"1\" ";
             $teachers_query .= "AND application_request_status = \"APPROVED\"";
 
-            $administrators = array_values($this->database->LoadDataFromDatabase("SELECT neptun_code FROM users WHERE is_administrator = \"1\""));
+            $administrators = array_values($this->database->LoadDataFromDatabaseWithPDO("SELECT neptun_code FROM users WHERE is_administrator = \"1\""));
+            $associated_array = array_values($this->database->LoadDataFromDatabaseWithPDO($associated_query));
+            $teachers_array = array_values($this->database->LoadDataFromDatabaseWithPDO($teachers_query));
+
+            /*$administrators = array_values($this->database->LoadDataFromDatabase("SELECT neptun_code FROM users WHERE is_administrator = \"1\""));
             $associated_array = array_values($this->database->LoadDataFromDatabase($associated_query));
-            $teachers_array = array_values($this->database->LoadDataFromDatabase($teachers_query));
+            $teachers_array = array_values($this->database->LoadDataFromDatabase($teachers_query));*/
 
             return [$administrators, $associated_array,$teachers_array];
         }
@@ -147,7 +161,8 @@
             }
             $query .= "COMMIT;";
             
-            return $this->database->UpdateDatabase($query, true);
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
     }
 

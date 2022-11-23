@@ -29,8 +29,11 @@
             $neptun_code = strtoupper($neptun_code); 
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT); // Hashing the new password
 
-            $query = "UPDATE users SET user_password = \"$hashed_password\" WHERE neptun_code = \"$neptun_code\"";
-            return $this->database->UpdateDatabase($query);
+            $query = "UPDATE users SET user_password = hashed_password WHERE neptun_code = :neptun_code";
+            return $this->database->UpdateDatabaseWithPDO($query, [":hashed_password"=>$hashed_password, ":neptun_code" => $neptun_code]);
+
+            //$query = "UPDATE users SET user_password = \"$hashed_password\" WHERE neptun_code = \"$neptun_code\"";
+            //return $this->database->UpdateDatabase($query);
         }
 
         /**
@@ -44,8 +47,12 @@
          */
         public function GetPasswordOfUser($neptun_code = "") {  
             $neptun_code = strtoupper($neptun_code); 
-            $query = "SELECT user_password FROM users WHERE neptun_code = \"$neptun_code\"";
-            return $this->database->LoadDataFromDatabase($query)[0]??["user_password" => ""];
+
+            $query = "SELECT user_password FROM users WHERE neptun_code = :neptun_code";
+            return $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code" => $neptun_code])[0]??["user_password" => ""];
+
+            //$query = "SELECT user_password FROM users WHERE neptun_code = \"$neptun_code\"";
+            //return $this->database->LoadDataFromDatabase($query)[0]??["user_password" => ""];
         }
 
         /**
@@ -56,8 +63,12 @@
         */
         public function IsAdministrator($neptun_code = "") {
             $neptun_code = strtoupper($neptun_code);
-            $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
-            $users = $this->database->LoadDataFromDatabase($query);
+
+            $query = "SELECT * FROM users WHERE users.neptun_code = :neptun_code";
+            $users = $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code" => $neptun_code]);
+
+            //$query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
+            //$users = $this->database->LoadDataFromDatabase($query);
             
             if(count($users) != 0){
                 return $users["is_administrator"];

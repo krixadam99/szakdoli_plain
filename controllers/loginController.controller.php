@@ -88,7 +88,7 @@
                 [
                     "neptun_code:neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
                         "not_placeholder" => ["", "Neptun kód..."],
-                        "in_array" => $neptun_codes
+                        "in_array" => $neptun_codes // No need for sanitazing
                     ])
                 ]
             );
@@ -100,8 +100,7 @@
                     [
                         "user_password:jelszó"  => array($_POST["user_password"]??"INVALID NAME ATTRIBUTE" => [
                             "not_placeholder" => ["","Jelszó..."],
-                            "is_same_password" => $this->login_model->GetPasswordOfUser($_POST["neptun_code"])["user_password"],
-            
+                            "is_same_password" => $this->login_model->GetPasswordOfUser($_POST["neptun_code"])["user_password"] // No need for sanitazing
                         ])
                     ]
                 );
@@ -146,7 +145,7 @@
                 [
                     "neptun_code" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
                         "not_placeholder" => ["", "Neptun kód..."],
-                        "in_array" => $neptun_codes
+                        "in_array" => $neptun_codes // No need for sanitazing
                     ])
                 ]
             );

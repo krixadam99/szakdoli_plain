@@ -52,6 +52,7 @@
             return $this->database->LoadDataFromDatabase($query);
         }
 
+        
         /**
          * This public method updates the database by the given query.
          * 
@@ -59,8 +60,20 @@
          * 
          * @return bool Returns whether updating the database was successful, or not.
          */
-        public function UpdataDatabase($query){
+        /* public function UpdataDatabase($query){
             return $this->database->UpdateDatabase($query);
+        }*/
+
+        /**
+         * This public method updates the database by the given query.
+         * 
+         * @param string $query The query with which data will be updated in the database.
+         * @param array $binding_array An array containing the binding parameters. The default is [].
+         * 
+         * @return bool Returns whether updating the database was successful, or not.
+         */
+        public function UpdateDatabase($query, $binding_array = []){
+            return $this->database->UpdateDatabaseWithPDO($query, $binding_array);
         }
     }
 

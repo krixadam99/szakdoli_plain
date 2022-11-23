@@ -37,8 +37,11 @@
         public function Register($neptun_code = "", $user_password = "", $user_password_again = "", $user_email = "", $subject_id = "", $user_status = "", $subject_group = "") {  
             $neptun_code = strtoupper($neptun_code);       
             $is_admin = 0;
-            $query = "INSERT INTO users VALUES(\"".$neptun_code."\", \"".$user_email."\", \"".password_hash($user_password,PASSWORD_BCRYPT)."\", \"$is_admin\")";
-            $this->database->UpdateDatabase($query);
+            
+            // $query = "INSERT INTO users VALUES(\"".$neptun_code."\", \"".$user_email."\", \"".password_hash($user_password,PASSWORD_BCRYPT)."\", \"$is_admin\")";
+            // $this->database->UpdateDatabase($query);
+            $query = "INSERT INTO users VALUES(:neptun_code, :user_email, :user_password, :is_admin)";
+            $this->database->UpdateDatabaseWithPDO($query, [":neptun_code" => $neptun_code, ":user_email" => $user_email, ":is_admin" => $is_admin, ":user_password" => password_hash($user_password,PASSWORD_BCRYPT)]);
 
             $pending_status = "PENDING";
             if($user_status === "Demonstrátor"){
@@ -48,17 +51,22 @@
             }
 
             if($subject_group !== "0"){
-                $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\"; ";
-                $this->database->UpdateDatabase($query);
+                $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(:subject_id, :subject_group) ON DUPLICATE KEY UPDATE subject_id = :subject_id; ";
+                $this->database->UpdateDatabaseWithPDO($query, [":subject_id" => $subject_id, ":subject_group" => $subject_group]);
     
-                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
-                , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
+                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
+                //, \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = :subject_group AND subject_id = :subject_id), :neptun_code, :user_status, :pending_status)";
+                $binding_array = [":subject_id" => $subject_id, ":subject_group" => $subject_group, ":neptun_code" => $neptun_code, ":user_status" => $user_status, ":pending_status" => $pending_status];
             }else{
-                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\")
-                , \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
+                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\")
+                //, \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
+
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = :subject_group), :neptun_code, :user_status, :pending_status)";
+                $binding_array = [":subject_group" => $subject_group, ":neptun_code" => $neptun_code, ":user_status" => $user_status, ":pending_status" => $pending_status];
             }
             
-            return $this->database->UpdateDatabase($query);
+            return $this->database->UpdateDatabaseWithPDO($query, $binding_array);
         }
     }
 

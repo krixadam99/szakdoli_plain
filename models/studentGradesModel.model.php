@@ -32,7 +32,8 @@
             AND is_teacher = \"0\"
             AND application_request_status = \"APPROVED\"";
 
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -46,7 +47,8 @@
         public function GetPracticeResults($subject_group = "", $subject_id = ""){
             $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
             $query .= "subject_group.group_number = \"$subject_group\" AND subject_group.subject_id = \"$subject_id\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            //return $this->database->LoadDataFromDatabase($query);
         }
 
         /**
@@ -84,7 +86,9 @@
                 AND results.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
             }
             $query .= "COMMIT;";
-            return $this->database->UpdateDatabase($query, true);
+
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
 
         /**
@@ -109,7 +113,9 @@
                 AND expectation_rules.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
             }
             $query .= "COMMIT;";
-            return $this->database->UpdateDatabase($query, true);
+
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
 
         /**
@@ -132,7 +138,9 @@
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";
-            return $this->database->UpdateDatabase($query, true);
+            
+            return $this->database->UpdateDatabaseWithPDO($query, []);
+            //return $this->database->UpdateDatabase($query, true);
         }
     }
 

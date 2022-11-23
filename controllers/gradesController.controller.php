@@ -43,7 +43,7 @@
                     $approved_subject_id = $this->approved_student_subject;
 
                     // Fetching the results of the user
-                    $results = $this->grades_model->GetResults($_SESSION["neptun_code"])[0]??[];
+                    $results = $this->grades_model->GetResults($this->neptun_code)[0]??[];
                     
                     // Fetching the practice task points of the user
                     $practice_points = [];

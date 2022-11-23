@@ -43,7 +43,8 @@
 
                 // If the user clicked on an incame message, then the system should update the is_seen_by_receiver flag
                 if(isset($_SESSION["message_id"])){
-                    $this->message_model->UpdataDatabase("UPDATE messages SET is_seen_by_receiver = \"1\" WHERE neptun_code_to = \"" . $_SESSION["neptun_code"] . "\" AND message_id = \""  . $_SESSION["message_id"] . "\"");
+                    $this->message_model->UpdateDatabase("UPDATE messages SET is_seen_by_receiver = \"1\" WHERE neptun_code_to = \"" . $_SESSION["neptun_code"] . "\" AND message_id = \""  . $_SESSION["message_id"] . "\"");
+                    //$this->message_model->UpdataDatabase("UPDATE messages SET is_seen_by_receiver = \"1\" WHERE neptun_code_to = \"" . $_SESSION["neptun_code"] . "\" AND message_id = \""  . $_SESSION["message_id"] . "\"");
                 }
 
                 // Fetch the sent, incame and (temporarily) removed messages
@@ -89,6 +90,10 @@
         public function SendNewMessage(){
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
+                foreach($_POST as $key => $value){
+                    $_POST[$key] = htmlspecialchars(htmlspecialchars($value, ENT_SUBSTITUTE)); // Prepare against XSS attack
+                }
+                
                 $neptun_codes = $this->GetAssociteNeptunCodes();
 
                 // Validate the message
@@ -118,12 +123,12 @@
                 }else{ // If all of the sent data was valid
                     // Creating the message
                     $new_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, message_topic, message_text) VALUES(
-                        \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
-                        \"" . strtoupper($_POST["message_to"]) . "\", 
-                        \"" . $_POST["message_topic"] . "\", 
-                        \"" . $_POST["message_text"] . "\"
+                        :neptun_code, 
+                        :message_to, 
+                        :message_topic, 
+                        :message_text
                     )";
-                    $this->message_model->UpdataDatabase($new_message_query);
+                    $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_POST["message_to"]), ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"]]);
                     header("Location: ./index.php?site=messages");
                 }
             }else{
@@ -143,6 +148,10 @@
             //Neptun code must be set in the session, otherwise we cannot move forward
             if(isset($_SESSION["neptun_code"])){
                 if(isset($_SESSION["message_id"]) && $_SESSION["thread_count_new"] && $_SESSION["neptun_code_to"]){
+                    foreach($_POST as $key => $value){
+                        $_POST[$key] = htmlspecialchars(htmlspecialchars($value, ENT_SUBSTITUTE)); // Prepare against XSS attack
+                    }
+                    
                     // Validate the reply message
                     // The topic must be a string, and the length must be less than, or equal to 255 characters, additionally it should not be the place holder (Üzenet témája...), or the empty string
                     // The text must be a string, and the length must be less than, or equal to 2024 characters, additionally it should not be the place holder (Üzenet szövege...), or the empty string
@@ -179,18 +188,18 @@
                             }
     
                             if($is_removed_by_receiver === "0" && $is_removed_by_sender === "0"){
-                                // Creating the reply message
-                                $reply_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count, is_removed_by_receiver) VALUES(
-                                    \"" . strtoupper($_SESSION["neptun_code"]) . "\", 
-                                    \"" . strtoupper($_SESSION["neptun_code_to"]) . "\", 
-                                    \"" . $_SESSION["message_id"] . "\", 
-                                    \"" . $_POST["message_topic"] . "\",
-                                    \"" . $_POST["message_text"] . "\",
-                                    \"" . $_SESSION["thread_count_new"] . "\",
-                                    \"" . $is_removed_by_receiver . "\"
+                                // Creating the reply message            
+                                $new_message_query = "INSERT INTO messages(neptun_code_from, neptun_code_to, belongs_to, message_topic, message_text, thread_count, is_removed_by_receiver) VALUES(
+                                    :neptun_code, 
+                                    :message_to, 
+                                    :message_id,
+                                    :message_topic, 
+                                    :message_text,
+                                    :thread_count,
+                                    :is_removed_by_receiver
                                 )";
-            
-                                $this->message_model->UpdataDatabase($reply_message_query);
+                                $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_SESSION["neptun_code_to"]), ":message_id" =>  $_SESSION["message_id"], ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"], ":thread_count" => $_SESSION["thread_count_new"], ":is_removed_by_receiver" => $is_removed_by_receiver]);
+                                //$this->message_model->UpdataDatabase($reply_message_query);
                             }
                         } 
 
