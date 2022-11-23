@@ -26,8 +26,8 @@
          * 
          * @return array Returns an array containing the data fetched from the database.
          */
-        public function GetDataFromDatabase($query, $data_type = MYSQLI_ASSOC){
-            return $this->database->LoadDataFromDatabase($query, $data_type);
+        public function GetDataFromDatabase($query){
+            return $this->database->LoadDataFromDatabaseWithPDO($query);
         }
 
         /**
@@ -44,12 +44,12 @@
             $neptun_code = strtoupper($neptun_code);
             $query = "";
             if($neptun_code == "ADMIN"){
-                $query = "SELECT * FROM users WHERE users.neptun_code = \"".$neptun_code."\"";
+                $query = "SELECT * FROM users WHERE users.neptun_code = :neptun_code";
             }else{
                 $query = "SELECT * FROM users JOIN user_status USING(neptun_code) JOIN subject_group USING(subject_group_id)
-                WHERE users.neptun_code = \"".$neptun_code."\"";
+                WHERE users.neptun_code = :neptun_code";
             }
-            return $this->database->LoadDataFromDatabase($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code" => $neptun_code]);
         }
 
         

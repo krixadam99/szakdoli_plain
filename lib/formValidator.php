@@ -83,11 +83,42 @@
                     $was_valid_before = true;
                     $was_valid = true;
                     // The name attribute was overwritten
-                    if((is_string($input) || is_numeric($input)) && $input !== "INVALID NAME ATTRIBUTE"){
+                    if($input !== "INVALID NAME ATTRIBUTE"){
                         // Here comes the validation rules for the attribute
                         foreach($validation_rules as $attribute => $condition){
                             if($was_valid_before){
                                 switch($attribute){
+                                    case "type":{ // Validation rules for length
+                                        $type = $condition;
+                                        switch($type){
+                                            case "int":{
+                                                if(!is_int($input)){
+                                                    $this->incorrect_parameters[$key] = "A(z) $attribute_name nem egész!";
+                                                    $was_valid = false;
+                                                }
+                                            };break;
+                                            case "string":{
+                                                if(!is_string($input)){
+                                                    $this->incorrect_parameters[$key] = "A(z) $attribute_name nem sztring!";
+                                                    $was_valid = false;
+                                                }
+                                            };break;
+                                            case "float":{
+                                                if(!is_float($input)){
+                                                    $this->incorrect_parameters[$key] = "A(z) $attribute_name nem lebegőpontos szám!";
+                                                    $was_valid = false;
+                                                }
+                                            };break;
+                                            case "array":{
+                                                if(!is_array($input)){
+                                                    $this->incorrect_parameters[$key] = "A(z) $attribute_name nem tömb!";
+                                                    $was_valid = false;
+                                                }
+                                            };break;
+                                            default:break;
+                                        }
+
+                                    };break;
                                     case "length":{ // Validation rules for length
                                         $left_side = strlen($input);
                                         $relation = $condition[0]??">";

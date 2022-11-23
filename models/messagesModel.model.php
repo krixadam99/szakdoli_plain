@@ -76,7 +76,7 @@
             $query = "SELECT * FROM messages WHERE ";
             $query .= "messages.message_id = \"$message_id\"";
             
-            return $this->database->LoadDataFromDatabaseWithPDO($query);
+            return $this->database->LoadDataFromDatabaseWithPDO($query)[0]??["belongs_to" => "-1"];
             //return $this->database->LoadDataFromDatabase($query)[0]??["belongs_to" => "-1"];
         }
 

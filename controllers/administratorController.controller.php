@@ -67,18 +67,20 @@
                     // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
-                        $parts = explode(":", $key);
-                        $neptun = $parts[0]??"neptun";
-                        $id = $parts[1]??"id";
-                        if($value === "ELUTASÍTÁS"){
-                            $decision = "DENIED";
-                        }elseif($value === "ELFOGADÁS"){
-                            $decision = "APPROVED";
-                        }else{
-                            $decision = "PENDING";
+                        if(is_string($key)){
+                            $parts = explode(":", $key);
+                            $neptun = $parts[0]??"neptun";
+                            $id = $parts[1]??"id";
+                            if($value === "ELUTASÍTÁS"){
+                                $decision = "DENIED";
+                            }elseif($value === "ELFOGADÁS"){
+                                $decision = "APPROVED";
+                            }else{
+                                $decision = "PENDING";
+                            }
+                            
+                            $decision_array[$neptun][$id] = $decision;
                         }
-                        
-                        $decision_array[$neptun][$id] = $decision;
                     }
                     
                     // Comparing the new pending values to the old ones

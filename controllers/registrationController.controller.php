@@ -127,31 +127,38 @@
             $this->ValidateInputs(
                 [
                     "neptun_code:neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
                         "length" => ["==", 6],
                         "preg_match" => ["/[0-9a-zA-Z]{6}/"], // No need for sanitazing
                         "unique" => $neptun_codes
                     ]),
                     "user_email:email cím" => array($_POST["user_email"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["", "Email cím..."],
                         "filter_var" => FILTER_VALIDATE_EMAIL, // No need for sanitazing
                         "unique" => $email_addresses
                     ]),
                     "subject_id:tárgy" => array($subject_id => [
+                        "type" => "string",
                         "in_array" => ["i", "ii"] // No need for sanitazing
                     ]),
                     "user_status:felhasználói státusz" => array($_POST["user_status"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "in_array" => ["Diák", "Demonstrátor"] // No need for sanitazing
                     ]),
                     "$group_name_attribute:csoport" => array($group => [
+                        "type" => "string",
                         "in_array" => $possible_group_numbers // No need for sanitazing
                     ]),
                     "user_password:jelszó" => array($_POST["user_password"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["","Jelszó..."],
                         "length" => [">=", 8],
                         "preg_match" => ["/[a-z]/", "/[A-Z]/", "/[0-9]/", "/[\-\,\.\?\!]/"] // No need for sanitazing
                     ]),
                     "user_password_again:megerősítő jelszó" => array($_POST["user_password_again"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["","Jelszó megerősítése..."],
                         "is_same" => $_POST["user_password"]??"INVALID NAME ATTRIBUTE",
                     ])

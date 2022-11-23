@@ -87,7 +87,10 @@
             $this->ValidateInputs(
                 [
                     "neptun_code:neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
+                        "length" => ["<=", 6],
+                        "preg_match" => ["/[0-9a-zA-Z]/"],
                         "in_array" => $neptun_codes // No need for sanitazing
                     ])
                 ]
@@ -99,6 +102,7 @@
                 $this->ValidateInputs(
                     [
                         "user_password:jelszó"  => array($_POST["user_password"]??"INVALID NAME ATTRIBUTE" => [
+                            "type" => "string",
                             "not_placeholder" => ["","Jelszó..."],
                             "is_same_password" => $this->login_model->GetPasswordOfUser($_POST["neptun_code"])["user_password"] // No need for sanitazing
                         ])
@@ -144,6 +148,7 @@
             $this->ValidateInputs(
                 [
                     "neptun_code" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                        "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
                         "in_array" => $neptun_codes // No need for sanitazing
                     ])

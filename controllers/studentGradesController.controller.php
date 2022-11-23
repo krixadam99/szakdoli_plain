@@ -82,13 +82,15 @@
                     // Processing the points
                     $new_results = array();
                     foreach($_POST as $key => $value){
-                        $neptun = substr($key,0,6);
-                        if(isset($new_results[$neptun])){
-                            $key = substr($key,7);
-                            $new_results[$neptun][$key] = $value;
-                        }else{
-                            $key = substr($key,7);
-                            $new_results[$neptun] = array($key => $value);
+                        if(is_string($key) && is_string($value)){
+                            $neptun = substr($key,0,6);
+                            if(isset($new_results[$neptun])){
+                                $key = substr($key,7);
+                                $new_results[$neptun][$key] = $value;
+                            }else{
+                                $key = substr($key,7);
+                                $new_results[$neptun] = array($key => $value);
+                            }
                         }
                     }
             
@@ -145,24 +147,26 @@
 
                     $new_expectation_rules = array();
                     foreach($_POST as $key => $value){
-                        $task = "";
-                        $new_key = "";
-                        if(is_numeric(strpos($key,"_is_better"))){
-                            $task = explode("_is_better",$key)[0];
-                            $new_key = "is_better";
-                        }elseif(is_numeric(strpos($key,"_minimum_for_pass"))){
-                            $task = explode("_minimum_for_pass",$key)[0];
-                            $new_key = "minimum_for_pass";
-                        }elseif(is_numeric(strpos($key,"_maximum_value"))){
-                            $task = explode("_maximum_value",$key)[0];
-                            $new_key = "maximum_value";
-                        }
+                        if(is_string($key) && is_string($value)){
+                            $task = "";
+                            $new_key = "";
+                            if(is_numeric(strpos($key,"_is_better"))){
+                                $task = explode("_is_better",$key)[0];
+                                $new_key = "is_better";
+                            }elseif(is_numeric(strpos($key,"_minimum_for_pass"))){
+                                $task = explode("_minimum_for_pass",$key)[0];
+                                $new_key = "minimum_for_pass";
+                            }elseif(is_numeric(strpos($key,"_maximum_value"))){
+                                $task = explode("_maximum_value",$key)[0];
+                                $new_key = "maximum_value";
+                            }
 
-                        if($task !== "" && $new_key !== ""){
-                            if(isset($new_expectation_rules[$task])){
-                                $new_expectation_rules[$task][$new_key] = $value;
-                            }else{
-                                $new_expectation_rules[$task] = array($new_key => $value);
+                            if($task !== "" && $new_key !== ""){
+                                if(isset($new_expectation_rules[$task])){
+                                    $new_expectation_rules[$task][$new_key] = $value;
+                                }else{
+                                    $new_expectation_rules[$task] = array($new_key => $value);
+                                }
                             }
                         }
                     }
@@ -248,13 +252,15 @@
 
                     $new_due_dates = array();
                     foreach($_POST as $key => $value){
-                        $task = "";
-                        if(is_numeric(strpos($key,"_due_to"))){
-                            $task = explode("_due_to",$key)[0];
-                        }
-
-                        if($task !== ""){
-                            $new_due_dates[$task] = $value;
+                        if(is_string($key) && is_string($value)){
+                            $task = "";
+                            if(is_numeric(strpos($key,"_due_to"))){
+                                $task = explode("_due_to",$key)[0];
+                            }
+    
+                            if($task !== ""){
+                                $new_due_dates[$task] = $value;
+                            }
                         }
                     }
                 

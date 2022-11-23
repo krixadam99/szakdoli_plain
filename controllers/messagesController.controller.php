@@ -103,14 +103,17 @@
                 $this->ValidateInputs(
                     [
                         "message_to:címzett" => array($_POST["message_to"]??-1 => [
+                            "type" => "string",
                             "in_array" => $neptun_codes,
                             "not_is_same" => $_SESSION["neptun_code"],
                         ]),
                         "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
+                            "type" => "string",
                             "not_placeholder" => ["","Üzenet témája..."],
                             "length" => ["<=","255"]
                         ]),
                         "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
+                            "type" => "string",
                             "not_placeholder" => ["","Üzenet szövege..."],
                             "length" => ["<=","2024"]
                         ])
@@ -158,10 +161,12 @@
                     $this->ValidateInputs(
                         [
                             "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
+                                "type" => "string",
                                 "not_placeholder" => ["","Üzenet témája..."],
                                 "length" => ["<=","255"]
                             ]),
                             "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
+                                "type" => "string",
                                 "not_placeholder" => ["","Üzenet szövege..."],
                                 "length" => ["<=","2024"]
                             ])
@@ -198,6 +203,7 @@
                                     :thread_count,
                                     :is_removed_by_receiver
                                 )";
+                                
                                 $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_SESSION["neptun_code_to"]), ":message_id" =>  $_SESSION["message_id"], ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"], ":thread_count" => $_SESSION["thread_count_new"], ":is_removed_by_receiver" => $is_removed_by_receiver]);
                                 //$this->message_model->UpdataDatabase($reply_message_query);
                             }

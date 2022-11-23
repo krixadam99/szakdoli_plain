@@ -83,16 +83,18 @@
                     // Processing the user inputs
                     $decision_array = array();
                     foreach($_POST as $key => $value){
-                        $neptun = $key;
-                        $decision = "";
-                        $id = $current_subject . "_" . $current_group;
-                        if($value != "-"){
-                            if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
-                                $decision = "APPROVED";
-                            }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
-                                $decision = "DENIED";
+                        if(is_string($key)){
+                            $neptun = $key;
+                            $decision = "";
+                            $id = $current_subject . "_" . $current_group;
+                            if($value != "-"){
+                                if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
+                                    $decision = "APPROVED";
+                                }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
+                                    $decision = "DENIED";
+                                }
+                                $decision_array[$neptun][$id] = $decision;
                             }
-                            $decision_array[$neptun][$id] = $decision;
                         }
                     }
                     
