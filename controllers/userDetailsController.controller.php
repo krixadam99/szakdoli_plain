@@ -41,8 +41,8 @@
                     $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
                     $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
                     
-                    $this->dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
-                    $this->dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                    $this->dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                    $this->dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
                     
                     include(ROOT_DIRECTORY . "/views/userDetailsPage.view.php");
                 }else{
@@ -129,9 +129,9 @@
                                 if($group === "-") $group  = "0";
 
                                 // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "i" id
-                                $dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                                $dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                                 foreach($dimat_i_groups as $key=>$group_number){
-                                   array_push($possible_group_numbers, $group_number[0]);
+                                   array_push($possible_group_numbers, $group_number["group_number"]);
                                 }
                                 array_push($possible_group_numbers, "0");
                             }
@@ -142,9 +142,9 @@
                                 if($group === "-") $group  = "0";
     
                                 // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "ii" id
-                                $dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"", MYSQLI_NUM);
+                                $dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                                 foreach($dimat_ii_groups as $key=>$group_number){
-                                   array_push($possible_group_numbers, $group_number[0]);
+                                   array_push($possible_group_numbers, $group_number["group_number"]);
                                 }
                                 array_push($possible_group_numbers, "0");
                             }

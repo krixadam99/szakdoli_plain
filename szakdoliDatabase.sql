@@ -1,3 +1,14 @@
+/*DROP TABLE practice_task_points;
+DROP TABLE results;
+DROP TABLE expectation_rules;
+DROP TABLE task_due_to_date_table;
+DROP TABLE grade_table;
+DROP TABLE messages;
+DROP TABLE user_status;
+DROP TABLE users;
+DROP TABLE subject_groups;*/
+
+
 CREATE TABLE users (
     neptun_code varchar(6) NOT NULL,
     email_address varchar(255) NOT NULL,
@@ -8,13 +19,13 @@ CREATE TABLE users (
     PRIMARY KEY(neptun_code)
 );
 
-CREATE TABLE subject_group (
+CREATE TABLE subject_groups (
     subject_group_id int(11) NOT NULL AUTO_INCREMENT,
     group_number int(11) NOT NULL,
     subject_id varchar(255) NOT NULL,
     
     UNIQUE ( group_number, subject_id ),
-    PRIMARY KEY( subject_group_id )
+    PRIMARY KEY( subject_group_id, subject_id )
 );
 
 CREATE TABLE user_status (
@@ -25,50 +36,29 @@ CREATE TABLE user_status (
     
     UNIQUE ( subject_group_id, neptun_code),
     FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 );
 
 CREATE TABLE practice_task_points (
     neptun_code varchar(6) NOT NULL,
     subject_group_id int(11) NOT NULL,
-    practice_task_1 float NOT NULL DEFAULT 0,
-    practice_task_2 float NOT NULL DEFAULT 0,
-    practice_task_3 float NOT NULL DEFAULT 0,
-    practice_task_4 float NOT NULL DEFAULT 0,
-    practice_task_5 float NOT NULL DEFAULT 0,
-    practice_task_6 float NOT NULL DEFAULT 0,
-    practice_task_7 float NOT NULL DEFAULT 0,
-    practice_task_8 float NOT NULL DEFAULT 0,
-    practice_task_9 float NOT NULL DEFAULT 0,
+    task_type varchar(255) NOT NULL,
+    task_point float(11) NOT NULL,
     
-    UNIQUE ( subject_group_id, neptun_code ),
+    UNIQUE ( subject_group_id, neptun_code, task_type ),
     FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 );
 
 CREATE TABLE results (
     neptun_code varchar(6) NOT NULL,
     subject_group_id int(11) NOT NULL,
-    practice_count int(11) NOT NULL DEFAULT 0,
-    extra int(11) NOT NULL DEFAULT 0,
-    middle_term_exam int(11) NOT NULL DEFAULT 0,
-    final_term_exam int(11) NOT NULL DEFAULT 0,
-    middle_term_exam_correction int(11) NOT NULL DEFAULT 0,
-    final_term_exam_correction int(11) NOT NULL DEFAULT 0,
-    small_test_1 int(11) NOT NULL DEFAULT 0,
-    small_test_2 int(11) NOT NULL DEFAULT 0,
-    small_test_3 int(11) NOT NULL DEFAULT 0,
-    small_test_4 int(11) NOT NULL DEFAULT 0,
-    small_test_5 int(11) NOT NULL DEFAULT 0,
-    small_test_6 int(11) NOT NULL DEFAULT 0,
-    small_test_7 int(11) NOT NULL DEFAULT 0,
-    small_test_8 int(11) NOT NULL DEFAULT 0,
-    small_test_9 int(11) NOT NULL DEFAULT 0,
-    small_test_10 int(11) NOT NULL DEFAULT 0,
+    task_type varchar(255) NOT NULL,
+    result float(11) NOT NULL,
     
-    UNIQUE ( subject_group_id, neptun_code ),
+    UNIQUE ( subject_group_id, neptun_code, task_type ),
     FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 );
 
 CREATE TABLE expectation_rules (
@@ -79,27 +69,27 @@ CREATE TABLE expectation_rules (
     maximum_value int(11) NOT NULL DEFAULT 100,
 
     UNIQUE ( subject_group_id, task_type),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 );
 
-CREATE TABLE task_due_to_date (
+CREATE TABLE task_due_to_date_table (
     subject_group_id int(11) NOT NULL,
     task_type varchar(255) NOT NULL,
-    due_to DATE NOT NULL DEFAULT CURRENT_DATE,
+    due_to DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE ( subject_group_id, task_type),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 );
 
 CREATE TABLE grade_table (
     subject_group_id int(11) NOT NULL,
-    pass_level_point int(11) NOT NULL DEFAULT 0,
-    satisfactory_level_point int(11) NOT NULL DEFAULT 0,
-    good_level_point int(11) NOT NULL DEFAULT 0,
-    excellent_level_point int(11) NOT NULL DEFAULT 0,
+    pass_level_point int(11) NOT NULL DEFAULT 1,
+    satisfactory_level_point int(11) NOT NULL DEFAULT 2,
+    good_level_point int(11) NOT NULL DEFAULT 3,
+    excellent_level_point int(11) NOT NULL DEFAULT 4,
 
     UNIQUE ( subject_group_id ),
-    FOREIGN KEY( subject_group_id ) REFERENCES subject_group( subject_group_id )
+    FOREIGN KEY( subject_group_id ) REFERENCES subject_groups( subject_group_id )
 
 );
 
@@ -114,7 +104,7 @@ CREATE TABLE messages (
     is_removed_by_receiver int(11) NOT NULL DEFAULT 0,
     is_removed_by_sender int(11) NOT NULL DEFAULT 0,
     thread_count int(11) NOT NULL DEFAULT 0,
-    sent_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+    sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE ( message_id ),
     FOREIGN KEY( neptun_code_from) REFERENCES users( neptun_code ),
@@ -129,11 +119,11 @@ INSERT INTO users VALUES("CBACBA", "cbacba@example.hu", "$2y$10$fR6hVQ88X1R1uUZJ
 INSERT INTO users VALUES("ALMA12", "alma12@example.hu", "$2y$10$1QGG.K.mP1AFMZ05clvezu5Jhj9Ol5sS5bm.qQCK2BmEB/jMXfJV.", 0);
 
 
-INSERT INTO subject_group VALUES(1, 0, "");
-INSERT INTO subject_group VALUES(2, 1, "i");
-INSERT INTO subject_group VALUES(3, 2, "ii");
-INSERT INTO subject_group VALUES(4, 2, "i");
-INSERT INTO subject_group VALUES(5, 3, "ii");
+INSERT INTO subject_groups VALUES(1, 0, "");
+INSERT INTO subject_groups VALUES(2, 1, "i");
+INSERT INTO subject_groups VALUES(3, 2, "ii");
+INSERT INTO subject_groups VALUES(4, 2, "i");
+INSERT INTO subject_groups VALUES(5, 3, "ii");
 
 
 INSERT INTO user_status VALUES(2, "AAAAAA", 1, "APPROVED");
@@ -147,20 +137,141 @@ INSERT INTO user_status VALUES(4, "ALMA12", 0, "WITHDRAWN");
 INSERT INTO user_status VALUES(2, "BBBBBB", 0, "APPROVED");
 INSERT INTO user_status VALUES(5, "CBACBA", 0, "APPROVED");
 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type, task_point) VALUES("ABCABC", 2,"practice_task_1", 0.2); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_task_9"); 
 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, practice_task_1, practice_task_2) VALUES("ABCABC", 3, 2, 0.5);
-INSERT INTO practice_task_points(neptun_code, subject_group_id, practice_task_1) VALUES("ABCABC", 2, 0.2);
-INSERT INTO practice_task_points(neptun_code, subject_group_id) VALUES("ALMA12", 2);
-INSERT INTO practice_task_points(neptun_code, subject_group_id, practice_task_1) VALUES("BBBBBB", 2, 5);
-INSERT INTO practice_task_points(neptun_code, subject_group_id) VALUES("CBACBA", 3);
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type, task_point) VALUES("ABCABC", 3,"practice_task_1", 2); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type, task_point) VALUES("ABCABC", 3,"practice_task_2", 0.5); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_9"); 
+
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_1"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_9"); 
+
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type, task_point) VALUES("BBBBBB", 2,"practice_task_1", 5); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_9"); 
+
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_1"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_9"); 
 
 
-INSERT INTO results(neptun_code, subject_group_id) VALUES("ABCABC", 3);
-INSERT INTO results(neptun_code, subject_group_id) VALUES("ABCABC", 2);
-INSERT INTO results(neptun_code, subject_group_id) VALUES("ALMA12", 2);
-INSERT INTO results(neptun_code, subject_group_id) VALUES("BBBBBB", 2);
-INSERT INTO results(neptun_code, subject_group_id) VALUES("CBACBA", 4);
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"small_test_10");
 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_10");
+
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_10");
+
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_10");
+
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_10");
 
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "practice_count");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "extra");
@@ -170,30 +281,30 @@ INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "middle_ter
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "final_term_exam_correction");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "small_tests");
 
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "middle_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "final_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "middle_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "final_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "small_test_10");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(2, "practice_task_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "middle_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "final_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "middle_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "final_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "small_test_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(2);
 
@@ -206,30 +317,30 @@ INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(3, "middle_ter
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(3, "final_term_exam_correction");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(3, "small_tests");
 
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "middle_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "final_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "middle_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "final_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "small_test_10");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(3, "practice_task_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "middle_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "final_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "middle_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "final_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "small_test_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(3);
 
@@ -242,30 +353,30 @@ INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(4, "middle_ter
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(4, "final_term_exam_correction");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(4, "small_tests");
 
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "middle_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "final_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "middle_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "final_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "small_test_10");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(4, "practice_task_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "middle_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "final_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "middle_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "final_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "small_test_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(4);
 
@@ -278,29 +389,29 @@ INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(5, "middle_ter
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(5, "final_term_exam_correction");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(5, "small_tests");
 
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "middle_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "final_term_exam");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "middle_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "final_term_exam_correction");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "small_test_10");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_1");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_2");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_3");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_4");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_5");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_6");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_7");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_8");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_9");
-INSERT INTO task_due_to_date(subject_group_id, task_type) VALUES(5, "practice_task_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "middle_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "final_term_exam");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "middle_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "final_term_exam_correction");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "small_test_10");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_1");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_2");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_3");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_4");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_5");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_6");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_7");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_8");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_9");
+INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(5);

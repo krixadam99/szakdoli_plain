@@ -61,7 +61,8 @@
     margin: 1% auto;
 }
 
-.message_text {
+.message_text,
+.message_topic {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

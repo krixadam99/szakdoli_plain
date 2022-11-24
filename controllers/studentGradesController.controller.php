@@ -42,7 +42,8 @@
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
                     // Fetching the grades, expectation rules, due dates and lower bound of the grades that belong to the subject - group pair
-                    $students_grades = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
+                    $students_grades = $this->GetResults($_SESSION["subject"], $_SESSION["group"]);
+                    
                     $expectation_rules = $this->student_grades_model->GetExpectationRules($_SESSION["subject"], $_SESSION["group"]);
                     $task_due_dates = $this->student_grades_model->GetTaskDueDate($_SESSION["subject"], $_SESSION["group"]);
                     $grade_levels = $this->student_grades_model->GetGradeLevels($_SESSION["subject"], $_SESSION["group"])[0]??[];
@@ -95,20 +96,21 @@
                     }
             
                     // Getting the results of the students who belong to the group determined by the subject - group pair
-                    $original_user_results = $this->student_grades_model->GetResults($_SESSION["subject"], $_SESSION["group"]);
+                    $original_user_results = $this->GetResults($_SESSION["subject"], $_SESSION["group"]);
                     $query_array = array();
-                    foreach($original_user_results as $index => $original_record){
+
+                    foreach($original_user_results as $neptun_code => $original_record){
                         // Only those students' points can be edited, who belong to the group determined by the subject - group pair
-                        if(isset($new_results[$original_record["neptun_code"]])){
-                            $results = $new_results[$original_record["neptun_code"]];
+                        if(isset($new_results[$neptun_code])){
+                            $results = $new_results[$neptun_code];
 
                             // Only numeric values can be passed through
-                            $student_array = ["neptun_code" => $original_record["neptun_code"], "group_number" => $current_group, "subject_id" => $current_subject];
+                            $student_array = ["neptun_code" => $neptun_code, "group_number" => $current_group, "subject_id" => $current_subject, "task_point_pairs" => []];
                             foreach($results as $index => $result){
                                if(is_numeric($result) && isset($original_record[$index])){
-                                    $student_array[$index] = $result;
+                                    $student_array["task_point_pairs"][$index] = $result;
                                 }else if(!is_numeric($result) && isset($original_record[$index])){
-                                    $student_array[$index] = $original_record[$index];
+                                    $student_array["task_point_pairs"][$index] = $original_record[$index];
                                 }
                             }      
                             array_push($query_array, $student_array);
@@ -273,9 +275,10 @@
                             $due_date = $new_due_dates[$task_type];
                             
                             // Validating the date
-                            $new_date = DateTime::createFromFormat("Y-m-d", $due_date);
+                            //$due_date = strtotime($due_date);
+                            $new_date = DateTime::createFromFormat("Y-m-d\TH:i:s", $due_date);
                             if($new_date){
-                                $due_date = $new_date->format("Y-m-d");
+                                $due_date = $new_date->format("Y-m-d H:i:s");
                             }else{
                                 $due_date = $original_due_date["due_to"];
                             }
@@ -361,7 +364,7 @@
                     satisfactory_level_point = :point_1,
                     good_level_point = :point_2,
                     excellent_level_point = :point_3
-                    WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = :current_subject
+                    WHERE subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = :current_subject
                     AND group_number = :current_group);";
 
                     $this->student_grades_model->UpdateDatabase($query, [":point_0"=>$points[0],":point_1"=>$points[1],":point_2"=>$points[2],":point_3"=>$points[3],":current_subject"=>$current_subject,":current_group"=>$current_group]);
@@ -374,6 +377,32 @@
             }else{
                 header("Location: ./index.php");
             }
+        }
+
+        /**
+         * This private method returns the grades of the students belonging to the given subject id - group number pair.
+         * 
+         * @param string $subject The id of the subject. Can be either "i", or "ii".
+         * @param int $group The group's number.
+         * 
+         * @return array Returns the grades of the students belonging to the given subject id - group number pair.
+         */
+        private function GetResults($subject, $group){
+            $students_grade_rows = $this->student_grades_model->GetResults($subject, $group);
+            $students_grades = [];
+            foreach($students_grade_rows as $row_counter => $students_grade_row){
+                if(isset($students_grades[$students_grade_row["neptun_code"]])){
+                    $students_grades[$students_grade_row["neptun_code"]] = array_merge($students_grades[$students_grade_row["neptun_code"]], [$students_grade_row["task_type"] => $students_grade_row["result"]]);
+                }else{
+                    $students_grades[$students_grade_row["neptun_code"]] = [
+                        "subject_id" => $students_grade_row["subject_id"],
+                        "group_number" => $students_grade_row["group_number"],
+                        $students_grade_row["task_type"] => $students_grade_row["result"]
+                    ];
+                }
+            }
+
+            return $students_grades;
         }
     }
 

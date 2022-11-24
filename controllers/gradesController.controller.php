@@ -43,15 +43,17 @@
                     $approved_subject_id = $this->approved_student_subject;
 
                     // Fetching the results of the user
-                    $results = $this->grades_model->GetResults($this->neptun_code)[0]??[];
+                    $task_type_results = $this->grades_model->GetResults($this->neptun_code);
+                    $results = [];
+                    foreach($task_type_results as $task_counter => $row){
+                        $results[$row["task_type"]] = $row["result"];
+                    }
                     
                     // Fetching the practice task points of the user
                     $practice_points = [];
-                    $practice_results = $this->grades_model->GetPracticeResults($this->neptun_code)[0]??[];
-                    foreach($practice_results as $key => $value){
-                        if(is_int(strpos($key, "practice_task"))){
-                            $practice_points[$key] = $value;
-                        }
+                    $practice_results = $this->grades_model->GetPracticeResults($this->neptun_code);
+                    foreach($practice_results as $task_counter => $row){
+                        $practice_points[$row["task_type"]] = $row["task_point"];
                     }               
                     
                     // Data related to results like expectation rules, due dates and the lower bound for grades

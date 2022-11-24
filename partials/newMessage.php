@@ -9,9 +9,11 @@
                 </label>
                 <select class="receiver_selector" name="message_to">
                     <?php foreach($neptun_codes as $element_counter => $neptun_code):?>
-                        <option <?=$element_counter===0?"selected":""?>>
-                            <?=$neptun_code?>
-                        </option>
+                        <?php if($_SESSION["neptun_code"] !== $neptun_code):?>
+                            <option <?=$element_counter===0?"selected":""?>>
+                                <?=$neptun_code?>
+                            </option>
+                        <?php endif?>
                     <?php endforeach?>
                 </select>
                 <?php if(isset($incorrect_parameters)):?>

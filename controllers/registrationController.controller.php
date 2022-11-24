@@ -29,8 +29,8 @@
         */
         public function Registration() {
             // Fetching the possible group numbers for Discrete mathematics I. and Discrete mathematics II.
-            $this->dimat_i_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
-            $this->dimat_ii_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
+            $this->dimat_i_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+            $this->dimat_ii_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
             
             $_SESSION["form_generated_token"] = bin2hex(random_bytes(24));
             $this->form_token = $_SESSION["form_generated_token"];
@@ -93,7 +93,7 @@
                             if($group === "-") $group  = "0";
                             
                             // Discrete mathematics I. group can be one of the groups having at least one teacher with approved status/ group and have "i" id
-                            $dimat_i_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                            $dimat_i_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                             foreach($dimat_i_groups as $key => $group_number){
                                array_push($possible_group_numbers, $group_number["group_number"]);
                             }
@@ -106,7 +106,7 @@
                             if($group === "-") $group  = "0";
 
                             // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "ii" id
-                            $dimat_ii_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_group JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                            $dimat_ii_groups = $this->registration_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 1 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                             foreach($dimat_ii_groups as $key=>$group_number){
                                array_push($possible_group_numbers, $group_number["group_number"]);
                             }

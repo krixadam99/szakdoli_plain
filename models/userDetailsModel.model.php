@@ -62,18 +62,18 @@
 
             $query = "BEGIN; ";
             if($is_teacher === 1){
-                $application_status = $this->database->LoadDataFromDatabaseWithPDO("SELECT application_request_status FROM user_status WHERE neptun_code = \"$neptun_code\" AND subject_group_id IN (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\") AND is_teacher=\"1\"")[0]??["application_request_status" => ""];
+                $application_status = $this->database->LoadDataFromDatabaseWithPDO("SELECT application_request_status FROM user_status WHERE neptun_code = \"$neptun_code\" AND subject_group_id IN (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\") AND is_teacher=\"1\"")[0]??["application_request_status" => ""];
                 
-                $query .= "INSERT INTO subject_group(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\", group_number = \"$subject_group\"; ";
+                $query .= "INSERT INTO subject_groups(subject_id, group_number) VALUES(\"$subject_id\", \"$subject_group\") ON DUPLICATE KEY UPDATE subject_id = \"$subject_id\", group_number = \"$subject_group\"; ";
                 if($application_status["application_request_status"] !== "APPROVED"){
-                    $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
+                    $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"1\"; ";
                 }
             }else{
                 $query .= "DELETE FROM user_status WHERE neptun_code = \"$neptun_code \" AND subject_group_id = 1; ";
 
                 // WITHDRAWN or DELETED?
                 $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"0\"; ";
-                $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
+                $query .= "INSERT INTO user_status VALUES((SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"), \"$neptun_code\", \"$is_teacher\", \"$pending_status\") ON DUPLICATE KEY UPDATE application_request_status = \"$pending_status\", is_teacher = \"0\"; ";
             }
             $query .= "COMMIT; ";
 

@@ -30,7 +30,7 @@
         public function GetExpectationRules($subject_id, $subject_group){
             
             $query = "SELECT * FROM expectation_rules 
-            WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
+            WHERE subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
         }
@@ -44,8 +44,8 @@
          * @return array Returns an array containing each task's due date belonging to the subject name - subject group pair.
          */
         public function GetTaskDueDate($subject_id, $subject_group){
-            $query = "SELECT * FROM task_due_to_date 
-            WHERE subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
+            $query = "SELECT * FROM task_due_to_date_table 
+            WHERE subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")";
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
         }
@@ -59,7 +59,7 @@
          * @return array Returns an array containing the minimum point to get a certain grade for the subject name - subject group pair.
          */
         public function GetGradeLevels($subject_id, $subject_group){
-            $query = "SELECT * FROM grade_table JOIN subject_group USING(subject_group_id)
+            $query = "SELECT * FROM grade_table JOIN subject_groups USING(subject_group_id)
             WHERE group_number = \"$subject_group\" AND subject_id= \"$subject_id\"";
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);

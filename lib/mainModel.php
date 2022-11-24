@@ -34,7 +34,7 @@
          * This public method fetches all of the rows from the users table, or users and user_groups joined tables that belongs to the user with the given neptun code.
          * 
          * The administrator will only be present in the users table, so for them data should be fetched only from the users table.
-         * Every other user's data will be fetched from the users, user_status and subject_group joined table (the first two will be joined on the neptun_code, the last two on the subject_group_id attribute).
+         * Every other user's data will be fetched from the users, user_status and subject_groups joined table (the first two will be joined on the neptun_code, the last two on the subject_group_id attribute).
          * 
          * @param string $neptun_code The neptun code of the user.
          * 
@@ -46,7 +46,7 @@
             if($neptun_code == "ADMIN"){
                 $query = "SELECT * FROM users WHERE users.neptun_code = :neptun_code";
             }else{
-                $query = "SELECT * FROM users JOIN user_status USING(neptun_code) JOIN subject_group USING(subject_group_id)
+                $query = "SELECT * FROM users JOIN user_status USING(neptun_code) JOIN subject_groups USING(subject_group_id)
                 WHERE users.neptun_code = :neptun_code";
             }
             return $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code" => $neptun_code]);

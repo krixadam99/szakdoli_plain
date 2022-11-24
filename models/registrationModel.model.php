@@ -18,7 +18,7 @@
         }
         
         /**
-         * This public method is responsible for adding the new user to the users table, user_status and subject_group table.
+         * This public method is responsible for adding the new user to the users table, user_status and subject_groups table.
          * 
          * New users will not be administrators.
          * Each user's status is pending in the beginning.
@@ -28,7 +28,7 @@
          * @param string $user_password This is the user' password. This will be hashed. This will be used in the users table. The default is "".
          * @param string $user_password_again This is the user' repeated password. This will not be used. The default is "".
          * @param string $user_email This is the user' email address. This will be used in the users table. The default is "".
-         * @param string $subject_id This is the user' selected subject's name. This can be "i", or "ii". This will be used in the subject_group table. The default is "".
+         * @param string $subject_id This is the user' selected subject's name. This can be "i", or "ii". This will be used in the subject_groups table. The default is "".
          * @param string $user_status This is the user' selected user status. This can be "Demonstrátor", or "Diák". This will be used in the user_status table. The default is "".
          * @param string $subject_group This is the user' selected subject group. This can be either a group's number which is in the selected subject and has an assigned teacher, the "-" sign, or a number between 1 and 30 (inclusively). This will be used in the subject_group table. The default is "".
          * 
@@ -51,18 +51,18 @@
             }
 
             if($subject_group !== "0"){
-                $query = "INSERT INTO subject_group(subject_id, group_number) VALUES(:subject_id, :subject_group) ON DUPLICATE KEY UPDATE subject_id = :subject_id; ";
+                $query = "INSERT INTO subject_groups(subject_id, group_number) VALUES(:subject_id, :subject_group) ON DUPLICATE KEY UPDATE subject_id = :subject_id; ";
                 $this->database->UpdateDatabaseWithPDO($query, [":subject_id" => $subject_id, ":subject_group" => $subject_group]);
     
-                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
+                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_groups WHERE group_number = \"$subject_group\" AND subject_id = \"$subject_id\")
                 //, \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
-                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = :subject_group AND subject_id = :subject_id), :neptun_code, :user_status, :pending_status)";
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_groups WHERE group_number = :subject_group AND subject_id = :subject_id), :neptun_code, :user_status, :pending_status)";
                 $binding_array = [":subject_id" => $subject_id, ":subject_group" => $subject_group, ":neptun_code" => $neptun_code, ":user_status" => $user_status, ":pending_status" => $pending_status];
             }else{
-                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = \"$subject_group\")
+                //$query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_groups WHERE group_number = \"$subject_group\")
                 //, \"".$neptun_code."\", \"$user_status\", \"$pending_status\")";
 
-                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_group WHERE group_number = :subject_group), :neptun_code, :user_status, :pending_status)";
+                $query = "INSERT INTO user_status(subject_group_id, neptun_code, is_teacher, application_request_status) VALUES((SELECT subject_group_id FROM subject_groups WHERE group_number = :subject_group), :neptun_code, :user_status, :pending_status)";
                 $binding_array = [":subject_group" => $subject_group, ":neptun_code" => $neptun_code, ":user_status" => $user_status, ":pending_status" => $pending_status];
             }
             

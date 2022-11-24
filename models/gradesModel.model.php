@@ -33,10 +33,6 @@
             $query = "SELECT * FROM user_status JOIN results USING(neptun_code, subject_group_id) WHERE ";
             $query .= "results.neptun_code = :neptun_code AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabaseWithPDO($query, [":neptun_code" => $neptun_code]);
-            
-            // $query = "SELECT * FROM user_status JOIN results USING(neptun_code, subject_group_id) WHERE ";
-            //$query .= "results.neptun_code = \"$neptun_code\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
-            //return $this->database->LoadDataFromDatabase($query);
         }
     }
 

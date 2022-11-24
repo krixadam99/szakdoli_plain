@@ -368,7 +368,7 @@
                 || "ii" === $approved_student_subject
                 || in_array("ii", $pending_student_subject_ids)){
                 $can_apply_to_group = false;
-                if(in_array("ii", $pending_student_subject_ids)){
+                if(in_array("ii", $pending_student_subject_ids) || "ii" === $approved_student_subject){
                     $can_add_group_for_dimat_ii = false;
                 }
             }

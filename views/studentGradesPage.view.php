@@ -12,7 +12,7 @@
     }
 
     $points = [];
-    foreach($students_grades as $index => $student){
+    foreach($students_grades as $neptun_code => $student){
         $small_test_point = 0;
         foreach($student as $key => $value){
           if(is_numeric(strpos($key, "small_test"))){
@@ -22,11 +22,11 @@
         $middle_term_exam_point = max($student["middle_term_exam"],$student["middle_term_exam_correction"]);
         $final_term_exam_point = max($student["final_term_exam"],$student["final_term_exam_correction"]);
 
-        $points[$student["neptun_code"]] = [];
-        $points[$student["neptun_code"]]["small_test"] =  $small_test_point;
-        $points[$student["neptun_code"]]["middle_term_exam"] =  $middle_term_exam_point;
-        $points[$student["neptun_code"]]["final_term_exam"] = $final_term_exam_point;
-        $points[$student["neptun_code"]]["sum"] = $student["extra"] + $middle_term_exam_point + $final_term_exam_point;
+        $points[$neptun_code] = [];
+        $points[$neptun_code]["small_test"] =  $small_test_point;
+        $points[$neptun_code]["middle_term_exam"] =  $middle_term_exam_point;
+        $points[$neptun_code]["final_term_exam"] = $final_term_exam_point;
+        $points[$neptun_code]["sum"] = $student["extra"] + $middle_term_exam_point + $final_term_exam_point;
     }
 
     $actual_page = "student_grades";
@@ -103,10 +103,10 @@
                                 <th>9. KIS ZH</th>
                                 <th>10. KIS ZH</th>
                             </tr>
-                            <?php foreach($students_grades as $index => $student):?>
+                            <?php foreach($students_grades as $neptun_code => $student):?>
                                 <tr id=<?=$student["group_number"]?> class="student_row">
                                     <td style="position: sticky;left: 0;background: rgba(255, 255, 255, 0.751);z-index: 1;backdrop-filter: blur(3px)">
-                                        <?=$student["neptun_code"]?>
+                                        <?=$neptun_code?>
                                     </td>
                                     <td style="border-left:1px dashed black">
                                         <?=$student["subject_id"]=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?>
@@ -119,16 +119,16 @@
                                             Nem kaphat érdemjegyet
                                         <?php else:?>
                                             <?php if(
-                                                    $points[$student["neptun_code"]]["small_test"] < $expectation_rules["small_tests"]["minimum_for_pass"]
-                                                ||  $points[$student["neptun_code"]]["middle_term_exam"] < $expectation_rules["middle_term_exam"]["minimum_for_pass"]
-                                                ||  $points[$student["neptun_code"]]["final_term_exam"] < $expectation_rules["final_term_exam"]["minimum_for_pass"]
+                                                    $points[$neptun_code]["small_test"] < $expectation_rules["small_tests"]["minimum_for_pass"]
+                                                ||  $points[$neptun_code]["middle_term_exam"] < $expectation_rules["middle_term_exam"]["minimum_for_pass"]
+                                                ||  $points[$neptun_code]["final_term_exam"] < $expectation_rules["final_term_exam"]["minimum_for_pass"]
                                             ):?>
                                                 1
                                             <?php else:?>
-                                                <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["excellent_level_point"]):?>
-                                                    <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["good_level_point"]):?>
-                                                        <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["satisfactory_level_point"]):?>
-                                                            <?php if($points[$student["neptun_code"]]["sum"] < $grade_levels["pass_level_point"]):?>
+                                                <?php if($points[$neptun_code]["sum"] < $grade_levels["excellent_level_point"]):?>
+                                                    <?php if($points[$neptun_code]["sum"] < $grade_levels["good_level_point"]):?>
+                                                        <?php if($points[$neptun_code]["sum"] < $grade_levels["satisfactory_level_point"]):?>
+                                                            <?php if($points[$neptun_code]["sum"] < $grade_levels["pass_level_point"]):?>
                                                                 1
                                                             <?php else:?>
                                                                 2
@@ -147,67 +147,67 @@
                                     </td>
 
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_practice_count" value="<?=$student["practice_count"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_practice_count" value="<?=$student["practice_count"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_extra" value="<?=$student["extra"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_extra" value="<?=$student["extra"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_middle_term_exam" value="<?=$student["middle_term_exam"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_middle_term_exam" value="<?=$student["middle_term_exam"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_middle_term_exam_correction" value="<?=$student["middle_term_exam_correction"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_middle_term_exam_correction" value="<?=$student["middle_term_exam_correction"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_final_term_exam" value="<?=$student["final_term_exam"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_final_term_exam" value="<?=$student["final_term_exam"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_final_term_exam_correction" value="<?=$student["final_term_exam_correction"]?>">
+                                        <input type="number" min="0" step="1" class="student_grade_input" name="<?=$neptun_code?>_final_term_exam_correction" value="<?=$student["final_term_exam_correction"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_1" value="<?=$student["small_test_1"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_1" value="<?=$student["small_test_1"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_2" value="<?=$student["small_test_2"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_2" value="<?=$student["small_test_2"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_3" value="<?=$student["small_test_3"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_3" value="<?=$student["small_test_3"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_4" value="<?=$student["small_test_4"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_4" value="<?=$student["small_test_4"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_5" value="<?=$student["small_test_5"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_5" value="<?=$student["small_test_5"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_6" value="<?=$student["small_test_6"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_6" value="<?=$student["small_test_6"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_7" value="<?=$student["small_test_7"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_7" value="<?=$student["small_test_7"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_8" value="<?=$student["small_test_8"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_8" value="<?=$student["small_test_8"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_9" value="<?=$student["small_test_9"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_9" value="<?=$student["small_test_9"]?>">
                                         </input>
                                     </td>
                                     <td style="padding:0%">
-                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$student["neptun_code"]?>_small_test_10" value="<?=$student["small_test_10"]?>">
+                                        <input type="number" min="0" max="2" step="1" class="student_grade_input" name="<?=$neptun_code?>_small_test_10" value="<?=$student["small_test_10"]?>">
                                         </input>
                                     </td>                            
                                 </tr>
@@ -334,7 +334,7 @@
                                     <?=$task_type_name?>
                                 </td>
                                 <td style="padding:0%">
-                                    <input type="date" class="student_task_due_date_input" name="<?=$id . "_due_to"?>" value="<?=$task_due_date["due_to"]?>">
+                                    <input type="datetime-local" min="2022" max="2023" step="1" class="student_task_due_date_input" name="<?=$id . "_due_to"?>" value="<?=$task_due_date["due_to"]?>">
                                     </input>
                                 </td>                            
                             </tr>

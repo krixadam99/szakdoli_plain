@@ -111,7 +111,7 @@
             AND neptun_code != \"$neptun_code\"
             AND subject_group_id IN (SELECT subject_group_id FROM user_status WHERE neptun_code = \"$neptun_code\" AND  application_request_status = \"APPROVED\")";
 
-            $teachers_query = "SELECT DISTINCT neptun_code FROM user_status JOIN subject_group USING(subject_group_id) ";
+            $teachers_query = "SELECT DISTINCT neptun_code FROM user_status JOIN subject_groups USING(subject_group_id) ";
             $teachers_query .= "WHERE neptun_code != \"$neptun_code\" ";
             $teachers_query .= "AND is_teacher=\"1\" ";
             $teachers_query .= "AND application_request_status = \"APPROVED\"";

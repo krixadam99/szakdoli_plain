@@ -83,13 +83,21 @@
                 $message = $thread_message["message"];
                 $thread_count = $thread_message["thread"];
                 if($message["neptun_code_from"] == $_SESSION["neptun_code"]){
-                    
-
-                    array_push($sent_messages, ["message" => $message, "thread_count" =>$thread_count]);
+                    if(isset($sent_messages[$message["sent_at"]])){
+                        $sent_messages[$message["sent_at"]] = array_merge($sent_messages[$message["sent_at"]] , ["message" => $message, "thread_count" =>$thread_count]);
+                    }else{
+                        $sent_messages[$message["sent_at"]] = ["message" => $message, "thread_count" =>$thread_count];
+                    }
                 }else{
-                    array_push($incame_messages, ["message" => $message, "thread_count" =>$thread_count]);
+                    if(isset($incame_messages[$message["sent_at"]])){
+                        $incame_messages[$message["sent_at"]] = array_merge($incame_messages[$message["sent_at"]] , ["message" => $message, "thread_count" =>$thread_count]);
+                    }else{
+                        $incame_messages[$message["sent_at"]] = ["message" => $message, "thread_count" =>$thread_count];
+                    }
                 }
             }
+            krsort($incame_messages);
+            krsort($sent_messages);
         }
     }
 

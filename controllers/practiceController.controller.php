@@ -185,12 +185,10 @@
         */
         private function GetPracticeResults($neptun_code){
             $practice_points = [];
-            $practice_results = $this->practice_model->GetPracticeResults($neptun_code)[0]??[];
-            foreach($practice_results as $key => $value){
-                if(is_int(strpos($key, "practice_task"))){
-                    $practice_points[$key] = $value;
-                }
-            } 
+            $practice_results = $this->practice_model->GetPracticeResults($neptun_code);
+            foreach($practice_results as $task_counter => $row){
+                $practice_points[$row["task_type"]] = $row["task_point"];
+            }     
             return $practice_points;
         }
     }

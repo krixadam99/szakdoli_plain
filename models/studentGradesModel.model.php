@@ -26,7 +26,7 @@
          * @return array Returns an array containing the students' grades belonging to the subject name - subject group pair.
          */
         public function GetResults($subject_id, $subject_group){
-            $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) JOIN results USING(neptun_code, subject_group_id) 
+            $query = "SELECT * FROM user_status JOIN subject_groups USING(subject_group_id) JOIN results USING(neptun_code, subject_group_id) 
             WHERE subject_id = \"$subject_id\" 
             AND group_number = \"$subject_group\" 
             AND is_teacher = \"0\"
@@ -45,8 +45,8 @@
          * @return array Returns an array containing the students' practice scores belonging to the subject name - subject group pair.
          */
         public function GetPracticeResults($subject_group = "", $subject_id = ""){
-            $query = "SELECT * FROM user_status JOIN subject_group USING(subject_group_id) JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
-            $query .= "subject_group.group_number = \"$subject_group\" AND subject_group.subject_id = \"$subject_id\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
+            $query = "SELECT * FROM user_status JOIN subject_groups USING(subject_group_id) JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
+            $query .= "subject_groups.group_number = \"$subject_group\" AND subject_groups.subject_id = \"$subject_id\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
         }
@@ -65,25 +65,13 @@
                 $subject_group = $record["group_number"];
                 $subject_id = $record["subject_id"];
                 
-                $query .= "UPDATE results 
-                SET practice_count = \"" . $record["practice_count"] . "\"
-                , extra = \"" . $record["extra"] . "\"
-                , middle_term_exam = \"" . $record["middle_term_exam"] . "\"
-                , middle_term_exam_correction = \"" . $record["middle_term_exam_correction"] . "\"
-                , final_term_exam = \"" . $record["final_term_exam"] . "\"
-                , final_term_exam_correction = \"" . $record["final_term_exam_correction"] . "\"
-                , small_test_1 = \"" . $record["small_test_1"] . "\"
-                , small_test_2 = \"" . $record["small_test_2"] . "\"
-                , small_test_3 = \"" . $record["small_test_3"] . "\"
-                , small_test_4 = \"" . $record["small_test_4"] . "\"
-                , small_test_5 = \"" . $record["small_test_5"] . "\"
-                , small_test_6 = \"" . $record["small_test_6"] . "\"
-                , small_test_7 = \"" . $record["small_test_7"] . "\"
-                , small_test_8 = \"" . $record["small_test_8"] . "\"
-                , small_test_9 = \"" . $record["small_test_9"] . "\"
-                , small_test_10 = \"" . $record["small_test_10"] . "\" 
-                WHERE neptun_code = \"$neptun_code \" 
-                AND results.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
+                foreach($record["task_point_pairs"] as $task_type => $point){
+                    $query .= "UPDATE results 
+                    SET result = \"" . $point . "\"
+                    WHERE neptun_code = \"$neptun_code \" 
+                    AND results.subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")
+                    AND task_type = \"$task_type\"; ";
+                }
             }
             $query .= "COMMIT;";
 
@@ -110,7 +98,7 @@
                 , minimum_for_pass = \"" . $record["minimum_for_pass"] . "\"
                 , maximum_value = \"" . $record["maximum_value"] . "\"
                 WHERE task_type = \"$task_type\"
-                AND expectation_rules.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
+                AND expectation_rules.subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\"); ";
             }
             $query .= "COMMIT;";
 
@@ -119,11 +107,11 @@
         }
 
         /**
-         * This public method updates the task_due_to_date table via an array containing the queries.
+         * This public method updates the task_due_to_date_table table via an array containing the queries.
          * 
          * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
          * 
-         * @return bool Returns whether updating the task_due_to_date table was successful, or not.
+         * @return bool Returns whether updating the task_due_to_date_table table was successful, or not.
          */
         public function UpdateTaskDueDates($query_array = []){
             $query = "BEGIN; ";
@@ -132,9 +120,9 @@
                 $subject_id = $record["subject_id"];
                 $task_type = $record["task_type"];
                 
-                $query .= "UPDATE task_due_to_date 
+                $query .= "UPDATE task_due_to_date_table 
                 SET due_to = \"" . $record["due_to"] . "\"
-                WHERE task_due_to_date.subject_group_id = (SELECT subject_group_id FROM subject_group WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")
+                WHERE task_due_to_date_table.subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"$subject_id\" AND group_number = \"$subject_group\")
                 AND task_type = \"$task_type\"; ";
             }
             $query .= "COMMIT;";
