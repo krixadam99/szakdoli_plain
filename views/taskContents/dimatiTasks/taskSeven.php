@@ -51,5 +51,3 @@
         ?>
     </div>
 <?php endforeach?>
-
-<?php var_dump($_SESSION["solution"])?>

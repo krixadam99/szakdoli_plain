@@ -21,7 +21,7 @@
 
 .message_and_bubble_holder{
     width: 92%;
-    margin: 2% 4% 4% 4%;
+    margin: 0% 4% 0% 4%;
     display: flex;
 }
 
@@ -47,7 +47,9 @@
 
 .message_from,
 .message_to, 
-.message_topic {
+.message_topic,
+.message_text,
+.message_date {
     width: 12%;
     margin: 2% auto;
     text-align: center;
@@ -60,12 +62,15 @@
 }
 
 .message_text {
-    width: 50%;
-    margin: 2% auto;
-    text-align: left;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.message_date {
+    width: 49%;
+    margin-left: 1%;
+    text-align: left;
 }
 
 .remove_message_bubble,

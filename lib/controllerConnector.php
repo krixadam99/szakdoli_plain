@@ -33,7 +33,8 @@
                         &&  isset($_POST["token"]) 
                         &&  $_POST["token"] === $_SESSION["form_generated_token"]
                         &&  isset($_SESSION["previous_controller"])
-                        &&  $_SESSION["previous_controller"] === $controller_name)
+                        &&  $_SESSION["previous_controller"] === $controller_name
+                        )
                     ){
                         $_SESSION["previous_controller"] = $controller_name;
 

@@ -114,6 +114,7 @@ CREATE TABLE messages (
     is_removed_by_receiver int(11) NOT NULL DEFAULT 0,
     is_removed_by_sender int(11) NOT NULL DEFAULT 0,
     thread_count int(11) NOT NULL DEFAULT 0,
+    sent_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
 
     UNIQUE ( message_id ),
     FOREIGN KEY( neptun_code_from) REFERENCES users( neptun_code ),

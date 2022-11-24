@@ -150,6 +150,10 @@
                                 <div class="message_text">
                                     Üzenet részlet: <?=$message["message_text"]?>
                                 </div>
+                                <div class="message_separator"></div>
+                                <div class="message_date">
+                                    Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
+                                </div>
                                 <div class="thread_count_bubble">
                                     <?=$actual_thread_count?>.
                                 </div>
@@ -187,6 +191,10 @@
                                 <div class="message_text">
                                     Üzenet részlet: <?=$message["message_text"]?>
                                 </div>
+                                <div class="message_separator"></div>
+                                <div class="message_date">
+                                    Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
+                                </div>
                                 <div class="thread_count_bubble">
                                     <?=$actual_thread_count?>.
                                 </div>
@@ -220,6 +228,10 @@
                                     <div class="message_separator"></div>
                                     <div class="message_text">
                                         Üzenet részlet: <?=$message["message_text"]?>
+                                    </div>
+                                    <div class="message_separator"></div>
+                                    <div class="message_date">
+                                        Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +272,12 @@
                             <?=$message["message_text"]?>
                         </label>
                     </div>
+                    <div class="message_separator"></div>
+                    <div class="message_date">
+                        <label>
+                            Üzenet elküldve: <?=$message["sent_at"]?>
+                        </label>
+                    </div>
                 </div>
                 <div class="message_container_expanded" id="expanded_container_<?=$message["message_id"]?>_<?=$message["thread_count"]?>" style="display:none">
                     <div>
@@ -275,6 +293,11 @@
                     <div>
                         <label>
                             <b>Cím: <?= $message["message_topic"]?></b>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            Üzenet elküldve: <?=$message["sent_at"]?>
                         </label>
                     </div>
                     <div>
