@@ -86,7 +86,7 @@
                     <select id="subject_group" name="student_group_i">
                         <option id="no_group" <?=!isset($correct_parameters['subject_group'])?"selected":""?>>-</option>
                         <?php foreach($dimat_i_groups as $key=>$group_number): ?>
-                            <option <?=(isset($correct_parameters['subject_group']) && $correct_parameters['subject_group']== "" . $group_number[0] . "" )?"selected":""?>><?=$group_number[0]?></option>
+                            <option <?=(isset($correct_parameters['subject_group']) && $correct_parameters['subject_group']== "" . $group_number["group_number"] . "" )?"selected":""?>><?=$group_number["group_number"]?></option>
                         <?php endforeach?>
                     </select>
                     <?php if(isset($incorrect_parameters)):?>
@@ -99,7 +99,7 @@
                     <select id="subject_group" name="student_group_ii">
                         <option id="no_group" <?=!isset($correct_parameters['subject_group'])?"selected":""?>>-</option>
                         <?php foreach($dimat_ii_groups as $key=>$group_number): ?>
-                            <option <?=(isset($correct_parameters['subject_group']) && $correct_parameters['subject_group']=="$group_number[0]")?"selected":""?>><?=$group_number[0]?></option>
+                            <option <?=(isset($correct_parameters['subject_group']) && $correct_parameters['subject_group']=="" . $group_number["group_number"] . "")?"selected":""?>><?=$group_number["group_number"]?></option>
                         <?php endforeach?>
                     </select>
                     <?php if(isset($incorrect_parameters)):?>

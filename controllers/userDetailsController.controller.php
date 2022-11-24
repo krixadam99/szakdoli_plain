@@ -205,7 +205,6 @@
                             "in_array" => ["Diák", "Demonstrátor"] // No need for sanitazing
                         ]),
                         "$group_name_attribute:csoport" => array($group => [
-                            "type" => "string",
                             "in_array" => $possible_group_numbers // No need for sanitazing
                         ]),
                         
