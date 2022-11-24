@@ -275,7 +275,6 @@
                             $due_date = $new_due_dates[$task_type];
                             
                             // Validating the date
-                            //$due_date = strtotime($due_date);
                             $new_date = DateTime::createFromFormat("Y-m-d\TH:i:s", $due_date);
                             if($new_date){
                                 $due_date = $new_date->format("Y-m-d H:i:s");
