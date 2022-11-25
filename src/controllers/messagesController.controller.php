@@ -130,8 +130,9 @@
                         :message_to, 
                         :message_topic, 
                         :message_text
-                    )";
+                    ); UPDATE messages SET belongs_to = message_id WHERE belongs_to = 0;";
                     $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_POST["message_to"]), ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"]]);
+                    
                     header("Location: ./index.php?site=messages");
                 }
             }else{

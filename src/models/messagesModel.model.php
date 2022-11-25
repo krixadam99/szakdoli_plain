@@ -31,6 +31,17 @@
             
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
+
+
+            /**
+             *   SELECT * FROM messages
+             *   WHERE messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" 
+             *   OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\"
+             *   AND (belongs_to, sent_at) IN 
+             *   (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages GROUP BY belongs_to)
+             *   ORDER BY sent_at DESC
+             *   LIMIT 0, 3
+             */
         }
 
         /**
@@ -47,6 +58,15 @@
             
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
+
+            /**
+             *   SELECT * FROM messages
+             *   WHERE messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"0\"
+             *   AND (belongs_to, sent_at) IN 
+             *   (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages GROUP BY belongs_to)
+             *   ORDER BY sent_at DESC
+             *   LIMIT 0, 3
+             */
         }
 
         /**
@@ -63,6 +83,15 @@
             
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
+
+            /**
+             *   SELECT * FROM messages
+             *   WHERE messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"0\"
+             *   AND (belongs_to, sent_at) IN 
+             *   (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages GROUP BY belongs_to)
+             *   ORDER BY sent_at DESC
+             *   LIMIT 0, 3
+             */
         }
 
         /**
@@ -94,6 +123,15 @@
             
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
+
+            /**
+             *   SELECT * FROM messages
+             *   WHERE messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"
+             *   AND (belongs_to, sent_at) IN 
+             *   (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages GROUP BY belongs_to)
+             *   ORDER BY sent_at DESC
+             *   LIMIT 0, 3
+             */
         }
 
         /**

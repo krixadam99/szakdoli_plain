@@ -550,7 +550,7 @@
                         $minimum_alphabetic = $element;
                     }
                     if($element > $maximum_alphabetic){
-                        $maximum_alpabetic = $element;
+                        $maximum_alphabetic = $element;
                     }
                 }
             }
