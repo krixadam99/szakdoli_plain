@@ -312,6 +312,14 @@
                     exit();
                 }
             }
+
+            // The message type must be in the array of "sent", "received", or "deleted"
+            if(isset($_SESSION["message_type"]) && $_SESSION["message_type"] != ""){
+                if(!in_array($_SESSION["message_type"], ["sent","received","deleted"])){
+                    header("Location: ./index.php?site=notifications");
+                    exit();
+                }
+            }
         }
 
         /**

@@ -43,6 +43,10 @@
         }else{
             unset($_SESSION["message_id"]);
         }
+
+        if(isset($_GET["messageType"])){
+            $_SESSION["message_type"] = $_GET["messageType"];
+        }
     }
 
     //Auto-loading classes 

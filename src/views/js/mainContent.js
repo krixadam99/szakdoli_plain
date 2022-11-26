@@ -60,7 +60,7 @@ if(demonstrator_handling_button){
 
 if(messages_button){
     messages_button.addEventListener("click", ()=>{
-        window.location = "./index.php?site=messages"
+        window.location = "./index.php?site=messages&messageType=received"
     })
 }
 

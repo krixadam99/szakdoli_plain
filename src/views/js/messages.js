@@ -8,6 +8,24 @@ let check_message_bubbles = document.querySelectorAll(".check_message_bubble_inp
 let remove_selected_elements = document.querySelectorAll(".remove_selected_elements")
 let recover_selected_elements = document.querySelectorAll(".recover_selected_elements")
 
+let inbox_button = document.getElementById("inbox_button")
+let sent_button = document.getElementById("sent_button")
+let deleted_button = document.getElementById("deleted_button")
+
+if(inbox_button && sent_button && deleted_button){
+    inbox_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=messages&messageType=received"
+    })
+
+    sent_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=messages&messageType=sent"
+    })
+
+    deleted_button.addEventListener("click", ()=>{
+        window.location = "./index.php?site=messages&messageType=deleted"
+    })
+}
+
 if(write_message_button){
     write_message_button.addEventListener("click", ()=>{
         window.location = "./index.php?site=writeMessage"

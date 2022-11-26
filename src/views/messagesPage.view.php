@@ -1,106 +1,6 @@
 <?php
     $form_token = $this->GetFormToken();
 
-    $messages_belonging_to_message_id = [];
-    if(isset($_SESSION["message_id"])){
-        $message_id = $_SESSION["message_id"];
-        
-        $is_altered = false;
-        // Find a message, that belongs to the message with the given message id
-        foreach($incame_messages as $message_counter => $message){
-            if($message["message_id"] === $message_id && $message["belongs_to"] != 0){
-                $message_id = $message["belongs_to"];
-                $is_altered = true;
-                break;
-            }
-        }
-        if(!$is_altered){
-            foreach($sent_messages as $message_counter => $message){
-                if($message["message_id"] === $message_id && $message["belongs_to"] != 0){
-                    $message_id = $message["belongs_to"];
-                    $is_altered = true;
-                    break;
-                }
-            }
-        }
-        $_SESSION["message_id"] = $message_id;
-        
-        
-        // Collect all of the messages belonging to the given message id
-        foreach($incame_messages as $message_counter => $message){
-            if($message["belongs_to"] === $message_id || $message["message_id"] === $message_id && $message["belongs_to"] == 0){
-                $messages_belonging_to_message_id[$message["thread_count"]] = $message;
-            }
-        }
-        foreach($sent_messages as $message_counter => $message){
-            if($message["belongs_to"] === $message_id || $message["message_id"] === $message_id && $message["belongs_to"] == 0){
-                $messages_belonging_to_message_id[$message["thread_count"]] = $message;
-            }
-        }
-        ksort($messages_belonging_to_message_id);
-        //var_dump($messages_belonging_to_message_id);
-
-        if(count($messages_belonging_to_message_id) !== 0){
-            $_SESSION["thread_count_new"] = count($messages_belonging_to_message_id);
-            $first_message = $messages_belonging_to_message_id[0];
-            if($first_message["neptun_code_from"] === $_SESSION["neptun_code"]){
-                $_SESSION["neptun_code_to"] = $first_message["neptun_code_to"];
-            }else{
-                $_SESSION["neptun_code_to"] = $first_message["neptun_code_from"];
-            }
-
-            if(     $first_message["neptun_code_from"] === $_SESSION["neptun_code"] && $first_message["is_removed_by_sender"] == "1"
-                ||  $first_message["neptun_code_from"] !== $_SESSION["neptun_code"] && $first_message["is_removed_by_receiver"] == "1"){
-                    header("Location: ./index.php?site=messages");
-            }
-        }else{
-            header("Location: ./index.php?site=messages");
-        }
-    }else{
-        if(!isset($_SESSION["write_message"])){
-            $merged_messages = array_merge($incame_messages, $sent_messages);
-            $final_messages = [];
-    
-            foreach($merged_messages as $message_counter => $message){
-                if($message["belongs_to"] == "0"){
-                    if(!in_array($message["message_id"], array_keys($final_messages))){
-                        $final_messages[$message["message_id"]] = ["thread" => 0, "message" => $message];
-                    }
-                }else{
-                    if(!in_array($message["belongs_to"], array_keys($final_messages))){
-                        $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
-                    }else{
-                        if(intval($message["thread_count"]) > $final_messages[$message["belongs_to"]]["thread"]){
-                            $final_messages[$message["belongs_to"]] = ["thread" => intval($message["thread_count"]), "message" => $message];
-                        }
-                    }
-                }
-            }
-            
-            $incame_messages = [];
-            $sent_messages = [];
-            foreach($final_messages as $message_main_id => $thread_message){
-                $message = $thread_message["message"];
-                $thread_count = $thread_message["thread"];
-                if($message["neptun_code_from"] == $_SESSION["neptun_code"]){
-                    if(isset($sent_messages[$message["sent_at"]])){
-                        $sent_messages[$message["sent_at"]] = array_merge($sent_messages[$message["sent_at"]] , ["message" => $message, "thread_count" =>$thread_count]);
-                    }else{
-                        $sent_messages[$message["sent_at"]] = ["message" => $message, "thread_count" =>$thread_count];
-                    }
-                }else{
-                    if(isset($incame_messages[$message["sent_at"]])){
-                        $incame_messages[$message["sent_at"]] = array_merge($incame_messages[$message["sent_at"]] , ["message" => $message, "thread_count" =>$thread_count]);
-                    }else{
-                        $incame_messages[$message["sent_at"]] = ["message" => $message, "thread_count" =>$thread_count];
-                    }
-                }
-            }
-            krsort($incame_messages);
-            krsort($sent_messages);
-        }
-    }
-
     $incorrect_parameters = $this->GetIncorrectParameters();
     $correct_parameters = $this->GetCorrectParameters();
     $error_params = array_keys($incorrect_parameters);
@@ -122,45 +22,44 @@
     <?php if(!isset($_SESSION["write_message"])):?>
         <?php if(!isset($_SESSION["message_id"])):?>
             <div id="non_header_navigation_row" style="margin: 2% 4% 6% 4%;">
-                <div class="non_header_navigation_row_button chosen" id="inbox_button">
+                <div class="non_header_navigation_row_button <?=$_SESSION["message_type"] === "received"?"chosen":""?>" id="inbox_button">
                     <label>Beérkező levelek</label>
                 </div>
-                <div class="non_header_navigation_row_button" id="sent_button">
+                <div class="non_header_navigation_row_button <?=$_SESSION["message_type"] === "sent"?"chosen":""?>" id="sent_button">
                     <label>Elküldött levelek</label>
                 </div>
-                <div class="non_header_navigation_row_button" id="deleted_button">
+                <div class="non_header_navigation_row_button <?=$_SESSION["message_type"] === "deleted"?"chosen":""?>" id="deleted_button">
                     <label>Törölt levelek</label>
                 </div>
             </div>
 
-            <div class="non_header_navigation_div">
+            <?php if($_SESSION["message_type"] === "received"):?>
                 <form id="delete_incame_messages" action="./index.php?site=deleteMessages" method="POST">
                     <input type="hidden" name="token" value="<?=$form_token?>">
 
-                    <?php foreach($incame_messages as $message_counter => $message_thread_pair):?>
+                    <?php foreach($incame_messages as $message_counter => $incame_message):?>
                         <?php
-                            $message = $message_thread_pair["message"];
-                            $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                            $actual_thread_count = $incame_message["thread_count"];
                         ?>
                         <div class="message_and_bubble_holder">
                             <div class="remove_message_bubble">
-                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$message["message_id"]?>">
+                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$incame_message["message_id"]?>">
                             </div>
-                            <div class="message_container <?=$message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$message["message_id"]?>">
+                            <div class="message_container <?=$incame_message["is_seen_by_receiver"] === "0"?"not_seen":"seen"?> clickable_message" id="<?=$incame_message["message_id"]?>">
                                 <div class="message_from">
-                                    Feladó: <?= $message["neptun_code_from"]?>
+                                    Feladó: <?= $incame_message["neptun_code_from"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_topic">
-                                    Tárgy: <?= $message["message_topic"]?>
+                                    Tárgy: <?= $incame_message["message_topic"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_text">
-                                    Üzenet részlet: <?=$message["message_text"]?>
+                                    Üzenet részlet: <?=$incame_message["message_text"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_date">
-                                    Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
+                                    Legutolsó üzenet elküldve: <?=$incame_message["sent_at"]?>
                                 </div>
                                 <div class="thread_count_bubble">
                                     <?=$actual_thread_count?>.
@@ -173,35 +72,33 @@
                         <input type="submit" hidden>
                     </div>
                 </form>
-            </div>
-            <div class="non_header_navigation_div" style="display:none">
+            <?php elseif($_SESSION["message_type"] === "sent"):?>
                 <form id="delete_sent_messages" action="./index.php?site=deleteMessages" method="POST">
                     <input type="hidden" name="token" value="<?=$form_token?>">
 
-                    <?php foreach($sent_messages as $message_counter => $message_thread_pair):?>
+                    <?php foreach($sent_messages as $message_counter => $sent_message):?>
                         <?php
-                            $message = $message_thread_pair["message"];
-                            $actual_thread_count = $message_thread_pair["thread_count"] + 1;
+                            $actual_thread_count = $sent_message["thread_count"];
                         ?>
                         <div class="message_and_bubble_holder">
                             <div class="remove_message_bubble">
-                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$message["message_id"]?>">
+                                <input type="checkbox" class="remove_message_bubble_input" name="<?=$sent_message["message_id"]?>">
                             </div>
-                            <div class="message_container seen clickable_message" id="<?=$message["message_id"]?>">
+                            <div class="message_container seen clickable_message" id="<?=$sent_message["message_id"]?>">
                                 <div class="message_to">
-                                    Címzett: <?= $message["neptun_code_to"]?>
+                                    Címzett: <?= $sent_message["neptun_code_to"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_topic">
-                                    Tárgy: <?= $message["message_topic"]?>
+                                    Tárgy: <?= $sent_message["message_topic"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_text">
-                                    Üzenet részlet: <?=$message["message_text"]?>
+                                    Üzenet részlet: <?=$sent_message["message_text"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_date">
-                                    Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
+                                    Legutolsó üzenet elküldve: <?=$sent_message["sent_at"]?>
                                 </div>
                                 <div class="thread_count_bubble">
                                     <?=$actual_thread_count?>.
@@ -213,33 +110,32 @@
                         <img src="./views/css/pics/garbage.png" alt="remove selected elements" width="60%" height="80%" style="margin:10% 20%">    
                         <input type="submit" hidden>
                     </div>
-                </form>    
-            </div>
-            <div class="non_header_navigation_div" style="display:none">
+                </form>
+            <?php elseif($_SESSION["message_type"] === "deleted"):?>
                 <form id="recover__deleted_messages" action="./index.php?site=recoverDeletedMessages" method="POST">    
                     <input type="hidden" name="token" value="<?=$form_token?>">
 
-                    <?php foreach($removed_messages as $message_counter => $message):?>
-                        <?php if($message["thread_count"] == "0"):?>
+                    <?php foreach($removed_messages as $message_counter => $removed_message):?>
+                        <?php if($removed_message["thread_count"] == "0"):?>
                             <div class="message_and_bubble_holder">
                                 <div class="check_message_bubble">
-                                    <input type="checkbox" class="check_message_bubble_input" name="<?=$message["message_id"]?>">
+                                    <input type="checkbox" class="check_message_bubble_input" name="<?=$removed_message["message_id"]?>">
                                 </div>
-                                <div class="message_container seen not_clickable_message" id="<?=$message["message_id"]?>">
+                                <div class="message_container seen not_clickable_message" id="<?=$removed_message["message_id"]?>">
                                     <div class="message_to">
-                                        Címzett: <?= $message["neptun_code_to"]?>
+                                        Címzett: <?= $removed_message["neptun_code_to"]?>
                                     </div>
                                     <div class="message_separator"></div>
                                     <div class="message_topic">
-                                        Tárgy: <?= $message["message_topic"]?>
+                                        Tárgy: <?= $removed_message["message_topic"]?>
                                     </div>
                                     <div class="message_separator"></div>
                                     <div class="message_text">
-                                        Üzenet részlet: <?=$message["message_text"]?>
+                                        Üzenet részlet: <?=$removed_message["message_text"]?>
                                     </div>
                                     <div class="message_separator"></div>
                                     <div class="message_date">
-                                        Legutolsó üzenet elküldve: <?=$message["sent_at"]?>
+                                        Legutolsó üzenet elküldve: <?=$removed_message["sent_at"]?>
                                     </div>
                                 </div>
                             </div>
@@ -250,9 +146,12 @@
                         </div>
                     <?php endforeach?>
                 </form>  
-            </div>
+            <?php endif?>
             <div id="write_message_button" style="cursor:pointer">
                 <img src="./views/css/pics/write_message.png" alt="write a message" width="60%" height="80%" style="margin:10% 20%">
+            </div>
+            <div class="pagination_button_row">
+                    <?=var_dump($count_messages)?>;
             </div>
         <?php else:?>
             <?php foreach($messages_belonging_to_message_id as $message_counter => $message):?>
@@ -331,7 +230,6 @@
     <?php endif?>
 
     <script type="module" src="./views/js/mainContent.js"></script>
-    <script type="module" src="./views/js/nonHeaderNavigation.js"></script>
     <script type="module" src="./views/js/messages.js"></script>
 </body>
 </html>

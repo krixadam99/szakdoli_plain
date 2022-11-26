@@ -31,9 +31,9 @@
          *  
          * @return void
         */
-        public function Messages(){
+        public function Messages($start_at = 0, $message_per_page = 3){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
-            if(isset($_SESSION["neptun_code"])){
+            if(isset($_SESSION["neptun_code"]) && isset($_SESSION["message_type"])){
                 $this->SetMembers();
                 
                 // This page is not the "write message" page
@@ -47,10 +47,34 @@
                     //$this->message_model->UpdataDatabase("UPDATE messages SET is_seen_by_receiver = \"1\" WHERE neptun_code_to = \"" . $_SESSION["neptun_code"] . "\" AND message_id = \""  . $_SESSION["message_id"] . "\"");
                 }
 
+                $count_messages = 0;
                 // Fetch the sent, incame and (temporarily) removed messages
-                $sent_messages = $this->message_model->GetSentMessages($_SESSION["neptun_code"]);
-                $incame_messages = $this->message_model->GetRecievedMessages($_SESSION["neptun_code"]);
-                $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"]);
+                if($_SESSION["message_type"] === "received"){
+                    $incame_messages = $this->message_model->GetReceivedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "received")["message_number"];
+                }else if($_SESSION["message_type"] === "sent"){
+                    $sent_messages = $this->message_model->GetSentMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "sent")["message_number"];
+                }else if($_SESSION["message_type"] === "deleted"){
+                    $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "deleted")["message_number"];
+                }
+
+                // Set messages belonging to message id, additionally, set session variables too
+                if(isset($_SESSION["message_id"])){
+                    $messages_belonging_to_message_id = $this->message_model->GetMessageBelongingToMessageId($_SESSION["message_id"]);
+                    $_SESSION["thread_count_new"] = $messages_belonging_to_message_id[0]["thread_count"] + 1;
+                    
+                    $last_message_neptun_code_to = $messages_belonging_to_message_id[0]["neptun_code_to"];
+                    $last_message_neptun_code_from = $messages_belonging_to_message_id[0]["neptun_code_from"];
+
+                    if($last_message_neptun_code_to !== $_SESSION["neptun_code"]){
+                        $_SESSION["neptun_code_to"] = $last_message_neptun_code_to;
+                    }else{
+                        $_SESSION["neptun_code_to"] = $last_message_neptun_code_from;
+                    }
+                   
+                }
 
                 include(ROOT_DIRECTORY . "/views/messagesPage.view.php");
             }else{
@@ -130,7 +154,7 @@
                         :message_to, 
                         :message_topic, 
                         :message_text
-                    ); UPDATE messages SET belongs_to = message_id WHERE belongs_to = 0;";
+                    );";
                     $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_POST["message_to"]), ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"]]);
                     
                     header("Location: ./index.php?site=messages");
@@ -203,8 +227,10 @@
                                     :message_text,
                                     :thread_count,
                                     :is_removed_by_receiver
-                                )";
+                                );";
                                 
+                                var_dump($new_message_query);
+
                                 $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_SESSION["neptun_code_to"]), ":message_id" =>  $_SESSION["message_id"], ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"], ":thread_count" => $_SESSION["thread_count_new"], ":is_removed_by_receiver" => $is_removed_by_receiver]);
                                 //$this->message_model->UpdataDatabase($reply_message_query);
                             }

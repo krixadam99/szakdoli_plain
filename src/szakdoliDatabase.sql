@@ -1,4 +1,4 @@
-/*DROP TABLE practice_task_points;
+DROP TABLE practice_task_points;
 DROP TABLE results;
 DROP TABLE expectation_rules;
 DROP TABLE task_due_to_date_table;
@@ -6,7 +6,7 @@ DROP TABLE grade_table;
 DROP TABLE messages;
 DROP TABLE user_status;
 DROP TABLE users;
-DROP TABLE subject_groups;*/
+DROP TABLE subject_groups;
 
 
 CREATE TABLE users (
@@ -20,7 +20,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE subject_groups (
-    subject_group_id int(11) NOT NULL AUTO_INCREMENT,
+    subject_group_id BIGINT NOT NULL AUTO_INCREMENT,
     group_number int(11) NOT NULL,
     subject_id varchar(255) NOT NULL,
     
@@ -29,7 +29,7 @@ CREATE TABLE subject_groups (
 );
 
 CREATE TABLE user_status (
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     neptun_code varchar(6) NOT NULL,
     is_teacher int(11) NOT NULL DEFAULT 0,
     application_request_status varchar(10) NOT NULL DEFAULT "PENDING",
@@ -41,7 +41,7 @@ CREATE TABLE user_status (
 
 CREATE TABLE practice_task_points (
     neptun_code varchar(6) NOT NULL,
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
     task_point float(11) NOT NULL,
     
@@ -52,7 +52,7 @@ CREATE TABLE practice_task_points (
 
 CREATE TABLE results (
     neptun_code varchar(6) NOT NULL,
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
     result float(11) NOT NULL,
     
@@ -62,7 +62,7 @@ CREATE TABLE results (
 );
 
 CREATE TABLE expectation_rules (
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
     is_better int(11) NOT NULL DEFAULT -1,
     minimum_for_pass int(11) NOT NULL DEFAULT 0,
@@ -73,7 +73,7 @@ CREATE TABLE expectation_rules (
 );
 
 CREATE TABLE task_due_to_date_table (
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
     due_to DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -82,7 +82,7 @@ CREATE TABLE task_due_to_date_table (
 );
 
 CREATE TABLE grade_table (
-    subject_group_id int(11) NOT NULL,
+    subject_group_id BIGINT NOT NULL,
     pass_level_point int(11) NOT NULL DEFAULT 1,
     satisfactory_level_point int(11) NOT NULL DEFAULT 2,
     good_level_point int(11) NOT NULL DEFAULT 3,
@@ -96,14 +96,14 @@ CREATE TABLE grade_table (
 CREATE TABLE messages (
     neptun_code_from varchar(6) NOT NULL,
     neptun_code_to varchar(6) NOT NULL,
-    message_id int(11) NOT NULL AUTO_INCREMENT,
-    belongs_to int(11) NOT NULL DEFAULT 0,
+    message_id BIGINT NOT NULL AUTO_INCREMENT,
+    belongs_to BIGINT NOT NULL DEFAULT 0,
     message_topic varchar(255) NOT NULL DEFAULT "",
     message_text varchar(2024) NOT NULL DEFAULT "",
     is_seen_by_receiver int(11) NOT NULL DEFAULT 0,
     is_removed_by_receiver int(11) NOT NULL DEFAULT 0,
     is_removed_by_sender int(11) NOT NULL DEFAULT 0,
-    thread_count int(11) NOT NULL DEFAULT 0,
+    thread_count int(11) NOT NULL DEFAULT 1,
     sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE ( message_id ),
