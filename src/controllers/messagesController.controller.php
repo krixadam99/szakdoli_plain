@@ -31,10 +31,22 @@
          *  
          * @return void
         */
-        public function Messages($start_at = 0, $message_per_page = 3){
+        public function Messages(){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"]) && isset($_SESSION["message_type"])){
                 $this->SetMembers();
+
+                // The number of messages to display per page
+                $message_per_page = 1;
+
+                // Starting index and actual page
+                $start_at = $_SESSION["start_at"]??0;
+                if($start_at > 0){
+                    $start_at -= 1;
+                }
+                $start_at = $start_at * $message_per_page;
+                $actual_page = $_SESSION["start_at"]??1;
+
                 
                 // This page is not the "write message" page
                 if(isset($_SESSION["write_message"])){
@@ -59,11 +71,12 @@
                     $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
                     $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "deleted")["message_number"];
                 }
+                $maximum_number_of_page = ceil($count_messages/$message_per_page);
 
                 // Set messages belonging to message id, additionally, set session variables too
                 if(isset($_SESSION["message_id"])){
                     $messages_belonging_to_message_id = $this->message_model->GetMessageBelongingToMessageId($_SESSION["message_id"]);
-                    $_SESSION["thread_count_new"] = $messages_belonging_to_message_id[0]["thread_count"] + 1;
+                    $_SESSION["thread_count_new"] = $messages_belonging_to_message_id[count($messages_belonging_to_message_id)-1]["thread_count"] + 1;
                     
                     $last_message_neptun_code_to = $messages_belonging_to_message_id[0]["neptun_code_to"];
                     $last_message_neptun_code_from = $messages_belonging_to_message_id[0]["neptun_code_from"];
@@ -208,10 +221,15 @@
                             // Send a reply only when the message (more precisely, the first message in the thread) is not removed by neither the sender, nor the receiver
                             $is_removed_by_receiver = "0";
                             $is_removed_by_sender = "0";
+                            $not_first_message = false;
+                            $first_in_thread = 0;
                             if($message_with_id["belongs_to"] == "0"){
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
                             }else{
+                                $not_first_message = true;
+                                $first_in_thread = $message_with_id["belongs_to"];
+
                                 $message_with_id = $this->message_model->GetMessageById($message_with_id["belongs_to"]);
                                 $is_removed_by_receiver = $message_with_id["is_removed_by_receiver"];
                                 $is_removed_by_sender = $message_with_id["is_removed_by_sender"];
@@ -229,9 +247,11 @@
                                     :is_removed_by_receiver
                                 );";
                                 
-                                var_dump($new_message_query);
-
-                                $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_SESSION["neptun_code_to"]), ":message_id" =>  $_SESSION["message_id"], ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"], ":thread_count" => $_SESSION["thread_count_new"], ":is_removed_by_receiver" => $is_removed_by_receiver]);
+                                $belongs_to = $_SESSION["message_id"];
+                                if($not_first_message){
+                                    $belongs_to = $first_in_thread;
+                                }
+                                $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_SESSION["neptun_code_to"]), ":message_id" => $belongs_to, ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"], ":thread_count" => $_SESSION["thread_count_new"], ":is_removed_by_receiver" => $is_removed_by_receiver]);
                                 //$this->message_model->UpdataDatabase($reply_message_query);
                             }
                         } 

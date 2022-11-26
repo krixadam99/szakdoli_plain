@@ -1,3 +1,5 @@
+import {ChangeAttributeInURL} from "./mainContent.js"
+
 let write_message_button = document.getElementById("write_message_button")
 let clickable_messages = document.querySelectorAll(".clickable_message")
 let expandable_message_containers = document.querySelectorAll(".expandable_message_container")
@@ -11,6 +13,8 @@ let recover_selected_elements = document.querySelectorAll(".recover_selected_ele
 let inbox_button = document.getElementById("inbox_button")
 let sent_button = document.getElementById("sent_button")
 let deleted_button = document.getElementById("deleted_button")
+
+let pagination_bubbles = document.getElementsByClassName("pagination_bubble")
 
 if(inbox_button && sent_button && deleted_button){
     inbox_button.addEventListener("click", ()=>{
@@ -133,4 +137,15 @@ if(recover_selected_elements){
             recover_selected_element.querySelector("input").click()
         })
     }
+}
+
+if(pagination_bubbles){
+    Array.from(pagination_bubbles).forEach((pagination_bubble)=>{
+        pagination_bubble.addEventListener("click", ()=>{
+            let pagination_bubble_id = pagination_bubble.id
+            let page_number = pagination_bubble_id.split("page_")[1]
+            
+            ChangeAttributeInURL("startAt", page_number)
+        })
+    })
 }

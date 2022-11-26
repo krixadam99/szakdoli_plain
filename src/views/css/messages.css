@@ -214,6 +214,39 @@
     border-color: rgb(153, 218, 149);
 }
 
+.pagination_button_row {
+    display: flex;
+    text-align: center;
+    width: 15%;
+    margin: auto;
+}
+
+.pagination_bubble {
+    border: 1px solid rgb(160, 160, 160);
+    background-color: rgb(255, 255, 255);
+    padding: 2px 7px;
+    border-radius: 50px;
+    margin: 2%;
+}
+
+.pagination_bubble,
+.pagination_bubble label {
+    cursor: pointer;
+}
+
+.pagination_bubble:first-of-type{
+    margin-left: auto;
+}
+
+.pagination_bubble:last-of-type{
+    margin-right: auto;
+}
+
+.chosen_pagination_bubble {
+    background-color: rgb(167, 167, 167);
+    color: rgb(0, 0, 0);
+}
+
 @media only screen and (max-width: 576px) {
     #new_message_form {
         font-size: calc(10px + 0.3vw);

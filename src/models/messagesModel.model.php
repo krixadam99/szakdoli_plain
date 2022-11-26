@@ -156,10 +156,12 @@
          * @return array Returns the messages belonging to the message given by the id.
          */
         public function GetMessageBelongingToMessageId($message_id){
-            $query = "SELECT * FROM messages WHERE ";
-            $query .= "messages.message_id = \"$message_id\" OR messages.belongs_to = \"$message_id\"";
-            $query .= "ORDER BY sent_at ASC";
-            
+            $query = "SELECT * FROM messages WHERE";
+            $query .= " messages.message_id = \"$message_id\"";
+            $query .= " OR (belongs_to = (SELECT belongs_to FROM messages WHERE message_id = \"$message_id\") AND belongs_to != 0)";
+            $query .= " OR message_id = (SELECT belongs_to FROM messages WHERE message_id = \"$message_id\")";
+            $query .= " ORDER BY sent_at ASC";
+
             return $this->database->LoadDataFromDatabaseWithPDO($query);
         }
 

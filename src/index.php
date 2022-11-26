@@ -47,6 +47,12 @@
         if(isset($_GET["messageType"])){
             $_SESSION["message_type"] = $_GET["messageType"];
         }
+
+        if(isset($_GET["startAt"])){
+            $_SESSION["start_at"] = $_GET["startAt"];
+        }else{
+            unset($_SESSION["start_at"]);
+        }
     }
 
     //Auto-loading classes 

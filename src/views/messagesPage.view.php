@@ -116,30 +116,28 @@
                     <input type="hidden" name="token" value="<?=$form_token?>">
 
                     <?php foreach($removed_messages as $message_counter => $removed_message):?>
-                        <?php if($removed_message["thread_count"] == "0"):?>
-                            <div class="message_and_bubble_holder">
-                                <div class="check_message_bubble">
-                                    <input type="checkbox" class="check_message_bubble_input" name="<?=$removed_message["message_id"]?>">
+                        <div class="message_and_bubble_holder">
+                            <div class="check_message_bubble">
+                                <input type="checkbox" class="check_message_bubble_input" name="<?=$removed_message["message_id"]?>">
+                            </div>
+                            <div class="message_container seen not_clickable_message" id="<?=$removed_message["message_id"]?>">
+                                <div class="message_to">
+                                    Címzett: <?= $removed_message["neptun_code_to"]?>
                                 </div>
-                                <div class="message_container seen not_clickable_message" id="<?=$removed_message["message_id"]?>">
-                                    <div class="message_to">
-                                        Címzett: <?= $removed_message["neptun_code_to"]?>
-                                    </div>
-                                    <div class="message_separator"></div>
-                                    <div class="message_topic">
-                                        Tárgy: <?= $removed_message["message_topic"]?>
-                                    </div>
-                                    <div class="message_separator"></div>
-                                    <div class="message_text">
-                                        Üzenet részlet: <?=$removed_message["message_text"]?>
-                                    </div>
-                                    <div class="message_separator"></div>
-                                    <div class="message_date">
-                                        Legutolsó üzenet elküldve: <?=$removed_message["sent_at"]?>
-                                    </div>
+                                <div class="message_separator"></div>
+                                <div class="message_topic">
+                                    Tárgy: <?= $removed_message["message_topic"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_text">
+                                    Üzenet részlet: <?=$removed_message["message_text"]?>
+                                </div>
+                                <div class="message_separator"></div>
+                                <div class="message_date">
+                                    Legutolsó üzenet elküldve: <?=$removed_message["sent_at"]?>
                                 </div>
                             </div>
-                        <?php endif?>
+                        </div>
                         <div class="recover_selected_elements" style="cursor:pointer; display:none">
                             <img src="./views/css/pics/garbage.png" alt="a recovery icon" width="60%" height="80%" style="margin:10% 20%">    
                             <input type="submit" hidden>
@@ -151,7 +149,33 @@
                 <img src="./views/css/pics/write_message.png" alt="write a message" width="60%" height="80%" style="margin:10% 20%">
             </div>
             <div class="pagination_button_row">
-                    <?=var_dump($count_messages)?>;
+                <?php if($actual_page >= 4):?>
+                    <div class="pagination_bubble" id="page_1">
+                        <label>1</label>
+                    </div>
+                <?php endif?>
+                <?php if($actual_page > 4):?>
+                    <div class="pagination_bubble" id="page_<?=ceil(($actual_page + 1) / 2)?>">
+                        <label>...</label>
+                    </div>
+                <?php endif?>
+                <?php for($page_counter = $actual_page - 2; $page_counter <= $actual_page + 2 && $page_counter <= $maximum_number_of_page; $page_counter++):?>
+                    <?php if($page_counter > 0):?>
+                        <div class="pagination_bubble <?=$page_counter == $actual_page?"chosen_pagination_bubble":""?>" id="page_<?=$page_counter?>">
+                            <label><?=$page_counter?></label>
+                        </div>
+                    <?php endif?>
+                <?php endfor?>
+                <?php if($maximum_number_of_page - $actual_page > 3):?>
+                    <div class="pagination_bubble" id="page_<?=ceil(($actual_page + $maximum_number_of_page) / 2)?>">
+                        <label>...</label>
+                    </div>
+                <?php endif?>
+                <?php if($actual_page < $maximum_number_of_page - 2):?>
+                    <div class="pagination_bubble" id="page_<?=$maximum_number_of_page?>">
+                        <label><?=$maximum_number_of_page?></label>
+                    </div>
+                <?php endif?>
             </div>
         <?php else:?>
             <?php foreach($messages_belonging_to_message_id as $message_counter => $message):?>
