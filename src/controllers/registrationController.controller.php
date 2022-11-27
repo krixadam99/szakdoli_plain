@@ -169,7 +169,7 @@
             if(count($this->GetIncorrectParameters()) == 0){ // Everything was correct 
                 $_SESSION["neptun_code"] = strtoupper($_POST['neptun_code']);
                 
-                $this->registration_model->Register($_POST['neptun_code'], $_POST['user_password'],  $_POST["user_password_again"], $_POST["user_email"], $subject_id, $_POST["user_status"], $group);
+                $this->registration_model->Register($_POST['neptun_code'], $_POST['user_password'], $_POST["user_email"], $subject_id, $_POST["user_status"], $group);
                 
                 header("Location: ./index.php?site=notifications");
             }else{ // At least one of the inputs was incorrect

@@ -39,12 +39,12 @@
         /**
          * This public method returns the practice task results from the practice_task_points table for students belonging to the given subject name - subject group pair (that is, for the given teacher).
          * 
-         * @param string $subject_id The subject's name. The default is "".
-         * @param int $subject_group The group's number. The default is "".
+         * @param string $subject_id The subject's name.
+         * @param int $subject_group The group's number.
          * 
          * @return array Returns an array containing the students' practice scores belonging to the subject name - subject group pair.
          */
-        public function GetPracticeResults($subject_group = "", $subject_id = ""){
+        public function GetPracticeResults($subject_group, $subject_id = ""){
             $query = "SELECT * FROM user_status JOIN subject_groups USING(subject_group_id) JOIN practice_task_points USING(neptun_code, subject_group_id) WHERE ";
             $query .= "subject_groups.group_number = \"$subject_group\" AND subject_groups.subject_id = \"$subject_id\" AND user_status.application_request_status = \"APPROVED\" AND user_status.is_teacher = \"0\"";
             return $this->database->LoadDataFromDatabaseWithPDO($query);
@@ -54,11 +54,11 @@
         /**
          * This public method updates the results table via an array containing the queries.
          * 
-         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs.
          * 
          * @return bool Returns whether updating the results table was successful, or not.
          */
-        public function UpdateResults($query_array = []){
+        public function UpdateResults($query_array){
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $neptun_code = $record["neptun_code"];
@@ -82,11 +82,11 @@
         /**
          * This public method updates the expectation_rules table via an array containing the queries.
          * 
-         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs.
          * 
          * @return bool Returns whether updating the expextation_rules table was successful, or not.
          */
-        public function UpdateExpectationRules($query_array = []){
+        public function UpdateExpectationRules($query_array){
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $subject_group = $record["group_number"];
@@ -109,11 +109,11 @@
         /**
          * This public method updates the task_due_to_date_table table via an array containing the queries.
          * 
-         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs.
          * 
          * @return bool Returns whether updating the task_due_to_date_table table was successful, or not.
          */
-        public function UpdateTaskDueDates($query_array = []){
+        public function UpdateTaskDueDates($query_array){
             $query = "BEGIN; ";
             foreach($query_array as $index => $record){
                 $subject_group = $record["group_number"];

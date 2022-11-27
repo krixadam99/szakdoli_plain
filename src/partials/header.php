@@ -124,7 +124,7 @@
 
                 <?php if(count($approved_teacher_subjects) === 2):?>
                     <nav id="generate_task" class="nav_with_submenu <?=$actual_page=="student_grades"?"actual_page":"not_actual_page"?>">
-                        Eredemények
+                        Eredmények
                         <div class="submenu">                    
                             <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>                            
                                 <?php 

@@ -42,11 +42,11 @@
          * 
          * If there is no user with the given neptun code, then it returns the ["email_address" => ""] array.
          * 
-         * @param string $neptun_code The user's neptun code in the users table. The default is "".
+         * @param string $neptun_code The user's neptun code in the users table.
          * 
          * @return array Returns an associative array containing the ["email_address" => emailAdress] key-value pair.
          */
-        public function GetEmailAddressOfUser($neptun_code = "") {  
+        public function GetEmailAddressOfUser($neptun_code) {  
             $neptun_code = strtoupper($neptun_code); 
             
             $query = "SELECT email_address FROM users WHERE neptun_code = :neptun_code";

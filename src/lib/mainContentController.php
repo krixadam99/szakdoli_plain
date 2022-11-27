@@ -85,7 +85,7 @@
                 "Relációk ompozíciója; homogén reláció tulajdonságai: reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
                 "Függvények, injekció, szürjekció, bijekció",
                 "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
-                "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, moivre-azonosságok",
+                "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, Moivre-azonosságok",
                 "Hatványozás és gyökvonás trigonometrikus alak segítségével",
                 "A binomiális tétel és Viéte- formula alkalmazása",
                 "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
@@ -95,7 +95,7 @@
             $this->dimat_ii_topics =  [
                 "Maradékos osztás és osztók száma", 
                 "Redukált és teljes maradékrendszerek",
-                "Eukleidészi algoritmus", 
+                "Euklideszi algoritmus", 
                 "Lineáris kongruenciák",
                 "Lineáris diofantikus egyenletek",
                 "Kínai maradéktétel",
@@ -108,7 +108,7 @@
             $this->dimat_ii_subtopics = array(
                 0 => ["Maradékos osztások", "Pozitív szám prímfelbontása", "Pozitív osztók számának meghatározása", "Kongruens szám keresése"],
                 1 => ["Teljes maradékrendszer megadása reprezentatív elemekkel", "Redukált maradékrendszer megadása reprezentatív elemekkel", "Euler-féle fí függvény"],
-                2 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus"],
+                2 => ["Legnagyobb közös osztó, legkisebb közös többszörös és az euklideszi algoritmus"],
                 3 => ["Lineáris kongruenciák megoldása"],
                 4 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
                 5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
@@ -121,7 +121,7 @@
             $this->dimat_ii_topics_descriptions = [
                 "Maradékos osztások, pozitív szám prímfelbontása, pozitív osztók számának meghatározása, kongruens szám keresése", 
                 "Teljes maradékrendszer megadása reprezentatív elemekkel, redukált maradékrendszer megadása reprezentatív elemekkel, Euler-féle fí függvény",
-                "Legnagyobb közös osztó, legkisebb közös többszörös és az Eukleidészi algoritmus",
+                "Legnagyobb közös osztó, legkisebb közös többszörös és az euklideszi algoritmus",
                 "Lineáris kongruenciák megoldása",
                 "Lineáris diofantikus egyenletek megoldása",
                 "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",

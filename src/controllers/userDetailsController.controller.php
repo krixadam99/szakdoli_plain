@@ -272,9 +272,29 @@
                         ])
                     ]
                 );
+                
+                $email_can_be_modified = false;
+                if(!isset($this->incorrect_parameters["user_email"])){
+                    $email_can_be_modified = true;
+                }
+
+                $password_can_be_modified = false;
+                if(!isset($this->incorrect_parameters["user_password"]) && !isset($this->incorrect_parameters["user_password_again"])){
+                    $password_can_be_modified = true;
+                }
         
-                if(count($this->incorrect_parameters) === 0){ // Everything was correct 
-                    $this->user_detail_model->UpdateUserDetails($_SESSION["neptun_code"], $_POST["user_email"], $_POST["user_password"]);
+                if($email_can_be_modified || $password_can_be_modified){ // Everything was correct 
+                    $new_email = "";
+                    if($email_can_be_modified){
+                        $new_email = $_POST["user_email"];
+                    }
+
+                    $new_password = "";
+                    if($password_can_be_modified){
+                        $new_password = $_POST["user_password"];
+                    }
+                    
+                    $this->user_detail_model->UpdateUserDetails($_SESSION["neptun_code"], $new_email, $new_password);
                     header("Location: ./index.php?site=notifications");
                 }else{ // There is at least one incorrect input
                     $this->PersonalInformation();

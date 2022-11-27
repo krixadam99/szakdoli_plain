@@ -20,12 +20,12 @@
         /**
          * This method updates the password of the user given by their neptun code.
          * 
-         * @param string $neptun_code The user's neptun code in the users table. The default is "".
-         * @param string $new_password The user's new password. The default is "".
+         * @param string $neptun_code The user's neptun code in the users table.
+         * @param string $new_password The user's new password.
          * 
          * @return bool Returns whether the update was successful, or not.
          */
-        public function UpdatePassword($neptun_code = "", $new_password = "") {  
+        public function UpdatePassword($neptun_code, $new_password) {  
             $neptun_code = strtoupper($neptun_code); 
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT); // Hashing the new password
 
@@ -41,11 +41,11 @@
          * 
          * If there is no user with the given neptun code, then it returns the ["user_password" => ""] array.
          * 
-         * @param string $neptun_code The user's neptun code in the users table. The default is "".
+         * @param string $neptun_code The user's neptun code in the users table.
          * 
          * @return array Returns an associative array containing the ["user_password" => password] key-value pair.
          */
-        public function GetPasswordOfUser($neptun_code = "") {  
+        public function GetPasswordOfUser($neptun_code) {  
             $neptun_code = strtoupper($neptun_code); 
 
             $query = "SELECT user_password FROM users WHERE neptun_code = :neptun_code";
@@ -61,7 +61,7 @@
          * 
          * @return bool Returns whether the user is an administrator, or not.
         */
-        public function IsAdministrator($neptun_code = "") {
+        public function IsAdministrator($neptun_code) {
             $neptun_code = strtoupper($neptun_code);
 
             $query = "SELECT * FROM users WHERE users.neptun_code = :neptun_code";

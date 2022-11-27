@@ -37,7 +37,7 @@
                 $this->SetMembers();
 
                 // The number of messages to display per page
-                $message_per_page = 1;
+                $message_per_page = 3;
 
                 // Starting index and actual page
                 $start_at = $_SESSION["start_at"]??0;
@@ -170,7 +170,7 @@
                     );";
                     $this->message_model->UpdateDatabase($new_message_query, [":neptun_code" => strtoupper($_SESSION["neptun_code"]), ":message_to" => strtoupper($_POST["message_to"]), ":message_topic" => $_POST["message_topic"], ":message_text" => $_POST["message_text"]]);
                     
-                    header("Location: ./index.php?site=messages");
+                    header("Location: ./index.php?site=messages&messageType=sent");
                 }
             }else{
                 header("Location: ./index.php");
@@ -256,7 +256,7 @@
                             }
                         } 
 
-                        header("Location: ./index.php?site=messages");
+                        header("Location: ./index.php?site=messages&messageType=sent");
                     }
                 }else{
                     header("Location: ./index.php?site=messages");

@@ -20,11 +20,11 @@
         /**
          * This public method is responsible for fetching the email address and user password for the user given by their neptun code.
          * 
-         * @param string $neptun_code The neptun code of the user. The default is "".
+         * @param string $neptun_code The neptun code of the user.
          * 
          * @return array Returns an array containing the user's email address and password.
          */
-        public function GetUserDetails($neptun_code = ""){
+        public function GetUserDetails($neptun_code){
             return $this->database->LoadDataFromDatabaseWithPDO("SELECT email_address, user_password FROM users WHERE neptun_code = \"$neptun_code\"")[0]??array("email_address"=>"","user_password"=>"");
             //return $this->database->LoadDataFromDatabase("SELECT email_address, user_password FROM users WHERE neptun_code = \"$neptun_code\"")[0]??array("email_address"=>"","user_password"=>"");
         }
@@ -46,7 +46,7 @@
          * 
          * @return bool Returns whether updating the user's applied groups was successful, or not.
          */
-        public function UpdateUserGroups($neptun_code = "", $subject_id = "", $user_status = "", $subject_group = "") {  
+        public function UpdateUserGroups($neptun_code, $subject_id, $user_status, $subject_group) {  
             $neptun_code = strtoupper($neptun_code);       
 
             $pending_status = "PENDING";
@@ -85,13 +85,21 @@
          * This public method is responsible for updating the logged in user's details in the users table with a new email address and password.
          * 
          * @param string $neptun_code The neptun code of the user.
-         * @param string $user_email The new email address of the user.
-         * @param string $user_password The new password of the user.
+         * @param string $user_email The new email address of the user. The default is "".
+         * @param string $user_password The new password of the user. The default is "".
          * 
          * @return bool Returns whether updating the database was successful, or not.
          */
-        public function UpdateUserDetails($neptun_code = "", $user_email, $user_passord){
-            return $this->database->UpdateDatabaseWithPDO("UPDATE users SET email_address = :user_email, user_password = :user_password WHERE neptun_code = :neptun_code", [":neptun_code" => $neptun_code, ":user_email" => $user_email, ":user_password" => password_hash($user_passord, PASSWORD_BCRYPT)]);
+        public function UpdateUserDetails($neptun_code, $user_email = "", $user_passord = ""){
+            if($user_email === ""){
+                return $this->database->UpdateDatabaseWithPDO("UPDATE users SET user_password = :user_password WHERE neptun_code = :neptun_code", [":neptun_code" => $neptun_code, ":user_password" => password_hash($user_passord, PASSWORD_BCRYPT)]);
+            }else{
+                if($user_passord === ""){
+                    return $this->database->UpdateDatabaseWithPDO("UPDATE users SET email_address = :user_email WHERE neptun_code = :neptun_code", [":neptun_code" => $neptun_code, ":user_email" => $user_email]);
+                }else{
+                    return $this->database->UpdateDatabaseWithPDO("UPDATE users SET email_address = :user_email, user_password = :user_password WHERE neptun_code = :neptun_code", [":neptun_code" => $neptun_code, ":user_email" => $user_email, ":user_password" => password_hash($user_passord, PASSWORD_BCRYPT)]);
+                }
+            }
             //return $this->database->UpdateDatabase("UPDATE users SET email_address = \"$user_email\", user_password =  \"" . password_hash($user_passord, PASSWORD_BCRYPT) . "\" WHERE neptun_code = \"$neptun_code\"");
         }
     }

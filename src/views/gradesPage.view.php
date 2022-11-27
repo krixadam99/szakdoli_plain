@@ -33,10 +33,10 @@
     <main>
         <div id="non_header_navigation_row" style="margin: 2% 4% 2% 4%;">
             <div class="non_header_navigation_row_button chosen" id="progress_button">
-                <label>ELŐREHALADÁS</label>
+                <label>Előrehaladás</label>
             </div>
             <div class="non_header_navigation_row_button" id="results_button">
-                <label>EREDMÉNYEK</label>
+                <label>Eredmények</label>
             </div>
         </div>
 
@@ -78,6 +78,7 @@
                         <th>FELADAT TÍPUSA</th>
                         <th>EREDMÉNY</th>
                     </tr>
+                    <?php ksort($results, SORT_NATURAL )?>
                     <?php foreach($results as $task_type => $result):?>
                         <?php 
                             $task_type_name = "";
@@ -119,6 +120,7 @@
                         <th>FELADATSOR</th>
                         <th>PONTSZÁM</th>
                     </tr>
+                    <?php ksort($practice_points)?>
                     <?php foreach($practice_points as $task_type => $result):?>
                         <?php 
                             $task_type_name = "";

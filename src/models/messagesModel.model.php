@@ -231,7 +231,7 @@
         /**
          * This public method will update the messages' table is_removed_by_sender and is_removed_by_receiver columns via the given query array.
          * 
-         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs. The default is the empty array.
+         * @param array $query_array An indexed array containing associative arrays containing the column name - new value pairs.
          * @param bool $remove This parameter decides whether we should remove the message or recover it. The default is true (i.e., we should remove the message).
          * 
          * @return bool Returns whether the removing or recovering procedure was successful, or not.

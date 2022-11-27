@@ -55,7 +55,7 @@
                                 <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
                                     <?php if($student["application_request_status"] === "PENDING"):?>
                                         <option selected>-</option>
-                                        <option >ELFOGADÁS</option>
+                                        <option>ELFOGADÁS</option>
                                         <option>ELUTASÍTÁS</option>
                                     <?php elseif($student["application_request_status"] === "APPROVED"):?>
                                         <option selected>-</option>
@@ -69,7 +69,7 @@
                         </tr>
                     <?php endforeach?>
                 </table>
-                <button type="submit" class="finalize_button">VÉGLEGESÍTÉS</button>
+                <button type="submit" class="finalize_button">FRISSÍTÉS</button>
             </form>
         <?php else:?>
             <div class="notification_box">

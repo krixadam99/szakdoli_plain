@@ -8,7 +8,7 @@
 
 #write_message_button {
     position: fixed;
-    right: 4%;
+    right: 5px;
     bottom: 4%;
     width: 3%;
     height: 6%;
@@ -92,7 +92,7 @@
 .remove_selected_elements,
 .recover_selected_elements {
     position: fixed;
-    left: 4%;
+    left: 5px;
     bottom: 4%;
 
     width: 3%;

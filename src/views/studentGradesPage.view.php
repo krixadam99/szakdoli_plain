@@ -214,7 +214,7 @@
                             <?php endforeach?>
                         </table>
                     </div>
-                    <button type="submit" class="finalize_button">RÖGZÍTÉS</button>
+                    <button type="submit" class="finalize_button">FRISSÍTÉS</button>
                 </form>
             <?php else:?>
                 <div class="notification_box">
@@ -374,7 +374,7 @@
                             
                         <tr class=<?=$id?> class="grade_point_row">
                             <td>
-                                MEGFELELT (3)
+                                KÖZEPES (3)
                             </td>
                             <td style="padding:0%">
                                 <input type="number" class="grade_level_input" min="0" step="1" name="satisfactory_level_point" value="<?=$grade_levels["satisfactory_level_point"]?>">
