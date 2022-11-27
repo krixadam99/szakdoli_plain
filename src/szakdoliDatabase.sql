@@ -43,7 +43,7 @@ CREATE TABLE practice_task_points (
     neptun_code varchar(6) NOT NULL,
     subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
-    task_point float(11) NOT NULL,
+    task_point float(11) NOT NULL DEFAULT 0,
     
     UNIQUE ( subject_group_id, neptun_code, task_type ),
     FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),
@@ -54,7 +54,7 @@ CREATE TABLE results (
     neptun_code varchar(6) NOT NULL,
     subject_group_id BIGINT NOT NULL,
     task_type varchar(255) NOT NULL,
-    result float(11) NOT NULL,
+    result float(11) NOT NULL DEFAULT 0,
     
     UNIQUE ( subject_group_id, neptun_code, task_type ),
     FOREIGN KEY( neptun_code ) REFERENCES users( neptun_code ),

@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_topic">
-                                    Tárgy: <?= $incame_message["message_topic"]?>
+                                    Üzenet tárgya: <?= $incame_message["message_topic"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_text">
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_topic">
-                                    Tárgy: <?= $sent_message["message_topic"]?>
+                                    Üzenet tárgya: <?= $sent_message["message_topic"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_text">
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_topic">
-                                    Tárgy: <?= $removed_message["message_topic"]?>
+                                    Üzenet tárgya: <?= $removed_message["message_topic"]?>
                                 </div>
                                 <div class="message_separator"></div>
                                 <div class="message_text">
@@ -194,7 +194,7 @@
                     <div class="message_separator"></div>
                     <div class="message_topic">
                         <label>
-                            <b>Cím: <?= $message["message_topic"]?></b>
+                            <b>Üzenet tárgya: <?= $message["message_topic"]?></b>
                         </label>
                     </div>
                     <div class="message_separator"></div>
@@ -223,7 +223,7 @@
                     </div>
                     <div>
                         <label>
-                            <b>Cím: <?= $message["message_topic"]?></b>
+                            <b>Üzenet tárgya: <?= $message["message_topic"]?></b>
                         </label>
                     </div>
                     <div>

@@ -320,6 +320,14 @@
                     exit();
                 }
             }
+
+            // The start at page must be a numeric value
+            if(isset($_SESSION["start_at"]) && $_SESSION["start_at"] != ""){
+                if(!is_numeric($_SESSION["start_at"])){
+                    header("Location: ./index.php?site=notifications");
+                    exit();
+                }
+            }
         }
 
         /**

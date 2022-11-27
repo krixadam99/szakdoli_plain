@@ -147,7 +147,7 @@
             <input type="hidden" name="token" value="<?=$form_token?>">
         
             <div class="label_div">
-                <label class="title_label">Add meg az új email-címet!</label>
+                <label class="title_label">Add meg az új email címet!</label>
             </div>    
             <input type="text" id="user_email" name="user_email" value="<?=$correct_parameters["user_email"]??$user_details["email_address"]?>" placeholder="<?=$user_details["email_address"]?>">
             <?php if(isset($incorrect_parameters)):?>

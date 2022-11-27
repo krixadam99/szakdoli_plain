@@ -75,7 +75,7 @@
 
                 // Set messages belonging to message id, additionally, set session variables too
                 if(isset($_SESSION["message_id"])){
-                    $messages_belonging_to_message_id = $this->message_model->GetMessageBelongingToMessageId($_SESSION["message_id"]);
+                    $messages_belonging_to_message_id = $this->message_model->GetMessagesBelongingToMessageId($_SESSION["message_id"]);
                     $_SESSION["thread_count_new"] = $messages_belonging_to_message_id[count($messages_belonging_to_message_id)-1]["thread_count"] + 1;
                     
                     $last_message_neptun_code_to = $messages_belonging_to_message_id[0]["neptun_code_to"];
@@ -144,9 +144,9 @@
                             "in_array" => $neptun_codes,
                             "not_is_same" => $_SESSION["neptun_code"],
                         ]),
-                        "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
+                        "message_topic:üzenet tárgya" => array($_POST["message_topic"]??-2 => [
                             "type" => "string",
-                            "not_placeholder" => ["","Üzenet témája..."],
+                            "not_placeholder" => ["","Üzenet tárgya..."],
                             "length" => ["<=","255"]
                         ]),
                         "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [

@@ -29,9 +29,9 @@
         </div>
         <div class="message_topic_div">
             <label class="message_label" style="margin: auto 2% auto auto; ">
-                Add meg az üzenet címét!
+                Add meg az üzenet tárgyát!
             </label>
-            <textarea class="message_topic_textarea" placeholder="Üzenet témája..." value="<?=$correct_parameters["message_topic"]??"Üzenet témája..."?>" name="message_topic" rows="1"><?=$correct_parameters["message_topic"]??""?></textarea>
+            <textarea class="message_topic_textarea" placeholder="Üzenet tárgy..." value="<?=$correct_parameters["message_topic"]??"Üzenet tárgya..."?>" name="message_topic" rows="1"><?=$correct_parameters["message_topic"]??""?></textarea>
             <?php if(isset($incorrect_parameters)):?>
                 <?php if(in_array('message_topic',$error_params)):?>
                     <label class="error_label"><?=$incorrect_parameters["message_topic"]?></label>
