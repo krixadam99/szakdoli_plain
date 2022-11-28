@@ -16,11 +16,11 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            A <?="\u{2282}"?> B : azt mondjuk, hogy az A halmaz valódi részhalmaza a B halmaznak, ha A minden eleme benne van a B-ben is, de B-nek van olyan eleme, amely A-ban nincsen benne.
+            A <?="\u{2282}"?> B: azt mondjuk, hogy az A halmaz valódi részhalmaza a B halmaznak, ha A minden eleme benne van a B-ben is, de B-nek van olyan eleme, amely A-ban nincsen benne.
         </label>
         <br>
         <label class="definition_label">
-            A <?="\u{2286}"?> B : azt mondjuk, hogy az A halmaz részhalmaza a B halmaznak, ha A minden eleme benne van a B-ben is, de B-nek lehet, hogy van olyan eleme, amely A-ban nincsen benne.
+            A <?="\u{2286}"?> B: azt mondjuk, hogy az A halmaz részhalmaza a B halmaznak, ha A minden eleme benne van a B-ben is, de B-nek lehet, hogy van olyan eleme, amely A-ban nincsen benne.
         </label>
         <br>
         <label class="definition_label">
@@ -39,17 +39,17 @@
     </div>
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
-            A <?="\u{222A}"?> B (unió) : Olyan elemek összessége, melyek benne vannak az A, vagy a B halmazban (megengedő vagy, OR). Formálisan: A <?="\u{222A}"?> B = { x: x <?="\u{2208}"?> A <?="\u{2228}"?> x <?="\u{2208}"?> B }. Tulajdonságai: kommutatív, asszociatív, idempotens (A <?="\u{222A}"?> A = A).
+            A <?="\u{222A}"?> B (unió): Olyan elemek összessége, melyek benne vannak az A, vagy a B halmazban (megengedő vagy, OR). Formálisan: A <?="\u{222A}"?> B = { x: x <?="\u{2208}"?> A <?="\u{2228}"?> x <?="\u{2208}"?> B }. Tulajdonságai: kommutatív, asszociatív, idempotens (A <?="\u{222A}"?> A = A).
         </label>
     </div>
     <div class="definition">
         <label class="definition_label">
-            A <?="\u{2229}"?> B (metszet) : Olyan elemek összessége, melyek benne vannak az A és a B halmazban is. Formálisan: A <?="\u{2229}"?> B = { x: x <?="\u{2208}"?> A <?="\u{2227}"?> x <?="\u{2208}"?> B }. Tulajdonságai: kommutatív, asszociatív, idempotens (A <?="\u{2229}"?> A = A).
+            A <?="\u{2229}"?> B (metszet): Olyan elemek összessége, melyek benne vannak az A és a B halmazban is. Formálisan: A <?="\u{2229}"?> B = { x: x <?="\u{2208}"?> A <?="\u{2227}"?> x <?="\u{2208}"?> B }. Tulajdonságai: kommutatív, asszociatív, idempotens (A <?="\u{2229}"?> A = A).
         </label>
     </div>
     <div class="definition">
         <label class="definition_label">
-            A \ B (különbség) : Olyan elemek összessége, melyek benne vannak az A halmazban, de nincsenek benne a B-ben. Formálisan: A \ B = { x: x <?="\u{2208}"?> A <?="\u{2227}"?> x <?="\u{2209}"?> B }. Tulajdonságai: nem kommutatív, asszociatív, nem idempotens (A \ A <?="\u{2260}"?> A ( = <?="\u{2205}"?>)).
+            A \ B (különbség): Olyan elemek összessége, melyek benne vannak az A halmazban, de nincsenek benne a B-ben. Formálisan: A \ B = { x: x <?="\u{2208}"?> A <?="\u{2227}"?> x <?="\u{2209}"?> B }. Tulajdonságai: nem kommutatív, asszociatív, nem idempotens (A \ A <?="\u{2260}"?> A ( = <?="\u{2205}"?>)).
         </label>
     </div>
     <div class="definition">

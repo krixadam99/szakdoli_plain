@@ -11,7 +11,7 @@
             Így jutottunk el a racionális számokhoz, ahol pedig már az alapműveletek elvégezhetők voltak, viszont a hatványozásnál csak a egész kitevőt lehetett venni. Így pedig a nem egész kitevős hatványozás során jutunk el a valós számokhoz, melyek a racionális és irracionális számok uniója.
             Fontos megjegyezni, hogy még mindig voltak korlátozások. Például páros gyököt csakis nemnegatív szám esetén vehettünk (ugyanis bármely szám páros kitevős hatványa nemnegatív, míg páratlan kitevős szám lehet negatív is).
             Ahhoz, hogy a gyökvonást korlátozás nélkül elvégezhessük, be lett vezetve az imaginárius egység, az i, melynek négyzete a -1. A komplex számok halmaza tehát olyan számhalmaz, amely a valós és imaginárius számok halmazának uniója.
-            A bővítés során folyamatosan figyelni kellett arra, hogy a korábbi műveleti tulajdonságok megmaradjanak. A komplex számok közötti műveletek is így lettek definiálva. A szorzás és összeadás műveleteie így továbbra is teljesülnek a test axiómák (ZANIK - ábel csoport (az adott művelet zárt, asszociatív, van neutrális eleme, van inverz elem valamennyi elemnek, kommutatív), valamint a 2 művelet esetén van 2 oldali disztributivitás).
+            A bővítés során folyamatosan figyelni kellett arra, hogy a korábbi műveleti tulajdonságok megmaradjanak. A komplex számok közötti műveletek is így lettek definiálva. A szorzás és összeadás műveleteire így továbbra is teljesülnek a test axiómák (ZANIK - Ábel csoport (az adott művelet zárt, asszociatív, van neutrális eleme, van inverz elem valamennyi elemnek, kommutatív), valamint a 2 művelet esetén van 2 oldali disztributivitás).
         </label>
     </div>
     <div class="definition">

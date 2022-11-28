@@ -120,7 +120,7 @@
                         <th>FELADATSOR</th>
                         <th>PONTSZÁM</th>
                     </tr>
-                    <?php ksort($practice_points)?>
+                    <?php ksort($practice_points, SORT_NATURAL)?>
                     <?php foreach($practice_points as $task_type => $result):?>
                         <?php 
                             $task_type_name = "";
@@ -134,7 +134,6 @@
                                 case "practice_task_7":$task_type_name="7. gyakorló feladatsor";break;
                                 case "practice_task_8":$task_type_name="8. gyakorló feladatsor";break;
                                 case "practice_task_9":$task_type_name="9. gyakorló feladatsor";break;
-                                case "practice_task_10":$task_type_name="10. gyakorló feladatsor";break;
                                 default: $task_type_name = "";break;
                             }
                         ?>

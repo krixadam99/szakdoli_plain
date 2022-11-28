@@ -8,7 +8,9 @@
         <?=$first_task_triplets[1][1] . "-" . PrintServices::UseCorrectObjectSuffix($first_task_triplets[1][1])?> ad maradékul!
     </label>
 
-    <?php $task_counter = 0;?>
+    <?php 
+        $task_counter = 0;
+    ?>
     <?php include("./views/taskContents/solutionInput.php")?>
 </div>
 

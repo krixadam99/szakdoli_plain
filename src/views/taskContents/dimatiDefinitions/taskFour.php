@@ -14,7 +14,7 @@
     <div class="definition">
         <label class="definition_label">
             Ha az f <?="\u{2286}"?> D <?="\u{2A2F}"?> R reláció függvény, akkor ezt így jelöljük: f <?="\u{2208}"?> D <?="\u{2192}"?> R. Ha Dom<sub>f</sub> = D, akkor a f : D <?="\u{2192}"?> R jelölést használjuk. Ekkor a D az alaphalmaz, az R a képhalmaz.
-            Az f függvény képe: graph(f) = { {{x}, {x,f(x)}} | x <?="\u{2208}"?> D } = {(x, f(x)) | x <?="\u{2208}"?> D}. Egyváltozós (skalár) függvény (azaz bináris reláció) esetén, a helyek az abszcisszán, az értékek pedig az ordinátán helyezkednek el. A nulvektor pedig az origó.
+            Az f függvény képe: graph(f) = { {{x}, {x,f(x)}} | x <?="\u{2208}"?> D } = {(x, f(x)) | x <?="\u{2208}"?> D}. Egyváltozós (skalár) függvény (azaz bináris reláció) esetén, a helyek az abszcisszán, az értékek pedig az ordinátán helyezkednek el. A nullvektor pedig az origó.
         </label>
     </div>
     <div class="definition">
@@ -24,7 +24,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            A függvényeknél a relációk korábbi definíciói (értelmezési tartomány, értékkészlet, inverz, megszorítás halmazra, halmazon felvett őskép és kép), valamint relációk kompozícója azonos az ott látottakkal (ez abból következik, hogy a függvények speciális relációk). Valójában minimálisan módosulnak a definíciók az <i>a f b</i> és <i>f(a) = b</i> jelölésváltás miatt.
+            A függvényeknél a relációk korábbi definíciói (értelmezési tartomány, értékkészlet, inverz, megszorítás halmazra, halmazon felvett őskép és kép), valamint relációk kompozíciója azonos az ott látottakkal (ez abból következik, hogy a függvények speciális relációk). Valójában minimálisan módosulnak a definíciók az <i>a f b</i> és <i>f(a) = b</i> jelölésváltás miatt.
         </label>
     </div>
     <button class="show_button">

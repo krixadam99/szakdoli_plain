@@ -37,7 +37,10 @@
                 $this->SetMembers();
 
                 // Only teachers can see this page, others will be redirected to the notifications page
-                if(count($this->approved_teacher_groups) != 0){
+                if(
+                        count($this->approved_teacher_groups) != 0
+                    &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
+                ){
                     
                     // Fetching all the students belonging to the subject id - group number pair
                     $all_students = [];
@@ -88,9 +91,9 @@
                             $decision = "";
                             $id = $current_subject . "_" . $current_group;
                             if($value != "-"){
-                                if($value == "ELFOGADÁS" || $value == "VISSZAVÉTEL"){
+                                if($value == "Elfogadás" || $value == "Visszavétel"){
                                     $decision = "APPROVED";
-                                }else if($value == "ELUTASÍTÁS" || $value == "TÖRLÉS"){
+                                }else if($value == "Elutasítás" || $value == "Törlés"){
                                     $decision = "DENIED";
                                 }
                                 $decision_array[$neptun][$id] = $decision;

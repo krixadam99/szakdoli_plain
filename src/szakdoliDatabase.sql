@@ -304,7 +304,6 @@ INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "pract
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_7");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_8");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_9");
-INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(2, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(2);
 
@@ -340,7 +339,6 @@ INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "pract
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_7");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_8");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_9");
-INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(3, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(3);
 
@@ -376,7 +374,6 @@ INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "pract
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_7");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_8");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_9");
-INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(4, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(4);
 
@@ -412,6 +409,5 @@ INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "pract
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_7");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_8");
 INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_9");
-INSERT INTO task_due_to_date_table(subject_group_id, task_type) VALUES(5, "practice_task_10");
 
 INSERT INTO grade_table(subject_group_id) VALUES(5);

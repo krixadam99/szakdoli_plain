@@ -29,7 +29,7 @@
             $neptun_code = strtoupper($neptun_code); 
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT); // Hashing the new password
 
-            $query = "UPDATE users SET user_password = hashed_password WHERE neptun_code = :neptun_code";
+            $query = "UPDATE users SET user_password = :hashed_password WHERE neptun_code = :neptun_code";
             return $this->database->UpdateDatabaseWithPDO($query, [":hashed_password"=>$hashed_password, ":neptun_code" => $neptun_code]);
 
             //$query = "UPDATE users SET user_password = \"$hashed_password\" WHERE neptun_code = \"$neptun_code\"";

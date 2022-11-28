@@ -15,25 +15,25 @@
             Oszthatóság tulajdonságai (ezek könnyen beláthatók az előbbi definíció felhasználásával):
         </label>
         <ul class="definition_list">
-            <li><label>(<?="\u{2200}"?> a <?="\u{2208}"?> <?="\u{2124}"?>) : a | a (reflexivitás); </label></li>
-            <li><label>(<?="\u{2200}"?> a, b <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2227}"?> b | a <?="\u{2194}"?> a = <?="\u{00B1}"?> b; </label></li>
-            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2227}"?> b | c <?="\u{2194}"?> a | c (tranzitivitás); </label></li>
-            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2227}"?> a | c <?="\u{2194}"?> a | b <?="\u{00B1}"?> c; </label></li>
-            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2227}"?> a | b <?="\u{00B1}"?> c <?="\u{2192}"?> a | c; </label></li>
-            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2227}"?> c | d <?="\u{2192}"?> a * c | b * d; </label></li>
-            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>) : a | b <?="\u{2192}"?> a | b * c. </label></li>
+            <li><label>(<?="\u{2200}"?> a <?="\u{2208}"?> <?="\u{2124}"?>): a | a (reflexivitás); </label></li>
+            <li><label>(<?="\u{2200}"?> a, b <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2227}"?> b | a <?="\u{2194}"?> a = <?="\u{00B1}"?> b; </label></li>
+            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2227}"?> b | c <?="\u{2194}"?> a | c (tranzitivitás); </label></li>
+            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2227}"?> a | c <?="\u{2194}"?> a | b <?="\u{00B1}"?> c; </label></li>
+            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2227}"?> a | b <?="\u{00B1}"?> c <?="\u{2192}"?> a | c; </label></li>
+            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2227}"?> c | d <?="\u{2192}"?> a * c | b * d; </label></li>
+            <li><label>(<?="\u{2200}"?> a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a | b <?="\u{2192}"?> a | b * c. </label></li>
         </ul>
     </div>
     <div class="definition">
         <label class="definition_label">
-            Keressük meg azokat a számokat, amelyek osztják a 0, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>) : a * c = 0. Természetesen bármely a egész esetén ott van a 0, mint egész, amellyel az egészet megszorozva 0-t kapjunk, vagyis <b>minden egész szám osztója a 0-nak</b>.
-            Most keressük meg azokat a számokat, amelyeknek osztója a 0, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>) : 0 * c = a. Itt a bal oldal mindig 0, így csak az a = 0 esetén kapunk egyenlőséget, vagyis <b>a 0 csak a 0-nak osztója</b>.
+            Keressük meg azokat a számokat, amelyek osztják a 0, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>): a * c = 0. Természetesen bármely a egész esetén ott van a 0, mint egész, amellyel az egészet megszorozva 0-t kapjunk, vagyis <b>minden egész szám osztója a 0-nak</b>.
+            Most keressük meg azokat a számokat, amelyeknek osztója a 0, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>): 0 * c = a. Itt a bal oldal mindig 0, így csak az a = 0 esetén kapunk egyenlőséget, vagyis <b>a 0 csak a 0-nak osztója</b>.
         </label>
     </div>
     <div class="definition">
         <label class="definition_label">
-            Keressük meg azokat a számokat, amelyek osztják az 1-gyet, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>) : a * c = 1. Látható, hogy ekkor az egészek körében csak az 1 és -1 esetén lesz ilyen c egész szám. Tehát <b>csak <?="\u{00B1}"?> 1 osztója az 1-nek</b>.
-            Most keressük meg azokat a számokat, amelyeknek osztója a <?="\u{00B1}"?>1, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>) : <?="\u{00B1}"?>1 * c = a. Ha c = a, akkor mindig teljesül az egyenlőség, tehát <b>bármely számnak osztója a <?="\u{00B1}"?>1</b>.
+            Keressük meg azokat a számokat, amelyek osztják az 1-gyet, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>): a * c = 1. Látható, hogy ekkor az egészek körében csak az 1 és -1 esetén lesz ilyen c egész szám. Tehát <b>csak <?="\u{00B1}"?> 1 osztója az 1-nek</b>.
+            Most keressük meg azokat a számokat, amelyeknek osztója a <?="\u{00B1}"?>1, azaz olyan <i>a</i> egészeket, amelyekre teljesül, hogy (c <?="\u{2208}"?> <?="\u{2124}"?>): <?="\u{00B1}"?>1 * c = a. Ha c = a, akkor mindig teljesül az egyenlőség, tehát <b>bármely számnak osztója a <?="\u{00B1}"?>1</b>.
             <b>Az egység egy olyan szám, amely bármely másik számnak osztója.</b> Ezért a <?="\u{00B1}"?>1-et egységnek nevezzük. Egészek körében csak ezek az egységek (ugyanis 1-nél nagyobb <i>a</i> egészek estén nincsen olyan <i>c</i> egész szám, hogy azzal megszorozva <i>a</i>-t pl.: 1-et kapjunk).
             <b>Két számot egymás asszociáltjának nevezzük, ha egymás egységszorosai.</b>
         </label>

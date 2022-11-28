@@ -1,7 +1,7 @@
 <div class="definition_holder">
     <div class="defined">
         <label class="definition_label">
-            Lagrange- interpoláció
+            Lagrange- féle interpoláció
         </label>
     </div>
     <div class="definition first_definition">

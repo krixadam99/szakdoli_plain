@@ -41,7 +41,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Azt mondjuk, hogy a w komplex szám az n.-ik egységyök, ha w<sup>n</sup> = 1. Előzőek szerint ekkor: <?="\u{03C6}"?> = (p / n) * 2 * <?="\u{03C0}"?> alakú (ahol (p, n) = 1). 
+            Azt mondjuk, hogy a w komplex szám az n.-ik egységgyök, ha w<sup>n</sup> = 1. Előzőek szerint ekkor: <?="\u{03C6}"?> = (p / n) * 2 * <?="\u{03C0}"?> alakú (ahol (p, n) = 1). 
             Ha nincsen olyan osztója n-nek, amelyre a w-t emelve 1-et kapnánk, de a w n.-ik egységgyök, akkor a w-t n.-ik primitív egységgyöknek nevezzük.
         </label>
     </div>

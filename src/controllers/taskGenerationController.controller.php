@@ -35,7 +35,7 @@
                 $this->SetMembers();
 
                 // Only teachers can see this page, others will be redirected to the notifications page
-                if(count($this->approved_teacher_groups) != 0){
+                if(     count($this->approved_teacher_groups) != 0){
                     // Setting the preview to default, if not set
                     if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
                         $_SESSION["preview"] = [];

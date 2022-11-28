@@ -854,7 +854,7 @@
                 }
             }
 
-            return array("Reflexív" => $is_reflexive,"Irreflexív" => $is_irreflexive,"Szimmetrikus" => $is_symmetric,"Antiszimmetrikus" => $is_antisymmetric,"Asszimetrikus" => $is_assymetric,"Tranzitív" => $is_transitive);
+            return array("Reflexív" => $is_reflexive,"Irreflexív" => $is_irreflexive,"Szimmetrikus" => $is_symmetric,"Szigorúan antiszimmetrikus" => $is_antisymmetric,"Asszimetrikus" => $is_assymetric,"Tranzitív" => $is_transitive);
         }
 
         /**
@@ -1231,7 +1231,7 @@
                             case "Szimmetrikus":{
                                 $missed = $this->IsSymmetricRelation($base_set, $relation) != $satisfies;
                             };break;
-                            case "Antiszimmetrikus":{
+                            case "Szigorúan antiszimmetrikus":{
                                 $missed = $this->IsAntiSymmetricRelation($base_set, $relation) != $satisfies;
                             };break;
                             case "Asszimetrikus":{

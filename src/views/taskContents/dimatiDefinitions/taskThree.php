@@ -41,7 +41,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> A. Ekkor az R relációt <b>asszimmetrikusnak</b> nevezzük, ha (<?="\u{2200}"?> a,b <?="\u{2208}"?> A): (a,b) <?="\u{2208}"?> R <?="\u{2227}"?> (b,a) <?="\u{2209}"?> R.
+            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> A. Ekkor az R relációt <b>szigorúan antiszimmetrikusnak</b> nevezzük, ha (<?="\u{2200}"?> a,b <?="\u{2208}"?> A): (a,b) <?="\u{2208}"?> R <?="\u{2227}"?> (b,a) <?="\u{2209}"?> R.
         </label>
     </div>
     <div class="definition">
@@ -56,7 +56,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> A. Ekkor az R relációt <b>trihotómnak</b> nevezzük, ha (<?="\u{2200}"?> a,b <?="\u{2208}"?> A): (a,b) <?="\u{2208}"?> R <?="\u{2228}"?> (b,a) <?="\u{2208}"?> R <?="\u{2228}"?> a = b közül pontosan egy teljesül.
+            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> A. Ekkor az R relációt <b>trichotómnak</b> nevezzük, ha (<?="\u{2200}"?> a,b <?="\u{2208}"?> A): (a,b) <?="\u{2208}"?> R <?="\u{2228}"?> (b,a) <?="\u{2208}"?> R <?="\u{2228}"?> a = b közül pontosan egy teljesül.
         </label>
     </div>
     <div class="definition">

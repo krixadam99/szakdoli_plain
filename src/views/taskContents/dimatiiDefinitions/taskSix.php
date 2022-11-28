@@ -70,13 +70,13 @@
             3. lépés: i := 1;<br>
             4. lépés: amíg 1-nél több kongruencia van (i < n):<br>
             4.1. lépés: az első két kongruenciát vonjuk össze eggyé.<br>
-            4.1.1. lépés: kibővített eukleidészi algoritmussal keressük meg az i == 1 esetén az m<sub>1</sub> * x + m<sub>2</sub> * y = 1, az i > 1 esetén pedig az m<sub>1,i</sub> * x + m<sub>i+1</sub> * y = 1 egyenlet egy-egy alapmegoldását az x-re és y-ra;<br>
+            4.1.1. lépés: kibővített euklideszi algoritmussal keressük meg az i == 1 esetén az m<sub>1</sub> * x + m<sub>2</sub> * y = 1, az i > 1 esetén pedig az m<sub>1,i</sub> * x + m<sub>i+1</sub> * y = 1 egyenlet egy-egy alapmegoldását az x-re és y-ra;<br>
             4.1.2. lépés: i == 1 esetén: b<sub>1,2</sub> = m<sub>1</sub> * x * b<sub>2</sub> + m<sub>2</sub> * y * b<sub>1</sub>, az i > 1 esetén pedig b<sub>1,i+1</sub> = m<sub>1,i</sub> * x * b<sub>i+1</sub> + m<sub>i+1</sub> * y * b<sub>1,i</sub>;<br>
             4.1.3. lépés: i == 1 esetén: m<sub>1,2</sub> = m<sub>1</sub> * m<sub>2</sub>, az i > 1 esetén pedig m<sub>1,i+1</sub> = m<sub>1,i</sub> * m<sub>i+1</sub>;<br>
             4.1.4. lépés: az összevont kongruencia: x <?="\u{2261}"?> b<sub>1,i+1</sub> (mod m<sub>1,i+1</sub>);<br>
             4.2. lépés: az összevont kongruenciára cseréljük ki az első két kongruenciát;<br>
             4.3. lépés: i := i + 1; <br>
-            5. lépés: a visszamart kongruencia a megoldás.
+            5. lépés: a visszamaradt kongruencia a megoldás.
         </label>
     </div>
     <button class="show_button">

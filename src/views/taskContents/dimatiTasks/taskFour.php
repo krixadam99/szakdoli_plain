@@ -41,7 +41,7 @@
     </div>
     <div class="small_task_container">
         <label class="task_label">
-            2.<?= $set_pair_counter + 1 ?>. Határozd meg, hogy mely tulajdonság igaz az f<?="<sub>$bottom_index</sub>"?> függvényre!
+            2.<?= $set_pair_counter + 1 ?>. Határozd meg, hogy mely tulajdonságok igazak az f<?="<sub>$bottom_index</sub>"?> függvényre!
         </label>
         <?php $task_counter = "1_$set_pair_counter";?>
         <?php foreach($function_characteristics as $index => $select_label):?>

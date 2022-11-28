@@ -183,7 +183,7 @@
 .message_topic_textarea,
 .receiver_selector {
     width: 65%;
-    margin: auto 5% auto 1%;
+    margin: auto 0% auto 1%;
 }
 
 .receiver_selector {

@@ -39,14 +39,14 @@
                             <td>
                                 <select id="pending_select" name=<?=$pending_user_information["neptun_code"].":".$pending_user_information["subject_id"]."_".$pending_user_information["group_number"]?>>
                                     <option selected>-</option>
-                                    <option>ELFOGADÁS</option>
-                                    <option>ELUTASÍTÁS</option>
+                                    <option>Elfogadás</option>
+                                    <option>Elutasítás</option>
                                 </select>
                             </td>
                         </tr>
                     <?php endforeach?>
                 </table>
-                <button type="submit" class="finalize_button">VÉGLEGESÍTÉS</button>
+                <button type="submit" class="finalize_button">Véglegesítés</button>
             </form>
         <?php else:?>
             <div class="notification_box">

@@ -14,14 +14,14 @@
             <div class="small_navigation_button" id="notifications_button">
                 <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
                 <span class="text_of_tooltip">
-                    Visszanavigálás az értesítések oldalára
+                    Navigálás az értesítések oldalra
                 </span>
             </div>
         <?php else:?>
             <div class="small_navigation_button" id="demonstrator_handling_button">
                 <img src="./views/css/pics/notifications_shape.png" alt="notifications_shape" id="notifications_shape">
                 <span class="text_of_tooltip">
-                    Visszanavigálás a demonstrátorkezelő oldalra
+                    Navigálás a demonstrátorkezelő oldalra
                 </span>
             </div>
         <?php endif?>
@@ -29,26 +29,10 @@
         <div class="small_navigation_button" id="messages_button">
             <img src="./views/css/pics/messages.png" alt="messages_shape" id="messages_shape">
             <span class="text_of_tooltip">
-                Navigálás az üzenetek oldalára
+                Navigálás az üzenetek oldalra
             </span>
         </div>
         <?php if(!$is_administrator):?>
-            <!-- Group addition -->
-            <!--
-                - i - student is pending -> if group is not 0, then don't show the group addition, else show group addition with only appying to group submenu row
-                - ii - student is pending -> Show group addition with only group adding submenu row
-                - i - student is approved -> cannot be teacher, cannot be student (don't show group addition)
-                - ii - student is approved -> can be i teacher, cannot be student (show group addition with only group adding submenu row)
-                - i - student is denied -> 
-                - ii - student is denied -> 
-
-                - i - teacher is pending, ii - teacher is pending, i - teacher is approved -> Show group addition menu
-                - ii - teacher is approved ->  Show group addition menu with only group adding submenu row
-                - i - teacher is deined
-                - ii - teacher is denied
-
-            -->
-            
             <?php
                 $group_addition_conditions = MainContentController::GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects);
                 $show_group_addition_menu = $group_addition_conditions[0];
@@ -57,14 +41,14 @@
                 <div class="small_navigation_button" id="group_addition_button">
                     <img src="./views/css/pics/apply_to_group.png" alt="group_addition_shape" id="group_addition_shape">
                     <span class="text_of_tooltip">
-                        Csoporthoz való csatlakozás
+                        Navigálás a csoporthoz való csatlakozás oldalra
                     </span>
                 </div>
             <?php endif?>
             <div class="small_navigation_button" id="user_setting_button">
                 <img src="./views/css/pics/edit_user.png" alt="user_setting_shape" id="user_setting_shape">
                 <span class="text_of_tooltip">
-                    Személyes adatok szerkesztése
+                    Navigálás a személyes adatok szerkesztése oldalra
                 </span>
             </div>
         <?php endif?>
@@ -74,10 +58,11 @@
     <?php if(!$is_administrator):?>
         <div id="header_line">
             <?php if(count($approved_teacher_groups) != 0):?> <!-- there is at least one group assigned to this user -->
+                <?php sort($approved_teacher_subjects, SORT_NATURAL)?>               
                 <?php if(count($approved_teacher_subjects) === 2):?>
                     <nav id="generate_task" class="nav_with_submenu <?=$actual_page=="task_generation"?"actual_page":"not_actual_page"?>">
                         Feladatsor összeállítása
-                        <div class="submenu">                    
+                        <div class="submenu">     
                             <?php foreach($approved_teacher_subjects as $approved_teacher_subject):?>                            
                                 <a class="submenu_row" href=<?="./index.php?site=taskGeneration&subject=" . $approved_teacher_subject?>><?=$approved_teacher_subject=="i"?"Diszkrét matematika I.":"Diszkrét matematika II."?></a>
                             <?php endforeach?>

@@ -6,7 +6,7 @@
     </div>
     <div class="definition first_definition">
         <label class="definition_label">
-            Adottak <?="\u{2124}"?> <?="\u{220B}"?> a, b számok. Jelölje ekkor ennek a két számnak a legnagyobb közös osztóját az a d <?="\u{2208}"?> <?="\u{2124}"?> szám amelyre teljesül, hogy:
+            Adottak <?="\u{2124}"?> <?="\u{220B}"?> a, b számok. Jelölje ekkor ennek a két számnak a legnagyobb közös osztóját az a d <?="\u{2208}"?> <?="\u{2124}"?> szám, amelyre teljesül, hogy:
         </label>
     </div>
     <div class="definition">
@@ -21,12 +21,12 @@
             Adott <?="\u{2124}"?> <?="\u{220B}"?> a gcd(0, a) = |a|. Nyilván |a| <?="\u{2265}"?> 0, és |a| a legnagyobb olyan szám, amely osztója a-nak. Végül azt is tudjuk, hogy bármely szám osztója a 0-nak, így a |a| is.
             Az is bebizonyítható, hogy gcd(a, b) = gcd(a, b - k * a) (a, b, k <?="\u{2208}"?> <?="\u{2124}"?>). 
             Ehhez vennünk kell a { d <?="\u{2208}"?> <?="\u{2124}"?><sup><?="\u{2265}"?>0</sup> : d | a <?="\u{2227}"?> d | b} és { d <?="\u{2208}"?> <?="\u{2124}"?><sup><?="\u{2265}"?>0</sup> : d | a <?="\u{2227}"?> d | b - a * k} halmazokat és be kell látni, hogy azonosak, így pedig a véges elemszámuk miatt a maximumuk (ami rendre gcd(a, b) és gcd(a, b - k * a)) is egyenlő.
-            Az Eukleidészi- algoritmus segítségével bizonyítjuk, hogy bármely két egész számnak van legnagyobb közös osztója.
+            Az euklideszi algoritmus segítségével bizonyítjuk, hogy bármely két egész számnak van legnagyobb közös osztója.
         </label>
     </div>
     <div class="definition">
         <label class="definition_label">
-            Adottak <?="\u{2124}"?> <?="\u{220B}"?> a, b számok. Jelölje ekkor ennek a két számnak a legkisebb közös többszörösét az az m <?="\u{2208}"?> <?="\u{2124}"?> szám amelyre teljesül, hogy:
+            Adottak <?="\u{2124}"?> <?="\u{220B}"?> a, b számok. Jelölje ekkor ennek a két számnak a legkisebb közös többszörösét az az m <?="\u{2208}"?> <?="\u{2124}"?> szám, amelyre teljesül, hogy:
         </label>
         <ul class="definition_list">
             <li><label>m <?="\u{2265}"?> 0 (egyértelmű);</label></li>
@@ -45,7 +45,7 @@
 <div class="definition_holder">
     <div class="defined">
         <label class="definition_label">
-            Eukleidészi- algoritmus
+            Euklideszi algoritmus
         </label>
     </div>
     <div class="definition first_definition">
@@ -70,7 +70,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Mivel az Eukleidészi- algoritmus véges lépésben véget ér bármely két egész szám esetén, ezért valóban bármely két szám esetén létezik a legnagyobb közös osztó.
+            Mivel az euklideszi algoritmus véges lépésben véget ér bármely két egész szám esetén, ezért valóban bármely két szám esetén létezik a legnagyobb közös osztó.
         </label>
     </div>
     <button class="show_button">
@@ -80,12 +80,12 @@
 <div class="definition_holder">
     <div class="defined">
         <label class="definition_label">
-            Kibővített Eukleidészi- algoritmus
+            Kibővített euklideszi algoritmus
         </label>
     </div>
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
-            A gcd(a,b) meghatározásánál használt Eukleidészi- algoritmust felhasználva alkotjuk meg az itteni algoritmust. Azt szeretnénk elérni, hogy minden maradékot felírhassunk az a és b lineáris kombinációjaként.<br>
+            A gcd(a,b) meghatározásánál használt euklideszi algoritmust felhasználva alkotjuk meg az itteni algoritmust. Azt szeretnénk elérni, hogy minden maradékot felírhassunk az a és b lineáris kombinációjaként.<br>
             r<sub>-2</sub> := 1*a + 0*b = a (m<sub>-2</sub> := 1, n<sub>-2</sub> := 0);<br>
             r<sub>-1</sub> := 0*a + 1*b = b (m<sub>-1</sub> := 0, n<sub>-1</sub> := 1);<br>
             r<sub>0</sub> = a - q<sub>0</sub> * b (m<sub>0</sub> := 1, n<sub>0</sub> := -q<sub>0</sub>);<br>
@@ -93,7 +93,7 @@
             ...<br>
             Tegyük fel, hogy a k.-ik (0 <?="\u{2264}"?> k <?="\u{2264}"?> (i - 1)) lépésig (a k.-ik már nem) minden maradékot fel tudtunk írni a és b lineáris kombinációjaként, 
             vagyis r<sub>k-2</sub> = m<sub>k-2</sub> * a + n<sub>k-2</sub> * b és r<sub>k-1</sub> = m<sub>k-1</sub> * a + n<sub>k-1</sub> * b.<br>
-            Ekkor az Eukleidészi- algoritmus szerint: r<sub>k</sub> = r<sub>k-2</sub> - q<sub>k</sub> * r<sub>k-1</sub>
+            Ekkor az euklideszi algoritmus szerint: r<sub>k</sub> = r<sub>k-2</sub> - q<sub>k</sub> * r<sub>k-1</sub>
             = m<sub>k-2</sub> * a + n<sub>k-2</sub> * b - q<sub>k</sub> * (m<sub>k-1</sub> * a + n<sub>k-1</sub> * b)
             = a * (m<sub>k-2</sub> - q<sub>k</sub> * m<sub>k-1</sub>) + b*(n<sub>k-2</sub> - q<sub>k</sub> * n<sub>k-1</sub>)
             = a * m<sub>k</sub>  + b*n<sub>k</sub> (m<sub>k</sub> := m<sub>k-2</sub> - q<sub>k</sub> * m<sub>k-1</sub>, n<sub>k</sub> := n<sub>k-2</sub> - q<sub>k</sub> * n<sub>k-1</sub>).
@@ -101,7 +101,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Mivel gcd(a,b) = r<sub>i-1</sub>, és r<sub>i-1</sub> a kibővített Eukleidészi- algoritmus szerint felírható az a és b lineáris kombinációjaként, ezért a legnagyobb közös osztó is.
+            Mivel gcd(a,b) = r<sub>i-1</sub>, és r<sub>i-1</sub> a kibővített euklideszi algoritmus szerint felírható az a és b lineáris kombinációjaként, ezért a legnagyobb közös osztó is.
             Ezt nevezzük Bézout- azonosságnak: gcd(a,b) = a * x + b * y ( = a * m<sub>i-1</sub> + b * n<sub>i-1</sub>) (x, y <?="\u{2208}"?> <?="\u{2124}"?>).
             Adottak a <?="\u{2124}"?> <?="\u{220B}"?> a, b, c számok, továbbá tudjuk, hogy c | a * b és gcd(c, a) = 1, ekkor c | b. Bézout szerint, ekkor 1 = c * x + a * y (x, y <?="\u{2208}"?> <?="\u{2124}"?>), mind a két oldalt b-vel szorozva pedig b = c * x * b + a * b * y, ahol a b a jobb oldal mindkét tagját osztja, így pedig a bal oldalt, azaz a b-t is.
             Következmény: ha a p szám prím és osztója az a * b szorzatnak, akkor osztója a-nak, vagy b-nek is. Sőt ez kiterjeszthető többtényezős szorzatra is.

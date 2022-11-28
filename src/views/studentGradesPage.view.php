@@ -65,7 +65,7 @@
                 <label>Feladatok időpontjainak módosítása</label>
             </div>
             <div class="non_header_navigation_row_button" id="update_grade_points_button">
-                <label>Jegyek alsó ponthatárjainak módosítása</label>
+                <label>Jegyek alsó ponthatárainak módosítása</label>
             </div>
         </div>
 
@@ -214,7 +214,7 @@
                             <?php endforeach?>
                         </table>
                     </div>
-                    <button type="submit" class="finalize_button">FRISSÍTÉS</button>
+                    <button type="submit" class="finalize_button">Frissítés</button>
                 </form>
             <?php else:?>
                 <div class="notification_box">
@@ -279,7 +279,7 @@
                         <?php endforeach?>
                     </table>
                 </div>
-                <button type="submit" class="finalize_button">FRISSÍTÉS</button>
+                <button type="submit" class="finalize_button">Frissítés</button>
             </form>
         </div>
             
@@ -289,7 +289,7 @@
                 <input type="hidden" name="token" value="<?=$form_token?>">
             
                 <label style="font-size: calc(15px + 0.3vw)">
-                <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport feladatok időpontjainak módosítása
+                    <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport feladatok időpontjainak módosítása
                 </label>
                 <hr>    
             
@@ -299,6 +299,7 @@
                             <th>FELADAT TÍPUSA</th>
                             <th>ESEDÉKESSÉG</th>
                         </tr>
+                        <?php ksort($task_due_dates, SORT_NATURAL )?>
                         <?php foreach($task_due_dates as $task_type => $task_due_date):?>
                             <?php 
                                 $id = $task_due_date["task_type"];
@@ -316,7 +317,6 @@
                                     case "practice_task_7":$task_type_name="7. gyakorló feladatsor";break;
                                     case "practice_task_8":$task_type_name="8. gyakorló feladatsor";break;
                                     case "practice_task_9":$task_type_name="9. gyakorló feladatsor";break;
-                                    case "practice_task_10":$task_type_name="10. gyakorló feladatsor";break;
                                     case "small_test_1":$task_type_name="1. kis zárthelyi";break;
                                     case "small_test_2":$task_type_name="2. kis zárthelyi";break;
                                     case "small_test_3":$task_type_name="3. kis zárthelyi";break;
@@ -341,7 +341,7 @@
                         <?php endforeach?>
                     </table>
                 </div>
-                <button type="submit" class="finalize_button">FRISSÍTÉS</button>
+                <button type="submit" class="finalize_button">Frissítés</button>
             </form>
         </div>
 
@@ -351,7 +351,7 @@
                 <input type="hidden" name="token" value="<?=$form_token?>">
             
                 <label style="font-size: calc(15px + 0.3vw)">
-                <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport jegyek alsó ponthatárjainak módosítása
+                <?=$_SESSION["subject"] === "i"?"Diszkrét matematika I.":"Diszkrét matematika II."?> - <?=$_SESSION["group"]?>. csoport jegyek alsó ponthatárainak módosítása
                 </label>
                 <hr>    
             
@@ -364,7 +364,7 @@
                         </tr>
                         <tr class=<?=$id?> class="grade_point_row">
                             <td>
-                                ELÉGSÉGES (2)
+                                Elégséges (2)
                             </td>
                             <td style="padding:0%">
                                 <input type="number" class="grade_level_input" min="0" step="1" name="pass_level_point" value="<?=$grade_levels["pass_level_point"]?>">
@@ -374,7 +374,7 @@
                             
                         <tr class=<?=$id?> class="grade_point_row">
                             <td>
-                                KÖZEPES (3)
+                                Közepes (3)
                             </td>
                             <td style="padding:0%">
                                 <input type="number" class="grade_level_input" min="0" step="1" name="satisfactory_level_point" value="<?=$grade_levels["satisfactory_level_point"]?>">
@@ -384,7 +384,7 @@
 
                         <tr class=<?=$id?> class="grade_point_row">
                             <td>
-                                JÓ (4)
+                                Jó (4)
                             </td>
                             <td style="padding:0%">
                                 <input type="number" class="grade_level_input" min="0" step="1" name="good_level_point" value="<?=$grade_levels["good_level_point"]?>">
@@ -394,7 +394,7 @@
                         
                         <tr class=<?=$id?> class="grade_point_row">
                             <td>
-                                JELES (5)
+                                Jeles (5)
                             </td>
                             <td style="padding:0%">
                                 <input type="number" class="grade_level_input" min="0" step="1" name="excellent_level_point" value="<?=$grade_levels["excellent_level_point"]?>">
@@ -403,7 +403,7 @@
                         </tr>
                     </table>
                 </div>
-                <button type="submit" class="finalize_button">FRISSÍTÉS</button>
+                <button type="submit" class="finalize_button">Frissítés</button>
             </form>
         </div>
     </main>

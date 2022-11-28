@@ -5,6 +5,7 @@
     $pending_student_groups = $this->pending_student_groups;
     $approved_teacher_groups = $this->approved_teacher_groups;
     $approved_student_group = $this->approved_student_group;
+    $approved_student_subject = $this->approved_student_subject;
     $denied_student_groups = $this->denied_student_groups;
     $withdrawn_student_groups = $this->withdrawn_student_groups;
 
@@ -50,7 +51,7 @@
                             <?php elseif($pending_student_group["subject_id"]=="ii"):?>
                                 Diszkrét matematika II.
                             <?php endif?>
-                            tárgy <?=$pending_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elbírálás alatt áll!
+                            tárgy <?=$pending_student_group["subject_group"]?>. csoporthoz való csatlakozási kérése elbírálás alatt áll!
                         </label>
                     <?php endif?>
                 </div>
@@ -68,12 +69,12 @@
                 <div class="notification_box">
                     <label>
                         A 
-                        <?php if($approved_student_group ==="i"):?>
+                        <?php if($approved_student_subject == "i"):?>
                             Diszkrét matematika I.
-                        <?php elseif($approved_student_group ==="ii"):?>
+                        <?php elseif($approved_student_subject == "ii"):?>
                             Diszkrét matematika II.
                         <?php endif?>
-                        tárgy <?=$approved_student_group?>. csoport-hoz való csatlakozási kérése elfogadásra került!
+                        tárgy <?=$approved_student_group?>. csoporthoz való csatlakozási kérése elfogadásra került!
                     </label>
                 </div>
             <?php endif?>
@@ -85,12 +86,12 @@
                 <div class="notification_box">
                     <label>
                         A 
-                        <?php if($denied_student_group["subject_id"]=="i"):?>
+                        <?php if($denied_student_group["subject_id"] == "i"):?>
                             Diszkrét matematika I.
-                        <?php elseif($denied_student_group["subject_id"]=="ii"):?>
+                        <?php elseif($denied_student_group["subject_id"] == "ii"):?>
                             Diszkrét matematika II.
                         <?php endif?>
-                        tárgy <?=$denied_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése elutasításra került!
+                        tárgy <?=$denied_student_group["subject_group"]?>. csoporthoz való csatlakozási kérése elutasításra került!
                     </label>
                 </div>
             <?php endforeach?>
@@ -102,12 +103,12 @@
                 <div class="notification_box">
                     <label>
                         A 
-                        <?php if($withdrawn_student_group["subject_id"]=="i"):?>
+                        <?php if($withdrawn_student_group["subject_id"] == "i"):?>
                             Diszkrét matematika I.
-                        <?php elseif($withdrawn_student_group["subject_id"]=="ii"):?>
+                        <?php elseif($withdrawn_student_group["subject_id"] == "ii"):?>
                             Diszkrét matematika II.
                         <?php endif?>
-                        tárgy <?=$withdrawn_student_group["subject_group"]?>. csoport-hoz való csatlakozási kérése visszavonásra került!
+                        tárgy <?=$withdrawn_student_group["subject_group"]?>. csoporthoz való csatlakozási kérése visszavonásra került!
                     </label>
                 </div>
             <?php endforeach?>
@@ -116,7 +117,7 @@
         <!-- If there is no more group that is pending, then let's display that too -->
         <?php if(count($pending_teacher_groups) == 0 && count($pending_student_groups) == 0):?>
             <div class="notification_box">
-                <label>Nincsen elbírálás allatt álló tárgya!</label>
+                <label>Nincs elbírálás alatt álló tárgya!</label>
             </div>
         <?php endif?>
     </main>

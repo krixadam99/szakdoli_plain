@@ -19,13 +19,13 @@
 <div class="definition_holder">
     <div class="defined">
         <label class="definition_label">
-            Horner- rendezés
+            Horner- elrendezés
         </label>
     </div>
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
             A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> polinomot más alakban is fel tudjuk írni.
-            Horner- rendzés: P[x] = ((...(a<sub>n</sub> * x + a<sub>n-1</sub>)...) * x + a<sub>1</sub>) * x + a<sub>0</sub>.
+            Horner- elrendezés: P[x] = ((...(a<sub>n</sub> * x + a<sub>n-1</sub>)...) * x + a<sub>1</sub>) * x + a<sub>0</sub>.
             Ebből rekurzívan megkapjuk a helyettesítési értéket:<br>
             c<sub>n</sub> = a<sub>n</sub>;<br>
             c<sub>n-1</sub> = c<sub>n</sub> * x + a<sub>n-1</sub>;<br>

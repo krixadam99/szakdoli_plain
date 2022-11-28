@@ -4,7 +4,7 @@
 <?php $task_counter = 0;?>
 <?php foreach($_SESSION["task"]["crs_numbers"] as $crs_index => $number):?>
     <div class="small_task_container">
-        <?="\u{2124}" . "/"?><sub><?= $number?></sub><?="\u{2124}"?> teljes maradék rendszer megadása:
+        <?="\u{2124}" . "/"?><sub><?= $number?></sub><?="\u{2124}"?> teljes maradékrendszer megadása:
         <br>
         <?php include("./views/taskContents/solutionInput.php")?>
     </div>
@@ -17,7 +17,7 @@
 <?php $task_counter = 1;?>
 <?php foreach($_SESSION["task"]["rrs_numbers"] as $rrs_index => $number):?>
     <div class="small_task_container">
-        <?="(\u{2124}" . "/"?><sub><?= $number?></sub><?="\u{2124})*"?> redukált maradék rendszer megadása:
+        <?="(\u{2124}" . "/"?><sub><?= $number?></sub><?="\u{2124})*"?> redukált maradékrendszer megadása:
         <br>
         <?php include("./views/taskContents/solutionInput.php")?>
     </div>
@@ -30,7 +30,7 @@
 <?php foreach($_SESSION["task"]["rrs_size_numbers"] as $rrs_size_index => $number):?>
     <div class="small_task_container">
         <?php $task_counter = 2 . "_" . $rrs_size_index;?>
-        <?="|(\u{2124}" . "/"?><sub><?=$number?></sub><?="\u{2124})*|"?> redukált maradék rendszer méretének megadása:
+        <?="|(\u{2124}" . "/"?><sub><?=$number?></sub><?="\u{2124})*|"?> redukált maradékrendszer méretének megadása:
         <br>
         <?php include("./views/taskContents/solutionInput.php")?>
     </div>

@@ -45,7 +45,7 @@
             2.<?= $base_set_counter + 1 ?>. részfeladat: Add meg a Q reláció tulajdonságait!
         </label>
         <?php $task_counter = "1_$base_set_counter";?>
-        <?php $relation_characteristics = ["Reflexív", "Irreflexív", "Szimmetrikus", "Antiszimmetrikus", "Asszimmetrikus", "Tranzitív", "Dichitóm", "Trichotóm", "Ekvivalencia reláció"]?>
+        <?php $relation_characteristics = ["Reflexív", "Irreflexív", "Szimmetrikus", "Antiszimmetrikus", "Szigorúan antisszimmetrikus", "Tranzitív", "Dichotóm", "Trichotóm", "Ekvivalencia reláció"]?>
         <?php $select_counter = 0;?>
         <?php foreach($relation_characteristics as $index => $select_label):?>
             <?php include("./views/taskContents/solutionSelect.php")?>

@@ -1,8 +1,8 @@
 <?php $lagrange_points = $_SESSION["task"]["lagrange_points"]?>
 <label class="task_label">
-    1. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
-    Míg megfelelő ponthoz tartozó alappolinomt az <i>l</i><sub>pont</sub>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
-    A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    1. részfeladat: Illessz polinomot a <?= PrintServices::PrintPoints($lagrange_points)?> pontokra a Lagrange-féle interpolációval! 
+    Míg megfelelő ponthoz tartozó alappolinomot az <i>l</i><sub>pont</sub>[x], addig a Lagrange-féle interpolációs polinomot az <i>L</i>[x] jelöli.
+    A polinomok együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (például: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">
@@ -23,8 +23,8 @@
 <?php $newton_points = $_SESSION["task"]["newton_points"]?>
 <?php $task_counter = 1?>
 <label class="task_label">
-    2. részfeladat: Illessz polinomot a <?php PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval!
-    Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
+    2. részfeladat: Illessz polinomot a <?= PrintServices::PrintPoints($newton_points)?> pontokra a Newton-féle interpolációval!
+    Az interpolációs polinom (<i>N</i>[x]) együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (például: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
     Az együtthatókat 2 tizedesjegy pontossággal add meg!
 </label>
 <div class="small_task_container">

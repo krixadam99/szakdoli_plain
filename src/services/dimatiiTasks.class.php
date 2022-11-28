@@ -162,7 +162,7 @@
 
             // Adding the data to the task array.
             $task_array = array(
-                "task_description" => "Old meg a következő Eukleidészi algoritmussal kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő euklideszi algoritmussal kapcsolatos feladatokat!",
                 "gcd_pairs" => $gcd_pairs["data"],
                 "step_counts" => $step_counts
             );
@@ -248,7 +248,7 @@
 
             // Adding the data to the task array.
             $task_array = array(
-                "task_description" => "Old meg a következő kínai maradékrendszerrel kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő kínai maradéktétellel kapcsolatos feladatokat!",
                 "divide_triplets" => $first_congruence_system_triplets["data"][0],
                 "first_congruence_system_triplets" => $first_congruence_system_triplets["data"][0],
                 "second_congruence_system_triplets" => $second_congruence_system_triplets["data"][0]
@@ -278,7 +278,7 @@
 
             // Task array declaration.
             $task_array = array(
-                "task_description" => "Old meg a következő Horner-táblázattal kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő Horner- elrendezéssel kapcsolatos feladatokat!",
                 "polynomials" => $horner_schemes_first["data"],
                 "divide_polynomials" => $horner_schemes_second["data"][0]
             );

@@ -41,7 +41,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Egy lehetsége megoldása az (a, b <?="\u{2208}"?> <?="\u{2124}"?> és m <?="\u{2208}"?> <?="\u{2124}"?><sup><?="\u{2265}"?>2</sup>): a * x <?="\u{2261}"?> b (mod m) lineáris kongruenciának:<br>
+            Egy lehetséges megoldása az (a, b <?="\u{2208}"?> <?="\u{2124}"?> és m <?="\u{2208}"?> <?="\u{2124}"?><sup><?="\u{2265}"?>2</sup>): a * x <?="\u{2261}"?> b (mod m) lineáris kongruenciának:<br>
             1. lépés: ellenőrizzük, hogy (a, m) | b;<br>
             2. lépés: ha a = 0, akkor |m| | b, ekkor megállhatunk, x bármi lehet; <br>
             3. lépés: vesszük az a és b maradékát m-mel osztva;<br>

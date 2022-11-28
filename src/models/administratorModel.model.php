@@ -54,7 +54,7 @@
                 // Whithdraw from subjects if approved
                 if($pending_status === "APPROVED"){
                     if($subject_id === "i"){
-                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = \"0\" AND subject_group_id IN (SELECT subject_group_id FROM subject_groups WHERE subject_group.subject_id = \"i\"); ";
+                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = \"0\" AND subject_group_id IN (SELECT subject_group_id FROM subject_groups WHERE subject_groups.subject_id = \"i\"); ";
                     }else{
                         $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = \"0\"; ";
                     }

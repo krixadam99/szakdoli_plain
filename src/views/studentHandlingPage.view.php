@@ -1,5 +1,12 @@
-<?php    
+<?php
     $form_token = $this->GetFormToken();
+
+    // Approved teacher subjects
+    $approved_teacher_subjects = $this->GetApprovedTeacherSubjects();
+    
+    // Redirect if the requested subject is not in the approved subject
+    $this->RedirectToIfWrongParam("subject", $approved_teacher_subjects, "notifications");
+
     $students = [];
     foreach($all_students as $index => $students_per_subjects_per_group){
         if($students_per_subjects_per_group["subject_id"] === $_SESSION["subject"] && $students_per_subjects_per_group["subject_group"] === $_SESSION["group"]){
@@ -55,21 +62,21 @@
                                 <select id="student_handling_select" name=<?=$student["neptun_code"]?>>
                                     <?php if($student["application_request_status"] === "PENDING"):?>
                                         <option selected>-</option>
-                                        <option>ELFOGADÁS</option>
-                                        <option>ELUTASÍTÁS</option>
+                                        <option>Elfogadás</option>
+                                        <option>Elutasítás</option>
                                     <?php elseif($student["application_request_status"] === "APPROVED"):?>
                                         <option selected>-</option>
-                                        <option>TÖRLÉS</option>
+                                        <option>Törlés</option>
                                     <?php elseif($student["application_request_status"] === "DENIED"):?>
                                         <option selected>-</option>
-                                        <option>VISSZAVÉTEL</option>
+                                        <option>Visszavétel</option>
                                     <?php endif?>
                                 </select>
                             </td>
                         </tr>
                     <?php endforeach?>
                 </table>
-                <button type="submit" class="finalize_button">FRISSÍTÉS</button>
+                <button type="submit" class="finalize_button">Frissítés</button>
             </form>
         <?php else:?>
             <div class="notification_box">

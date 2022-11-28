@@ -248,7 +248,7 @@
 
             // Adding the data to the task array.
             $task_array = array(
-                "task_description" => "Old meg a következő komplex számok algebrai alakjával kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő komplex számok hatványozásával és gyökvonással kapcsolatos feladatokat!",
                 "first_subtasks" => $complex_numbers_powers_subtask["data"],
                 "second_subtasks" => $complex_numbers_roots_subtask["data"]
             );
@@ -272,7 +272,7 @@
 
             // Adding the data to the task array.
             $task_array = array(
-                "task_description" => "Old meg a következő binomiális tétellel és viéte formulákkal kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő binomiális tétellel és Viéte- formulákkal kapcsolatos feladatokat!",
                 "first_subtasks" => $binomial_theorem_subtask["data"],
                 "second_subtasks" => $viete_formula_subtask["data"]
             );
@@ -299,7 +299,7 @@
 
             // Adding the data to the task array.
             $task_array = array(
-                "task_description" => "Old meg a következő bgráfok megszerkeszthetőségével kapcsolatos feladatokat!",
+                "task_description" => "Old meg a következő gráfok megszerkeszthetőségével kapcsolatos feladatokat!",
                 "first_subtasks" => $simple_graph_subtask["data"],
                 "second_subtasks" => $tree_graph_subtask["data"],
                 "third_subtasks" => $paired_graph_subtask["data"],

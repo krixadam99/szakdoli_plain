@@ -206,7 +206,7 @@ if(show_buttons){
                 })
                 is_shown[counter] = false
     
-                let bottom_triangle = show_button.querySelector(".bottom_triangle")
+                let bottom_triangle = show_button.getElementsByClassName("bottom_triangle")
                 show_button.removeChild(bottom_triangle)
                 
                 let top_triangle = document.createElement("div")

@@ -24,7 +24,7 @@
             (a, b, c <?="\u{2208}"?> <?="\u{2124}"?>): a * x + b * y = c II. lehetséges megoldása:<br>
             1. lépés: ellenőrizzük, hogy (a,b) | c;<br>
             2. lépés: meghatározni egy x<sub>0</sub> és y<sub>0</sub> alapmegoldást;<br>
-            2.1. lépés: kibővíttt Eukleidészi- algoritmussal határozzuk meg a megoldását a gcd(a,b) = a * x<sub>a</sub> + b * y<sub>b</sub> (x<sub>a</sub>, y<sub>b</sub> <?="\u{2208}"?> <?="\u{2124}"?>);<br>
+            2.1. lépés: kibővített euklideszi algoritmussal határozzuk meg a megoldását a gcd(a,b) = a * x<sub>a</sub> + b * y<sub>b</sub> (x<sub>a</sub>, y<sub>b</sub> <?="\u{2208}"?> <?="\u{2124}"?>);<br>
             2.2. lépés: szorozzuk be mind a két oldalt (c/gcd(a,b))-val, így c = a * x<sub>a</sub> * (c/gcd(a,b)) + b * y<sub>b</sub> * (c/gcd(a,b)) (x<sub>a</sub>, y<sub>b</sub> <?="\u{2208}"?> <?="\u{2124}"?>);<br>
             2.3. lépés: az alap megoldások így: x<sub>0</sub> = x<sub>a</sub> * (c/gcd(a,b)) és y<sub>0</sub> = y<sub>b</sub> * (c/gcd(a,b));<br>
             3. lépés: behelyettesítés az x = x<sub>0</sub> + k * (b/gcd(a,b)) és y = y<sub>0</sub> - k * (a/gcd(a,b)) egyenletekbe, ahol a k egy tetszőleges egész szám, ami közös a két egyenletben.

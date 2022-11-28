@@ -6,7 +6,7 @@
     </div>
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
-            Az (a,b) rendezett pár alatt a {{a}, {a,b}} halmazt értjük (számít a sorrend). Az A és B halmazok Descartes (direkt, vagy cartesian) szorzata egy olyan halmaz, amely olyan rendezett párokat tartalmaz, melyek első eleme az A, második eleme pedig a B halmazban van benne. Formálisan: A <?="\u{2A2F}"?> B = { (a,b): a <?="\u{2208}"?> A <?="\u{2227}"?> b <?="\u{2208}"?> B}.
+            Az (a,b) rendezett pár alatt a {{a}, {a,b}} halmazt értjük (számít a sorrend). Az A és B halmazok Descartes (direkt, vagy cartesian (angolosan)) szorzata egy olyan halmaz, amely olyan rendezett párokat tartalmaz, melyek első eleme az A, második eleme pedig a B halmazban van benne. Formálisan: A <?="\u{2A2F}"?> B = { (a,b): a <?="\u{2208}"?> A <?="\u{2227}"?> b <?="\u{2208}"?> B}.
         </label>
     </div>
     <div class="definition">
@@ -41,7 +41,7 @@
     </div>
     <div class="definition">
         <label class="definition_label">
-            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> B és az N halmaz. Ekkor R<sub>N</sub> = { (a,b) <?="\u{2208}"?> R | a <?="\u{2208}"?> N } <?="\u{2286}"?> R. Ezt nevezzük az <b>R reláció N halmazra vett megszorítása</b>. Informálisan: kivesszük azokat a rendezett párokat R-ből, amik első elemei benne vannak N-ben.
+            Adott <?="\u{2205}"?> <?="\u{2260}"?> R <?="\u{2286}"?> A <?="\u{2A2F}"?> B és az N halmaz. Ekkor R<sub>N</sub> = { (a,b) <?="\u{2208}"?> R | a <?="\u{2208}"?> N } <?="\u{2286}"?> R. Ezt nevezzük az <b>R reláció N halmazra vett megszorításának</b>. Informálisan: kivesszük azokat a rendezett párokat R-ből, amik első elemei benne vannak N-ben.
         </label>
     </div>
     <div class="definition">

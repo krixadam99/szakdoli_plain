@@ -7,7 +7,7 @@
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
             Adott az <?="\u{2124}"?> <?="\u{220B}"?> k szám. Ekkor a k szám faktoriálisa alatt a következőt értjük: k! = 0 (ha k < 0) és k! = <?="\u{220F}"?><sup>k</sup><sub>i=1</sub>i (ha k > 0) és 1, ha k = 0.
-            Adottak az n, m <?="\u{220B}"?> <?="\u{2124}"?> egészek, ahol n <?="\u{2265}"?> m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az <?="\u{276C}"?> n alatt m <?="\u{276D}"?> jelölést használjuk az oldalon. 
+            Adottak az n, m <?="\u{220B}"?> <?="\u{2124}"?> egészek, ahol n <?="\u{2265}"?> m. Ekkor a (n alatt az m) = n! / (m! * (n - m)!) egészet binomiális együtthatónak nevezzük. Erre az <span class="upper_down_span"><span class="up_index"> n </span><span class="down_index"> m </span></span> jelölést használjuk az oldalon. 
             Tulajdonságok: <?="\u{276C}"?> n alatt m <?="\u{276D}"?> = <?="\u{276C}"?> n alatt (m-n) <?="\u{276D}"?>; <?="\u{276C}"?> (n-1) alatt m <?="\u{276D}"?> + <?="\u{276C}"?> (n-1) alatt (m-1) <?="\u{276D}"?> = <?="\u{276C}"?> n alatt m <?="\u{276D}"?>.
         </label>
     </div>
@@ -31,7 +31,7 @@
 <div class="definition_holder">
     <div class="defined">
         <label class="definition_label">
-                Általánosított Viéte- formula
+                Általánosított Viète- formulák
             </label>
         </div>
         <div class="definition first_definition">

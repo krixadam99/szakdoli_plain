@@ -30,10 +30,10 @@
                     Az R reláció értékkészlete:
                 <?php elseif($subtask_counter == 2):?>
                     <?php $solution_label = "R<sub>" . PrintServices::CreatePrintableSet("", $_SESSION["task"]["sets"][$counter]["N"], false) . "</sub> = "?>
-                    Az R reláció leszűkítése az N halmazra (itt (elem,elem) (pl.: (1,1), (1,2), ...) felsorolást írj):
+                    Az R reláció leszűkítése az N halmazra (itt (elem,elem) (például: (1,1), (1,2), ...) felsorolást írj):
                 <?php elseif($subtask_counter == 3):?>
                     <?php $solution_label = "R<sup>-1</sup> = "?>
-                    Az R reláció inverze (itt is (elem,elem) (pl.: (1,1), (1,2), ...) felsorolást írj):
+                    Az R reláció inverze (itt is (elem,elem) (például: (1,1), (1,2), ...) felsorolást írj):
                 <?php elseif($subtask_counter == 4):?>
                     <?php $solution_label = "R(I) = "?>
                     Az R reláció I halmazon felvett képe:

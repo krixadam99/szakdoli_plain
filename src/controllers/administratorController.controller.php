@@ -71,9 +71,9 @@
                             $parts = explode(":", $key);
                             $neptun = $parts[0]??"neptun";
                             $id = $parts[1]??"id";
-                            if($value === "ELUTASÍTÁS"){
+                            if($value === "Elutasítás"){
                                 $decision = "DENIED";
-                            }elseif($value === "ELFOGADÁS"){
+                            }elseif($value === "Elfogadás"){
                                 $decision = "APPROVED";
                             }else{
                                 $decision = "PENDING";

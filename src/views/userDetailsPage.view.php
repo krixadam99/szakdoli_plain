@@ -48,7 +48,7 @@
             <div>
                 <div>
                     <label class="title_label">
-                        Válassz sátuszt!
+                        Válasszon sátuszt!
                     </label>
                 </div>
                 <select id="user_status" name="user_status">
@@ -69,7 +69,7 @@
             <div>
                 <div>
                     <label class="title_label">
-                        Válassz tárgyat!
+                        Válasszon tárgyat!
                     </label>
                 </div>
                 <select id="subject_id" name="subject_id" style="margin: 1% auto 3% 0%">
@@ -89,7 +89,7 @@
 
             <div id="subject_group_div">
                 <div class="label_div">
-                    <label class="title_label">Válassz csoportot!</label>
+                    <label class="title_label">Válasszon csoportot!</label>
                 </div>
                 <?php if($can_apply_to_group):?>
                     <div id="student_groups" <?=(isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]==="Demonstrátor")?"hidden":""?>>
@@ -147,7 +147,7 @@
             <input type="hidden" name="token" value="<?=$form_token?>">
         
             <div class="label_div">
-                <label class="title_label">Add meg az új email címet!</label>
+                <label class="title_label">Adja meg az új email címet!</label>
             </div>    
             <input type="text" id="user_email" name="user_email" value="<?=$correct_parameters["user_email"]??$user_details["email_address"]?>" placeholder="<?=$user_details["email_address"]?>">
             <?php if(isset($incorrect_parameters)):?>
@@ -157,7 +157,7 @@
             <?php endif?>
 
             <div class="label_div">
-                <label class="title_label">Add meg az új jelszót!</label>
+                <label class="title_label">Adja meg az új jelszót!</label>
                 <br>
                 <label class="title_label">(legalább 8 karakter hosszú, tartalmazzon legalább 1 kis- és nagybetűt, számot, valamint a "," "-" "." "?" és "!" karakterek valamelyikét)</label>
             </div>
@@ -172,7 +172,7 @@
             <?php endif?>
 
             <div class="label_div">
-                <label class="title_label">Add meg újra a jelszót!</label>
+                <label class="title_label">Adja meg újra a jelszót!</label>
             </div>
             <div class="password_row">
                 <input type="text" id="user_password_again" name="user_password_again" value="Jelszó megerősítése..." placeholder="Jelszó megerősítése...">

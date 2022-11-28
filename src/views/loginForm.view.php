@@ -18,7 +18,7 @@
 <body>
     <?php if(isset($with_success_bar) && $with_success_bar):?>
         <div id="success_div">
-            <label>Az új jelszót kilüdtük a <?=$email_address?> email címre!</label>
+            <label>Az új jelszót kiküldtük a(z) <?=$email_address?> email címre!</label>
         </div>
     <?php endif?>
 
@@ -58,7 +58,7 @@
 
             <div class="label_div">
                 <label>
-                    A jelszó kiküldéséhez adja meg a neptun kódját!
+                    A jelszó kiküldéséhez adja meg a Neptun kódját!
                 </label>
             </div>
         

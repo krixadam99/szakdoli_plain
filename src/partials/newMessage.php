@@ -5,7 +5,7 @@
         <div class="message_receiver_div">
             <?php if(!isset($_SESSION["message_id"])):?>
                 <label class="message_label" style="margin: auto 2% auto 0%; ">
-                    Add meg a címzettet!
+                    Adja meg a címzettet!
                 </label>
                 <select class="receiver_selector" name="message_to">
                     <?php foreach($neptun_codes as $element_counter => $neptun_code):?>
@@ -29,7 +29,7 @@
         </div>
         <div class="message_topic_div">
             <label class="message_label" style="margin: auto 2% auto auto; ">
-                Add meg az üzenet tárgyát!
+                Adja meg az üzenet tárgyát!
             </label>
             <textarea class="message_topic_textarea" placeholder="Üzenet tárgy..." value="<?=$correct_parameters["message_topic"]??"Üzenet tárgya..."?>" name="message_topic" rows="1"><?=$correct_parameters["message_topic"]??""?></textarea>
             <?php if(isset($incorrect_parameters)):?>
@@ -41,7 +41,7 @@
     </div>
     <div class="message__div">
         <label class="message_label" style="margin: auto auto auto 0%; ">
-            Add meg az üzenet szövegét!
+            Adja meg az üzenet szövegét!
         </label>
         <textarea class="message_text_textarea" placeholder="Üzenet szövege..." value="<?=$correct_parameters["message_text"]??"Üzenet szövege..."?>" rows="10" name="message_text"><?=$correct_parameters["message_text"]??""?></textarea>
         <?php if(isset($incorrect_parameters)):?>

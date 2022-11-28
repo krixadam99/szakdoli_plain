@@ -10,7 +10,7 @@
                 (<?= PrintServices::CreatePrintableComplexNumberAlgebraic("", $complex_number, false)?>) <sup><?=$actual_power[0]?></sup> és 
                 (v<sub><?=$bottom_index?></sub>)<sup><?=$actual_power[1]?></sup> = 
                 (<?= PrintServices::CreatePrintableComplexNumberAlgebraic("", $complex_number, false)?>) <sup><?=$actual_power[1]?></sup> 
-            hatványozások eredményét a trigonometrikus alak segítségével! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(1.2*pi)+i*sin(1.2*pi)) helyett írj 4.11, 1.2-et)
+            hatványozások eredményét a trigonometrikus alak segítségével! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (például: 4.111*(cos(1.2*pi)+i*sin(1.2*pi)) helyett írj 4.11, 1.2-et)!
         </label>
         <?php 
             $solution_label = "<label>v<sub>$bottom_index</sub><sup>" . $actual_power[0] . "</sup> = </label>";
@@ -37,7 +37,7 @@
                 <sup><?=$actual_root[0]?></sup><?="\u{221A}"?>(<?= PrintServices::CreatePrintableComplexNumberAlgebraic("", $complex_number, false)?>) és 
                 <sup><?=$actual_root[1]?></sup><?="\u{221A}"?>v<sub><?=$bottom_index?></sub> = 
                 <sup><?=$actual_root[1]?></sup><?="\u{221A}"?>(<?= PrintServices::CreatePrintableComplexNumberAlgebraic("", $complex_number, false)?>)
-            gyökvonások eredményét a trigonometrikus alak segítségével! A hosszt és argumentumot 2 tizedesjegyre kerekítsd, és vesszővel válaszd el (példuául: 4.111*(cos(1.2*pi)+i*sin(1.2*pi)) helyett írj 4.11, 1.2-et)
+            gyökvonások eredményét a trigonometrikus alak segítségével! A hosszt és argumentumokat 2 tizedesjegyre kerekítsd! A hosszt az argumentumoktól ';'-vel válaszd el! Az argumentumokat a hossz után sorold fel!
         </label>
         <?php 
             $solution_label = "<label><sup>" . $actual_root[0] . "</sup>\u{221A}v<sub>$bottom_index</sub> = </label>";

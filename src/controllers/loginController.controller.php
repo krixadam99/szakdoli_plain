@@ -169,9 +169,9 @@
                 $email_address = $this->login_model->GetEmailAddressOfUser(($neptun_code))["email_address"];
                 $title = "Új jelszó a dimaasz alkalmazásban";
                 $message = "
-                <h1>Új jelszó igénylése $actual_time időpontban a $neptun_code netunkódhoz tartozó felhasználónak</h1>\n
-                <label>A rendszerben a $neptun_code netunkódhoz tartozó felhasználó jelszava megváltozott az $actual_time időpontban. Az új jelszó: <b>$new_password</b>.</label>\n
-                <label>Kérjük az új jelszóval való belépést követően változtassa meg a jelszavát a \"Kilépés\" feliratú gomb mellett található kis ikonra kattintva!</label>\n
+                <h1>Új jelszó igénylése $actual_time időpontban a $neptun_code Neptun kódhoz tartozó felhasználónak</h1>\n
+                <label>A rendszerben a $neptun_code Netun kódhoz tartozó felhasználó jelszava megváltozott az $actual_time időpontban. Az új jelszó: <b>$new_password</b>.</label>\n
+                <label>Kérjük az új jelszóval való belépést követően változtassa meg a jelszavát a navigációs menü első sorában található ceruza ikonra kattintva!</label>\n
                 ";
                 
                 // Sending email to the user's address

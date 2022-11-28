@@ -20,9 +20,9 @@
     <?php $main_coefficient = $_SESSION["task"]["second_subtasks"]["main_coefficients"][$second_task_counter]?>
     <div class="small_task_container">
         <label class="task_label">
-            2.<?= $second_task_counter + 1 ?>. részfeladat: Add meg a Viéte formulák segítségével azt a polinomot, amelynek a <b>zérushelyei:
+            2.<?= $second_task_counter + 1 ?>. részfeladat: Add meg a Viète- formulák segítségével azt a polinomot, amelynek a <b>zérushelyei:
             <?= PrintServices::CreatePrintablePlaces($polynomial_expression_roots)?></b> és a <b>főegyütthatója <?=$main_coefficient?></b>! 
-            Az polinom együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (pl.: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)
+            A polinom együtthatóit és a változók fokszámát a főegyütthatótól a konstans tagig haladva vesszővel elválasztva (együttható, változó fokszáma) alakban add meg (például: 2x<sup>2</sup>+3x+1 helyett írj (2,2),(3,1),(1,0)-t)!
         </label>
         <?php 
             $solution_label = "<label>P[x] = </label>";

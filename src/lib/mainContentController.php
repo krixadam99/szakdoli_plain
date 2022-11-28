@@ -61,7 +61,7 @@
                 "Komplex számok alapvető tulajdonságai",
                 "Komplex számok trigonometrikus alakja",
                 "Komplex számok hatványozása és gyökvonás",
-                "Binomiális tétel és Viéte formulák",
+                "Binomiális tétel és Viète- formulák",
                 "Gráfok megszerkeszthetősége"
             ];
 
@@ -74,7 +74,7 @@
                 4 => ["Komplex számok alapvető tulajdonságai", "Komplex számok közötti műveletek"],
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
-                7 => ["A binomiális tétel alkalmazása", "Viéte formula alkalmazása"],
+                7 => ["A binomiális tétel alkalmazása", "Viète- formulák alkalmazása"],
                 8 => ["Egyszerű gráf megszerkeszthetősége", "páros gráf megszerkeszthetősége", "fagráf megszerkeszthetősége", "irányított gráf megszerkeszthetősége"]
             );
 
@@ -82,12 +82,12 @@
             $this->dimat_i_topics_descriptions = [
                 "Unió, metszet, különbség, komplementer, szimmetrikus differencia", 
                 "Értelmezési tartomány, értékkészlet, megszorítás halmazra, inverz, kép és őskép",
-                "Relációk ompozíciója; homogén reláció tulajdonságai: reflexivitás, szimmetria, antiszimmetria, asszimetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
+                "Relációk kompozíciója; homogén reláció tulajdonságai: reflexivitás, szimmetria, antiszimmetria, szigorú antiszimmetria, tranzitivitás, dichotómia, trichotómia, ekvivalencia és rendezési reláció",
                 "Függvények, injekció, szürjekció, bijekció",
-                "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai; másodfokú egyenletek",
+                "Komplex számok alapműveletei: összeadás, kivonás, szorzás és osztás; komplex szám alapvető tulajdonságai",
                 "Komplex szám trigonometrikus alakjának megadása, komplex szám argumentuma, Moivre-azonosságok",
                 "Hatványozás és gyökvonás trigonometrikus alak segítségével",
-                "A binomiális tétel és Viéte- formula alkalmazása",
+                "A binomiális tétel és Viète- formulák alkalmazása",
                 "Egyszerű gráf, páros gráf, fa, irányított gráf megszerkeszthetősége"
             ];
 
@@ -99,7 +99,7 @@
                 "Lineáris kongruenciák",
                 "Lineáris diofantikus egyenletek",
                 "Kínai maradéktétel",
-                "Horner- rendezés használata", 
+                "Horner- elrendezés használata", 
                 "Polinomok osztása és szorzása", 
                 "Lagrange- és Newton-féle interpolációs polinomok"
             ];
@@ -112,7 +112,7 @@
                 3 => ["Lineáris kongruenciák megoldása"],
                 4 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
                 5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
-                6 => ["Polinomok helyettesítési értékének meghatározása Horner- rendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
+                6 => ["Polinomok helyettesítési értékének meghatározása Horner- elrendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
                 7 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
                 8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"]
             );
@@ -125,7 +125,7 @@
                 "Lineáris kongruenciák megoldása",
                 "Lineáris diofantikus egyenletek megoldása",
                 "Kínai maradéktétel alkalmazása: lineáris kongruenciarendszerek megoldása",
-                "Polinomok helyettesítési értékének meghatározása Horner- rendezéssel",
+                "Polinomok helyettesítési értékének meghatározása Horner- elrendezéssel",
                 "Polinomok (maradékos) osztása és szorzása",
                 "Lagrange- és Newton- féle interpolációs polinom illesztése több pontra"
             ];

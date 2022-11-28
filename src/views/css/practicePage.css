@@ -320,6 +320,7 @@ ul {
 
 }
 
+
 @media only screen and (max-width: 576px) {
     .practice_container {
         flex-direction: column;

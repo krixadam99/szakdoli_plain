@@ -22,7 +22,7 @@
                         if(isset($solution_label)){
                             echo($solution_label);
                         }else{
-                            echo("<label>Megoldásom: </label>");
+                            echo("<label>Megoldás: </label>");
                         }
                     ?>
                     <?=$current_answer["solution_text"]??""?>
@@ -34,7 +34,7 @@
                 if(isset($solution_label)){
                     echo("<label>" . $solution_label . "</label>");
                 }else{
-                    echo("<label>Megoldásom: </label>");
+                    echo("<label>Megoldás: </label>");
                 }
             ?>
             <input type="text" name=<?="solution_" . $task_counter?> value="Megoldásom..." class="solution_input">
