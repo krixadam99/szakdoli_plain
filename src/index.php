@@ -26,8 +26,8 @@
             $_SESSION["topic"] = "";
         }
 
-        if(isset($_GET["exam_type"])){
-            $_SESSION["exam_type"] = $_GET["exam_type"];
+        if(isset($_GET["examType"])){
+            $_SESSION["exam_type"] = $_GET["examType"];
         }else{
             unset($_SESSION["exam_type"]);
         }

@@ -335,15 +335,15 @@ let cursor_actual_pos = 0
 
 // Event-handlers
 if(small_exam_generation_card){
-    small_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "small")})
+    small_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("examType", "small")})
 }
 
 if(big_exam_generation_card){
-    big_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "big")})
+    big_exam_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("examType", "big")})
 }
 
 if(seminar_tasks_generation_card){
-    seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("exam_type", "seminar")})
+    seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("examType", "seminar")})
 }
 
 if(topic_select){
