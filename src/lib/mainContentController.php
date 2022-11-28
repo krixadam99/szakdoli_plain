@@ -75,7 +75,7 @@
                 5 => ["Komplex szám trigonometrikus alakja", "Komplex számok szorzása és osztása trigonometrikus alak segítségével"],
                 6 => ["Komplex számok hatványozása", "Komplex számok gyökvonása"],
                 7 => ["A binomiális tétel alkalmazása", "Viète- formulák alkalmazása"],
-                8 => ["Egyszerű gráf megszerkeszthetősége", "páros gráf megszerkeszthetősége", "fagráf megszerkeszthetősége", "irányított gráf megszerkeszthetősége"]
+                8 => ["Egyszerű gráf megszerkeszthetősége", "Páros gráf megszerkeszthetősége", "Fagráf megszerkeszthetősége", "Irányított gráf megszerkeszthetősége"]
             );
 
             // Discrete mathematics I. topics explanation
@@ -112,7 +112,7 @@
                 3 => ["Lineáris kongruenciák megoldása"],
                 4 => ["Lineáris diofantikus egyenletek megoldása", "Szám felbontása osztási feltétellel"],
                 5 => ["Lineáris kongruenciarendszerek megoldása", "Olyan szám keresése, amely különböző számokkal osztva különböző maradékot ad"],
-                6 => ["Polinomok helyettesítési értékének meghatározása Horner- elrendezéssel", "Elsőfokú polinommal való osztás és Horner- rendezés"],
+                6 => ["Polinomok helyettesítési értékének meghatározása Horner- elrendezéssel", "Elsőfokú polinommal való osztás és Horner- elrendezés"],
                 7 => ["Polinomok (maradékos) osztása a valós számtest felett", "Polinomok szorzása egészek felett"],
                 8 => ["Lagrange- féle interpolációs polinom illesztése több pontra", "Newton- féle interpolációs polinom illesztése több pontra"]
             );

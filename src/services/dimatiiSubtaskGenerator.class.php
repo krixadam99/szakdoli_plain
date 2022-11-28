@@ -125,7 +125,7 @@
             $printable_solutions = ["<div class=\"editable_box\"><label class=\"editable_label\">Megoldás:</label></div>"];
             
             for($division_counter = 0; $division_counter < $number_of_pairs; $division_counter++){
-                $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg ". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . " osztás eredményét az egész számok körében</label></div>";
+                $task_text = "<div class=\"editable_box\"><label class=\"editable_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg ". $division_pairs[$division_counter][0] . "/" . $division_pairs[$division_counter][1] . " osztás eredményét az egész számok körében!</label></div>";
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $division_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">". $division_pairs[$division_counter][0] . " = " . $solutions[$division_counter][0] . " * " . $division_pairs[$division_counter][1] . " + " . $solutions[$division_counter][1] . "</label></div>";
                 array_push($descriptions, $task_text);
                 array_push($printable_solutions, $printable_solution);
@@ -274,7 +274,7 @@
             $descriptions = [];
 
             for($crs_counter = 0; $crs_counter < $number_of_numbers; $crs_counter++){
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a \u{2124}/<sub>". $modulos[$crs_counter] . "</sub>\u{2124} teljes maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a \u{2124}/<sub>". $modulos[$crs_counter] . "</sub>\u{2124} teljes maradékrendszer maradékosztályait 1-1 reprezentatív elemükkel!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineCompleteResidueSystem($modulos[$crs_counter]);
                 array_push($solutions, $solution);
 
@@ -317,7 +317,7 @@
             $descriptions = [];
 
             for($rrs_counter = 0; $rrs_counter < $number_of_numbers; $rrs_counter++){
-                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<sub>". $modulos[$rrs_counter] . "</sub>\u{2124})* redukált maradékrendszer maradékosztályait azok 1-1 reprezentatív elemének megadásával!</label></div>";
+                $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $rrs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a (\u{2124}/<sub>". $modulos[$rrs_counter] . "</sub>\u{2124})* redukált maradékrendszer maradékosztályait 1-1 reprezentatív elemükkel!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineReducedResidueSystem($modulos[$rrs_counter]);
                 array_push($solutions, $solution);
 
@@ -430,7 +430,7 @@
                 $first_number = $gcd_pairs[$gcd_pair_counter][0];
                 $second_number = $gcd_pairs[$gcd_pair_counter][1];
 
-                $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . $first_number . " és " . $second_number . " számok legnagyobb közös osztóját az Euklideszi algoritmus segítségével!</label></div>";
+                $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . $first_number . " és " . $second_number . " számok legnagyobb közös osztóját az euklideszi algoritmus segítségével!</label></div>";
                 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><table class=\"eucleidan_solution_table\">";
                 $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">i</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-2</sub><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">q<sub>i</sub></label></td><td class=\"editable_box\"><label class=\"editable_label\"> * </label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-1</sub><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i</sub></label></td></tr>";
@@ -640,7 +640,7 @@
 
                 $texts = $this->CreateCRTSolutionText($new_congruence_system, $actual_solution);
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_description"];
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_description"] . $texts["task_solution"];
                 
 
                 array_push($descriptions, $task_description);
@@ -692,9 +692,12 @@
                 array_push($solutions, $actual_solution);
 
                 $texts = $this->CreateCRTSolutionText($new_congruence_system, $actual_solution);
+                
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Adj egy olyan számot, ami " . $new_congruence_system[0][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[0][2]) . " osztva " . $new_congruence_system[0][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[0][1]) . " és "
                 . $new_congruence_system[1][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[1][2]) . " osztva " . $new_congruence_system[1][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[1][1]) . " ad maradékul!</label></div>";
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];
+                
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $congruence_systems_counter + 1 . ". csoport: </label></div>" . "<div class=\"editable_box\"><label class=\"editable_label\">Adj egy olyan számot, ami " . $new_congruence_system[0][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[0][2]) . " osztva " . $new_congruence_system[0][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[0][1]) . " és "
+                . $new_congruence_system[1][2] . "-" .  PrintServices::UseCorrectAdverb($new_congruence_system[1][2]) . " osztva " . $new_congruence_system[1][1] . "-" . PrintServices::UseCorrectObjectSuffix($new_congruence_system[1][1]) . " ad maradékul!</label></div>" . $texts["task_solution"];
                 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);
@@ -799,7 +802,7 @@
                 
                 $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>" . $texts["task_solution"];                
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . PrintServices::CreatePrintablePolynomial($polynomial_expression);
-                $task_description = $task_description . " polinom x" . PrintServices::PlusMinus(-1*$places[0]) . abs($places[0]) . " polinommal vett maradékát és eredményét! Használd a Horner- rendezést!</label></div>";
+                $task_description = $task_description . " polinom (x" . PrintServices::PlusMinus(-1*$places[0]) . abs($places[0]) . ") polinommal való osztási maradékát és eredményét! Használd a Horner- elrendezést!</label></div>";
 
                 $residue_text = "<div class=\"editable_box\"><label class=\"editable_label\">Az eredmény: ";
                 $division_text = "<div class=\"editable_box\"><label class=\"editable_label\">A maradék: ";
@@ -1026,7 +1029,7 @@
                 $base_polynomial_expressions = $interpolation["base_polynomial_expressions"];
 
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a Lagrange- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
                 $sum_text = "";
                 foreach($base_polynomial_expressions as $base_polynomial_counter => $base_polynomial_expression){
                     if($base_polynomial_counter !== 0){
@@ -1087,7 +1090,7 @@
                 $table_data = $interpolation["table_data"];
 
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div>";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $polynomial_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a Newton- interpoláció segítségével azt a " . $polynomial_degree . "-d fokú polinomot, amely illeszkedik a <b>" . PrintServices::CreatePrintablePoints($points) . "</b> pontokra!</label></div>";
                 $printable_solution = $printable_solution . "<table class=\"stair_table\">";
                 $printable_solution = $printable_solution . "<tr>";
                 for($column_counter=0; $column_counter < count($points) + 1; $column_counter++){
@@ -1138,9 +1141,9 @@
                                         $cell_content = $cell_content . $content[floor(($row_counter - $column_counter + 1)/2)]??"";
                                     }
 
-                                    $printable_solution = $printable_solution . "<td class=\"editable_box\" style=\"border-top: 1px solid black; width: <?=$width?>%; border-right: 1px solid black\"><label class=\"editable_label\">$cell_content</label></td>";
+                                    $printable_solution = $printable_solution . "<td class=\"editable_box\" style=\"border-top: 1px solid black; width: $width%; border-right: 1px solid black\"><label class=\"editable_label\">$cell_content</label></td>";
                                 }else{
-                                    $printable_solution = $printable_solution . "<td class=\"editable_box\" class =\"no_content_cell\" style=\" width: $width%;";
+                                    $printable_solution = $printable_solution . "<td class=\"editable_box no_content_cell\" style=\"width: $width%;";
                                     if($row_counter === 2*count($points) - ($column_counter-1) - 1){
                                         $printable_solution = $printable_solution . "border-bottom: 1px solid black";
                                     }

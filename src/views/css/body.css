@@ -114,6 +114,47 @@ select#group_selector {
     border-bottom: 1px solid black;
 }
 
+.solution_table, .stair_table, .residue_system_table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2% 0% 3% 0%;
+}
+
+.solution_table tr:first-of-type{
+    border-bottom: 1px solid black;
+}
+
+.solution_table td:last-of-type, .solution_table th:last-of-type{
+    border-left: 1px dashed black;
+}
+
+.solution_table th, .solution_table td, .residue_system_table th, .residue_system_table td {
+    text-align: left;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.solution_table input, .stair_table input, .residue_system_table input{
+    width: 60%;
+    margin: 2% auto 2% 2%;
+}
+
+.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr, .polynomial_division_table tr {
+    background-color:white;
+}
+
+
+.no_content_cell {
+    border-right: 1px solid black; 
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+
+.stair_table td {
+    padding-top: 1%;
+    padding-bottom: 0%;
+}
+
 @keyframes moving_symbols {
     0% {
         background-position: left bottom;

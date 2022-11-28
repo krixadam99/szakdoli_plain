@@ -400,10 +400,10 @@ if(add_new_task_button){
         event.preventDefault()
 
         let parent_element = add_new_task_button.parentNode
-        let topic_select = parent_element.querySelector(".topic_select")
-        let subtopic_select = parent_element.querySelector(".subtopic_select")
+        let topic_select = document.querySelector(".topic_select")
         let selected_main_topic = topic_select.options.selectedIndex
 
+        let subtopic_select = document.getElementById("subtopic_select_" + selected_main_topic)
         let selected_subtopic = 0
         if(subtopic_select.tagName === "SELECT"){
             selected_subtopic = subtopic_select.options.selectedIndex

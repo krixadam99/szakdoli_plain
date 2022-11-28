@@ -163,6 +163,11 @@
                 $dimat_subtasks = new DimatiiSubtaskGenerator();
             }
 
+            // The subtask count must be smaller than 20
+            if($subtask_count > 20){
+                $subtask_count = 20;
+            }
+
             $subtask = $dimat_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
             $task["descriptions"] = $subtask["descriptions"];
             $task["printable_solutions"] = $subtask["printable_solutions"];

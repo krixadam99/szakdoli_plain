@@ -461,7 +461,7 @@
                 <div class="pdf_page_section">
                     <label class="pdf_page_section_label">Feladatsor címe</label>
                     <hr class="full_hr">
-                    <textarea class="task_generation_textarea" name="title_textarea" rows="1" placeholder="Ide írd a címet..."></textarea>
+                    <textarea class="task_generation_textarea" name="title_textarea" rows="1" placeholder="Feladatsor címe..."></textarea>
                 </div>
             
                 <?php if($_SESSION["exam_type"] === "big"):?>
