@@ -134,7 +134,7 @@
     
                     $subject = $_SESSION["subject"];
                     $exam_type = $_SESSION["exam_type"];
-                    header("Location: ./index.php?site=taskGeneration&" . "subject=$subject&" . "exam_type=$exam_type");
+                    header("Location: ./index.php?site=taskGeneration&" . "subject=$subject&" . "examType=$exam_type");
                 }else{
                     header("Location: ./index.php?site=notifications");
                 }
