@@ -40,8 +40,8 @@
             if(isset($_SESSION["neptun_code"])){
                 $this->SetMembers();
                 if($this->is_administrator){ // Only the administrator(s) can see this page 
+                    $_SESSION["previous_controller"] = "AdministratorController";
                     $this->pending_teachers = $this->administrator_model->GetPendingTeachers();
-
                     include(ROOT_DIRECTORY . "/views/demonstratorHandlingPage.view.php");
                 }else{
                     header("Location: ./index.php?site=notifications");

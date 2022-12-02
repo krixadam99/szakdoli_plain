@@ -41,7 +41,8 @@
                         count($this->approved_teacher_groups) != 0
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
-                    
+                    $_SESSION["previous_controller"] = "StudentHandlingController";
+
                     // Fetching all the students belonging to the subject id - group number pair
                     $all_students = [];
                     foreach($this->approved_teacher_groups as $group_counter => $group_id_pair){

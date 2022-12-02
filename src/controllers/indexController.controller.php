@@ -12,6 +12,8 @@
          * @return void
         */
         public function Index() {
+            $_SESSION["previous_controller"] = "IndexController";
+
             session_unset();
             session_destroy();
 

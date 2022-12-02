@@ -46,6 +46,8 @@
 
         if(isset($_GET["messageType"])){
             $_SESSION["message_type"] = $_GET["messageType"];
+        }else{
+            unset($_SESSION["message_type"]);
         }
 
         if(isset($_GET["startAt"])){

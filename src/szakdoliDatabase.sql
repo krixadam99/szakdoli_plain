@@ -1,4 +1,4 @@
-DROP TABLE practice_task_points;
+/*DROP TABLE practice_task_points;
 DROP TABLE results;
 DROP TABLE expectation_rules;
 DROP TABLE task_due_to_date_table;
@@ -6,7 +6,7 @@ DROP TABLE grade_table;
 DROP TABLE messages;
 DROP TABLE user_status;
 DROP TABLE users;
-DROP TABLE subject_groups;
+DROP TABLE subject_groups;*/
 
 
 CREATE TABLE users (

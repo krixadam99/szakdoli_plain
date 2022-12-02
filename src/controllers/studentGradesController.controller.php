@@ -41,6 +41,8 @@
                     &&  isset($_SESSION["group"])
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
+                    $_SESSION["previous_controller"] = "StudentGradesController";
+
                     // Fetching the grades, expectation rules, due dates and lower bound of the grades that belong to the subject - group pair
                     $students_grades = $this->GetResults($_SESSION["subject"], $_SESSION["group"]);
                     
@@ -77,6 +79,8 @@
                         isset($_SESSION["group"]) && isset($_SESSION["subject"])
                     &&  in_array(["subject_id" => $_SESSION["subject"],"subject_group" => $_SESSION["group"]], $this->approved_teacher_groups)
                 ){
+                    $_SESSION["previous_controller"] = "StudentGradesController";
+
                     $current_subject = $_SESSION["subject"];
                     $current_group = $_SESSION["group"];
 

@@ -36,7 +36,6 @@
                         &&  $_SESSION["previous_controller"] === $controller_name
                         )
                     ){
-                        $_SESSION["previous_controller"] = $controller_name;
 
                         $controller = new $controller_name();
                         $controller->$controller_method();

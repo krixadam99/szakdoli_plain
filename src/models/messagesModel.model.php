@@ -39,9 +39,10 @@
             $query  = "SELECT * FROM messages";
             $query .= " WHERE ((belongs_to, sent_at) IN (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages WHERE belongs_to != 0 GROUP BY belongs_to)"; // The latest message in a thread that belongs to other message
             $query .= " OR message_id NOT IN (SELECT DISTINCT first_table.message_id FROM messages first_table, messages second_table WHERE first_table.message_id = second_table.belongs_to) AND belongs_to = 0)"; // Messages that belong to no other message and do not have other message in their thread
-            $query .= " AND messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\"";
+            $query .= " AND (messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\")";
             $query .= " ORDER BY sent_at DESC";
             $query .= " LIMIT $start_at,  $message_per_page";
+
 
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
@@ -125,24 +126,14 @@
         /**
          * This public method returns all of the messages of the user from the messages table.
          * 
-         * Messages will be fetched from the messages table.
-         * The messages will be ordered by the sent_at date in descending manner.
-         * Only those messages will be displayed for the given user that are the latest in their threads and belong to the user.
-         * 
          * @param string $neptun_code The neptun code of the user.
          * 
          * @return array Returns an array containing all of the messages of the user.
          */
         public function GetMessages($neptun_code){
             $neptun_code = strtoupper($neptun_code);
-            //$query = "SELECT * FROM messages WHERE ";
-            //$query .= "messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"";
-
-            $query  = "SELECT * FROM messages";
-            $query .= " WHERE ((belongs_to, sent_at) IN (SELECT belongs_to, MAX(sent_at) AS sent_at FROM messages WHERE belongs_to != 0 GROUP BY belongs_to)"; // The latest message in a thread that belongs to other message
-            $query .= " OR message_id NOT IN (SELECT DISTINCT first_table.message_id FROM messages first_table, messages second_table WHERE first_table.message_id = second_table.belongs_to) AND belongs_to = 0)"; // Messages that belong to no other message and do not have other message in their thread
-            $query .= " AND messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"";
-            $query .= " ORDER BY sent_at DESC";
+            $query = "SELECT * FROM messages WHERE ";
+            $query .= "messages.neptun_code_from = \"$neptun_code\" OR messages.neptun_code_to = \"$neptun_code\"";
             
             return $this->database->LoadDataFromDatabaseWithPDO($query);
             //return $this->database->LoadDataFromDatabase($query);
@@ -159,6 +150,7 @@
             $query = "SELECT * FROM messages WHERE";
             $query .= " messages.message_id = \"$message_id\"";
             $query .= " OR (belongs_to = (SELECT belongs_to FROM messages WHERE message_id = \"$message_id\") AND belongs_to != 0)";
+            $query .= " OR belongs_to = \"$message_id\"";
             $query .= " OR message_id = (SELECT belongs_to FROM messages WHERE message_id = \"$message_id\")";
             $query .= " ORDER BY sent_at ASC";
 

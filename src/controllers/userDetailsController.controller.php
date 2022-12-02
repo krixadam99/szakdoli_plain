@@ -36,6 +36,8 @@
                 $this->SetMembers();
                 // The administrator cannot see this page
                 if(!$this->is_administrator){
+                    $_SESSION["previous_controller"] = "UserDetailsController";
+
                     $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
                     $can_apply_to_group = $group_addition_conditions[1]??false;
                     $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
@@ -67,6 +69,8 @@
                 $this->SetMembers();
                 // The administrator cannot see this page
                 if(!$this->is_administrator){
+                    $_SESSION["previous_controller"] = "UserDetailsController";
+
                     $user_details_editing = true;
                     $user_details = $this->user_detail_model->GetUserDetails($_SESSION["neptun_code"]);
 
@@ -152,38 +156,37 @@
                     }
 
                     // Checking if the user is elligible to apply to the given subject with the given status 
-                    $cannot_advance = false;
                     if($can_apply_to_group){
                         if(!$can_add_group_for_dimat_i){
                             if($_POST["subject_id"] == "Diszkrét matematika I."){
-                                $cannot_advance = true;
+                                $this->incorrect_parameters["subject_id"] = "Nem lehet a tárgy Diszkrét matematika I.!";
                             }
                         }
 
                         if(!$can_add_group_for_dimat_ii){
                             if($_POST["subject_id"] == "Diszkrét matematika II."){
-                                $cannot_advance = true;
+                                $this->incorrect_parameters["subject_id"] = "Nem lehet a tárgy Diszkrét matematika II.!";
                             }
                         }
 
                         if(!$can_add_group_for_dimat_i && !$can_add_group_for_dimat_ii){
                             if($_POST["user_status"] == "Demonstrátor"){
-                                $cannot_advance = true;
+                                $this->incorrect_parameters["user_status"] = "Nem lehet a státusz demonstrátor!";
                             }
                         }
                     }else{
                         if($_POST["user_status"] == "Diák"){
-                            $cannot_advance = true;
+                            $this->incorrect_parameters["user_status"] = "Nem lehet a státusz diák!";
                         }else{
                             if(!$can_add_group_for_dimat_i){
                                 if($_POST["subject_id"] == "Diszkrét matematika I."){
-                                    $cannot_advance = true;
+                                    $this->incorrect_parameters["subject_id"] = "Nem lehet a tárgy Diszkrét matematika I.!";
                                 }
                             }
     
                             if(!$can_add_group_for_dimat_ii){
                                 if($_POST["subject_id"] == "Diszkrét matematika II."){
-                                    $cannot_advance = true;
+                                    $this->incorrect_parameters["subject_id"] = "Nem lehet a tárgy Diszkrét matematika II.!";
                                 }
                             }
                         }
@@ -213,7 +216,6 @@
                 
                 if(
                        count($this->incorrect_parameters) === 0
-                    && !$cannot_advance
                 ){ // Everything was correct 
                     if(    $_POST['user_status'] === "Demonstrátor"
                         || $_POST['user_status'] === "Diák"
@@ -253,7 +255,7 @@
                 // The reassuring password should be a string, not the placeholder, or the empty string, and it should be the same as the original password
                 $this->ValidateInputs(
                     [
-                        "user_email:email cím" => array($_POST["user_email"]??"INVALID" => [
+                        "user_email:email cím" => array($_POST["user_email"]??"INVALID NAME ATTRIBUTE" => [
                             "type" => "string",
                             "not_placeholder" => "",
                             "filter_var" => FILTER_VALIDATE_EMAIL, // No need for sanitazing

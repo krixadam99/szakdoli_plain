@@ -40,6 +40,7 @@
 
                 // If the user is not a student, then the method redirects them to the notifications page
                 if($this->approved_student_subject != ""){
+                    $_SESSION["previous_controller"] = "PracticeController";
                     $_SESSION["is_new_task"] = true;
                     
                     unset($_SESSION["answers"]);
@@ -86,6 +87,8 @@
 
                 // If the user is not a student, then the method redirects them to the notifications page
                 if($this->approved_student_subject != ""){
+                    $_SESSION["previous_controller"] = "PracticeController";
+                    
                     // Fetching the practice task points of the user
                     $practice_results = $this->GetPracticeResults($_SESSION["neptun_code"]);
                     

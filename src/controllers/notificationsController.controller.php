@@ -31,6 +31,7 @@
         public function Notifications(){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
+                $_SESSION["previous_controller"] = "NotificationsController";
                 $this->SetMembers();
                 // The administrator should not see this page, since they won't have (system) messages about group addition
                 if(!$this->is_administrator){

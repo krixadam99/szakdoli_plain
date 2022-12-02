@@ -86,7 +86,7 @@
             // Validate the neptun code, where as valid neptun code is a string, not the place holder, or the empty string, and is in use
             $this->ValidateInputs(
                 [
-                    "neptun_code:neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                    "neptun_code:Neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
                         "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
                         "length" => ["<=", 6],
@@ -147,7 +147,7 @@
             // Validate the neptun code, where as valid neptun code is a string, not the place holder, or the empty string, and is in use
             $this->ValidateInputs(
                 [
-                    "neptun_code" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                    "neptun_code:Neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
                         "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
                         "in_array" => $neptun_codes // No need for sanitazing

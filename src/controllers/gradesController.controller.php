@@ -39,6 +39,8 @@
 
                 // Only students can see this page, otherwise, the user will be redirected to the notifications page
                 if($this->GetApprovedStudentSubject() != ""){
+                    $_SESSION["previous_controller"] = "GradesController";
+
                     $approved_subject_group = $this->approved_student_group;
                     $approved_subject_id = $this->approved_student_subject;
 

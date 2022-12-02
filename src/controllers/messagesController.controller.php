@@ -34,10 +34,22 @@
         public function Messages(){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"]) && isset($_SESSION["message_type"])){
+                $_SESSION["previous_controller"] = "MessagesController";
                 $this->SetMembers();
 
+                // Get the actual messages belonging to the user
+                $merged_messages =  $this->message_model->GetMessages($_SESSION["neptun_code"]);
+                $possible_message_ids = [];
+                foreach($merged_messages as $message_counter => $message){
+                    array_push($possible_message_ids, $message["message_id"]);
+                }
+                // If the message id doesn't belong to the given user, then redirect them to the messages page
+                if(isset($_SESSION["message_id"]) && !in_array($_SESSION["message_id"], $possible_message_ids)){
+                    header("Location: ./index.php?site=messages");
+                }
+
                 // The number of messages to display per page
-                $message_per_page = 3;
+                $message_per_page = 1;
 
                 // Starting index and actual page
                 $start_at = $_SESSION["start_at"]??0;
@@ -107,6 +119,7 @@
         public function WriteMessage(){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
             if(isset($_SESSION["neptun_code"])){
+                $_SESSION["previous_controller"] = "MessagesController";
                 $this->SetMembers();
                 
                 $_SESSION["write_message"] = true;
@@ -139,17 +152,17 @@
                 // The text must be a string, and the length must be less than, or equal to 2024 characters, additionally it should not be the place holder (Üzenet szövege...), or the empty string
                 $this->ValidateInputs(
                     [
-                        "message_to:címzett" => array($_POST["message_to"]??-1 => [
+                        "message_to:címzett" => array($_POST["message_to"]??"INVALID NAME ATTRIBUTE" => [
                             "type" => "string",
                             "in_array" => $neptun_codes,
                             "not_is_same" => $_SESSION["neptun_code"],
                         ]),
-                        "message_topic:üzenet tárgya" => array($_POST["message_topic"]??-2 => [
+                        "message_topic:üzenet tárgya" => array($_POST["message_topic"]??"INVALID NAME ATTRIBUTE" => [
                             "type" => "string",
                             "not_placeholder" => ["","Üzenet tárgya..."],
                             "length" => ["<=","255"]
                         ]),
-                        "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
+                        "message_text: üzenet törzse" => array($_POST["message_text"]??"INVALID NAME ATTRIBUTE" => [
                             "type" => "string",
                             "not_placeholder" => ["","Üzenet szövege..."],
                             "length" => ["<=","2024"]
@@ -198,12 +211,12 @@
                     // The text must be a string, and the length must be less than, or equal to 2024 characters, additionally it should not be the place holder (Üzenet szövege...), or the empty string
                     $this->ValidateInputs(
                         [
-                            "message_topic:üzenet témája" => array($_POST["message_topic"]??-2 => [
+                            "message_topic:üzenet témája" => array($_POST["message_topic"]??"INVALID NAME ATTRIBUTE" => [
                                 "type" => "string",
                                 "not_placeholder" => ["","Üzenet témája..."],
                                 "length" => ["<=","255"]
                             ]),
-                            "message_text: üzenet törzse" => array($_POST["message_text"]??-3 => [
+                            "message_text: üzenet törzse" => array($_POST["message_text"]??"INVALID NAME ATTRIBUTE" => [
                                 "type" => "string",
                                 "not_placeholder" => ["","Üzenet szövege..."],
                                 "length" => ["<=","2024"]
@@ -259,7 +272,7 @@
                         header("Location: ./index.php?site=messages&messageType=sent");
                     }
                 }else{
-                    header("Location: ./index.php?site=messages");
+                    header("Location: ./index.php?site=messages&messageType=" . $_SESSION["message_type"]??"sent");
                 }
             }else{
                 header("Location: ./index.php");
@@ -318,7 +331,7 @@
 
                 $this->message_model->RemoveRecoverMessages($query_array, true);
 
-                header("Location: ./index.php?site=messages");
+                header("Location: ./index.php?site=messages&messageType=" . $_SESSION["message_type"]??"sent");
             }else{
                 header("Location: ./index.php");
             }
@@ -347,7 +360,6 @@
                     $message_id_indexed[$message["message_id"]] = $message;
                 }
 
-                // The ids of the messages belonging to the user
                 $possible_message_ids = array_keys($message_id_indexed);
                 $query_array = [];
                 foreach($message_ids as $id_counter => $message_id){
@@ -375,7 +387,7 @@
 
                 $this->message_model->RemoveRecoverMessages($query_array, false);
                 
-                header("Location: ./index.php?site=messages");
+                header("Location: ./index.php?site=messages&messageType=" . $_SESSION["message_type"]??"sent");
             }else{
                 header("Location: ./index.php");
             }

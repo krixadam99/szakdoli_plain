@@ -36,6 +36,8 @@
 
                 // Only teachers can see this page, others will be redirected to the notifications page
                 if(     count($this->approved_teacher_groups) != 0){
+                    $_SESSION["previous_controller"] = "TaskGenerationController";
+
                     // Setting the preview to default, if not set
                     if(!isset($_SESSION["preview"]) || !isset($_SESSION["exam_type"])){
                         $_SESSION["preview"] = [];
@@ -57,6 +59,8 @@
          */
         public function PrintPage(){
             if(isset($_SESSION["preview"])){
+                $_SESSION["previous_controller"] = "TaskGenerationController";
+
                 include(ROOT_DIRECTORY . "/views/printPage.view.php");
             }else{
                 header("Location: ./index.php?site=notifications");
