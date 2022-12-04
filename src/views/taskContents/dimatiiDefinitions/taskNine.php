@@ -25,6 +25,22 @@
     </div>
     <div class="definition first_definition">
         <label class="definition_label elliptical_definition">
+            A Newton- interpoláció által kapott polinomhoz a lépcsős táblát használjuk.
+            Nem bizonyítjuk, hogy az előző és következő módszerek ugyanazt a polinomot adják.
+        </label>
+    </div>
+    <div class="definition">
+        <label class="definition_label">
+            A Newton- interpoláció menete (vázlatosan):
+            <br>
+            Felrajzoljuk a lépcsős táblát, mely 1. és 2. oszlopában vannak a hely - érték párok.
+            A 3. oszloptól kezdve minden oszlopban 1-gyel kevesebb sor lesz, mint az előzőben. Érdemes a 3. oszloptól az előző oszlop celláit felezni, ezek pedig meghatározzák az új cellákat. Összesen (pontok száma) - 1 új oszlop lesz.
+            Minden cella esetén a számlálóba a cellával szomszédos, előző oszlopban lévő értékek különbsége kerül úgy, hogy az alsóból vonjuk ki a felsőt.
+            A nevezőben pedig a helyek (1. oszlop béli elemek) különbsége kerül úgy, hogy a kivonandó a (cella sorszáma (adott oszlopban 1-től számozva) + (oszlopszám - 2)). hely (1. oszlop béli elem), a kivonó pedig a (cella sorszáma). hely (1. oszlop béli elem).
+            Ezt a törtet az egyes cellákban osztott differenciának is nevezzük.
+            Ha a táblázatot kitöltöttük, akkor válasszuk ki a 2. oszloptól a legfelső cellákat.
+            Az interpolációs polinom pedig: 2. oszlop 1. eleme + 3. oszlop 1. eleme * (x - 1. oszlop 1. eleme) + 4. oszlop 1. eleme * (x -  1. oszlop 1. eleme)(x -  1. oszlop 2. eleme) + ...
+            = y<sub>1</sub> + &Sum;<sup>n+1</sup><sub>i = 3</sub>(i. oszlop 1. elem * &Product;<sup>i - 2</sup><sub>j = 1</sub>(x-x<sub>j</sub>)).
         </label>
     </div>
     <button class="show_button">

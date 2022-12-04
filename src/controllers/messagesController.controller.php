@@ -33,7 +33,7 @@
         */
         public function Messages(){
             // Users, who are not logged in won't see this page, they will be redirected to the login page
-            if(isset($_SESSION["neptun_code"]) && isset($_SESSION["message_type"])){
+            if(isset($_SESSION["neptun_code"]) && (isset($_SESSION["message_type"]) || isset($_SESSION["message_id"]))){
                 $_SESSION["previous_controller"] = "MessagesController";
                 $this->SetMembers();
 
@@ -45,11 +45,11 @@
                 }
                 // If the message id doesn't belong to the given user, then redirect them to the messages page
                 if(isset($_SESSION["message_id"]) && !in_array($_SESSION["message_id"], $possible_message_ids)){
-                    header("Location: ./index.php?site=messages");
+                    header("Location: ./index.php?site=messages&messageType=received");
                 }
 
                 // The number of messages to display per page
-                $message_per_page = 1;
+                $message_per_page = 3;
 
                 // Starting index and actual page
                 $start_at = $_SESSION["start_at"]??0;
@@ -73,17 +73,19 @@
 
                 $count_messages = 0;
                 // Fetch the sent, incame and (temporarily) removed messages
-                if($_SESSION["message_type"] === "received"){
-                    $incame_messages = $this->message_model->GetReceivedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
-                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "received")["message_number"];
-                }else if($_SESSION["message_type"] === "sent"){
-                    $sent_messages = $this->message_model->GetSentMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
-                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "sent")["message_number"];
-                }else if($_SESSION["message_type"] === "deleted"){
-                    $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
-                    $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "deleted")["message_number"];
+                if(isset($_SESSION["message_type"])){
+                    if($_SESSION["message_type"] === "received"){
+                        $incame_messages = $this->message_model->GetReceivedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                        $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "received")["message_number"];
+                    }else if($_SESSION["message_type"] === "sent"){
+                        $sent_messages = $this->message_model->GetSentMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                        $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "sent")["message_number"];
+                    }else if($_SESSION["message_type"] === "deleted"){
+                        $removed_messages = $this->message_model->GetRemovedMessages($_SESSION["neptun_code"], $start_at, $message_per_page);
+                        $count_messages = $this->message_model->CountMessagesByType($_SESSION["neptun_code"], "deleted")["message_number"];
+                    }
+                    $maximum_number_of_page = ceil($count_messages/$message_per_page);
                 }
-                $maximum_number_of_page = ceil($count_messages/$message_per_page);
 
                 // Set messages belonging to message id, additionally, set session variables too
                 if(isset($_SESSION["message_id"])){

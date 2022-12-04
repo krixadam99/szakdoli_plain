@@ -130,9 +130,10 @@ INSERT INTO user_status VALUES(2, "AAAAAA", 1, "APPROVED");
 INSERT INTO user_status VALUES(3, "AAAAAA", 1, "APPROVED");
 INSERT INTO user_status VALUES(4, "AAAAAA", 1, "APPROVED");
 INSERT INTO user_status VALUES(5, "AAAAAA", 1, "APPROVED");
+INSERT INTO user_status VALUES(2, "ALMA12", 1, "APPROVED");
+
 INSERT INTO user_status VALUES(2, "ABCABC", 0, "WITHDRAWN");
 INSERT INTO user_status VALUES(3, "ABCABC", 0, "APPROVED");
-INSERT INTO user_status VALUES(2, "ALMA12", 1, "APPROVED");
 INSERT INTO user_status VALUES(4, "ALMA12", 0, "WITHDRAWN");
 INSERT INTO user_status VALUES(2, "BBBBBB", 0, "APPROVED");
 INSERT INTO user_status VALUES(5, "CBACBA", 0, "APPROVED");
@@ -157,15 +158,15 @@ INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUE
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_8"); 
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"practice_task_9"); 
 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_1"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_2"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_3"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_4"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_5"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_6"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_7"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_8"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_task_9"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_1"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_task_9"); 
 
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type, task_point) VALUES("BBBBBB", 2,"practice_task_1", 5); 
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_2"); 
@@ -177,15 +178,15 @@ INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUE
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_8"); 
 INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_task_9"); 
 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_1"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_2"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_3"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_4"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_5"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_6"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_7"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_8"); 
-INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_task_9"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_1"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_2"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_3"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_4"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_5"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_6"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_7"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_8"); 
+INSERT INTO practice_task_points(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_task_9"); 
 
 
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 2,"extra");
@@ -222,22 +223,22 @@ INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_9"); 
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ABCABC", 3,"small_test_10");
 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"extra");
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"practice_count"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"middle_term_exam"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"middle_term_exam_correction"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"final_term_exam"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"final_term_exam_correction"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_1"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_2"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_3"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_4"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_5"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_6"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_7"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_8"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_9"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 2,"small_test_10");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("ALMA12", 4,"small_test_10");
 
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"extra");
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"practice_count"); 
@@ -256,22 +257,22 @@ INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_9"); 
 INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("BBBBBB", 2,"small_test_10");
 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"extra");
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"practice_count"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"middle_term_exam"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"middle_term_exam_correction"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"final_term_exam"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"final_term_exam_correction"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_1"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_2"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_3"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_4"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_5"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_6"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_7"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_8"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_9"); 
-INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 4,"small_test_10");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"extra");
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"practice_count"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"middle_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"middle_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"final_term_exam"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"final_term_exam_correction"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_1"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_2"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_3"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_4"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_5"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_6"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_7"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_8"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_9"); 
+INSERT INTO results(neptun_code, subject_group_id, task_type) VALUES("CBACBA", 5,"small_test_10");
 
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "practice_count");
 INSERT INTO expectation_rules(subject_group_id, task_type) VALUES(2, "extra");

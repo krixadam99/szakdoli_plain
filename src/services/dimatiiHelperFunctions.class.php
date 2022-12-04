@@ -362,6 +362,7 @@
                     array_push($distinct_roots, $root);
                 }
             }
+            $number_of_possible_roots_in_boundaries = $upper_bound - $lower_bound + 1; // [1,3] -> 3 - 1 + 1 = 3 (1,2,3) és roots = [1,2,3,4,5], number_of_roots = 5, number_of_places = 6
 
             // Add places to return array
             $counter = 0;
@@ -381,14 +382,26 @@
                     while(in_array($random_element_from_roots, $return_places)){
                         $random_element_from_roots = $distinct_roots[mt_rand(0,count($distinct_roots)-1)];
                     }
+
+                    if($random_element_from_roots >= $lower_bound && $random_element_from_roots <= $upper_bound){
+                        $number_of_possible_roots_in_boundaries--;
+                    }
+
                     $return_places[$random_index] = $random_element_from_roots; 
                     $root_counter++;
                 }else{
                     $random_element = mt_rand($lower_bound, $upper_bound);
-                    while(in_array($random_element, $return_places) || in_array($random_element, $roots)){
+                    while(
+                        in_array($random_element, $return_places) || 
+                        in_array($random_element, $roots) &&
+                        $number_of_possible_roots_in_boundaries > 0
+                    ){
                         $random_element = mt_rand($lower_bound, $upper_bound);
                     }
-                    $return_places[$random_index] = $random_element;
+                    $number_of_possible_roots_in_boundaries--;
+                    if($number_of_possible_roots_in_boundaries >= 0){
+                        $return_places[$random_index] = $random_element;
+                    }
                 }
                 $counter++;
             }
@@ -416,12 +429,14 @@
             $first_coordinates = []; 
             for($counter = 0; $counter < $number_of_points; $counter++){
                 $first_element = mt_rand($lower_bound, $upper_bound);
-                while(in_array($first_element, $first_coordinates)){
+                while(in_array($first_element, $first_coordinates) && ($upper_bound - $lower_bound + 1) > count($first_coordinates)){
                     $first_element = mt_rand($lower_bound, $upper_bound);
                 }
 
                 array_push($return_points, [$first_element, $this->DeterminePolynomialValue($first_element, $polynomial_expression)]);
-                array_push($first_coordinates, $first_element);
+                if(($upper_bound - $lower_bound + 1) > count($first_coordinates)){
+                    array_push($first_coordinates, $first_element);
+                }
             }
             return $return_points;
         }

@@ -40,7 +40,7 @@ if(clickable_messages){
     for(let clickable_message of clickable_messages){
         clickable_message.addEventListener("click", ()=>{
             let message_id = clickable_message.id
-            window.location = "./index.php?site=messages&messageId=" + message_id
+            window.location = "./index.php?site=messages&messageId=" + message_id 
         })
     }
 }

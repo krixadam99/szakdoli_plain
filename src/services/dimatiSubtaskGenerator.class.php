@@ -223,9 +223,9 @@
 
                 // Create relation
                 $relation = $this->dimat_helper_functions->CreateDescartesProduct($first_set, $second_set, $number_of_pairs);
-                $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
-                $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4, false);
-                $make_domain_to_set = $this->dimat_helper_functions->GetPartOfSet($second_set, 4, false);
+                $narrow_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4);
+                $make_image_to_set = $this->dimat_helper_functions->GetPartOfSet($first_set, 4);
+                $make_domain_to_set = $this->dimat_helper_functions->GetPartOfSet($second_set, 4);
 
                 array_push($task_data["relations"], $relation);
                 array_push($task_data["sets"], array("A" => $first_set, "B" => $second_set, "N" => $narrow_to_set, "I" => $make_image_to_set, "D" => $make_domain_to_set));
