@@ -1,5 +1,6 @@
 import {ChangeAttributeInURL} from "./mainContent.js"
 
+// Variables
 let write_message_button = document.getElementById("write_message_button")
 let clickable_messages = document.querySelectorAll(".clickable_message")
 let expandable_message_containers = document.querySelectorAll(".expandable_message_container")
@@ -7,8 +8,8 @@ let message_containers_expanded = document.querySelectorAll(".message_container_
 let reply_button = document.getElementById("reply_button")
 let remove_message_bubbles = document.querySelectorAll(".remove_message_bubble_input");
 let check_message_bubbles = document.querySelectorAll(".check_message_bubble_input");
-let remove_selected_elements = document.querySelectorAll(".remove_selected_elements")
-let recover_selected_elements = document.querySelectorAll(".recover_selected_elements")
+let remove_selected_elements = document.getElementById("remove_selected_elements")
+let recover_selected_elements = document.getElementById("recover_selected_elements")
 
 let inbox_button = document.getElementById("inbox_button")
 let sent_button = document.getElementById("sent_button")
@@ -16,6 +17,7 @@ let deleted_button = document.getElementById("deleted_button")
 
 let pagination_bubbles = document.getElementsByClassName("pagination_bubble")
 
+// Non-navigation submenu
 if(inbox_button && sent_button && deleted_button){
     inbox_button.addEventListener("click", ()=>{
         window.location = "./index.php?site=messages&messageType=received"
@@ -30,12 +32,26 @@ if(inbox_button && sent_button && deleted_button){
     })
 }
 
+
+// Events related to writing a message
 if(write_message_button){
     write_message_button.addEventListener("click", ()=>{
         window.location = "./index.php?site=writeMessage"
     })
 }
 
+if(reply_button){
+    reply_button.addEventListener("click", ()=>{
+        let reply_div = document.getElementById("reply_div")
+        if(reply_div){
+            reply_div.style["display"] = ""
+        }
+        reply_button.style["display"] = "none"
+    })
+}
+
+
+// Events related to expanding/closing, or clicking on a message
 if(clickable_messages){
     for(let clickable_message of clickable_messages){
         clickable_message.addEventListener("click", ()=>{
@@ -65,16 +81,7 @@ if(message_containers_expanded){
     }
 }
 
-if(reply_button){
-    reply_button.addEventListener("click", ()=>{
-        let reply_div = document.getElementById("reply_div")
-        if(reply_div){
-            reply_div.style["display"] = ""
-        }
-        reply_button.style["display"] = "none"
-    })
-}
-
+// Events related to chossing messages for removing/ recovering process
 if(remove_message_bubbles){
     for(let remove_message_bubble of remove_message_bubbles){
         remove_message_bubble.addEventListener("click", ()=>{
@@ -87,7 +94,7 @@ if(remove_message_bubbles){
             }
 
             let parent_form = remove_message_bubble.closest("form")
-            let remove_selected_element_div = parent_form.querySelector(".remove_selected_elements")
+            let remove_selected_element_div = parent_form.querySelector("#remove_selected_elements")
 
             if(found_checked){
                 remove_selected_element_div.style["display"] = ""
@@ -110,7 +117,7 @@ if(check_message_bubbles){
             }
 
             let parent_form = check_message_bubble.closest("form")
-            let recover_selected_element_div = parent_form.querySelector(".recover_selected_elements")
+            let recover_selected_element_div = parent_form.querySelector("#recover_selected_elements")
 
             if(found_checked){
                 recover_selected_element_div.style["display"] = ""
@@ -121,24 +128,23 @@ if(check_message_bubbles){
     }
 }
 
+// Events related to removing/ recovering messages
 if(remove_selected_elements){
-    for(let remove_selected_element of remove_selected_elements){
-        let remove_image = remove_selected_element.querySelector("img")
-        remove_image.addEventListener("click", ()=>{
-            remove_selected_element.querySelector("input").click()
-        })
-    }
+    let remove_image = remove_selected_elements.querySelector("img")
+    remove_image.addEventListener("click", ()=>{
+        remove_selected_elements.querySelector("input").click()
+    })
 }
 
 if(recover_selected_elements){
-    for(let recover_selected_element of recover_selected_elements){
-        let recover_image = recover_selected_element.querySelector("img")
-        recover_image.addEventListener("click", ()=>{
-            recover_selected_element.querySelector("input").click()
-        })
-    }
+    let recover_image = recover_selected_elements.querySelector("img")
+    recover_image.addEventListener("click", ()=>{
+        recover_selected_elements.querySelector("input").click()
+    })
 }
 
+
+// Pagination element
 if(pagination_bubbles){
     Array.from(pagination_bubbles).forEach((pagination_bubble)=>{
         pagination_bubble.addEventListener("click", ()=>{

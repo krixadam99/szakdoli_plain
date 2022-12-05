@@ -4,10 +4,10 @@
 <div class="pdf_page_task_choice_container">
     <div class="subtopic_box" style="width:100%;margin:0%">
         <?php for($topic_counter = 0; $topic_counter < 9; $topic_counter++):?>
-            <div style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?:"none"?>">
+            <div style="width:100%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>">
                 <?php if(count($sub_topics[$topic_counter]) === 1):?>
                     <label class="pdf_page_task_choice_label" style="width: 12%; margin: auto 2% auto 0%">Altéma:</label>
-                    <input value="<?=$sub_topics[$topic_counter][0]?>" style="width:20%; display:<?=$topic_counter == $previous_chosen_topic?"inline":"none"?>" class="subtopic_input" name="main_topic_<?=$topic_counter?>_subtopic_0" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>
+                    <input value="<?=$sub_topics[$topic_counter][0]?>" style="width:20%;" class="subtopic_input" name="main_topic_<?=$topic_counter?>_subtopic_0" <?=$topic_counter != $previous_chosen_topic?"disabled=\"disabled\"":"readonly"?>>
                     <label class="pdf_page_task_choice_label" style="width: 20%; margin: 0% 0% 0% 2%">Hány feladat legyen generálva:</label>
                     <input type="number" min="1" max="20" class="task_quantity_input" step="1" placeholder="4" style="width:9%; margin:0% auto 0% 1%" name="main_topic_<?=$topic_counter?>_subtopic_0_task_quantity" value="<?=isset($_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"])?$_SESSION["preview"]["main_topic_$topic_counter" . "_subtopic_0_task_quantity"]:"4"?>">
                 <?php elseif(count($sub_topics[$topic_counter]) > 1):?>

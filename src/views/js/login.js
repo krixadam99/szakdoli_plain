@@ -5,6 +5,8 @@ let show_password_image = document.querySelector("#show_password_image")
 
 let clicked_inputs = []
 
+
+// Event listeners
 back_button.addEventListener("click", ()=>{
     window.location = "./"
 })
@@ -27,6 +29,7 @@ if(password_input){
     })    
 }
 
+// Is the show password eye opened?
 let opened = true
 if(show_password_image){
     show_password_image.addEventListener("click", (event)=>{

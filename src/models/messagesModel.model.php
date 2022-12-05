@@ -180,7 +180,7 @@
                     $query .= " AND messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"0\"";
                 };break;
                 case "deleted":{
-                    $query .= " AND messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\"";
+                    $query .= " AND (messages.neptun_code_to = \"$neptun_code\" AND is_removed_by_receiver = \"1\" OR messages.neptun_code_from = \"$neptun_code\" AND is_removed_by_sender = \"1\")";
                 };break;
             }
             $query .= ";";

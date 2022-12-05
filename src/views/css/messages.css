@@ -89,8 +89,8 @@
     height: 23%;
 }
 
-.remove_selected_elements,
-.recover_selected_elements {
+#remove_selected_elements,
+#recover_selected_elements {
     position: fixed;
     left: 5px;
     bottom: 4%;
@@ -104,9 +104,6 @@
     border-radius: 5px;
 }
 
-.recover_selected_elements {
-    left: 8%;
-}
 
 .thread_count_bubble {
     margin: 2% auto;
@@ -260,7 +257,9 @@
         padding: 6px 10px;
     }
 
-    #write_message_button {
+    #write_message_button,
+    #recover_selected_elements,
+    #remove_selected_elements {
         width: 8%;
         height: 8%;
     }
@@ -272,7 +271,9 @@
 }
 
 @media only screen and (min-width: 576px) and (max-width: 1024px) {
-    #write_message_button {
+    #write_message_button,
+    #recover_selected_elements,
+    #remove_selected_elements {
         width: 5%;
         height: 7%;
     }

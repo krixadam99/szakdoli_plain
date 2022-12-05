@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     <?php endforeach?>
-                    <div class="remove_selected_elements" style="cursor:pointer; display:none">
+                    <div id="remove_selected_elements" style="cursor:pointer; display:none">
                         <img src="./views/css/pics/garbage.png" alt="remove selected elements" width="60%" height="80%" style="margin:10% 20%">    
                         <input type="submit" hidden>
                     </div>
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     <?php endforeach?>
-                    <div class="remove_selected_elements" style="cursor:pointer; display:none">
+                    <div id="remove_selected_elements" style="cursor:pointer; display:none">
                         <img src="./views/css/pics/garbage.png" alt="remove selected elements" width="60%" height="80%" style="margin:10% 20%">    
                         <input type="submit" hidden>
                     </div>
@@ -138,8 +138,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="recover_selected_elements" style="cursor:pointer; display:none">
-                            <img src="./views/css/pics/garbage.png" alt="a recovery icon" width="60%" height="80%" style="margin:10% 20%">    
+                        <div id="recover_selected_elements" style="cursor:pointer; display:none">
+                            <img src="./views/css/pics/recover_deleted_messages.png" alt="a recovery icon" width="60%" height="80%" style="margin:10% 20%">    
                             <input type="submit" hidden>
                         </div>
                     <?php endforeach?>

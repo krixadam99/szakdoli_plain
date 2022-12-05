@@ -1,4 +1,10 @@
 // Functions:
+/**
+ * This method changes the url by the given parameter - value pair. If the parameter is already in the url, then the new value overrides the older.
+ * 
+ * @param {string} parameter The new url parameter.
+ * @param {string} new_value The new value of the given url parameter
+ */
 function ChangeAttributeInURL(parameter, new_value){
     let actual_path = window.location.href
     if(actual_path.includes(parameter)){
@@ -40,6 +46,8 @@ let small_cards = document.querySelectorAll(".small_card")
 let show_buttons = document.querySelectorAll(".show_button")
 
 // Event-handlers
+
+// Header's first line's navigation buttons
 if(logout_button){
     logout_button.addEventListener("click", ()=>{
         window.location = "./index.php"
@@ -76,7 +84,8 @@ if(user_setting_button){
     })
 }
 
-
+// The navigation buttons' events
+// Hovering on a navigation menu button with submenu, should make the submenu visible
 if(nav_buttons){
     let width = 100/nav_button_number
     if(nav_button_number === 1){
@@ -143,6 +152,7 @@ if(solution_inputs){
     }
 }
 
+// Hovering on a small card should change the background's color to #96979a
 if(body){
     for(let small_card of small_cards){
         small_card.addEventListener("mouseenter", ()=>{
@@ -185,6 +195,7 @@ if(body){
     }
 }
 
+// The definition holder element
 if(show_buttons){
     let is_shown = []
     let counter = 0

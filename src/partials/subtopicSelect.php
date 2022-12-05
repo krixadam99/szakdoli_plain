@@ -8,8 +8,8 @@
                     <?php for($subtopic_counter = 0; $subtopic_counter < count($sub_topics[$topic_counter]); $subtopic_counter++):?>
                         <?php 
                             $previous_chosen_subtopic = 0;
-                            if(isset($_SESSION["preview"]["main_topic_" . $topic_counter . "_subtopic" . "_$subtopic_counter"])){
-                                $previous_chosen_subtopic = $_SESSION["preview"]["main_topic_" . $topic_counter . "_subtopic" . "_$subtopic_counter"];
+                            if(isset($_SESSION["preview"]["main_topic_" . $topic_counter . "_subtopic"])){
+                                $previous_chosen_subtopic = $_SESSION["preview"]["main_topic_" . $topic_counter . "_subtopic"];
                             }
                         ?>
                         <option value="<?=$subtopic_counter?>" <?=$subtopic_counter == $previous_chosen_subtopic?"selected":""?>><?=$sub_topics[$topic_counter][$subtopic_counter]?></option>

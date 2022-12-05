@@ -7,6 +7,38 @@
         $task_expectations_associative[$expectation["task_type"]] = $expectation;
     }
 
+    $next_small_test = "";
+    $next_small_test_counter = "";
+    $next_date = "";
+    $is_first_date = true;
+    foreach($task_due_dates as $task_due_date){
+        if(isset($task_expectations_associative[$task_due_date["task_type"]])){
+            $task_expectations_associative[$task_due_date["task_type"]]["due_to"] = $task_due_date["due_to"];
+        }
+
+        if(is_numeric(strpos($task_due_date["task_type"],"small_test"))){
+            $small_test_counter = explode("small_test_",$task_due_date["task_type"])[1];
+            if($task_due_date["due_to"] >= date("Y-m-d H:i:s")){
+                if($is_first_date){
+                    $next_date = $task_due_date["due_to"];
+                    $next_small_test = $task_due_date["task_type"];
+                    $is_first_date = false;
+                    $next_small_test_counter = explode("small_test_", $task_due_date["task_type"])[1];
+                }else{
+                    if($task_due_date["due_to"] < $next_date){
+                        $next_date = $task_due_date["due_to"];
+                        $next_small_test = $task_due_date["task_type"];
+                        $next_small_test_counter = explode("small_test_", $task_due_date["task_type"])[1];
+                    }else if($task_due_date["due_to"] == $next_date && $small_test_counter < $next_small_test_counter){
+                        $next_date = $task_due_date["due_to"];
+                        $next_small_test = $task_due_date["task_type"];
+                        $next_small_test_counter = $small_test_counter;
+                    }
+                }
+            }
+        }
+    }
+
     $small_tests_sum = 0;
     foreach($results as $task_type => $result){
         if(is_numeric(strpos($task_type, "small_test"))){
@@ -58,13 +90,82 @@
 
             <?php if($small_tests_sum < $task_expectations_associative["small_tests"]["minimum_for_pass"]):?>
                 <div class="notification_box">
-                    <label>Még <?=$task_expectations_associative["small_tests"]["minimum_for_pass"] - $small_tests_sum?> pontot kell elérnie a kis zárthelyiken, hogy a rájuk vonatkozó követelményt teljesítse!</label>
+                    <label>
+                        Még <?=$task_expectations_associative["small_tests"]["minimum_for_pass"] - $small_tests_sum?> pontot kell elérnie a kis zárthelyiken, hogy a rájuk vonatkozó követelményt teljesítse!
+                        <?php if($next_date !== ""):?>
+                            A <?=$next_small_test_counter?>. kis zárthelyi időpontja: <?=$next_date?>.
+                        <?php endif?>
+                    </label>
                 </div>
             <?php else:?>
                 <div class="notification_box">
                     <label>A kis zárthelyire vonatkozó követelményt teljesítette!</label>
                 </div>
             <?php endif?>
+
+            
+
+            <?php if($task_expectations_associative["middle_term_exam"]["due_to"] > date("Y-m-d H:i:s")):?>
+                <div class="notification_box">
+                    <label>Az évközi zárthelyi időpontja: <?=$task_expectations_associative["middle_term_exam"]["due_to"]?>!</label>
+                </div>
+            <?php endif?>
+
+            <?php $middle_term_plus_a_week = date("Y-m-d H:i:s", strtotime($task_expectations_associative["middle_term_exam"]["due_to"] . " +7 day"))?>
+            <?php if( $middle_term_plus_a_week <= date("Y-m-d H:i:s")):?>
+                <?php if($task_expectations_associative["middle_term_exam"]["minimum_for_pass"] <= $results["middle_term_exam"]):?>
+                    <div class="notification_box">
+                        <label>Az évközi zárthelyit teljesítette! Az elért százaléka: <?=100*round($results["middle_term_exam"]/max($task_expectations_associative["middle_term_exam"]["maximum_value"],1),2)?>%.</label>
+                    </div>
+                <?php elseif($task_expectations_associative["middle_term_exam_correction"]["due_to"] > date("Y-m-d H:i:s")):?>
+                    <div class="notification_box">
+                        <label>
+                            Önnek az évközi zárthelyit javítania/ pótolnia kell! Az elért pontja: <?=$results["middle_term_exam"]?>. 
+                            A minimum pontszám: <?=$task_expectations_associative["middle_term_exam"]["minimum_for_pass"]?>.
+                            A javító/ pótló dolgozat időpontja: <?=$task_expectations_associative["middle_term_exam_correction"]["due_to"]?>.
+                        </label>
+                    </div>
+                <?php endif?>
+            <?php endif?>
+
+            <?php $middle_term_correction_plus_a_week = date("Y-m-d H:i:s", strtotime($task_expectations_associative["middle_term_exam_correction"]["due_to"] . " +7 day"))?>
+            <?php if( $middle_term_correction_plus_a_week <= date("Y-m-d H:i:s") && $task_expectations_associative["middle_term_exam_correction"]["minimum_for_pass"] <= $results["middle_term_exam_correction"]):?>
+                <div class="notification_box">
+                    <label>Az évközi javító/ pót zárthelyit teljesítette! Az elért százaléka: <?=100*round($results["middle_term_exam_correction"]/max($task_expectations_associative["middle_term_exam_correction"]["maximum_value"],1),2)?>%.</label>
+                </div>
+            <?php endif?>
+
+            <?php if($task_expectations_associative["final_term_exam"]["due_to"] > date("Y-m-d H:i:s")):?>
+                <div class="notification_box">
+                    <label>Az évvégi zárthelyi időpontja: <?=$task_expectations_associative["final_term_exam"]["due_to"]?>!</label>
+                </div>
+            <?php endif?>
+
+            <?php $final_term_plus_a_week = date("Y-m-d H:i:s", strtotime($task_expectations_associative["final_term_exam"]["due_to"] . " +7 day"))?>
+            <?php if($final_term_plus_a_week <= date("Y-m-d H:i:s")):?>
+                <?php if($task_expectations_associative["final_term_exam"]["minimum_for_pass"] <= $results["final_term_exam"]):?>
+                    <div class="notification_box">
+                        <label>Az évvégi zárthelyit teljesítette! Az elért százaléka: <?=100*round($results["final_term_exam"]/max($task_expectations_associative["final_term_exam"]["maximum_value"],1),2)?>%.</label>
+                    </div>
+                <?php elseif($task_expectations_associative["final_term_exam_correction"]["due_to"] > date("Y-m-d H:i:s")):?>
+                    <div class="notification_box">
+                        <label>
+                            Önnek az évvégi zárthelyit javítania/ pótolnia kell! Az elért pontja: <?=$results["final_term_exam"]?>. 
+                            A minimum pontszám: <?=$task_expectations_associative["final_term_exam"]["minimum_for_pass"]?>.
+                            A javító/ pótló dolgozat időpontja: <?=$task_expectations_associative["final_term_exam_correction"]["due_to"]?>.
+                        </label>
+                    </div>
+                <?php endif?>
+            <?php endif?>
+
+            <?php $final_term_plus_a_week = date("Y-m-d H:i:s", strtotime($task_expectations_associative["final_term_exam_correction"]["due_to"] . " +7 day"))?>
+            <?php if( $final_term_plus_a_week <= date("Y-m-d H:i:s") && $task_expectations_associative["final_term_exam_correction"]["minimum_for_pass"] <= $results["final_term_exam_correction"]):?>
+                <div class="notification_box">
+                    <label>Az évvégi javító/ pót zárthelyit teljesítette! Az elért százaléka: <?=100*round($results["final_term_exam_correction"]/max($task_expectations_associative["final_term_exam_correction"]["maximum_value"],1),2)?>%.</label>
+                </div>
+            <?php endif?>
+
+
         </div>
     
         <div class="grades_div non_header_navigation_div" style="display:none" id="results_div">

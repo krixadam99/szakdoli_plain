@@ -1,6 +1,13 @@
 import {ChangeAttributeInURL} from "./mainContent.js"
 
 // Functions:
+/**
+ * This method is responsible for removing an element from an array containing HTML elements.
+ * 
+ * @param {Array} array An array containing HTML elements.
+ * @param {Element} child The HTML element to be removed.
+ * @returns A new array containing the original elements, except the removed one. 
+ */
 function RemoveElement(array, child){
     let index_of_actual_child = array.indexOf(child)
     if(index_of_actual_child >= 0){
@@ -16,6 +23,12 @@ function RemoveElement(array, child){
     }
 }
 
+/**
+ * This method is responsible for modifying the given HTML element's style by the given key - value pairs.
+ * 
+ * @param {Element} element The HTML element which style is to be modified
+ * @param {Array} style_dictionary An array containing the key - value pairs, with which the method will modify the given element's style.
+ */
 function ModifyElementStyle(element, style_dictionary){
     if(element){
         for (let key in style_dictionary){
@@ -24,6 +37,13 @@ function ModifyElementStyle(element, style_dictionary){
     }
 }
 
+/**
+ * This method is repsonsible for setting a new value to the given style key for an array of HTML elements.
+ * 
+ * @param {Array} elements HTML elements for which the method will set the given style key to the given new value.
+ * @param {string} new_value The new value for the given key.
+ * @param {string} style_key The style key.
+ */
 function Editing(elements, new_value = "", style_key){
     for(let element of elements){
         switch(style_key){
@@ -79,6 +99,12 @@ function Editing(elements, new_value = "", style_key){
     }
 }
 
+/**
+ * This method adds a box shadow effect to the given button. This effect will last for 0.2s (default value).
+ * 
+ * @param {Element} button The button for which the method will create the box shadow effect.
+ * @param {Int} timeout The effect will last for this long. The default is 0.2s.
+ */
 function AddButtonClickEffect(button, timeout = 200){
     let original_box_shadow = button.style.boxShadow
     button.style.boxShadow = "0px 0px 10px 0px rgba(132, 131, 131, 0.5)"
@@ -87,6 +113,13 @@ function AddButtonClickEffect(button, timeout = 200){
     },timeout)
 }
 
+/**
+ * This method changes the given predecessors of a parent to new ones based on the new tag name. The predecessor elements will be found recursively. 
+ * 
+ * @param {Element} parent_element The ancestor element.
+ * @param {string} children_selector The selector by which the predecessor elements will be found. The default is "editable_label".
+ * @param {string} element_new_tagname The tag name of the new elements. The default is "SPAN".
+ */
 function ChangeElementToAnother(parent_element, children_selector = "editable_label", element_new_tagname = "SPAN"){
     let children = Array.from(parent_element.children)
     children.forEach((child)=>{
@@ -112,6 +145,14 @@ function ChangeElementToAnother(parent_element, children_selector = "editable_la
     })
 }
 
+/**
+ * This method add the click and dblclick events to the given paragraph label. 
+ * 
+ * For the click event, the element will be selected.
+ * On the dblclick event, it will be ready to be edited.
+ * 
+ * @param {Element} element A paragraph label in the task generator editing box.
+ */
 function AddEventsToParagraphLabel(element){
     element.addEventListener("click", ()=>{
         element.style["background-color"] = "rgb(255, 237, 230)"
@@ -155,6 +196,9 @@ function AddEventsToParagraphLabel(element){
     })
 }
 
+/**
+ * This method removes the highlights from all the selected paragraph labels.
+ */
 function removeHighlights(){
     all_highlighted = false
     chosen_elements_for_edition = []
@@ -175,6 +219,12 @@ function removeHighlights(){
     }
 }
 
+/**
+ * This method adds an x button to a new content editable span element. 
+ * 
+ * @param {Element} parent_element The new content editable span element's parent.
+ * @param {string} remove_from The element from which the new content editable span element should be removed upon clicking the new x button.
+ */
 function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
     let new_x_button = document.createElement("button")
     new_x_button.innerHTML = "x" 
@@ -217,6 +267,11 @@ function AddTextAreaXButton(parent_element, remove_from = "grand_parent"){
     parent_element.appendChild(new_x_button)
 }
 
+/**
+ * This method will split the actual content editable span element, if the user edits the element, and adds a sup, sub, frac, or sup-sub element to the span.
+ * 
+ * @param {Element} element The content editable span element.
+ */
 function SplitTextAreaIfNecessary(element){
     let focused_element_parent = focused_span.parentNode
 
@@ -253,6 +308,12 @@ function SplitTextAreaIfNecessary(element){
     }
 }
 
+/**
+ * This method creates a content editable span and styles it by the given styles array.
+ * 
+ * @param {Array} styles An array containing key - value pairs.
+ * @returns A new content editable span.
+ */
 function CreateNewSpan(styles){
     let new_span = document.createElement("span")
     new_span.classList.add("editing_span")
@@ -278,6 +339,12 @@ function CreateNewSpan(styles){
     return new_span
 }
 
+/**
+ * This method assigns certain parts of the computed style of the original element to the new element.
+ * 
+ * @param {Element} child The original element.
+ * @param {Element} new_element The new element.
+ */
 function GetComputedStylesOfChild(child, new_element){
     let computed_styles = window.getComputedStyle(child)
     new_element.style["font-family"] = computed_styles.fontFamily
@@ -346,6 +413,7 @@ if(seminar_tasks_generation_card){
     seminar_tasks_generation_card.addEventListener("click", ()=>{ChangeAttributeInURL("examType", "seminar")})
 }
 
+// Main topic select for the task generation
 if(topic_select){
     topic_select.addEventListener("change", ()=>{
         let selected_index = topic_select.options.selectedIndex
@@ -356,17 +424,26 @@ if(topic_select){
             if(subtopic_counter === selected_index){
                 subtopic_children[subtopic_counter].style["display"] = "inline"
                 subtopic_children[subtopic_counter].disabled = ""
-                if(subtopic_children[subtopic_counter].tagName.toLocaleLowerCase() === "input"){
-                    subtopic_children[subtopic_counter].readOnly = true
-                }
+
+                subtopic_children[subtopic_counter].querySelectorAll("input, select").forEach(element => {
+                    element.disabled = ""
+                    if(element.classList.contains("subtopic_input")){
+                        element.readOnly = true
+                    }
+                })
             }else{
                 subtopic_children[subtopic_counter].style["display"] = "none"
                 subtopic_children[subtopic_counter].disabled = "disabled"
+
+                subtopic_children[subtopic_counter].querySelectorAll("input, select").forEach(element => {
+                    element.disabled = "disabled"
+                })
             }
         }
     })
 }
 
+// Page container with the generated subtasks
 if(page_container){
     let page_container_elements = page_container.children
     for(let children_counter = 0; children_counter < page_container_elements.length; children_counter++){
@@ -395,6 +472,7 @@ if(page_container){
     })
 }
 
+// The + button for the big test generation page
 if(add_new_task_button){
     add_new_task_button.addEventListener("click", (event)=>{
         event.preventDefault()
@@ -417,6 +495,7 @@ if(add_new_task_button){
     })
 }
 
+// The - button for the big test generation page
 if(remove_task_buttons){
     remove_task_buttons.forEach((remove_task_button)=>{
         remove_task_button.addEventListener("click", (event)=>{
@@ -429,6 +508,7 @@ if(remove_task_buttons){
     })
 }
 
+// Alignment elements for editing
 if(left_alignment){
     left_alignment.addEventListener("click", ()=>{
         Editing(chosen_elements_for_edition, "left", "text-align")
@@ -457,6 +537,7 @@ if(justify_alignment){
     })
 }
 
+// Font editing elements
 if(font_size_input){
     font_size_input.addEventListener("input", ()=>{
         Editing(chosen_elements_for_edition, font_size_input.value, "size")
@@ -505,6 +586,7 @@ if(italic_button){
     })
 }
 
+// Linebreak elements
 if(linebreak_before_input){
     linebreak_before_input.addEventListener("input", ()=>{
         Editing(chosen_elements_for_edition, linebreak_before_input.value + "%", "margin-top")
@@ -517,18 +599,7 @@ if(linebreak_after_input){
     })
 }
 
-if(special_character_button){
-    special_character_button.addEventListener("mouseenter", ()=>{
-        let special_characters_holder = special_character_button.querySelector(".special_characters")
-        special_characters_holder.style["display"] = "block"
-    })
-
-    special_character_button.addEventListener("mouseleave", ()=>{
-        let special_characters_holder = special_character_button.querySelector(".special_characters")
-        special_characters_holder.style["display"] = "none"
-    })
-}
-
+// Special characters
 if(special_character_button){
     special_character_button.addEventListener("mouseenter", ()=>{
         let special_characters_holder = special_character_button.querySelector(".special_characters")
@@ -554,6 +625,7 @@ if(special_character_cells){
     })
 }
 
+// Adding sup, sub, frac, or sup-sub element to a content editable span element
 if(sup_button){
     sup_button.addEventListener("click", ()=>{       
         if(focused_span){
@@ -616,7 +688,7 @@ if(sub_sup_button){
     })
 }
 
-
+// Saving the generated subtasks
 if(save_pdf_button){
     save_pdf_button.addEventListener("click", (event)=>{
         event.preventDefault()
@@ -634,6 +706,7 @@ if(save_pdf_button){
     })
 }
 
+// Opening a new tab for saving the generated subtasks
 window.addEventListener("click", (event)=>{
     if(edited_label_parent){
         let editing_spans = edited_label_parent.querySelectorAll(".editing_span")

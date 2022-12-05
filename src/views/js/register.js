@@ -1,4 +1,9 @@
 //Functions
+/**
+ * This method is responsible for changing the password show/hide eyes according to its previous state.
+ * 
+ * @param {Element} element The eye element for hiding and showing a password.
+ */
 function change_eyes(element){
     element.addEventListener("click", (event)=>{
         event.preventDefault()
@@ -33,6 +38,7 @@ if(back_button){
     })
 }
 
+// Showing the groups based on the chosen user status
 if(user_status){
     user_status.addEventListener("change", ()=>{
         let student_groups = document.querySelector("#student_groups")
@@ -55,6 +61,7 @@ if(user_status){
     })
 }
 
+// Showing only those groups that belong to the chosen subject
 if(subject_name){
     subject_name.addEventListener("change", ()=>{
         if(subject_name.selectedIndex == 2){

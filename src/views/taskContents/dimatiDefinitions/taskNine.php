@@ -41,9 +41,6 @@
             Adott a d<sub>1</sub> &ge; ... &ge; d<sub>n</sub> nemnegatív számokból álló fokszámsorozat. Ezzel a fokszámsorozattal gráf szerkeszthető, ha a fokszámösszeg páros.
         </label>
     </div>
-    <button class="show_button">
-        <div class="top_triangle"></div>
-    </button>
 </div>
 <div class="definition_holder">
     <div class="defined">
