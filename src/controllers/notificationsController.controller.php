@@ -35,7 +35,7 @@
                 $this->SetMembers();
                 // The administrator should not see this page, since they won't have (system) messages about group addition
                 if(!$this->is_administrator){
-                    include(ROOT_DIRECTORY . "/views/notificationPage.view.php");
+                    include(ROOT_DIRECTORY . "/views/notificationsPage.view.php");
                 }else{
                     header("Location: ./index.php?site=demonstratorHandling");
                 }
