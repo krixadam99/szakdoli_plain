@@ -481,6 +481,46 @@
 
             $this->assertEquals([[1,2],[1,3],[2,3]], $this->dimati_helper->DetermineCombinationOfList([1,2,3],2));
         }
+
+        /**
+         * This method tests the DetermineIfSimpleGraphCanBeCreated() method of the DimatiHelperFunctions class.
+         * 
+         * @test
+         */
+        public function TestDetermineIfSimpleGraphCanBeCreated() : void {
+            $this->assertFalse($this->dimati_helper->DetermineIfSimpleGraphCanBeCreated([0,1,2,3,4,5]));
+            $this->assertTrue($this->dimati_helper->DetermineIfSimpleGraphCanBeCreated([1,1,1,1,1,1]));
+        }
+
+        /**
+         * This method tests the DetermineIfTreeGraphCanBeCreated() method of the DimatiHelperFunctions class.
+         * 
+         * @test
+         */
+        public function TestDetermineIfTreeGraphCanBeCreated() : void {
+            $this->assertFalse($this->dimati_helper->DetermineIfTreeGraphCanBeCreated([1,2,3,4]));
+            $this->assertTrue($this->dimati_helper->DetermineIfTreeGraphCanBeCreated([1,2,2,2,2,1]));
+        }
+
+        /**
+         * This method tests the DetermineIfPairedGraphCanBeCreated() method of the DimatiHelperFunctions class.
+         * 
+         * @test
+         */
+        public function TestDetermineIfPairedGraphCanBeCreated() : void {
+            $this->assertFalse($this->dimati_helper->DetermineIfPairedGraphCanBeCreated([[1,1,6,6], [1,1,1,2,3,3,3]]));
+            $this->assertTrue($this->dimati_helper->DetermineIfPairedGraphCanBeCreated([[1,2,2],[3,2,0]]));
+        }
+
+        /**
+         * This method tests the DetermineIfDirectedGraphCanBeCreated() method of the DimatiHelperFunctions class.
+         * 
+         * @test
+         */
+        public function TestDetermineIfDirectedGraphCanBeCreated() : void {
+            $this->assertFalse($this->dimati_helper->DetermineIfDirectedGraphCanBeCreated([[1,1,1,3,4,4],[5,5,1,1,1,1]]));
+            $this->assertTrue($this->dimati_helper->DetermineIfDirectedGraphCanBeCreated([[1,2,1,1,2,0],[0,2,1,1,0,3]]));
+        }
     }
 
 ?>

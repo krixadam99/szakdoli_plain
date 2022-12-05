@@ -168,25 +168,25 @@
         }
 
         /**
-         * This method tests the DetermineGCDWithEucleidan() method of the DimatiiHelperFunctions class.
+         * This method tests the DetermineGCDWithEuclidean() method of the DimatiiHelperFunctions class.
          * 
          * @test
          */
-        public function TestDetermineGCDWithEucleidan() : void {    
-            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEucleidan([9,12]);
+        public function TestDetermineGCDWithEuclidean() : void {    
+            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEuclidean([9,12]);
             $this->assertEquals(3, $eucliden_algorithm["solution"]);
             $this->assertEquals(2, count($eucliden_algorithm["steps"]));
 
-            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEucleidan([-9,12]);
+            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEuclidean([-9,12]);
             $this->assertEquals(3, $eucliden_algorithm["solution"]);
             $this->assertEquals(2, count($eucliden_algorithm["steps"]));
 
             
-            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEucleidan([-9,-12]);
+            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEuclidean([-9,-12]);
             $this->assertEquals(3, $eucliden_algorithm["solution"]);
             $this->assertEquals(2, count($eucliden_algorithm["steps"]));
 
-            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEucleidan([18,109]);
+            $eucliden_algorithm = $this->dimatii_helper->DetermineGCDWithEuclidean([18,109]);
             $this->assertEquals(1, $eucliden_algorithm["solution"]);
             $this->assertEquals(2, count($eucliden_algorithm["steps"]));
         }

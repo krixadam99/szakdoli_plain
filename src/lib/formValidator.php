@@ -19,14 +19,6 @@
          * @return array An indexed array containing the incorrect parameters.
         */
         public function GetIncorrectParameters() : array { return $this->incorrect_parameters; }
-
-        /**
-         *
-         * This method pushes a new incorrect parameter to the back of the array holding the incorrect parameters.
-         * @param string $value The value we wish to push to the back of the array holding the incorrect values.
-         * @return void
-        */
-        public function SetIncorrectParameter($value) { array_push( $this->incorrect_parameters,$value); }
         
         /**
          *
@@ -35,16 +27,6 @@
          * @return array An associative array containing the incorrect parameters.
         */
         public function GetCorrectParameters() : array { return $this->correct_parameters; }
-
-        /**
-         *
-         * This method sets a value of the correct parameters' dictionary by the given key.
-         *  
-         * @param string $key The key which we want to assign a new value to in the correct parameters' dictionary.
-         * @param string $value The value we want to assign to the key in the correct parameters' dictionary.
-         * @return void
-        */
-        public function SetCorrectParameter($key, $value) { $this->correct_parameters[$key] = $value; }
 
         /**
          *

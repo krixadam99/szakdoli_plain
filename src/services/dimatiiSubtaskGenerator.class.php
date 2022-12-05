@@ -48,7 +48,7 @@
                 }break;
                 case "2":{
                     switch($subtopic_number){
-                        case "0": $subtask = $this->CreateEucleidanAlgorithmSubtask($number_of_subtasks);break;
+                        case "0": $subtask = $this->CreateEuclideanAlgorithmSubtask($number_of_subtasks);break;
                         case "1": ; break;
                         default:break;
                     }
@@ -391,30 +391,30 @@
         /**
          * This private method will generate a set of tasks related to the third main topic - first subtopic of Discrete Mathematics II.
          * 
-         * The subtask is about giving the gcd for each pair with the Eucleidan algorithm. Additionally, the lcm for these pairs will also be determined.
+         * The subtask is about giving the gcd for each pair with the Euclidean algorithm. Additionally, the lcm for these pairs will also be determined.
          * 
          * Per subtask:
          * 
          * Creates the given amount of distinct pairs, where the elements of the pairs are from the [30, 200] interval and are whole numbers.
-         * Determines the GCD with the Eucleidan algorithm.
+         * Determines the GCD with the Euclidean algorithm.
          * 
          * @param int $number_of_numbers The number of numbers which is a positive whole number.
          * 
          * @return array Returns an associative array containing the data, the task text containing html elements, the raw solution and the solution's text containing html elements.
          */
-        private function CreateEucleidanAlgorithmSubtask($number_of_numbers){
+        private function CreateEuclideanAlgorithmSubtask($number_of_numbers){
             $lower = 30;
             $upper = 200;
             $gcd_pairs = $this->dimat_helper_functions->CreatePairsOfNumbers($number_of_numbers, $lower, $upper);
             $printable_solutions = ["<div class=\"editable_box\"><label class=\"editable_label\">Megoldás:</label></div>"];
             $descriptions = [];
 
-            $eucleidan_algorithm = [];
+            $euclidean_algorithm = [];
             $gcd_array = [];
             $lcm_array = [];
             foreach($gcd_pairs as $index => $pair){
-                $algorithm = $this->dimat_helper_functions->DetermineGCDWithEucleidan($pair);
-                array_push($eucleidan_algorithm, $algorithm["steps"]);
+                $algorithm = $this->dimat_helper_functions->DetermineGCDWithEuclidean($pair);
+                array_push($euclidean_algorithm, $algorithm["steps"]);
                 array_push($gcd_array, $algorithm["solution"]);
                 if($algorithm["solution"] !== 0){
                     array_push($lcm_array, ($pair[0]*$pair[1])/$algorithm["solution"]);
@@ -426,13 +426,13 @@
             for($gcd_pair_counter = 0; $gcd_pair_counter < count($gcd_pairs); $gcd_pair_counter++){
                 $actual_gcd = $gcd_array[$gcd_pair_counter];
                 $actual_lcm = $lcm_array[$gcd_pair_counter];
-                $actual_steps = $eucleidan_algorithm[$gcd_pair_counter];
+                $actual_steps = $euclidean_algorithm[$gcd_pair_counter];
                 $first_number = $gcd_pairs[$gcd_pair_counter][0];
                 $second_number = $gcd_pairs[$gcd_pair_counter][1];
 
                 $task_description =  "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a " . $first_number . " és " . $second_number . " számok legnagyobb közös osztóját az euklideszi algoritmus segítségével!</label></div>";
                 
-                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><table class=\"eucleidan_solution_table\">";
+                $printable_solution = "<div class=\"editable_box\"><label class=\"editable_label\">" . $gcd_pair_counter + 1 . ". csoport: </label></div><table class=\"euclidean_solution_table\">";
                 $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">i</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-2</sub><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">q<sub>i</sub></label></td><td class=\"editable_box\"><label class=\"editable_label\"> * </label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i-1</sub><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">r<sub>i</sub></label></td></tr>";
                 foreach($actual_steps as $step_counter => $actual_step){
                     $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">" . $step_counter + 1 . ".</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[0] .  "</label></td><td class=\"editable_box\"><label class=\"editable_label\">=</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[1] . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">*</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[2] . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">+</label></td><td class=\"editable_box\"><label class=\"editable_label\">" . $actual_step[3] .  "</label></td></tr>";
@@ -445,7 +445,7 @@
                 array_push($printable_solutions, $printable_solution);
             }
             
-            return array("data" => $gcd_pairs , "descriptions" => $descriptions, "solutions" => [$eucleidan_algorithm, $gcd_array, $lcm_array], "printable_solutions" => $printable_solutions);
+            return array("data" => $gcd_pairs , "descriptions" => $descriptions, "solutions" => [$euclidean_algorithm, $gcd_array, $lcm_array], "printable_solutions" => $printable_solutions);
         }
 
         /**
@@ -1171,7 +1171,6 @@
          * 
          * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
          * @param string $second_variable_name The second parameter's name in the equation. The default is "y".
-         * @param string $first_variable_name The first parameter's name in the equation. The default is "x".
          * @param array $diophantine_equation An array containing the numbers of the diophantine equation.
          * @param array $steps An array containing the solution steps.
          * @param array $solution An array containing the final solution of the equation.
@@ -1196,12 +1195,12 @@
         }
 
         /**
-         * This private method...
+         * This private method create the CRT subtask's task description and task solution text.
          * 
          * @param array $new_congruence_system An array containing the linear congruences in the CRT.
          * @param array $actual_solution An array containing the solution and solution steps of the CRT.
          * 
-         * @return string Returns a...
+         * @return array Returns an array containing the CRT subtask's description and solution text.
          */
         private function CreateCRTSolutionText($new_congruence_system, $actual_solution){
             $number_of_congruences_per_system = count($new_congruence_system);
@@ -1265,13 +1264,13 @@
         }
 
         /**
-         * This private method...
+         * This private method create the Horner- scheme subtask's task description and task solution text.
          * 
          * @param array $polynomial_expression An array containing the coefficients of the polynomial expression.
          * @param array $places An array containing the places where the Horner- scheme will be determined.
          * @param array $horner_schemes The steps of the Horner- scheme.
          * 
-         * @return string Returns an array containing the...
+         * @return array Returns an array containing the Horner- scheme subtask's description and solution text.
          */
         private function CreateHornerSchemeText($polynomial_expression, $places, $horner_schemes){
             $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">Add meg a ";

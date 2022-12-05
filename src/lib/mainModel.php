@@ -22,7 +22,6 @@
          * This public method fetches data from the database via the given query.
          * 
          * @param string $query The query with which data will be fetched from the database.
-         * @param int $data_type The form of the returned array (either associative or indexed). The default is MYSQLI_ASSOC.
          * 
          * @return array Returns an array containing the data fetched from the database.
          */

@@ -626,13 +626,13 @@
         }
 
         /**
-         * This method uses the Eucleidan algorithm to Determine the greatest common divisor of the given pair.
+         * This method uses the Euclidean algorithm to Determine the greatest common divisor of the given pair.
          * 
          * @param array $pair The pair for which the method will determine the gcd and eucleidan algorithm steps.
          * 
          * @return array Returns an associative array containing each step of the algorithm in the form of [bigger_number, quotient, smaller_number, residue] and the solution.
          */
-        public function DetermineGCDWithEucleidan($pair){
+        public function DetermineGCDWithEuclidean($pair){
             $return_array = array("steps" => [], "solution" => []);
             $first_number = abs($pair[0]);
             $second_number = abs($pair[1]);
@@ -1351,7 +1351,7 @@
          * This private method determines the sum of two polynomial expressions.
          * 
          * @param array $first_polynomial_expression An indexed array containing the first addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
-         * @param array $first_polynomial_expression An indexed array containing the second addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
+         * @param array $second_polynomial_expression An indexed array containing the second addend polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
          * 
          * @return array An indexed array containing the summed polynomial expression's coefficients. The coefficients are in descending order from the main coefficient to the constant member.
          */

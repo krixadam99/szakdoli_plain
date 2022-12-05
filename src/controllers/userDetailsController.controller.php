@@ -5,7 +5,7 @@
      * This controller extends the MainContentController, from which it inherits its members.
     */
     class UserDetailsController extends MainContentController {        
-        private $user_detail_model;
+        private $user_details_model;
 
         /**
          * The contructor of the GroupAdditionController class.
@@ -19,7 +19,7 @@
             $this->error_parameters = [];
             $this->success_parameters = [];
 
-            $this->user_detail_model = new UserDetailsModel();
+            $this->user_details_model = new UserDetailsModel();
         }
 
         /**
@@ -43,8 +43,8 @@
                     $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
                     $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
                     
-                    $this->dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
-                    $this->dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
+                    $this->dimat_i_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                    $this->dimat_ii_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
                     
                     include(ROOT_DIRECTORY . "/views/userDetailsPage.view.php");
                 }else{
@@ -72,7 +72,7 @@
                     $_SESSION["previous_controller"] = "UserDetailsController";
 
                     $user_details_editing = true;
-                    $user_details = $this->user_detail_model->GetUserDetails($_SESSION["neptun_code"]);
+                    $user_details = $this->user_details_model->GetUserDetails($_SESSION["neptun_code"]);
 
                     include(ROOT_DIRECTORY . "/views/userDetailsPage.view.php");
                 }else{
@@ -133,7 +133,7 @@
                                 if($group === "-") $group  = "0";
 
                                 // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "i" id
-                                $dimat_i_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                                $dimat_i_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                                 foreach($dimat_i_groups as $key=>$group_number){
                                    array_push($possible_group_numbers, $group_number["group_number"]);
                                 }
@@ -146,7 +146,7 @@
                                 if($group === "-") $group  = "0";
     
                                 // Discrete mathematics II. group can be one of the groups having at least one teacher with approved status/ group and have "ii" id
-                                $dimat_ii_groups = $this->user_detail_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
+                                $dimat_ii_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                                 foreach($dimat_ii_groups as $key=>$group_number){
                                    array_push($possible_group_numbers, $group_number["group_number"]);
                                 }
@@ -220,7 +220,7 @@
                     if(    $_POST['user_status'] === "Demonstrátor"
                         || $_POST['user_status'] === "Diák"
                     ){
-                        $this->user_detail_model->UpdateUserGroups($_SESSION['neptun_code'], $subject_id, $_POST["user_status"], $group);
+                        $this->user_details_model->UpdateUserGroups($_SESSION['neptun_code'], $subject_id, $_POST["user_status"], $group);
                     }
                     
                     header("Location: ./index.php?site=notifications");
@@ -243,7 +243,7 @@
         public function ValidateNewPersonalInformation() {
             if(isset($_SESSION["neptun_code"])){
                 // Fetch all of the email addresses from the users table
-                $email_addresses_array = $this->user_detail_model->GetEmailAddresses();
+                $email_addresses_array = $this->user_details_model->GetEmailAddresses();
                 $email_addresses = [];
                 foreach($email_addresses_array as $email_address_counter => $email_address_array){
                     array_push($email_addresses, $email_address_array["email_address"]);
@@ -296,7 +296,7 @@
                         $new_password = $_POST["user_password"];
                     }
                     
-                    $this->user_detail_model->UpdateUserDetails($_SESSION["neptun_code"], $new_email, $new_password);
+                    $this->user_details_model->UpdateUserDetails($_SESSION["neptun_code"], $new_email, $new_password);
                     header("Location: ./index.php?site=notifications");
                 }else{ // There is at least one incorrect input
                     $this->PersonalInformation();

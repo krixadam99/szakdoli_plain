@@ -212,14 +212,14 @@
             $is_new_pair = !in_array([$first_number, $second_number], $array);
             $first_index = array_search($first_number, $this->complex_number_names);
             $second_index = array_search($second_number, $this->complex_number_names);
-            while(!$is_new_pair){
+            while(!$is_new_pair && count($array) < count($this->complex_number_names)*(count($this->complex_number_names)-1)){
                 $is_new_pair = !in_array([$first_number, $second_number], $array);
                 if(!$is_new_pair){
-                    $first_index = mt_rand(0, 4);
-                    $second_index = mt_rand(0, 4);
+                    $first_index = mt_rand(0, (count($this->complex_number_names)-1));
+                    $second_index = mt_rand(0, (count($this->complex_number_names)-1));
                     while($first_index == $second_index){
-                        $first_index = mt_rand(0, 4);
-                        $second_index = mt_rand(0, 4);
+                        $first_index = mt_rand(0, (count($this->complex_number_names)-1));
+                        $second_index = mt_rand(0, (count($this->complex_number_names)-1));
                     }
                     $first_number = $this->complex_number_names[$first_index];
                     $second_number = $this->complex_number_names[$second_index];
@@ -527,6 +527,7 @@
          * For alphabet charactes, all of the alphabet charatcers will be picked between the smallest and biggest alphabet characters of the set (small and big as their index in the alphabet).
          * 
          * @param array $set An indexed array containing the elements of the set.
+         * 
          * @return array An array containing the universe of the given set of the form [element,element...].
         */
         public function GetUniverse($set){
@@ -1523,8 +1524,8 @@
             }
 
             if(     $first_sum === $second_sum 
-                &&  $first_class[$number_of_verteces_of_first_class - 1] > 0
-                &&  $second_class[$number_of_verteces_of_second_class - 1] > 0
+                &&  $first_class[$number_of_verteces_of_first_class - 1] >= 0
+                &&  $second_class[$number_of_verteces_of_second_class - 1] >= 0
             ){
                 // Checking the other condition for creatable paired graphs
                 for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
@@ -1563,17 +1564,26 @@
             // Sorting the incoming degrees in descending manner
             $first_class = $graph[0];
             $second_class = $graph[1];
-            $new_associative_array = [];
-            foreach($first_class as $counter => $element){
-                $new_associative_array[$element] = $second_class[$counter];
+            foreach($second_class as $counter => $outer_element){
+                for($inner_counter = 0; $inner_counter < $counter; ++ $inner_counter){
+                    $inner_element = $second_class[$inner_counter];
+                    if($outer_element > $inner_element){
+                        break;
+                    }
+                }
+                
+                $first_element = $first_class[$counter];
+                for($running_counter = $counter; $running_counter > $inner_counter;$running_counter--){
+                    $first_class[$running_counter] = $first_class[$running_counter - 1];
+                    $second_class[$running_counter] = $second_class[$running_counter - 1];
+                }
+                $second_class[$inner_counter] = $outer_element;
+                $first_class[$inner_counter] = $first_element;
             }
-            krsort($new_associative_array);
-
-            $first_class = array_keys($new_associative_array);
-            $second_class = array_values($new_associative_array);
             $number_of_verteces_of_first_class = count($first_class);
             $number_of_verteces_of_second_class = count($second_class);
-            
+
+
             // Checking the sum
             $first_sum = 0;
             for($element_counter = 0; $element_counter < $number_of_verteces_of_first_class; $element_counter++){
@@ -1586,18 +1596,18 @@
 
             if($first_sum === $second_sum){
                 // Checking the other condition for creatable directed graphs
-                for($outer_index = 0; $outer_index < $number_of_verteces_of_first_class; ++$outer_index){
+                for($outer_index = 0; $outer_index < $number_of_verteces_of_second_class; ++$outer_index){
                     $left_sum = 0;
                     for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
-                        $left_sum += $first_class[$inner_index];
+                        $left_sum += $second_class[$inner_index];
                     }
 
                     $right_sum = 0;
                     for($inner_index = 0; $inner_index < $outer_index; ++$inner_index){
-                        $right_sum += min($second_class[$inner_index], $outer_index - 1);
+                        $right_sum += min($first_class[$inner_index], $outer_index - 1);
                     }
-                    for($inner_index = $outer_index + 1; $inner_index < $number_of_verteces_of_second_class; ++$inner_index){
-                        $right_sum += min($second_class[$inner_index], $outer_index);
+                    for($inner_index = $outer_index; $inner_index < $number_of_verteces_of_first_class; ++$inner_index){
+                        $right_sum += min($first_class[$inner_index], $outer_index);
                     }
 
                     if($left_sum > $right_sum){

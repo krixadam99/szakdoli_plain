@@ -114,7 +114,7 @@
          * 
          * This method assigns a new value to the given answers member.
          * 
-         * @param int $given_answers An array which will be assigned to the class's $topic_number member.
+         * @param array $given_answers An array which will be assigned to the class's $topic_number member.
          * 
          * @return void
         */
@@ -222,8 +222,8 @@
          * 
          * This method compares the values of two select elements.
          * 
-         * @param array $real_solution The real solutions for the subtask.
-         * @param array $given_answer The given answers for the subtask.
+         * @param array $real_solutions The real solutions for the subtask.
+         * @param array $given_answers The given answers for the subtask.
          * @param string $answer_counter If the selects are under the same subtask, then this determines the subtask's number.
          * 
          * @return bool Returns whether the given answers and real solutions are all the same, or not.
@@ -546,7 +546,7 @@
          * 
          * @param array $congruence An indexed array containing two elements, the resiude and the modulo.
          * @param array $input_names An array containing the keys of the required inputs' values found in the user's given answers' (associative) array.
-         * @param string $answer_id The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
+         * @param array $answer_ids The id of the view's input for which the method sets attributes like the value, class. It also sets the correct answer for that input.
          * 
          * @return void
          */

@@ -160,6 +160,9 @@
          * 
          * The task generation depends on the subject's id and the topic's number.
          * 
+         * @param string $subject The id of the subject. Can be either "i", or "ii".
+         * @param string $topic_number The chosen topic's number. It is between 0 and 8 (inclusively).
+         * 
          * @return void
         */
         private function GenerateTask($subject, $topic_number){
