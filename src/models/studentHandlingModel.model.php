@@ -58,7 +58,7 @@
                     if($subject_id === "i"){
                         $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\"; ";
                     }else{
-                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_group_id = (SELECT subject_group_id FROM subject_groups WHERE subject_group_id = user_status.subject_group_id); ";
+                        $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code \" AND is_teacher = \"1\" AND subject_group_id IN (SELECT subject_group_id FROM subject_groups WHERE subject_id = \"ii\"); ";
                     }
                     $query .= "UPDATE user_status SET application_request_status = \"WITHDRAWN\" WHERE neptun_code = \"$neptun_code\" AND is_teacher = 0 AND application_request_status != \"APPROVED\"; ";
                 

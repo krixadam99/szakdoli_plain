@@ -363,9 +363,10 @@
          */
         static function GroupAdditionChecker($pending_student_groups, $approved_student_subject, $approved_teacher_subjects){
             $show_group_addition_menu = true;
-            $can_apply_to_group = true;
             $can_add_group_for_dimat_i = true;
             $can_add_group_for_dimat_ii = true;
+            $can_apply_to_dimat_i = true;
+            $can_apply_to_dimat_ii = true;
         
             $pending_student_subject_ids = [];
             $no_group = false;
@@ -383,11 +384,17 @@
             if(    in_array("ii", $approved_teacher_subjects) 
                 || "ii" === $approved_student_subject
                 || in_array("ii", $pending_student_subject_ids)){
-                $can_apply_to_group = false;
+                $can_apply_to_dimat_i = false;
+                $can_apply_to_dimat_ii = false;
                 if(in_array("ii", $pending_student_subject_ids) || "ii" === $approved_student_subject){
                     $can_add_group_for_dimat_ii = false;
                 }
             }
+
+            if(in_array("i", $approved_teacher_subjects)){
+                $can_apply_to_dimat_i = false;
+            }
+
 
             // If the user's student status is approved for Discrete mathematics I. (or this status is pending), then don't show the group addition page
             if("i" === $approved_student_subject || in_array("i", $pending_student_subject_ids)){
@@ -397,10 +404,11 @@
             // Those, who couldn't apply to a desired group, should be able to do so later
             if($no_group){
                 $show_group_addition_menu = true;
-                $can_apply_to_group = true;
+                $can_apply_to_dimat_i = true;
+                $can_apply_to_dimat_ii = true;
             }
 
-            return [$show_group_addition_menu, $can_apply_to_group, $can_add_group_for_dimat_i, $can_add_group_for_dimat_ii];
+            return [$show_group_addition_menu, $can_apply_to_dimat_i, $can_apply_to_dimat_ii, $can_add_group_for_dimat_i, $can_add_group_for_dimat_ii];
         }
     }
 

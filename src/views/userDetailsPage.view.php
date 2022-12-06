@@ -52,7 +52,7 @@
                     </label>
                 </div>
                 <select id="user_status" name="user_status">
-                    <?php if($can_apply_to_group):?>
+                    <?php if($can_apply_to_dimat_i || $can_apply_to_dimat_ii):?>
                         <option id="student" <?=(isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]=="Diák")?"selected":""?>>Diák</option>
                     <?php endif?>
                     <?php if($can_add_group_for_dimat_i || $can_add_group_for_dimat_ii):?>
@@ -73,10 +73,10 @@
                     </label>
                 </div>
                 <select id="subject_id" name="subject_id" style="margin: 1% auto 3% 0%">
-                    <?php if($can_add_group_for_dimat_i):?>
+                    <?php if($can_add_group_for_dimat_i || $can_apply_to_dimat_i):?>
                         <option id="dimat_i" <?=(isset($correct_parameters["subject_id"]) && $correct_parameters["subject_id"]=="0")?"selected":""?>>Diszkrét matematika I.</option>
                     <?php endif?>
-                    <?php if($can_add_group_for_dimat_ii):?>
+                    <?php if($can_add_group_for_dimat_ii || $can_apply_to_dimat_ii):?>
                         <option id="dimat_ii" <?=(isset($correct_parameters["subject_id"]) && $correct_parameters["subject_id"]=="1")?"selected":""?>>Diszkrét matematika II.</option>
                     <?php endif?>
                 </select>
@@ -91,7 +91,7 @@
                 <div class="label_div">
                     <label class="title_label">Válasszon csoportot!</label>
                 </div>
-                <?php if($can_apply_to_group):?>
+                <?php if($can_apply_to_dimat_i || $can_apply_to_dimat_ii):?>
                     <div id="student_groups" <?=(isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]==="Demonstrátor")?"hidden":""?>>
                         <div id="subject_1" <?=(isset($correct_parameters['subject_id']) && $correct_parameters['subject_id']=="0")?"hidden":""?>>
                             <select id="subject_group" name="student_group_i" style="margin: 1% auto 1% 0%">
@@ -120,7 +120,7 @@
                     </div>
                 <?php endif?>
                 <?php if($can_add_group_for_dimat_i || $can_add_group_for_dimat_ii):?>
-                    <div id="teacher_groups" <?=((isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]==="Diák") || !isset($correct_parameters["user_status"]) && $can_apply_to_group)?"hidden":""?>>
+                    <div id="teacher_groups" <?=((isset($correct_parameters["user_status"]) && $correct_parameters["user_status"]==="Diák") || !isset($correct_parameters["user_status"]) && ($can_apply_to_dimat_i || $can_apply_to_dimat_ii))?"hidden":""?>>
                         <select id="subject_group" name="teacher_group" style="margin: 1% auto 1% 0%">
                             <?php for($count= 1; $count <= 30; $count++): ?>
                                 <option <?=(isset($correct_parameters['subject_group']) && $correct_parameters['subject_group']=="$count")?"selected":""?>><?=$count?></option>

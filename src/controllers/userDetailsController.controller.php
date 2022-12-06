@@ -39,9 +39,10 @@
                     $_SESSION["previous_controller"] = "UserDetailsController";
 
                     $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
-                    $can_apply_to_group = $group_addition_conditions[1]??false;
-                    $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
-                    $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
+                    $can_apply_to_dimat_i = $group_addition_conditions[1]??false;
+                    $can_apply_to_dimat_ii = $group_addition_conditions[2]??false;
+                    $can_add_group_for_dimat_i = $group_addition_conditions[3]??false;
+                    $can_add_group_for_dimat_ii = $group_addition_conditions[4]??false;
 
                     if(!$group_addition_conditions[0]){
                         header("Location: ./index.php?site=notifications");
@@ -99,9 +100,10 @@
             if(isset($_SESSION["neptun_code"])){    
                 $this->SetMembers();
                 $group_addition_conditions = MainContentController::GroupAdditionChecker($this->GetPendingStudentGroups(), $this->GetApprovedStudentSubject(), $this->GetApprovedTeacherSubjects());
-                $can_apply_to_group = $group_addition_conditions[1]??false;
-                $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
-                $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
+                $can_apply_to_dimat_i = $group_addition_conditions[1]??false;
+                $can_apply_to_dimat_ii = $group_addition_conditions[2]??false;
+                $can_add_group_for_dimat_i = $group_addition_conditions[3]??false;
+                $can_add_group_for_dimat_ii = $group_addition_conditions[4]??false;
 
                 if(!$group_addition_conditions){
                     header("Location: ./index.php?site=notifications");
@@ -164,7 +166,19 @@
                     }
 
                     // Checking if the user is elligible to apply to the given subject with the given status 
-                    if($can_apply_to_group){
+                    if($can_apply_to_dimat_i || $can_apply_to_dimat_ii){
+                        if(!$can_apply_to_dimat_i){
+                            if($_POST["subject_id"] == "Diszkrét matematika I." && $_POST["user_status"] == "Diák"){
+                                $this->incorrect_parameters["user_status"] = "Nem lehet diák a Diszkrét matematika I. tárgy esetén!";
+                            }
+                        }
+
+                        if(!$can_apply_to_dimat_ii){
+                            if($_POST["subject_id"] == "Diszkrét matematika II." && $_POST["user_status"] == "Diák"){
+                                $this->incorrect_parameters["user_status"] = "Nem lehet diák a Diszkrét matematika II. tárgy esetén!";
+                            }
+                        }
+                        
                         if(!$can_add_group_for_dimat_i){
                             if($_POST["subject_id"] == "Diszkrét matematika I."){
                                 $this->incorrect_parameters["subject_id"] = "Nem lehet a tárgy Diszkrét matematika I.!";
