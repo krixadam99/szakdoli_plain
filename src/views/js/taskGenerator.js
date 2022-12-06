@@ -175,7 +175,6 @@ function AddEventsToParagraphLabel(element){
             editing_span.addEventListener("click", (event)=>{
                 editing_span.style.height = "auto";
                 cursor_actual_pos = window.getSelection().anchorOffset
-                console.log(cursor_actual_pos, window.getSelection(),  window)
                 focused_span = event.target
                 if(editing_span.parentElement !== edited_label_parent){
                     //editing_span.style["border-right"] = "0px"
@@ -553,7 +552,6 @@ if(font_color_input){
 if(font_family_select){
     font_family_select.addEventListener("change", ()=>{
         let chosen_family = font_family_select.options[font_family_select.options.selectedIndex].value
-        console.log(chosen_family)
         Editing(chosen_elements_for_edition, chosen_family, "family")
     })
 }

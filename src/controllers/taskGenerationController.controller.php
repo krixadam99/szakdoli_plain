@@ -58,7 +58,7 @@
          * @return void
          */
         public function PrintPage(){
-            if(isset($_SESSION["preview"])){
+            if(isset($_SESSION["preview"]) && $_SESSION["preview"] !== []){
                 $_SESSION["previous_controller"] = "TaskGenerationController";
 
                 include(ROOT_DIRECTORY . "/views/printPage.view.php");

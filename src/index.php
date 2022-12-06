@@ -55,6 +55,10 @@
         }else{
             unset($_SESSION["start_at"]);
         }
+
+        if(isset($_SESSION["preview"]) && !isset($_SESSION["exam_type"])){
+            unset($_SESSION["preview"]);
+        }
     }
 
     //Auto-loading classes 
