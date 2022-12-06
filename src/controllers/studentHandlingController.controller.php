@@ -89,7 +89,7 @@
                     foreach($_POST as $key => $value){
                         if(is_string($key)){
                             $neptun = $key;
-                            $decision = "";
+                            $decision = "PENDING";
                             $id = $current_subject . "_" . $current_group;
                             if($value != "-"){
                                 if($value == "Elfogadás" || $value == "Visszavétel"){

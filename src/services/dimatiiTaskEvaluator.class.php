@@ -255,8 +255,6 @@
             $real_solution_first_number = $this->real_solutions["diophantine_equations"][2][0]; // a,b,c
             $real_solution_second_number = $this->real_solutions["diophantine_equations"][2][1]; // d,e,f
 
-            //!!!!
-
             $first_number = $real_solution_first_number[1]*$real_solution_second_number[1];
             $second_number = $real_solution_second_number[0]*$real_solution_first_number[2];
 

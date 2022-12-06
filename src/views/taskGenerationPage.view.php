@@ -414,7 +414,8 @@
                                 <?php endforeach?>
                             <?php endforeach?>
                         <?php else:?>
-                            <?php for($exam_counter = 0; $exam_counter < $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
+                            <?php $task_quantity = $_SESSION["preview"]["task_quantity"]??0;?>
+                            <?php for($exam_counter = 0; $exam_counter < $task_quantity; $exam_counter++):?>
                                 <div class="editable_box" style="margin-top:3%">
                                     <label class="editable_label">
                                         <?= $exam_counter + 1?>. feladatsor
@@ -422,14 +423,24 @@
                                 </div>
                                 <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
                                     <?php
-                                        $description = $_SESSION["preview_tasks"][$task_counter]["descriptions"][$exam_counter];
-                                        $description = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $description);
+                                        if(isset( $_SESSION["preview_tasks"][$task_counter]["descriptions"])){
+                                            $description = $_SESSION["preview_tasks"][$task_counter]["descriptions"][$exam_counter];
+                                            $description = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $description);
+                                        }else{
+                                            $description = "";
+                                        }
                                     ?>
                                     <?=$description?>
                                 <?php endfor?>
                             <?php endfor?>
 
-                            <?php for($exam_counter = 1; $exam_counter <= $_SESSION["preview"]["task_quantity"]??0; $exam_counter++):?>
+                            <div class="editable_box" style="margin-top:3%">
+                                    <label class="editable_label">
+                                        <b>Megoldások</b>
+                                    </label>
+                                </div>
+
+                            <?php for($exam_counter = 1; $exam_counter <= $task_quantity; $exam_counter++):?>
                                 <div class="editable_box" style="margin-top:3%">    
                                     <label class="editable_label">    
                                         <?= $exam_counter?>. feladatsor:
@@ -437,8 +448,12 @@
                                 </div>
                                 <?php for($task_counter = 0; $task_counter < count($_SESSION["preview_tasks"]); $task_counter++):?>
                                     <?php 
-                                        $printable_solution = $_SESSION["preview_tasks"][$task_counter]["printable_solutions"][$exam_counter];
-                                        $printable_solution = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $printable_solution);
+                                        if(isset( $_SESSION["preview_tasks"][$task_counter]["printable_solutions"])){
+                                            $printable_solution = $_SESSION["preview_tasks"][$task_counter]["printable_solutions"][$exam_counter];
+                                            $printable_solution = preg_replace("/[0-9]*\. csoport/", $task_counter + 1 . ". feladat", $printable_solution);
+                                        }else{
+                                            $printable_solution = "";
+                                        }
                                     ?>
                                     <?=$printable_solution?>
                                 <?php endfor?>

@@ -104,8 +104,8 @@
                         if(is_numeric($main_topic) && intval($main_topic) < 9 && 0 <= intval($main_topic)){
                             foreach($_POST as $key => $value){
                                 if(is_string($key) && is_numeric(strpos($key, "main_topic_$main_topic" . "_subtopic_")) && !is_numeric(strpos($key, "_task_quantity"))){
-                                    $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$key)[1];
-                                    if($subtopic_index === "" && isset( $_POST["main_topic_$main_topic" . "_subtopic_0"])){
+                                    $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$key)[1]??"";
+                                    if($subtopic_index === "" && isset($_POST["main_topic_$main_topic" . "_subtopic_0"])){
                                         $subtopic_index = "0";
                                     }
                                     $subtask_count = $_POST["main_topic_$main_topic" . "_subtopic_" . $subtopic_index . "_task_quantity"]??"";
@@ -119,15 +119,14 @@
                     }else if($_SESSION["exam_type"] === "big"){ // Generate set of tasks for a big test based on the selected main topic - subtopic indeices pairs, and overall amounts
                         $subtask_count = $_POST["task_quantity"]??4;
 
-                        foreach($_POST as $key => $value){
-                            if(is_string($key) && is_numeric(strpos($key, "main_topic_"))){
-                                $main_topic = explode("main_topic_", $key)[1]??"";
-                                foreach($_POST as $key => $value){
-                                    if(is_string($key) && is_numeric(strpos($key, "main_topic_$main_topic" . "_subtopic_"))){
-                                        $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$key)[1];
-                                        var_dump($main_topic, $subtopic_index);
+                        foreach($_POST as $outer_key => $value){
+                            if(is_string($outer_key) && is_numeric(strpos($outer_key, "main_topic_"))){
+                                $main_topic = explode("main_topic_", $outer_key)[1]??"";
+                                foreach($_POST as $inner_key => $value){
+                                    if(is_string($inner_key) && is_numeric(strpos($inner_key, "main_topic_$main_topic" . "_subtopic_"))){
+                                        $subtopic_index = explode("main_topic_$main_topic" . "_subtopic_",$inner_key)[1]??"";
                                         
-                                        if(is_numeric($subtopic_index)){
+                                        if(is_numeric($subtask_count) && is_numeric($subtopic_index)){
                                             array_push($_SESSION["preview_tasks"], $this->GenerateTask($main_topic, $subtopic_index, $subtask_count));
                                         }
                                     }

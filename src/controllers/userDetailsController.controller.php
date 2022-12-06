@@ -42,6 +42,10 @@
                     $can_apply_to_group = $group_addition_conditions[1]??false;
                     $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
                     $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
+
+                    if(!$group_addition_conditions[0]){
+                        header("Location: ./index.php?site=notifications");
+                    }
                     
                     $this->dimat_i_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"i\" AND group_number != 0 AND is_teacher = 1 AND application_request_status  = \"APPROVED\"");
                     $this->dimat_ii_groups = $this->user_details_model->GetDataFromDatabase("SELECT DISTINCT group_number FROM subject_groups JOIN user_status USING(subject_group_id) WHERE subject_id = \"ii\" AND group_number != 0 AND is_teacher = 1  AND application_request_status  = \"APPROVED\"");
@@ -98,7 +102,13 @@
                 $can_apply_to_group = $group_addition_conditions[1]??false;
                 $can_add_group_for_dimat_i = $group_addition_conditions[2]??false;
                 $can_add_group_for_dimat_ii = $group_addition_conditions[3]??false;
+
+                if(!$group_addition_conditions){
+                    header("Location: ./index.php?site=notifications");
+                    exit();
+                }
                 
+                $subject_id = "INVALID NAME ATTRIBUTE";
                 // Setting the subject id based on the selected subject
                 if(isset($_POST["subject_id"])){
                     if($_POST["subject_id"] == "Diszkrét matematika I."){
@@ -106,8 +116,6 @@
                     }else if($_POST["subject_id"] == "Diszkrét matematika II."){
                         $subject_id = "ii";
                     }
-                }else{
-                    $subject_id = "INVALID NAME ATTRIBUTE";
                 }
     
                 // Setting the subject group based on the selected group
@@ -215,7 +223,7 @@
                 );
                 
                 if(
-                       count($this->incorrect_parameters) === 0
+                      count($this->incorrect_parameters) === 0
                 ){ // Everything was correct 
                     if(    $_POST['user_status'] === "Demonstrátor"
                         || $_POST['user_status'] === "Diák"

@@ -9,7 +9,7 @@
             A P[x] = a<sub>n</sub> * x<sup>n</sup> + ... + a<sub>1</sub> * x + a<sub>0</sub> (x <?="\u{2208}"?> <?="\u{2124}"?>) kifejezést az egészek felett értelmezett polinomnak nevezzük.
             Tulajdonképpen a polinomot felírhatjuk olyan végtelen hosszú számsorozatként, ahol véges számú nem-nulla tag van. Amennyiben az x helyére beírunk egy értelmezés tartomány béli elemet, akkor a polinomot a helyen kiértékelve megkapjuk a helyettesítési értéket.
             A polinom legmagasabb fokú tagja melletti számot a polinom főegyütthatójának, a nullad rendű tag együtthatóját pedig konstans tagnak nevezzük. Amennyiben egy értelmezési tartomány béli helyen a polinomnak a helyettesítési értéke 0, akkor azt a polinom gyökének nevezzük.
-            Az algebra alaptétele szerint egy n-ed rendű komplex számtest felett értelmezett polinomnak a multiplicitásokat beleszámítva pontosan n darab gyöke van.
+            Az algebra alaptétele szerint egy n-ed fokú komplex számtest felett értelmezett polinomnak a multiplicitásokat beleszámítva pontosan n darab gyöke van.
         </label>
     </div>
     <button class="show_button">

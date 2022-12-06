@@ -397,7 +397,11 @@
             $given_answer_raw = $this->given_answers[$input_name]??"";
             $given_answer = $this->ExtractSolutionFromInputOnlyNumbers($given_answer_raw)[0]??"";
             
-            $was_correct =  $given_answer == round($real_value,2);
+            if(is_int($real_value) || is_float($real_value)){
+                $real_value = round($real_value,2);
+            }
+
+            $was_correct =  $given_answer == $real_value;
             if($was_correct){
                 $this->correct_answer_counter += 1;
             }

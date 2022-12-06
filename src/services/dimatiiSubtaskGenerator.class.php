@@ -160,7 +160,9 @@
                 foreach($solutions[$prime_factorization_counter] as $factor_index => $factor){
                     for($exp_counter = 0; $exp_counter < $factor[1]; $exp_counter++){
                         $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">" . $number . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">". $factor[0] . "</label></td></tr>";
-                        $number /= intval($factor[0]);
+                        if(intval($factor[0]) !== 0){
+                            $number /= intval($factor[0]);
+                        }
                     }
                 }
                 $printable_solution = $printable_solution . "</table>";
@@ -201,7 +203,9 @@
                 foreach($prime_factorizations[$counter] as $factor_index => $factor){
                     for($exponential_counter = 0; $exponential_counter < $factor[1]; $exponential_counter++){
                         $printable_solution = $printable_solution . "<tr><td class=\"editable_box\"><label class=\"editable_label\">" . $number . "</label></td><td class=\"editable_box\"><label class=\"editable_label\">". $factor[0] . "</label></td></tr>";
-                        $number /= intval($factor[0]);
+                        if(intval($factor[0]) !== 0){
+                            $number /= intval($factor[0]);
+                        }
                     }
 
                     if($factor_index !== 0){
@@ -1156,8 +1160,8 @@
                     }
                     $printable_solution = $printable_solution . "</tr>";
                 }
-                $printable_solution = $printable_solution . "</table>";  
-
+                $printable_solution = $printable_solution . "</table>"; 
+                $printable_solution .=  "<div class=\"editable_box\"><label class=\"editable_label\">N[x]=" . PrintServices::CreatePrintablePolynomial($polynomial_expression) . ".</label></div>";
                 
                 array_push($descriptions, $task_description);
                 array_push($printable_solutions, $printable_solution);

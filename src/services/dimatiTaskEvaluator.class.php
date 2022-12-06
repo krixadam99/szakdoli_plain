@@ -176,6 +176,8 @@
                 
                 $personal_set = $_SESSION["task"]["characteristics"]["sets"][$subtask_counter];
                 $characteristics = $_SESSION["task"]["characteristics"]["characteristics"][$subtask_counter];
+
+                $are_elements_from_personal_set = count(array_diff($this->ExtractSolutionFromInput($given_answer_raw), $personal_set)) === 0;
                 $correct_array = [];
                 foreach($characteristics as $characteristic => $is_true){
                     $is_answer_true = false;
@@ -207,9 +209,9 @@
                         default:break;
                     }
                     
-                    $correct_array = array_merge($correct_array, array($characteristic => $is_answer_true === $is_true));
+                    $correct_array = array_merge($correct_array, array($characteristic => $is_answer_true === $is_true && $are_elements_from_personal_set));
                 }
-
+                
                 $possible_relations = "<label class=\"task_label\">";
                 foreach($real_solution as $relation_counter => $relation){
                     if($relation_counter > 1){

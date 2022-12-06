@@ -88,11 +88,11 @@ select#group_selector {
 
 /*Practice page content*/
 
-.prime_factorization_table, .eucleidan_solution_table, .polynomial_division_table {
+.prime_factorization_table, .euclidean_solution_table, .polynomial_division_table {
     border-collapse: collapse;
 }
 
-.prime_factorization_table td:first-of-type, .eucleidan_solution_table td:first-of-type{
+.prime_factorization_table td:first-of-type, .euclidean_solution_table td:first-of-type{
     border-right: 1px solid black;
     padding-right: 10px;
 }
@@ -102,7 +102,7 @@ select#group_selector {
     
 }
 
-.eucleidan_solution_table td, .polynomial_division_table td, .polynomial_division_table th, .stair_table td {
+.euclidean_solution_table td, .polynomial_division_table td, .polynomial_division_table th, .stair_table td {
     width: 2%;
     white-space: nowrap;
     padding-top: 2px;
@@ -110,7 +110,7 @@ select#group_selector {
     text-align: center;
 }
 
-.eucleidan_solution_table tr:first-of-type {
+.euclidean_solution_table tr:first-of-type {
     border-bottom: 1px solid black;
 }
 
@@ -139,7 +139,7 @@ select#group_selector {
     margin: 2% auto 2% 2%;
 }
 
-.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .eucleidan_solution_table tr, .polynomial_division_table tr {
+.stair_table tr, .residue_system_table tr, .prime_factorization_table tr, .euclidean_solution_table tr, .polynomial_division_table tr {
     background-color:white;
 }
 
