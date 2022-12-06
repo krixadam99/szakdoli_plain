@@ -8,6 +8,8 @@
     */
     class PracticeController extends MainContentController{
         private $practice_model;
+        private $task_evaluator;
+        private $dimat_task;
 
         /**
          * 
@@ -129,14 +131,14 @@
                             $practice_points = $this->GetPracticeResults($_SESSION["neptun_code"]);
                             $previous_point = floatval($practice_points["practice_task_" . $practice_number]??0);
                             if($this->approved_student_subject === "i"){
-                                $task_evaluator = new DimatiTaskEvaluator($_POST);
+                                $this->task_evaluator = new DimatiTaskEvaluator($_POST);
                             }else if($this->approved_student_subject === "ii"){
-                                $task_evaluator = new DimatiiTaskEvaluator($_POST);
+                                $this->task_evaluator = new DimatiiTaskEvaluator($_POST);
                             }else{
                                 header("Location: ./index.php?site=practiceShowAnswers");
                             }
-                            $task_evaluator->CheckSolution($_SESSION["topic"]);
-                            $update_point = round($task_evaluator->GetUpdatePoint(),2);
+                            $this->task_evaluator->CheckSolution($_SESSION["topic"]);
+                            $update_point = round($this->task_evaluator->GetUpdatePoint(),2);
                             $this->practice_model->UpdatePracticeScore($_SESSION["neptun_code"], $practice_number, $previous_point, $update_point);
         
                             header("Location: ./index.php?site=practiceShowAnswers&topic=" . $_SESSION["topic"]);
@@ -167,18 +169,18 @@
         */
         private function GenerateTask($subject, $topic_number){
             if($subject == "i"){ // The user is a student of Discrete mathematics I. 
-                $dimat_i_tasks = new DimatiTasks($topic_number);
-                $dimat_i_tasks->PracticePageTaskGeneration();
+                $this->dimat_task = new DimatiTasks($topic_number);
+                $this->dimat_task->PracticePageTaskGeneration();
 
-                $_SESSION["task"] = $dimat_i_tasks->GetTaskDescriptions();
-                $_SESSION["solution"] = $dimat_i_tasks->GetTaskSolutions();
+                $_SESSION["task"] = $this->dimat_task->GetTaskDescriptions();
+                $_SESSION["solution"] = $this->dimat_task->GetTaskSolutions();
             }else if($subject == "ii"){ // The user is a student of Discrete mathematics II. 
-                $dimat_ii_tasks = new DimatiiTasks($topic_number);
-                $dimat_ii_tasks->PracticePageTaskGeneration();
+                $this->dimat_task = new DimatiiTasks($topic_number);
+                $this->dimat_task->PracticePageTaskGeneration();
 
-                $_SESSION["task"] = $dimat_ii_tasks->GetTaskDescriptions();
-                $_SESSION["solution"] = $dimat_ii_tasks->GetTaskSolutions();
-                $_SESSION["solution_texts"] = $dimat_ii_tasks->GetSolutionTexts();
+                $_SESSION["task"] = $this->dimat_task->GetTaskDescriptions();
+                $_SESSION["solution"] = $this->dimat_task->GetTaskSolutions();
+                $_SESSION["solution_texts"] = $this->dimat_task->GetSolutionTexts();
             }
         }
 

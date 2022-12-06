@@ -7,6 +7,8 @@
      * If someone navigates to the task generation page, however they are not a teacher, then this controller redirects them to the notifications page.
     */
     class TaskGenerationController extends MainContentController{
+        private $dimat_subtask_generator;
+        
         /**
          * 
          * The contructor of the TaskGenerationController class.
@@ -161,9 +163,9 @@
             $task = array("task_descriptions" => "", "task_solutions" => "");
             
             if($_SESSION["subject"] == "i"){
-                $dimat_subtasks = new DimatiSubtaskGenerator();
+                $this->dimat_subtask_generator = new DimatiSubtaskGenerator();
             }else{
-                $dimat_subtasks = new DimatiiSubtaskGenerator();
+                $this->dimat_subtask_generator = new DimatiiSubtaskGenerator();
             }
 
             // The subtask count must be smaller than 20
@@ -171,7 +173,7 @@
                 $subtask_count = 20;
             }
 
-            $subtask = $dimat_subtasks->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
+            $subtask = $this->dimat_subtask_generator->CreateSubtask($main_task_index, $subtask_index, $subtask_count);
             $task["descriptions"] = $subtask["descriptions"];
             $task["printable_solutions"] = $subtask["printable_solutions"];
 
