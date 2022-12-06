@@ -111,8 +111,8 @@ CREATE TABLE messages (
     FOREIGN KEY( neptun_code_to) REFERENCES users( neptun_code )
 );
 
-INSERT INTO users VALUES("admin", "-", "$2y$10$9nSKotQ51hqlRaNt8AMaXOgCw97rLwvobEP8KuM7OC4cS3Ae7gixu", 1);
-INSERT INTO users VALUES("AAAAAA", "crx.adam1999@gmail.com", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
+INSERT INTO users VALUES("admin", "admin@example.hu", "$2y$10$9nSKotQ51hqlRaNt8AMaXOgCw97rLwvobEP8KuM7OC4cS3Ae7gixu", 1);
+INSERT INTO users VALUES("AAAAAA", "aaaaaa@gmail.com", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("ABCABC", "abcabc@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("BBBBBB", "bbbbbb@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
 INSERT INTO users VALUES("CBACBA", "cbacba@example.hu", "$2y$10$fR6hVQ88X1R1uUZJm0CAROQ7HNkb0SA/klR6EV.mS4cf8YMtSaMva", 0);
