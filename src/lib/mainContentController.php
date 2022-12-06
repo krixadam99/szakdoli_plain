@@ -389,11 +389,6 @@
                 }
             }
 
-            
-            if(in_array("i", $approved_teacher_subjects)){
-                $can_add_group_for_dimat_i = false;
-            }
-
             // If the user's student status is approved for Discrete mathematics I. (or this status is pending), then don't show the group addition page
             if("i" === $approved_student_subject || in_array("i", $pending_student_subject_ids)){
                 $show_group_addition_menu = false;
