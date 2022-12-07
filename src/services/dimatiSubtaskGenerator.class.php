@@ -1204,7 +1204,7 @@
             $task_data = [];
             for($subtask_counter = 0; $subtask_counter < $number_of_subtasks; $subtask_counter++){
                 [$graph, $solution] =  $this->dimat_helper_functions->CreateGraph(6,0,$max, $graph_type);
-                while(in_array($graph, $task_data)){
+                if(in_array($graph, $task_data)){
                     [$graph, $solution] =  $this->dimat_helper_functions->CreateGraph(6,0,$max, $graph_type);
                 }
                 array_push($task_data, $graph);

@@ -572,7 +572,7 @@
                 $b = mt_rand(200,1000);
                 $c = mt_rand(2, 100);
                 $a = mt_rand(2, 100);
-                while($a === $c 
+                while($a === $c
                     || $b % $this->dimat_helper_functions->DetermineGCDWithIteration([$a,$c]) !== 0
                     || in_array([$a,$b,$c], $triplets)){
                     $c = mt_rand(2, 100);
@@ -635,7 +635,7 @@
 
             for($congruence_systems_counter = 0; $congruence_systems_counter < $number_of_congruence_systems; $congruence_systems_counter++){
                 $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
-                while(in_array($new_congruence_system, $congruence_systems)){
+                if(in_array($new_congruence_system, $congruence_systems)){
                     $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT($number_of_congruences_per_system, $lower, $upper);
                 }
                 array_push($congruence_systems, $new_congruence_system);
@@ -683,7 +683,7 @@
                     $new_congruence_system[$index][1] %= $new_congruence_system[$index][2];
                 }
 
-                while(in_array($new_congruence_system, $congruence_systems)){
+                if(in_array($new_congruence_system, $congruence_systems)){
                     $new_congruence_system = $this->dimat_helper_functions->CreateSolvableLinearCongruencesForCRT(2, $lower, $upper);
                     for($index = 0; $index < count($new_congruence_system); $index++){
                         $new_congruence_system[$index][0] = 1;
@@ -740,7 +740,7 @@
                 // Picking 2-5 (same as degree) wole numbers from the range of -20 and 20, where degree - 2 needs to be actual roots of the first and second polynomial expressions respectively.
                 $polynomial_degree = mt_rand(2,5);
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
-                while(in_array($polynomial_expression, $polynomials)){
+                if(in_array($polynomial_expression, $polynomials)){
                     [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
                 }
                 $places = $this->dimat_helper_functions->CreatePlacesWithRoots($polynomial_degree, $polynomial_degree - 2, $roots, -20, 20);
@@ -792,7 +792,7 @@
                 // Picking 2-5 (same as degree) wole numbers from the range of -20 and 20, where degree - 2 needs to be actual roots of the first and second polynomial expressions respectively.
                 $polynomial_degree = mt_rand(2,5);
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
-                while(in_array($polynomial_expression, $polynomials)){
+                if(in_array($polynomial_expression, $polynomials)){
                     [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree, $lower, $upper);
                 }
                 $places = $this->dimat_helper_functions->CreatePlacesWithRoots(1, 0, $roots, $lower, $upper);
@@ -867,7 +867,7 @@
                 // If this polynomial expression is already created, then a new one will be created.
                 $dividand_polynomial_degree = mt_rand(3,5);
                 [$dividand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree);
-                while(in_array($dividand_polynomial_expression, $dividands)){
+                if(in_array($dividand_polynomial_expression, $dividands)){
                     $dividand_polynomial_degree = mt_rand(3,5);
                     [$dividand_polynomial_degree, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree, $lower, $upper);
                 }
@@ -964,7 +964,7 @@
                 // If this polynomial expression is already created, then a new one will be created.
                 $multiplicand_polynomial_degree = mt_rand(3,5);
                 [$multiplicand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($multiplicand_polynomial_degree, $lower, $upper);
-                while(in_array($multiplicand_polynomial_expression, $multiplicands)){
+                if(in_array($multiplicand_polynomial_expression, $multiplicands)){
                     $multiplicand_polynomial_degree = mt_rand(3,5);
                     [$multiplicand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($multiplicand_polynomial_degree, $lower, $upper);
                 }
@@ -1020,7 +1020,7 @@
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
                 $polynomial_degree = mt_rand(2,3);
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-                while(in_array($polynomial_expression, $polynomial_expressions)){
+                if(in_array($polynomial_expression, $polynomial_expressions)){
                     $polynomial_degree = mt_rand(2,3);
                     [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
                 }
@@ -1081,7 +1081,7 @@
             for($polynomial_counter = 0; $polynomial_counter < $number_of_points; $polynomial_counter++){
                 $polynomial_degree = mt_rand(3,4);
                 [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
-                while(in_array($polynomial_expression, $polynomial_expressions)){
+                if(in_array($polynomial_expression, $polynomial_expressions)){
                     $polynomial_degree = mt_rand(3,4);
                     [$polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($polynomial_degree);
                 }
