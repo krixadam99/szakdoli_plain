@@ -1284,10 +1284,16 @@
             foreach($polynomial_expression as $coefficient_counter => $coefficient){
                 if($coefficient_counter !== 0){
                     $task_description = $task_description . PrintServices::PlusMinus($coefficient);
+
+                    $sign = 1;
+                    if($coefficient < 0){
+                        $sign = -1;
+                    }
+
                     $coefficient = abs($coefficient);
                 }
                 $task_description = $task_description . PrintServices::CreatePrintablePolynomialCoefficient($coefficient, $coefficient_counter, $degree);
-                $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">p<sub>" . $degree - $coefficient_counter . "</sub> = " . $coefficient . "</label></th>";
+                $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">p<sub>" . $degree - $coefficient_counter . "</sub> = " . $sign * $coefficient . "</label></th>";
             }
             $task_description = $task_description . " polinom helyettesítési értékét a ";
             $task_solution = $task_solution . "<th class=\"editable_box\"><label class=\"editable_label\">P[x<sub>i</sub>]</label></th>";
