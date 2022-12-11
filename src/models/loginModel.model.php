@@ -71,7 +71,7 @@
             //$users = $this->database->LoadDataFromDatabase($query);
             
             if(count($users) != 0){
-                return $users["is_administrator"];
+                return $users[0]["is_administrator"];
             }else{
                 return false;
             }

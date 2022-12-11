@@ -278,6 +278,10 @@
             $descriptions = [];
 
             for($crs_counter = 0; $crs_counter < $number_of_numbers; $crs_counter++){
+                if(!isset($modulos[$crs_counter])){
+                    $modulos[$crs_counter] = mt_rand(2,15);
+                }
+
                 $task_description = "<div class=\"editable_box\"><label class=\"editable_label\">" . $crs_counter + 1 . ". csoport: </label></div><div class=\"editable_box\"><label class=\"editable_label\">Add meg a \u{2124}/<sub>". $modulos[$crs_counter] . "</sub>\u{2124} teljes maradékrendszer maradékosztályait 1-1 reprezentatív elemükkel!</label></div>";
                 $solution = $this->dimat_helper_functions->DetermineCompleteResidueSystem($modulos[$crs_counter]);
                 array_push($solutions, $solution);
