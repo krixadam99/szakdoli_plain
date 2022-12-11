@@ -869,7 +869,7 @@
                 [$dividand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree);
                 if(in_array($dividand_polynomial_expression, $dividands)){
                     $dividand_polynomial_degree = mt_rand(3,5);
-                    [$dividand_polynomial_degree, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree, $lower, $upper);
+                    [$dividand_polynomial_expression, $roots] = $this->dimat_helper_functions->CreatePolynomialExpression($dividand_polynomial_degree, $lower, $upper);
                 }
 
                 // Creating the divisor polynomial expression
