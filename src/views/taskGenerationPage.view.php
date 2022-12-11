@@ -390,7 +390,7 @@
                 <div id="page_container">
                     <?php if(isset($_SESSION["preview_tasks"])):?>
                         <div id="pdf_page_title_container">
-                            <label id="pdf_page_title"><?=$_SESSION["preview"]["title_textarea"]?></label>
+                            <label id="pdf_page_title"><?=$_SESSION["preview"]["title_textarea"]??""?></label>
                         </div>
                         <?php if($_SESSION["exam_type"] !== "big"):?>
                             <?php foreach($_SESSION["preview_tasks"] as $main_task_counter => $main_task):?>
