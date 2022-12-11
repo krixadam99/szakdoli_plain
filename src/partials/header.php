@@ -6,6 +6,9 @@
     $approved_student_group = $this->GetApprovedStudentGroup();
     $approved_student_subject = $this->GetApprovedStudentSubject();
 
+    if(!isset($actual_page)){
+        $actual_page = "misc";
+    }
 ?>
 
 <header>

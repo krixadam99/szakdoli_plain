@@ -254,11 +254,13 @@
          */
         static function CreatePrintableComplexNumberAlgebraic($complex_number_name, $complex_number, $with_name = true){
             $text = "";
-            if($complex_number_name){
-                $text = $complex_number_name . " = ";
-            }
+            if(count($complex_number) === 2 ){
+                if($complex_number_name){
+                    $text = $complex_number_name . " = ";
+                }
 
-            $text = $text . $complex_number[0] . PrintServices::PlusMinus($complex_number[1]) . abs($complex_number[1]) . "*i";
+                $text = $text . $complex_number[0] . PrintServices::PlusMinus($complex_number[1]) . abs($complex_number[1]) . "*i";
+            }
 
             return $text;
         }
@@ -276,16 +278,19 @@
          */
         static function CreatePrintableComplexNumberTrigonometric($complex_number_name, $complex_number, $pi_form = true, $with_name = true, $with_degree = false){
             $text = "";
-            if($complex_number_name){
-                $text = $complex_number_name . " = ";
-            }
+            
+            if(count($complex_number) === 2 ){
+                if($complex_number_name){
+                    $text = $complex_number_name . " = ";
+                }
 
-            if($pi_form){
-                $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{03C0}) + i*sin(" . $complex_number[1] . "\u{03C0}))";
-            }elseif($with_degree){
-                $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{00B0}) + i*sin(" . $complex_number[1] . "\u{00B0}))";
-            }else{
-                $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . ") + i*sin(" . $complex_number[1] . "))";
+                if($pi_form){
+                    $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{03C0}) + i*sin(" . $complex_number[1] . "\u{03C0}))";
+                }elseif($with_degree){
+                    $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . "\u{00B0}) + i*sin(" . $complex_number[1] . "\u{00B0}))";
+                }else{
+                    $text = $text . $complex_number[0] . " * (cos(" . $complex_number[1] . ") + i*sin(" . $complex_number[1] . "))";
+                }
             }
 
             return $text;

@@ -444,7 +444,7 @@
                 };break;
                 case "trigonometric_multiple_arguments":{
                     $answer_text = "";
-                    $given_answer_size = $given_answer[0];
+                    $given_answer_size = $given_answer[0]??0;
                     for($argument_counter = 1; $argument_counter < count($given_answer); ++$argument_counter){
                         $answer_text .= "<br>" . PrintServices::CreatePrintableComplexNumberTrigonometric("", [$given_answer_size,  $given_answer[$argument_counter]], true, false);
                     }
