@@ -268,12 +268,14 @@
                 $email_addresses_array = $this->user_details_model->GetEmailAddresses();
                 $email_addresses = [];
                 foreach($email_addresses_array as $email_address_counter => $email_address_array){
-                    array_push($email_addresses, $email_address_array["email_address"]);
+                    if(is_string($email_address_array["email_address"])){
+                        array_push($email_addresses, strtolower($email_address_array["email_address"]));
+                    }
                 }
 
                 $email_address = "INVALID NAME ATTRIBUTE";
                 if(isset($_POST["user_email"])){
-                    $email_address = strtoupper($_POST["user_email"]);
+                    $email_address = strtolower($_POST["user_email"]);
                 }
 
                 // Validating the form
