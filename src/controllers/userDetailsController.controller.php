@@ -271,13 +271,18 @@
                     array_push($email_addresses, $email_address_array["email_address"]);
                 }
 
+                $email_address = "INVALID NAME ATTRIBUTE";
+                if(isset($_POST["user_email"])){
+                    $email_address = strtoupper($_POST["user_email"]);
+                }
+
                 // Validating the form
                 // The email address should be a string, not the placeholder, or the empty string, it should be of email format, finally it should be unique
                 // The password should be a string, not the placeholder, or the empty string, the length should be greater than 7, it should contain at leaset 1 number, 1 small and capital english alphabet character, and at least 1 of the ",", "-", ".", "?", "!" characters
                 // The reassuring password should be a string, not the placeholder, or the empty string, and it should be the same as the original password
                 $this->ValidateInputs(
                     [
-                        "user_email:email cím" => array($_POST["user_email"]??"INVALID NAME ATTRIBUTE" => [
+                        "user_email:email cím" => array($email_address => [
                             "type" => "string",
                             "not_placeholder" => "",
                             "filter_var" => FILTER_VALIDATE_EMAIL, // No need for sanitazing

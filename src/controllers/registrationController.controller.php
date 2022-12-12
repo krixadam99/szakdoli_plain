@@ -117,6 +117,16 @@
                 }
             }
 
+            $neptun_code = "INVALID NAME ATTRIBUTE";
+            if(isset($_POST["neptun_code"])){
+                $neptun_code = strtoupper($_POST["neptun_code"]);
+            }
+
+            $email_address = "INVALID NAME ATTRIBUTE";
+            if(isset($_POST["user_email"])){
+                $email_address = strtoupper($_POST["user_email"]);
+            }
+
             // Validating the form
             // The neptun code should be a string, not the placeholder, or the empty string, it should be of length 6, contain only numbers and (english) alphabet characters, finally it should be unique
             // The email address should be a string, not the placeholder, or the empty string, it should be of email format, finally it should be unique
@@ -127,14 +137,14 @@
             // The reassuring password should be a string, not the placeholder, or the empty string, and it should be the same as the original password
             $this->ValidateInputs(
                 [
-                    "neptun_code:Neptun kód" => array($_POST["neptun_code"]??"INVALID NAME ATTRIBUTE" => [
+                    "neptun_code:Neptun kód" => array($neptun_code => [
                         "type" => "string",
                         "not_placeholder" => ["", "Neptun kód..."],
                         "length" => ["==", 6],
                         "preg_match" => ["/[0-9a-zA-Z]{6}/"], // No need for sanitazing
                         "unique" => $neptun_codes
                     ]),
-                    "user_email:email cím" => array($_POST["user_email"]??"INVALID NAME ATTRIBUTE" => [
+                    "user_email:email cím" => array($email_address => [
                         "type" => "string",
                         "not_placeholder" => ["", "Email cím..."],
                         "filter_var" => FILTER_VALIDATE_EMAIL, // No need for sanitazing
