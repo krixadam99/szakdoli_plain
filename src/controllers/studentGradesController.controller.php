@@ -229,7 +229,7 @@
                     $this->student_grades_model->UpdateExpectationRules($query_array);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
-
+                    header("Location: ./index.php?site=notifications");
                 }
             }else{
                 header("Location: ./index.php");
@@ -298,7 +298,7 @@
                     $this->student_grades_model->UpdateTaskDueDates($query_array);
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
-
+                    header("Location: ./index.php?site=notifications");
                 }
             }else{
                 header("Location: ./index.php");
@@ -375,7 +375,7 @@
                     
                     header("Location: ./index.php?site=studentGrades&group=" . $_SESSION["group"] . "&subject=" . $_SESSION["subject"]);
                 }else{
-
+                    header("Location: ./index.php?site=notifications");
                 }
             }else{
                 header("Location: ./index.php");

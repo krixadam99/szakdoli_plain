@@ -46,6 +46,7 @@
                 // If the message id doesn't belong to the given user, then redirect them to the messages page
                 if(isset($_SESSION["message_id"]) && !in_array($_SESSION["message_id"], $possible_message_ids)){
                     header("Location: ./index.php?site=messages&messageType=received");
+                    exit();
                 }
 
                 // The number of messages to display per page
